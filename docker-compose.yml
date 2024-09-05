@@ -17,7 +17,7 @@ services:
 #        condition: service_healthy
 #        restart: true
     env_file:
-      - .env.docker
+      - .env
 
   db:
     image: mariadb:10.6.4-focal
@@ -25,10 +25,10 @@ services:
     volumes:
       - db_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: "snipedb"
-      MYSQL_USER: "sqluser"
-      MYSQL_PASSWORD: "sqlpass"
-      MYSQL_ROOT_PASSWORD: "sqlrootpass"
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
 #    healthcheck:
 #      test: mysqladmin ping -h 127.0.0.1 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD
 #      interval: 5s
