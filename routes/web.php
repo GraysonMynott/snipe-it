@@ -29,22 +29,22 @@ use Illuminate\Support\Facades\Auth;
 
 Route::group(['middleware' => 'auth'], function () {
     /*
-    * Companies
-    */
+     * Companies
+     */
     Route::resource('companies', CompaniesController::class, [
         'parameters' => ['company' => 'company_id'],
     ]);
 
     /*
-    * Categories
-    */
+     * Categories
+     */
     Route::resource('categories', CategoriesController::class, [
         'parameters' => ['category' => 'category_id'],
     ]);
   
     /*
-    * Labels
-    */
+     * Labels
+     */
     Route::get(
         'labels/{labelName}',
         [LabelsController::class, 'show']
@@ -53,7 +53,6 @@ Route::group(['middleware' => 'auth'], function () {
     /*
      * Locations
      */
-
     Route::group(['prefix' => 'locations', 'middleware' => ['auth']], function () {
 
         Route::post(
@@ -87,10 +86,9 @@ Route::group(['middleware' => 'auth'], function () {
         'parameters' => ['location' => 'location_id'],
     ]);
 
-
     /*
-    * Manufacturers
-    */
+     * Manufacturers
+     */
 
     Route::group(['prefix' => 'manufacturers', 'middleware' => ['auth']], function () {
         Route::post('{manufacturers_id}/restore', [ManufacturersController::class, 'restore'] )->name('restore/manufacturer');
@@ -101,29 +99,29 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
 
     /*
-    * Suppliers
-    */
+     * Suppliers
+     */
     Route::resource('suppliers', SuppliersController::class, [
         'parameters' => ['supplier' => 'supplier_id'],
     ]);
 
     /*
-    * Depreciations
+     * Depreciations
      */
     Route::resource('depreciations', DepreciationsController::class, [
          'parameters' => ['depreciation' => 'depreciation_id'],
-     ]);
+    ]);
 
     /*
-    * Status Labels
+     * Status Labels
      */
     Route::resource('statuslabels', StatuslabelsController::class, [
           'parameters' => ['statuslabel' => 'statuslabel_id'],
-      ]);
+    ]);
 
     /*
-    * Departments
-    */
+     * Departments
+     */
     Route::resource('departments', DepartmentsController::class, [
         'parameters' => ['department' => 'department_id'],
     ]);
