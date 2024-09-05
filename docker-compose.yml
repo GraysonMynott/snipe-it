@@ -12,10 +12,10 @@ services:
       - storage:/var/lib/snipeit
     ports:
       - "8000:80"
-    depends_on:
-      - db:
-        condition: service_healthy
-        restart: true
+#    depends_on:
+#      - db:
+#        condition: service_healthy
+#        restart: true
     env_file:
       - .env
 
