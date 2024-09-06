@@ -55,6 +55,7 @@ chown -R docker:root /var/lib/snipeit/data/*
 chown -R docker:root /var/lib/snipeit/dumps
 chown -R docker:root /var/lib/snipeit/keys
 chown -R docker:root /var/www/html/storage/framework/cache
+chown -R docker:root /var/www/html/storage/logs
 
 # Fix php settings
 if [ -v "PHP_UPLOAD_LIMIT" ]
@@ -65,7 +66,7 @@ then
 fi
 
 # If the Oauth DB files are not present copy the vendor files over to the db migrations
-if [ ! -f "/var/www/html/database/migrations/*create_oauth*" ]
+if [ ! ls /var/www/html/database/migrations/*create_oauth* 1> /dev/null 2>&1 ]
 then
   cp -ax /var/www/html/vendor/laravel/passport/database/migrations/* /var/www/html/database/migrations/
 fi
