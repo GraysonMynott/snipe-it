@@ -156,7 +156,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     </a>
                                 </li>
                             @endcan
-                            @can('index', \App\Models\Accessory::class)
+{{--                             @can('index', \App\Models\Accessory::class)
                                 <li aria-hidden="true"{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
                                     <a href="{{ route('accessories.index') }}" accesskey="3" tabindex="-1">
                                         <i class="far fa-keyboard fa-fw"></i>
@@ -179,7 +179,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                         <span class="sr-only">{{ trans('general.components') }}</span>
                                     </a>
                                 </li>
-                            @endcan
+                            @endcan --}}
 
                             @can('index', \App\Models\Asset::class)
                                 <li>
@@ -227,7 +227,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                                 </a>
                                             </li>
                                         @endcan
-                                        @can('create', \App\Models\Accessory::class)
+{{--                                         @can('create', \App\Models\Accessory::class)
                                             <li {!! (Request::is('accessories/create') ? 'class="active"' : '') !!}>
                                                 <a href="{{ route('accessories.create') }}" tabindex="-1">
                                                     <i class="far fa-keyboard fa-fw" aria-hidden="true"></i>
@@ -250,7 +250,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                                     {{ trans('general.component') }}
                                                 </a>
                                             </li>
-                                        @endcan
+                                        @endcan --}}
                                         @can('create', \App\Models\User::class)
                                             <li {!! (Request::is('users/create') ? 'class="active"' : '') !!}>
                                                 <a href="{{ route('users.create') }}" tabindex="-1">
@@ -332,7 +332,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
-                                        <li {!! (Request::is('account/profile') ? ' class="active"' : '') !!}>
+{{--                                         <li {!! (Request::is('account/profile') ? ' class="active"' : '') !!}>
                                             <a href="{{ route('view-assets') }}">
                                                 <i class="fas fa-check fa-fw" aria-hidden="true"></i>
                                                 {{ trans('general.viewassets') }}
@@ -350,7 +350,8 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                             <a href="{{ route('account.accept') }}">
                                                 <i class="fas fa-check fa-disk fa-fw"></i>
                                                 {{ trans('general.accept_assets_menu') }}
-                                            </a></li>
+                                            </a>
+                                        </li> --}}
 
 
                                         @can('self.profile')
@@ -585,7 +586,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                 </a>
                             </li>
                         @endcan
-                        @can('index', \App\Models\Accessory::class)
+{{--                         @can('index', \App\Models\Accessory::class)
                             <li{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
                                 <a href="{{ route('accessories.index') }}">
                                     <i class="far fa-keyboard fa-fw"></i>
@@ -616,7 +617,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     <span>{{ trans('general.kits') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
 
                         @can('view', \App\Models\User::class)
                             <li{!! (Request::is('users*') ? ' class="active"' : '') !!}>
@@ -779,14 +780,14 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                             </li>
                         @endcan
 
-                        @can('viewRequestable', \App\Models\Asset::class)
+{{--                         @can('viewRequestable', \App\Models\Asset::class)
                             <li{!! (Request::is('account/requestable-assets') ? ' class="active"' : '') !!}>
                                 <a href="{{ route('requestable-assets') }}">
                                     <i class="fa fa-laptop fa-fw"></i>
                                     <span>{{ trans('general.requestable_items') }}</span>
                                 </a>
                             </li>
-                        @endcan
+                        @endcan --}}
 
 
                     </ul>

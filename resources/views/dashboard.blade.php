@@ -65,7 +65,7 @@
   </div><!-- ./col -->
 
 
-  <div class="col-lg-2 col-xs-6">
+{{--   <div class="col-lg-2 col-xs-6">
     <!-- small box -->
       <a href="{{ route('accessories.index') }}">
     <div class="small-box bg-orange">
@@ -117,7 +117,7 @@
        @endcan
    </div>
     </a>
- </div><!-- ./col -->
+ </div><!-- ./col --> --}}
 
  <div class="col-lg-2 col-xs-6">
     <a href="{{ route('users.index') }}">
@@ -175,7 +175,7 @@
                                 <a class="btn bg-maroon" style="width: 100%" href="{{ route('licenses.create') }}">{{ trans('general.new_license') }}</a>
                             @endcan
                         </div>
-                        <div class="col-md-3">
+                        {{-- <div class="col-md-3">
                             @can('create', \App\Models\Accessory::class)
                                 <a class="btn bg-orange" style="width: 100%" href="{{ route('accessories.create') }}">{{ trans('general.new_accessory') }}</a>
                             @endcan
@@ -184,7 +184,7 @@
                             @can('create', \App\Models\Consumable::class)
                                 <a class="btn bg-purple" style="width: 100%" href="{{ route('consumables.create') }}">{{ trans('general.new_consumable') }}</a>
                             @endcan
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
