@@ -181,6 +181,26 @@ class Category extends SnipeModel
     {
         return $this->hasMany(\App\Models\AssetModel::class, 'category_id');
     }
+    
+    /**
+     * Checks for a category-specific EULA, and if that doesn't exist,
+     * checks for a settings level EULA
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v2.0]
+     * @return string | null
+     */
+    public function getEula()
+    {
+
+        if ($this->eula_text) {
+            return Helper::parseEscapedMarkedown($this->eula_text);
+        } elseif ((Setting::getSettings()->default_eula_text) && ($this->use_default_eula == '1')) {
+            return Helper::parseEscapedMarkedown(Setting::getSettings()->default_eula_text);
+        } else {
+            return null;
+        }
+    }
 
     /**
      * -----------------------------------------------

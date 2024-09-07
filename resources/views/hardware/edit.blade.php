@@ -84,7 +84,7 @@
         @include ('partials.forms.edit.eol_date')
 
         <!-- TODO: Asset EOS -->
-        <!--@include ('partials.forms.edit.eos_date') -->
+        {{--@include ('partials.forms.edit.eos_date') --}}
 
         @php
             $currency_type = null;
