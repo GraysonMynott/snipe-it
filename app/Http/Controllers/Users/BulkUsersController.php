@@ -5,14 +5,11 @@ namespace App\Http\Controllers\Users;
 use App\Events\UserMerged;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
-use App\Models\Accessory;
 use App\Models\License;
 use App\Models\Actionlog;
 use App\Models\Asset;
 use App\Models\Group;
 use App\Models\LicenseSeat;
-use App\Models\ConsumableAssignment;
-use App\Models\Consumable;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -42,7 +39,7 @@ class BulkUsersController extends Controller
             // Get the list of affected users
             $user_raw_array = request('ids');
             $users = User::whereIn('id', $user_raw_array)
-                ->with('assets', 'manager', 'userlog', 'licenses', 'consumables', 'accessories', 'managedLocations','uploads', 'acceptances')->get();
+                ->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads', 'acceptances')->get();
 
             // bulk edit, display the bulk edit form
             if ($request->input('bulk_actions') == 'edit') {
@@ -219,9 +216,7 @@ class BulkUsersController extends Controller
 
         $users = User::whereIn('id', $user_raw_array)->get();
         $assets = Asset::whereIn('assigned_to', $user_raw_array)->where('assigned_type', \App\Models\User::class)->get();
-        $accessories = DB::table('accessories_users')->whereIn('assigned_to', $user_raw_array)->get();
         $licenses = DB::table('license_seats')->whereIn('assigned_to', $user_raw_array)->get();
-        $consumables = DB::table('consumables_users')->whereIn('assigned_to', $user_raw_array)->get();
 
         if ((($assets->count() > 0) && ((!$request->filled('status_id')) || ($request->input('status_id') == '')))) {
             return redirect()->route('users.index')->with('error', 'No status selected');
@@ -229,9 +224,7 @@ class BulkUsersController extends Controller
 
 
         $this->logItemCheckinAndDelete($assets, Asset::class);
-        $this->logItemCheckinAndDelete($accessories, Accessory::class);
         $this->logItemCheckinAndDelete($licenses, License::class);
-        $this->logItemCheckinAndDelete($consumables, Consumable::class);
 
 
         Asset::whereIn('id', $assets->pluck('id'))->update([
@@ -243,13 +236,10 @@ class BulkUsersController extends Controller
 
 
         LicenseSeat::whereIn('id', $licenses->pluck('id'))->update(['assigned_to' => null]);
-        ConsumableAssignment::whereIn('id', $consumables->pluck('id'))->delete();
 
 
         foreach ($users as $user) {
 
-            $user->consumables()->sync([]);
-            $user->accessories()->sync([]);
             if ($request->input('delete_user')=='1') {
                 $user->delete();
             }
@@ -281,7 +271,7 @@ class BulkUsersController extends Controller
             }
             
             $logAction->item_id = $item_id;
-            // We can't rely on get_class here because the licenses/accessories fetched above are not eloquent models, but simply arrays.
+            // We can't rely on get_class here because the licenses fetched above are not eloquent models, but simply arrays.
             $logAction->item_type = $itemType;
             $logAction->target_id = $item->assigned_to;
             $logAction->target_type = User::class;
@@ -317,7 +307,7 @@ class BulkUsersController extends Controller
 
         // Get the users
         $merge_into_user = User::find($request->input('merge_into_id'));
-        $users_to_merge = User::whereIn('id', $user_ids_to_merge)->with('assets', 'manager', 'userlog', 'licenses', 'consumables', 'accessories', 'managedLocations','uploads', 'acceptances')->get();
+        $users_to_merge = User::whereIn('id', $user_ids_to_merge)->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads', 'acceptances')->get();
         $admin = User::find(auth()->id());
 
         // Walk users
@@ -332,15 +322,6 @@ class BulkUsersController extends Controller
             foreach ($user_to_merge->licenses as $license) {
                 Log::debug('Updating license pivot: '.$license->id . ' to '.$merge_into_user->id);
                 $user_to_merge->licenses()->updateExistingPivot($license->id, ['assigned_to' => $merge_into_user->id]);
-            }
-
-            foreach ($user_to_merge->consumables as $consumable) {
-                Log::debug('Updating consumable pivot: '.$consumable->id . ' to '.$merge_into_user->id);
-                $user_to_merge->consumables()->updateExistingPivot($consumable->id, ['assigned_to' => $merge_into_user->id]);
-            }
-
-            foreach ($user_to_merge->accessories as $accessory) {
-                $user_to_merge->accessories()->updateExistingPivot($accessory->id, ['assigned_to' => $merge_into_user->id]);
             }
 
             foreach ($user_to_merge->userlog as $log) {

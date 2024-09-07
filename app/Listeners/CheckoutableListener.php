@@ -3,20 +3,14 @@
 namespace App\Listeners;
 
 use App\Events\CheckoutableCheckedOut;
-use App\Models\Accessory;
 use App\Models\Asset;
 use App\Models\CheckoutAcceptance;
-use App\Models\Component;
-use App\Models\Consumable;
 use App\Models\LicenseSeat;
 use App\Models\Recipients\AdminRecipient;
 use App\Models\Setting;
-use App\Notifications\CheckinAccessoryNotification;
 use App\Notifications\CheckinAssetNotification;
 use App\Notifications\CheckinLicenseSeatNotification;
-use App\Notifications\CheckoutAccessoryNotification;
 use App\Notifications\CheckoutAssetNotification;
-use App\Notifications\CheckoutConsumableNotification;
 use App\Notifications\CheckoutLicenseSeatNotification;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Facades\Notification;
@@ -25,9 +19,6 @@ use Illuminate\Support\Facades\Log;
 
 class CheckoutableListener
 {
-    private array $skipNotificationsFor = [
-        Component::class,
-    ];
 
     /**
      * Notify the user and post to webhook about the checked out checkoutable
@@ -188,9 +179,6 @@ class CheckoutableListener
         $notificationClass = null;
 
         switch (get_class($event->checkoutable)) {
-            case Accessory::class:
-                $notificationClass = CheckinAccessoryNotification::class;
-                break;
             case Asset::class:
                 $notificationClass = CheckinAssetNotification::class;
                 break;    
@@ -216,18 +204,9 @@ class CheckoutableListener
         $notificationClass = null;
 
         switch (get_class($event->checkoutable)) {
-            case Accessory::class:
-                $notificationClass = CheckoutAccessoryNotification::class;
-                break;
             case Asset::class:
                 $notificationClass = CheckoutAssetNotification::class;
-                break;
-            case Consumable::class:
-                $notificationClass = CheckoutConsumableNotification::class;
-                break;    
-            case LicenseSeat::class:
-                $notificationClass = CheckoutLicenseSeatNotification::class;
-                break;
+                break;   
         }
 
 

@@ -15,10 +15,7 @@ use App\Models\Contracts\Acceptable;
 use App\Models\Setting;
 use App\Models\User;
 use App\Models\AssetModel;
-use App\Models\Accessory;
 use App\Models\License;
-use App\Models\Component;
-use App\Models\Consumable;
 use App\Notifications\AcceptanceAssetAcceptedNotification;
 use App\Notifications\AcceptanceAssetDeclinedNotification;
 use Illuminate\Http\Request;
@@ -160,47 +157,13 @@ class AcceptanceController extends Controller
                         $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
                 break;
 
-                case 'App\Models\Accessory':
-                        $pdf_view_route ='account.accept.accept-accessory-eula';
-                        $accessory = Accessory::find($item->id);
-                        $display_model = $accessory->name;
-                        $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
-                break;
-
                 case 'App\Models\LicenseSeat':
                         $pdf_view_route ='account.accept.accept-license-eula';
                         $license = License::find($item->license_id);
                         $display_model = $license->name;
                         $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
                 break;
-
-                case 'App\Models\Component':
-                        $pdf_view_route ='account.accept.accept-component-eula';
-                        $component = Component::find($item->id);
-                        $display_model = $component->name;
-                        $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
-                break;
-
-                case 'App\Models\Consumable':
-                        $pdf_view_route ='account.accept.accept-consumable-eula';
-                        $consumable = Consumable::find($item->id);
-                        $display_model = $consumable->name;
-                        $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
-                break;
             }
-//            if ($acceptance->checkoutable_type == 'App\Models\Asset') {
-//                $pdf_view_route ='account.accept.accept-asset-eula';
-//                $asset_model = AssetModel::find($item->model_id);
-//                $display_model = $asset_model->name;
-//                $assigned_to = User::find($item->assigned_to)->present()->fullName;
-//
-//            } elseif ($acceptance->checkoutable_type== 'App\Models\Accessory') {
-//                $pdf_view_route ='account.accept.accept-accessory-eula';
-//                $accessory = Accessory::find($item->id);
-//                $display_model = $accessory->name;
-//                $assigned_to = User::find($item->assignedTo);
-//
-//            }
 
             /**
              * Gather the data for the PDF. We fire this whether there is a signature required or not,
@@ -283,23 +246,7 @@ class AcceptanceController extends Controller
                     $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
                     break;
 
-                case 'App\Models\Accessory':
-                    $accessory = Accessory::find($item->id);
-                    $display_model = $accessory->name;
-                    $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
-                    break;
-
                 case 'App\Models\LicenseSeat':
-                    $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
-                    break;
-
-                case 'App\Models\Component':
-                    $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
-                    break;
-
-                case 'App\Models\Consumable':
-                    $consumable = Consumable::find($item->id);
-                    $display_model = $consumable->name;
                     $assigned_to = User::find($acceptance->assigned_to_id)->present()->fullName;
                     break;
             }

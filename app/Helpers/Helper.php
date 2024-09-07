@@ -1,11 +1,8 @@
 <?php
 
 namespace App\Helpers;
-use App\Models\Accessory;
 use App\Models\Asset;
 use App\Models\AssetModel;
-use App\Models\Component;
-use App\Models\Consumable;
 use App\Models\CustomField;
 use App\Models\CustomFieldset;
 use App\Models\Depreciation;
@@ -624,10 +621,7 @@ class Helper
     {
         $category_types = [
             '' => '',
-            'accessory' => trans('general.accessory'),
             'asset' => trans('general.asset'),
-            'consumable' => trans('general.consumable'),
-            'component' => trans('general.component'),
             'license' => trans('general.license'),
         ];
 
@@ -719,71 +713,11 @@ class Helper
     public static function checkLowInventory()
     {
         $alert_threshold = \App\Models\Setting::getSettings()->alert_threshold;
-        $consumables = Consumable::withCount('consumableAssignments as consumable_assignments_count')->whereNotNull('min_amt')->get();
-        $accessories = Accessory::withCount('users as users_count')->whereNotNull('min_amt')->get();
-        $components = Component::whereNotNull('min_amt')->get();
         $asset_models = AssetModel::where('min_amt', '>', 0)->get();
         $licenses = License::where('min_amt', '>', 0)->get();
 
         $items_array = [];
         $all_count = 0;
-
-        foreach ($consumables as $consumable) {
-            $avail = $consumable->numRemaining();
-            if ($avail < ($consumable->min_amt) + $alert_threshold) {
-                if ($consumable->qty > 0) {
-                    $percent = number_format((($avail / $consumable->qty) * 100), 0);
-                } else {
-                    $percent = 100;
-                }
-
-                $items_array[$all_count]['id'] = $consumable->id;
-                $items_array[$all_count]['name'] = $consumable->name;
-                $items_array[$all_count]['type'] = 'consumables';
-                $items_array[$all_count]['percent'] = $percent;
-                $items_array[$all_count]['remaining'] = $avail;
-                $items_array[$all_count]['min_amt'] = $consumable->min_amt;
-                $all_count++;
-            }
-        }
-
-        foreach ($accessories as $accessory) {
-            $avail = $accessory->qty - $accessory->users_count;
-            if ($avail < ($accessory->min_amt) + $alert_threshold) {
-                if ($accessory->qty > 0) {
-                    $percent = number_format((($avail / $accessory->qty) * 100), 0);
-                } else {
-                    $percent = 100;
-                }
-
-                $items_array[$all_count]['id'] = $accessory->id;
-                $items_array[$all_count]['name'] = $accessory->name;
-                $items_array[$all_count]['type'] = 'accessories';
-                $items_array[$all_count]['percent'] = $percent;
-                $items_array[$all_count]['remaining'] = $avail;
-                $items_array[$all_count]['min_amt'] = $accessory->min_amt;
-                $all_count++;
-            }
-        }
-
-        foreach ($components as $component) {
-            $avail = $component->numRemaining();
-            if ($avail < ($component->min_amt) + $alert_threshold) {
-                if ($component->qty > 0) {
-                    $percent = number_format((($avail / $component->qty) * 100), 0);
-                } else {
-                    $percent = 100;
-                }
-
-                $items_array[$all_count]['id'] = $component->id;
-                $items_array[$all_count]['name'] = $component->name;
-                $items_array[$all_count]['type'] = 'components';
-                $items_array[$all_count]['percent'] = $percent;
-                $items_array[$all_count]['remaining'] = $avail;
-                $items_array[$all_count]['min_amt'] = $component->min_amt;
-                $all_count++;
-            }
-        }
 
         foreach ($asset_models as $asset_model){
 
@@ -1306,15 +1240,6 @@ class Helper
         switch ($item) {
             case 'asset':
                 return 'fas fa-barcode';
-                break;
-            case 'accessory':
-                return 'fas fa-keyboard';
-                break;
-            case 'component':
-                return 'fas fa-hdd';
-                break;
-            case 'consumable':
-                return 'fas fa-tint';
                 break;
             case 'license':
                 return 'far fa-save';

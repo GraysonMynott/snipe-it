@@ -3,14 +3,10 @@
 namespace Tests\Feature\Notifications\Webhooks;
 
 use App\Events\CheckoutableCheckedOut;
-use App\Models\Accessory;
 use App\Models\Asset;
-use App\Models\Component;
-use App\Models\Consumable;
 use App\Models\LicenseSeat;
 use App\Models\Location;
 use App\Models\User;
-use App\Notifications\CheckoutAccessoryNotification;
 use App\Notifications\CheckoutAssetNotification;
 use App\Notifications\CheckoutConsumableNotification;
 use App\Notifications\CheckoutLicenseSeatNotification;
@@ -47,30 +43,6 @@ class SlackNotificationsUponCheckoutTest extends TestCase
         ];
     }
 
-    public function testAccessoryCheckoutSendsSlackNotificationWhenSettingEnabled()
-    {
-        $this->settings->enableSlackWebhook();
-
-        $this->fireCheckOutEvent(
-            Accessory::factory()->create(),
-            User::factory()->create(),
-        );
-
-        $this->assertSlackNotificationSent(CheckoutAccessoryNotification::class);
-    }
-
-    public function testAccessoryCheckoutDoesNotSendSlackNotificationWhenSettingDisabled()
-    {
-        $this->settings->disableSlackWebhook();
-
-        $this->fireCheckOutEvent(
-            Accessory::factory()->create(),
-            User::factory()->create(),
-        );
-
-        $this->assertNoSlackNotificationSent(CheckoutAccessoryNotification::class);
-    }
-
     /** @dataProvider assetCheckoutTargets */
     public function testAssetCheckoutSendsSlackNotificationWhenSettingEnabled($checkoutTarget)
     {
@@ -95,42 +67,6 @@ class SlackNotificationsUponCheckoutTest extends TestCase
         );
 
         $this->assertNoSlackNotificationSent(CheckoutAssetNotification::class);
-    }
-
-    public function testComponentCheckoutDoesNotSendSlackNotification()
-    {
-        $this->settings->enableSlackWebhook();
-
-        $this->fireCheckOutEvent(
-            Component::factory()->create(),
-            Asset::factory()->laptopMbp()->create(),
-        );
-
-        Notification::assertNothingSent();
-    }
-
-    public function testConsumableCheckoutSendsSlackNotificationWhenSettingEnabled()
-    {
-        $this->settings->enableSlackWebhook();
-
-        $this->fireCheckOutEvent(
-            Consumable::factory()->create(),
-            User::factory()->create(),
-        );
-
-        $this->assertSlackNotificationSent(CheckoutConsumableNotification::class);
-    }
-
-    public function testConsumableCheckoutDoesNotSendSlackNotificationWhenSettingDisabled()
-    {
-        $this->settings->disableSlackWebhook();
-
-        $this->fireCheckOutEvent(
-            Consumable::factory()->create(),
-            User::factory()->create(),
-        );
-
-        $this->assertNoSlackNotificationSent(CheckoutConsumableNotification::class);
     }
 
     /** @dataProvider licenseCheckoutTargets */

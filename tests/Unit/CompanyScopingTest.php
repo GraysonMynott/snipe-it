@@ -2,12 +2,9 @@
 
 namespace Tests\Unit;
 
-use App\Models\Accessory;
 use App\Models\Asset;
 use App\Models\AssetMaintenance;
 use App\Models\Company;
-use App\Models\Component;
-use App\Models\Consumable;
 use App\Models\License;
 use App\Models\LicenseSeat;
 use App\Models\User;
@@ -19,10 +16,7 @@ class CompanyScopingTest extends TestCase
     public function models(): array
     {
         return [
-            'Accessories' => [Accessory::class],
             'Assets' => [Asset::class],
-            'Components' => [Component::class],
-            'Consumables' => [Consumable::class],
             'Licenses' => [License::class],
         ];
     }

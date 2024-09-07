@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Licenses;
 use App\Events\CheckoutableCheckedOut;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LicenseCheckoutRequest;
-use App\Models\Accessory;
 use App\Models\Asset;
 use App\Models\License;
 use App\Models\LicenseSeat;

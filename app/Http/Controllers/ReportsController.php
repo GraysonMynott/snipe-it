@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
-use App\Models\Accessory;
 use App\Models\Actionlog;
 use App\Models\Asset;
 use App\Models\AssetModel;
@@ -41,63 +40,6 @@ class ReportsController extends Controller
     public function __construct()
     {
         parent::__construct();
-    }
-
-    /**
-    * Returns a view that displays the accessories report.
-    *
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @since [v1.0]
-    * @return \Illuminate\Contracts\View\View
-    */
-    public function getAccessoryReport() : View
-    {
-        $this->authorize('reports.view');
-
-        return view('reports/accessories');
-    }
-
-    /**
-    * Exports the accessories to CSV
-    *
-    * @deprecated Server-side exports have been replaced by datatables export since v2.
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @see ManufacturersController::getDatatable() method that generates the JSON response
-    * @since [v1.0]
-    * @return \Illuminate\Http\Response
-    */
-    public function exportAccessoryReport() : Response
-    {
-        $this->authorize('reports.view');
-        $accessories = Accessory::orderBy('created_at', 'DESC')->get();
-
-        $rows = [];
-        $header = [
-            trans('admin/accessories/table.title'),
-            trans('admin/accessories/general.accessory_category'),
-            trans('admin/accessories/general.total'),
-            trans('admin/accessories/general.remaining'),
-        ];
-        $header = array_map('trim', $header);
-        $rows[] = implode(', ', $header);
-
-        // Row per accessory
-        foreach ($accessories as $accessory) {
-            $row = [];
-            $row[] = e($accessory->accessory_name);
-            $row[] = e($accessory->accessory_category);
-            $row[] = e($accessory->total);
-            $row[] = e($accessory->remaining);
-
-            $rows[] = implode(',', $row);
-        }
-
-        $csv = implode("\n", $rows);
-        $response = response()->make($csv, 200);
-        $response->header('Content-Type', 'text/csv');
-        $response->header('Content-disposition', 'attachment;filename=report.csv');
-
-        return $response;
     }
 
     /**

@@ -5,16 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SaveUserRequest;
-use App\Http\Transformers\AccessoriesTransformer;
 use App\Http\Transformers\AssetsTransformer;
-use App\Http\Transformers\ConsumablesTransformer;
 use App\Http\Transformers\LicensesTransformer;
 use App\Http\Transformers\SelectlistTransformer;
 use App\Http\Transformers\UsersTransformer;
 use App\Models\Actionlog;
 use App\Models\Asset;
-use App\Models\Accessory;
-use App\Models\Consumable;
 use App\Models\License;
 use App\Models\User;
 use App\Notifications\CurrentInventory;
@@ -78,8 +74,8 @@ class UsersController extends Controller
             'users.autoassign_licenses',
             'users.website',
 
-        ])->with('manager', 'groups', 'userloc', 'company', 'department', 'assets', 'licenses', 'accessories', 'consumables', 'createdBy', 'managesUsers', 'managedLocations')
-            ->withCount('assets as assets_count', 'licenses as licenses_count', 'accessories as accessories_count', 'consumables as consumables_count', 'managesUsers as manages_users_count', 'managedLocations as manages_locations_count');
+        ])->with('manager', 'groups', 'userloc', 'company', 'department', 'assets', 'licenses', 'createdBy', 'managesUsers', 'managedLocations')
+            ->withCount('assets as assets_count', 'licenses as licenses_count', 'managesUsers as manages_users_count', 'managedLocations as manages_locations_count');
 
 
         if ($request->filled('search') != '') {
@@ -182,16 +178,8 @@ class UsersController extends Controller
            $users->has('assets', '=', $request->input('assets_count'));
         }
 
-        if ($request->filled('consumables_count')) {
-            $users->has('consumables', '=', $request->input('consumables_count'));
-        }
-
         if ($request->filled('licenses_count')) {
             $users->has('licenses', '=', $request->input('licenses_count'));
-        }
-
-        if ($request->filled('accessories_count')) {
-            $users->has('accessories', '=', $request->input('accessories_count'));
         }
 
         if ($request->filled('manages_users_count')) {
@@ -256,8 +244,6 @@ class UsersController extends Controller
                         'last_login',
                         'assets_count',
                         'licenses_count',
-                        'consumables_count',
-                        'accessories_count',
                         'manages_users_count',
                         'manages_locations_count',
                         'phone',
@@ -409,7 +395,7 @@ class UsersController extends Controller
     {
         $this->authorize('view', User::class);
 
-        if ($user = User::withCount('assets as assets_count', 'licenses as licenses_count', 'accessories as accessories_count', 'consumables as consumables_count', 'managesUsers as manages_users_count', 'managedLocations as manages_locations_count')->find($id)) {
+        if ($user = User::withCount('assets as assets_count', 'licenses as licenses_count', 'managesUsers as manages_users_count', 'managedLocations as manages_locations_count')->find($id)) {
             $this->authorize('view', $user);
             return (new UsersTransformer)->transformUser($user);
         }
@@ -559,7 +545,7 @@ class UsersController extends Controller
         $this->authorize('view', User::class);
         $this->authorize('view', Asset::class);
 
-        if ($user = User::with('assets', 'assets.model', 'consumables', 'accessories', 'licenses', 'userloc')->withTrashed()->find($id)) {
+        if ($user = User::with('assets', 'assets.model', 'licenses', 'userloc')->withTrashed()->find($id)) {
             $this->authorize('view', $user);
 
             $assets = Asset::where('assigned_to', '=', $id)->where('assigned_type', '=', User::class)->with('model');
@@ -617,41 +603,6 @@ class UsersController extends Controller
         return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/users/message.user_not_found', compact('id'))));
  
 
-    }
-
-    /**
-     * Return JSON containing a list of consumables assigned to a user.
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
-     * @param $userId
-     */
-    public function consumables(Request $request, $id) : array
-    {
-        $this->authorize('view', User::class);
-        $this->authorize('view', Consumable::class);
-        $user = User::findOrFail($id);
-        $this->authorize('view', $user);
-        $consumables = $user->consumables;
-        return (new ConsumablesTransformer)->transformConsumables($consumables, $consumables->count(), $request);
-    }
-
-    /**
-     * Return JSON containing a list of accessories assigned to a user.
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.6.14]
-     * @param $userId
-     */
-    public function accessories($id) : array
-    {
-        $this->authorize('view', User::class);
-        $user = User::findOrFail($id);
-        $this->authorize('view', $user);
-        $this->authorize('view', Accessory::class);
-        $accessories = $user->accessories;
-
-        return (new AccessoriesTransformer)->transformAccessories($accessories, $accessories->count());
     }
 
     /**

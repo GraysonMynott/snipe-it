@@ -2,9 +2,7 @@
 
 namespace Tests\Feature\Console;
 
-use App\Models\Accessory;
 use App\Models\Asset;
-use App\Models\Consumable;
 use App\Models\LicenseSeat;
 use App\Models\User;
 use App\Models\Actionlog;
@@ -42,40 +40,6 @@ class MergeUsersTest extends TestCase
 
         $this->assertEquals(6, $user_to_merge_into->refresh()->licenses->count());
         $this->assertEquals(0, $user1->refresh()->licenses->count());
-
-    }
-
-    public function testAccessoriesTransferredOnUserMerge(): void
-    {
-        $user1 = User::factory()->create(['username' => 'user1']);
-        $user_to_merge_into = User::factory()->create(['username' => 'user1@example.com']);
-
-        Accessory::factory()->count(3)->checkedOutToUser($user1)->create();
-        Accessory::factory()->count(3)->checkedOutToUser($user_to_merge_into)->create();
-
-        $this->assertEquals(3, $user_to_merge_into->refresh()->accessories->count());
-
-        $this->artisan('snipeit:merge-users')->assertExitCode(0);
-
-        $this->assertEquals(6, $user_to_merge_into->refresh()->accessories->count());
-        $this->assertEquals(0, $user1->refresh()->accessories->count());
-
-    }
-
-    public function testConsumablesTransferredOnUserMerge(): void
-    {
-        $user1 = User::factory()->create(['username' => 'user1']);
-        $user_to_merge_into = User::factory()->create(['username' => 'user1@example.com']);
-
-        Consumable::factory()->count(3)->checkedOutToUser($user1)->create();
-        Consumable::factory()->count(3)->checkedOutToUser($user_to_merge_into)->create();
-
-        $this->assertEquals(3, $user_to_merge_into->refresh()->consumables->count());
-
-        $this->artisan('snipeit:merge-users')->assertExitCode(0);
-
-        $this->assertEquals(6, $user_to_merge_into->refresh()->consumables->count());
-        $this->assertEquals(0, $user1->refresh()->consumables->count());
 
     }
 

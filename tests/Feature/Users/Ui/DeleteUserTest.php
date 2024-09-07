@@ -5,7 +5,6 @@ namespace Tests\Feature\Users\Ui;
 use Tests\TestCase;
 use App\Models\LicenseSeat;
 use App\Models\Location;
-use App\Models\Accessory;
 use App\Models\User;
 use App\Models\Company;
 
@@ -118,21 +117,6 @@ class DeleteUserTest extends TestCase
             ->assertRedirect(route('users.index'));
 
            $this->followRedirects($response)->assertSee('Error');
-    }
-
-    public function testDisallowUserDeletionIfStillHaveAccessories()
-    {
-        $user = User::factory()->create();
-        Accessory::factory()->count(3)->checkedOutToUser($user)->create();
-
-        $this->actingAs(User::factory()->deleteUsers()->viewUsers()->create())->assertFalse($user->isDeletable());
-
-        $response = $this->actingAs(User::factory()->deleteUsers()->viewUsers()->create())
-            ->delete(route('users.destroy', $user->id))
-            ->assertStatus(302)
-            ->assertRedirect(route('users.index'));
-
-        $this->followRedirects($response)->assertSee('Error');
     }
 
     public function testDisallowUserDeletionIfStillHaveLicenses()
