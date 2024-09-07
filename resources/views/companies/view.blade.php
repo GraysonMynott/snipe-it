@@ -38,37 +38,7 @@
                         </a>
                     </li>
 
-                    <li>
-                        <a href="#accessories_tab" data-toggle="tab">
-                            <span class="hidden-lg hidden-md">
-                            <i class="far fa-keyboard"></i>
-                            </span> <span class="hidden-xs hidden-sm">{{ trans('general.accessories') }}
-                                {!! ($company->accessories->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($company->accessories->count()).'</badge>' : '' !!}
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#consumables_tab" data-toggle="tab">
-                            <span class="hidden-lg hidden-md">
-                            <i class="fas fa-tint"></i></span>
-                            <span class="hidden-xs hidden-sm">{{ trans('general.consumables') }}
-                                {!! ($company->consumables->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($company->consumables->count()).'</badge>' : '' !!}
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#components_tab" data-toggle="tab">
-                            <span class="hidden-lg hidden-md">
-                            <i class="far fa-hdd"></i></span>
-                            <span class="hidden-xs hidden-sm">{{ trans('general.components') }}
-                                {!! (($company->components) && ($company->components->count() > 0 )) ? '<badge class="badge badge-secondary">'.number_format($company->components->count()).'</badge>' : '' !!}
-                            </span>
-                        </a>
-                    </li>
-
-                    <li>
+                     <li>
                         <a href="#users_tab" data-toggle="tab">
                             <span class="hidden-lg hidden-md">
                             <i class="fas fa-users"></i></span>
@@ -140,84 +110,6 @@
 
                         </div>
                     </div><!-- /licenses-tab -->
-
-                    <div class="tab-pane" id="accessories_tab">
-                        <div class="table-responsive">
-
-                            <table
-                                    data-columns="{{ \App\Presenters\AccessoryPresenter::dataTableLayout() }}"
-                                    data-cookie-id-table="accessoriesTable"
-                                    data-pagination="true"
-                                    data-id-table="accessoriesTable"
-                                    data-search="true"
-                                    data-side-pagination="server"
-                                    data-show-columns="true"
-                                    data-show-export="true"
-                                    data-show-refresh="true"
-                                    data-sort-order="asc"
-                                    id="accessoriesTable"
-                                    class="table table-striped snipe-table"
-                                    data-url="{{route('api.accessories.index',['company_id' => $company->id]) }}"
-                                    data-export-options='{
-                              "fileName": "export-companies-{{ str_slug($company->name) }}-accessories-{{ date('Y-m-d') }}",
-                              "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                              }'>
-                            </table>
-
-                        </div>
-                    </div><!-- /accessories-tab -->
-
-                    <div class="tab-pane" id="consumables_tab">
-                        <div class="table-responsive">
-
-                            <table
-                                    data-columns="{{ \App\Presenters\ConsumablePresenter::dataTableLayout() }}"
-                                    data-cookie-id-table="consumablesTable"
-                                    data-pagination="true"
-                                    data-id-table="consumablesTable"
-                                    data-search="true"
-                                    data-side-pagination="server"
-                                    data-show-columns="true"
-                                    data-show-export="true"
-                                    data-show-refresh="true"
-                                    data-sort-order="asc"
-                                    id="consumablesTable"
-                                    class="table table-striped snipe-table"
-                                    data-url="{{route('api.consumables.index',['company_id' => $company->id]) }}"
-                                    data-export-options='{
-                              "fileName": "export-companies-{{ str_slug($company->name) }}-consumables-{{ date('Y-m-d') }}",
-                              "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                              }'>
-                            </table>
-
-                        </div>
-                    </div><!-- /consumables-tab -->
-
-                    <div class="tab-pane" id="components_tab">
-                        <div class="table-responsive">
-
-                            <table
-                                    data-columns="{{ \App\Presenters\ComponentPresenter::dataTableLayout() }}"
-                                    data-cookie-id-table="componentsTable"
-                                    data-pagination="true"
-                                    data-id-table="componentsTable"
-                                    data-search="true"
-                                    data-side-pagination="server"
-                                    data-show-columns="true"
-                                    data-show-export="true"
-                                    data-show-refresh="true"
-                                    data-sort-order="asc"
-                                    id="componentsTable"
-                                    class="table table-striped snipe-table"
-                                    data-url="{{route('api.components.index',['company_id' => $company->id]) }}"
-                                    data-export-options='{
-                              "fileName": "export-companies-{{ str_slug($company->name) }}-components-{{ date('Y-m-d') }}",
-                              "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                              }'>
-
-                            </table>
-                        </div>
-                    </div><!-- /consumables-tab -->
 
                     <div class="tab-pane" id="users_tab">
                         <div class="table-responsive">

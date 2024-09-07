@@ -24,9 +24,7 @@ final class Company extends SnipeModel
     // Declare the rules for the model validation
     protected $rules = [
         'name' => 'required|min:1|max:255|unique:companies,name',
-        'fax' => 'min:7|max:35|nullable',
         'phone' => 'min:7|max:35|nullable',
-		'email' => 'email|max:150|nullable',
     ];
 
     protected $presenter = \App\Presenters\CompanyPresenter::class;
@@ -48,7 +46,7 @@ final class Company extends SnipeModel
      * 
      * @var array
      */
-    protected $searchableAttributes = ['name', 'phone', 'fax', 'email', 'created_at', 'updated_at'];
+    protected $searchableAttributes = ['name', 'phone', 'created_at', 'updated_at'];
 
     /**
      * The relations and their attributes that should be included when searching the model.
@@ -65,8 +63,6 @@ final class Company extends SnipeModel
     protected $fillable = [
         'name',
         'phone',
-        'fax',
-        'email',
     ];
 
     private static function isFullMultipleCompanySupportEnabled()
@@ -188,9 +184,6 @@ final class Company extends SnipeModel
     {
         return Gate::allows('delete', $this)
                 && ($this->assets()->count() === 0)
-                && ($this->accessories()->count() === 0)
-                && ($this->consumables()->count() === 0)
-                && ($this->components()->count() === 0)
                 && ($this->users()->count() === 0);
     }
 
@@ -221,21 +214,6 @@ final class Company extends SnipeModel
     public function licenses()
     {
         return $this->hasMany(License::class, 'company_id');
-    }
-
-    public function accessories()
-    {
-        return $this->hasMany(Accessory::class, 'company_id');
-    }
-
-    public function consumables()
-    {
-        return $this->hasMany(Consumable::class, 'company_id');
-    }
-
-    public function components()
-    {
-        return $this->hasMany(Component::class, 'company_id');
     }
 
     /**
