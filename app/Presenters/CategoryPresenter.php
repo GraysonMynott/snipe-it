@@ -57,13 +57,6 @@ class CategoryPresenter extends Presenter
                 'visible' => true,
                 'formatter' => 'trueFalseFormatter',
             ], [
-                'field' => 'require_acceptance',
-                'searchable' => false,
-                'sortable' => true,
-                'title' => trans('admin/categories/table.require_acceptance'),
-                'visible' => true,
-                'formatter' => 'trueFalseFormatter',,
-            ], [
                 'field' => 'created_at',
                 'searchable' => true,
                 'sortable' => true,
