@@ -1,3 +1,4 @@
+{{-- Hardware/Asset Create/Edit Page --}}
 
 @extends('layouts/edit-form', [
     'createText' => trans('admin/hardware/form.create'),
@@ -12,169 +13,90 @@
 {{-- Page content --}}
 @section('inputFields')
     
-    @include ('partials.forms.edit.company-select', ['translated_name' => trans('general.company'), 'fieldname' => 'company_id'])
+<!-- Asset Name -->
+@include ('partials.forms.edit.name', ['translated_name' => trans('admin/hardware/form.name')])
 
+<!-- Company Select -->
+@include ('partials.forms.edit.company-select', ['translated_name' => trans('general.company'), 'fieldname' => 'company_id'])
 
-  <!-- Asset Tag -->
-  <div class="form-group {{ $errors->has('asset_tag') ? ' has-error' : '' }}">
+<!-- Asset Tag -->
+<div class="form-group {{ $errors->has('asset_tag') ? ' has-error' : '' }}">
     <label for="asset_tag" class="col-md-3 control-label">{{ trans('admin/hardware/form.tag') }}</label>
 
+    @if  ($item->id)
+        <!-- we are editing an existing asset,  there will be only one asset tag -->
+        <div class="col-md-7 col-sm-12{{  (Helper::checkIfRequired($item, 'asset_tag')) ? ' required' : '' }}">
 
-
-      @if  ($item->id)
-          <!-- we are editing an existing asset,  there will be only one asset tag -->
-          <div class="col-md-7 col-sm-12{{  (Helper::checkIfRequired($item, 'asset_tag')) ? ' required' : '' }}">
-
-
-          <input class="form-control" type="text" name="asset_tags[1]" id="asset_tag" value="{{ old('asset_tag', $item->asset_tag) }}" required>
-              {!! $errors->first('asset_tags', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
-              {!! $errors->first('asset_tag', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
-          </div>
-      @else
-          <!-- we are creating a new asset - let people use more than one asset tag -->
-          <div class="col-md-7 col-sm-12{{  (Helper::checkIfRequired($item, 'asset_tag')) ? ' required' : '' }}">
-              <input class="form-control" type="text" name="asset_tags[1]" id="asset_tag" value="{{ old('asset_tags.1', \App\Models\Asset::autoincrement_asset()) }}" required>
-              {!! $errors->first('asset_tags', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
-              {!! $errors->first('asset_tag', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
-          </div>
-          <div class="col-md-2 col-sm-12">
-              <button class="add_field_button btn btn-default btn-sm">
-                  <i class="fas fa-plus"></i>
-              </button>
-          </div>
-      @endif
-  </div>
-
-    @include ('partials.forms.edit.serial', ['fieldname'=> 'serials[1]', 'old_val_name' => 'serials.1', 'translated_serial' => trans('admin/hardware/form.serial')])
-
-    <div class="input_fields_wrap">
-    </div>
-
-    @include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/hardware/form.model'), 'fieldname' => 'model_id', 'field_req' => true])
-
-
-    @include ('partials.forms.edit.status', [ 'required' => 'true'])
-    @if (!$item->id)
-        @include ('partials.forms.checkout-selector', ['user_select' => 'true','asset_select' => 'true', 'location_select' => 'true', 'style' => 'display:none;'])
-        @include ('partials.forms.edit.user-select', ['translated_name' => trans('admin/hardware/form.checkout_to'), 'fieldname' => 'assigned_user', 'style' => 'display:none;', 'required' => 'false'])
-        @include ('partials.forms.edit.asset-select', ['translated_name' => trans('admin/hardware/form.checkout_to'), 'fieldname' => 'assigned_asset', 'style' => 'display:none;', 'required' => 'false'])
-        @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.checkout_to'), 'fieldname' => 'assigned_location', 'style' => 'display:none;', 'required' => 'false'])
-    @elseif (($item->assignedTo) && ($item->deleted_at == ''))
-        <!-- This is an asset and it's currently deployed, so let them edit the expected checkin date -->
-        @include ('partials.forms.edit.datepicker', ['translated_name' => trans('admin/hardware/form.expected_checkin'),'fieldname' => 'expected_checkin'])
+            <input class="form-control" type="text" name="asset_tags[1]" id="asset_tag" value="{{ old('asset_tag', $item->asset_tag) }}" required>
+            {!! $errors->first('asset_tags', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
+            {!! $errors->first('asset_tag', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
+        </div>
+    @else
+        <!-- we are creating a new asset - let people use more than one asset tag -->
+        <div class="col-md-7 col-sm-12{{  (Helper::checkIfRequired($item, 'asset_tag')) ? ' required' : '' }}">
+            <input class="form-control" type="text" name="asset_tags[1]" id="asset_tag" value="{{ old('asset_tags.1', \App\Models\Asset::autoincrement_asset()) }}" required>
+            {!! $errors->first('asset_tags', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
+            {!! $errors->first('asset_tag', '<span class="alert-msg"><i class="fas fa-times"></i> :message</span>') !!}
+        </div>
+        <div class="col-md-2 col-sm-12">
+            <button class="add_field_button btn btn-default btn-sm">
+                <i class="fas fa-plus"></i>
+            </button>
+        </div>
     @endif
+</div>
 
-    @include ('partials.forms.edit.notes')
-    @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.default_location'), 'fieldname' => 'rtd_location_id', 'help_text' => trans('general.rtd_location_help')])
-    @include ('partials.forms.edit.requestable', ['requestable_text' => trans('admin/hardware/general.requestable')])
+<!-- Asset Serial -->
+@include ('partials.forms.edit.serial', ['fieldname'=> 'serials[1]', 'old_val_name' => 'serials.1', 'translated_serial' => trans('admin/hardware/form.serial')])
 
+<!-- Asset Model -->
+@include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/hardware/form.model'), 'fieldname' => 'model_id', 'field_req' => true])
 
+<!-- Asset Status -->
+@include ('partials.forms.edit.status', [ 'required' => 'true'])
 
-    @include ('partials.forms.edit.image-upload', ['image_path' => app('assets_upload_path')])
+<!-- Asset Notes -->
+@include ('partials.forms.edit.notes')
 
+<!-- Asset Location -->
+@include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.default_location'), 'fieldname' => 'rtd_location_id', 'help_text' => trans('general.rtd_location_help')])
 
-    <div id='custom_fields_content'>
-        <!-- Custom Fields -->
-        @if ($item->model && $item->model->fieldset)
-        <?php $model = $item->model; ?>
-        @endif
-        @if (old('model_id'))
-            @php
-                $model = \App\Models\AssetModel::find(old('model_id'));
-            @endphp
-        @elseif (isset($selected_model))
-            @php
-                $model = $selected_model;
-            @endphp
-        @endif
-        @if (isset($model) && $model)
-        @include("models/custom_fields_form",["model" => $model])
-        @endif
-    </div>
-
-    <div class="form-group">
-    <label class="col-md-3 control-label"></label>
-
-        <div class="col-md-9 col-sm-9 col-md-offset-3">
-
-        <a id="optional_info" class="text-primary">
-            <i class="fa fa-caret-right fa-2x" id="optional_info_icon"></i>
-            <strong>{{ trans('admin/hardware/form.optional_infos') }}</strong>
+<!-- Order Details -->
+<div class="form-group">
+    <div class="col-md-9 col-sm-9 col-md-offset-3">
+        <a id="order_info" class="text-primary">
+            <i class="fa fa-caret-right fa-2x" id="order_info_icon"></i>
+            <strong>{{ trans('admin/hardware/form.order_details') }}</strong>
         </a>
 
-        </div>
-        
-        <div id="optional_details" class="col-md-12" style="display:none">
+    </div>
+
+    <div id='order_details' class="col-md-12" style="display:none">
         <br>
-            @include ('partials.forms.edit.name', ['translated_name' => trans('admin/hardware/form.name')])
-            @include ('partials.forms.edit.warranty')
 
-            <!-- Datepicker -->
-            <div class="form-group{{ $errors->has('next_audit_date') ? ' has-error' : '' }}">
+        <!-- Asset Purchase Order Number -->
+        @include ('partials.forms.edit.order_number')
 
-                <label class="col-md-3 control-label">
-                    {{ trans('general.next_audit_date') }}
-                </label>
+        <!-- Asset Purchase Date -->
+        @include ('partials.forms.edit.purchase_date')
 
-                <div class="input-group col-md-4">
-                    <div class="input-group date" data-provide="datepicker" data-date-clear-btn="true" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-                        <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="next_audit_date" id="next_audit_date" value="{{ old('next_audit_date', $item->next_audit_date) }}" readonly style="background-color:inherit" maxlength="10">
-                        <span class="input-group-addon"><i class="fas fa-calendar" aria-hidden="true"></i></span>
-                    </div>
-                </div>
-                <div class="col-md-8 col-md-offset-3">
-                    {!! $errors->first('next_audit_date', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-                    <p class="help-block">{!! trans('general.next_audit_date_help') !!}</p>
-                </div>
+        <!-- Asset EOL -->
+        @include ('partials.forms.edit.eol_date')
 
-            </div>
+        <!-- TODO: Asset EOS -->
+        <!--@include ('partials.forms.edit.eos_date') -->
 
+        @php
+            $currency_type = null;
+            if ($item->id && $item->location) {
+                $currency_type = $item->location->currency;
+            }
+        @endphp
 
+        @include ('partials.forms.edit.purchase_cost', ['currency_type' => $currency_type])
 
-
-            <!-- byod checkbox -->
-            <div class="form-group">
-                <div class="col-md-7 col-md-offset-3">
-                    <label for="byod" class="form-control">
-                        <input type="checkbox" value="1" name="byod" {{ (old('remote', $item->byod)) == '1' ? ' checked="checked"' : '' }} aria-label="byod">
-                        {{ trans('general.byod') }}
-
-                    </label>
-                    <p class="help-block">{{ trans('general.byod_help') }}
-                    </p>
-                </div>
-            </div>
-        </div>
     </div>
-
-    <div class="form-group">
-        <div class="col-md-9 col-sm-9 col-md-offset-3">
-            <a id="order_info" class="text-primary">
-                <i class="fa fa-caret-right fa-2x" id="order_info_icon"></i>
-                <strong>{{ trans('admin/hardware/form.order_details') }}</strong>
-            </a>
-
-        </div>
-
-        <div id='order_details' class="col-md-12" style="display:none">
-            <br>
-            @include ('partials.forms.edit.order_number')
-            @include ('partials.forms.edit.purchase_date')
-            @include ('partials.forms.edit.eol_date')
-            @include ('partials.forms.edit.supplier-select', ['translated_name' => trans('general.supplier'), 'fieldname' => 'supplier_id'])
-
-                @php
-                $currency_type = null;
-                if ($item->id && $item->location) {
-                    $currency_type = $item->location->currency;
-                }
-                @endphp
-
-            @include ('partials.forms.edit.purchase_cost', ['currency_type' => $currency_type])
-
-        </div>
-    </div>
-   
+</div>
 @stop
 
 @section('moar_scripts')
