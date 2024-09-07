@@ -38,6 +38,8 @@ class ModalController extends Controller
             if ($type == "statuslabel") {
                 $view->with('statuslabel_types', Helper::statusTypeList());
             }
+
+            return $view;
         }
 
         abort(404,'Page not found');
