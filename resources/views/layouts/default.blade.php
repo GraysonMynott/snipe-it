@@ -156,30 +156,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     </a>
                                 </li>
                             @endcan
-{{--                             @can('index', \App\Models\Accessory::class)
-                                <li aria-hidden="true"{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
-                                    <a href="{{ route('accessories.index') }}" accesskey="3" tabindex="-1">
-                                        <i class="far fa-keyboard fa-fw"></i>
-                                        <span class="sr-only">{{ trans('general.accessories') }}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('index', \App\Models\Consumable::class)
-                                <li aria-hidden="true"{!! (Request::is('consumables*') ? ' class="active"' : '') !!}>
-                                    <a href="{{ url('consumables') }}" accesskey="4" tabindex="-1">
-                                        <i class="fas fa-tint fa-fw"></i>
-                                        <span class="sr-only">{{ trans('general.consumables') }}</span>
-                                    </a>
-                                </li>
-                            @endcan
-                            @can('view', \App\Models\Component::class)
-                                <li aria-hidden="true"{!! (Request::is('components*') ? ' class="active"' : '') !!}>
-                                    <a href="{{ route('components.index') }}" accesskey="5" tabindex="-1">
-                                        <i class="far fa-hdd fa-fw"></i>
-                                        <span class="sr-only">{{ trans('general.components') }}</span>
-                                    </a>
-                                </li>
-                            @endcan --}}
 
                             @can('index', \App\Models\Asset::class)
                                 <li>
@@ -227,30 +203,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                                 </a>
                                             </li>
                                         @endcan
-{{--                                         @can('create', \App\Models\Accessory::class)
-                                            <li {!! (Request::is('accessories/create') ? 'class="active"' : '') !!}>
-                                                <a href="{{ route('accessories.create') }}" tabindex="-1">
-                                                    <i class="far fa-keyboard fa-fw" aria-hidden="true"></i>
-                                                    {{ trans('general.accessory') }}
-                                                </a>
-                                            </li>
-                                        @endcan
-                                        @can('create', \App\Models\Consumable::class)
-                                            <li {!! (Request::is('consunmables/create') ? 'class="active"' : '') !!}>
-                                                <a href="{{ route('consumables.create') }}" tabindex="-1">
-                                                    <i class="fas fa-tint fa-fw" aria-hidden="true"></i>
-                                                    {{ trans('general.consumable') }}
-                                                </a>
-                                            </li>
-                                        @endcan
-                                        @can('create', \App\Models\Component::class)
-                                            <li {!! (Request::is('components/create') ? 'class="active"' : '') !!}>
-                                                <a href="{{ route('components.create') }}" tabindex="-1">
-                                                    <i class="far fa-hdd fa-fw" aria-hidden="true"></i>
-                                                    {{ trans('general.component') }}
-                                                </a>
-                                            </li>
-                                        @endcan --}}
                                         @can('create', \App\Models\User::class)
                                             <li {!! (Request::is('users/create') ? 'class="active"' : '') !!}>
                                                 <a href="{{ route('users.create') }}" tabindex="-1">
@@ -503,51 +455,8 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                             <span class="badge">{{ (isset($total_archived_sidebar)) ? $total_archived_sidebar : '' }}</span>
                                         </a>
                                     </li>
-{{--                                     <li{!! (Request::query('status') == 'Requestable' ? ' class="active"' : '') !!}><a
-                                                href="{{ url('hardware?status=Requestable') }}"><i
-                                                    class="fas fa-check text-blue fa-fw"></i>
-                                            {{ trans('admin/hardware/general.requestable') }}
-                                        </a>
-                                    </li>
-
-                                    @can('audit', \App\Models\Asset::class)
-                                        <li{!! (Request::is('hardware/audit/due') ? ' class="active"' : '') !!}>
-                                            <a href="{{ route('assets.audit.due') }}">
-                                                <i class="fas fa-history text-yellow fa-fw"></i> {{ trans('general.audit_due') }}
-                                                <span class="badge">{{ (isset($total_due_and_overdue_for_audit)) ? $total_due_and_overdue_for_audit : '' }}</span>
-                                            </a>
-                                        </li>
-                                    @endcan
-
-                                    @can('checkin', \App\Models\Asset::class)
-                                    <li{!! (Request::is('hardware/checkins/due') ? ' class="active"' : '') !!}>
-                                        <a href="{{ route('assets.checkins.due') }}">
-                                            <i class="fas fa-history text-yellow fa-fw"></i> {{ trans('general.checkin_due') }}
-                                            <span class="badge">{{ (isset($total_due_and_overdue_for_checkin)) ? $total_due_and_overdue_for_checkin : '' }}</span>
-                                        </a>
-                                    </li>
-                                    @endcan --}}
 
                                     <li class="divider">&nbsp;</li>
-{{--                                     @can('checkin', \App\Models\Asset::class)
-                                        <li{!! (Request::is('hardware/quickscancheckin') ? ' class="active"' : '') !!}>
-                                            <a href="{{ route('hardware/quickscancheckin') }}">
-                                                {{ trans('general.quickscan_checkin') }}
-                                            </a>
-                                        </li>
-                                    @endcan
-
-                                    @can('checkout', \App\Models\Asset::class)
-                                        <li{!! (Request::is('hardware/bulkcheckout') ? ' class="active"' : '') !!}>
-                                            <a href="{{ route('hardware.bulkcheckout.show') }}">
-                                                {{ trans('general.bulk_checkout') }}
-                                            </a>
-                                        </li>
-                                        <li{!! (Request::is('hardware/requested') ? ' class="active"' : '') !!}>
-                                            <a href="{{ route('assets.requested') }}">
-                                                {{ trans('general.requested') }}</a>
-                                        </li>
-                                    @endcan --}}
 
                                     @can('create', \App\Models\Asset::class)
                                         <li{!! (Request::query('Deleted') ? ' class="active"' : '') !!}>
@@ -555,26 +464,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                                 {{ trans('general.deleted') }}
                                             </a>
                                         </li>
-{{--                                         <li>
-                                            <a href="{{ route('maintenances.index') }}">
-                                                {{ trans('general.asset_maintenances') }}
-                                            </a>
-                                        </li> --}}
                                     @endcan
-{{--                                     @can('admin')
-                                        <li>
-                                            <a href="{{ url('hardware/history') }}">
-                                                {{ trans('general.import-history') }}
-                                            </a>
-                                        </li>
-                                    @endcan
-                                    @can('audit', \App\Models\Asset::class)
-                                        <li>
-                                            <a href="{{ route('assets.bulkaudit') }}">
-                                                {{ trans('general.bulkaudit') }}
-                                            </a>
-                                        </li>
-                                    @endcan --}}
                                 </ul>
                             </li>
                         @endcan
@@ -586,38 +476,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                 </a>
                             </li>
                         @endcan
-{{--                         @can('index', \App\Models\Accessory::class)
-                            <li{!! (Request::is('accessories*') ? ' class="active"' : '') !!}>
-                                <a href="{{ route('accessories.index') }}">
-                                    <i class="far fa-keyboard fa-fw"></i>
-                                    <span>{{ trans('general.accessories') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('view', \App\Models\Consumable::class)
-                            <li{!! (Request::is('consumables*') ? ' class="active"' : '') !!}>
-                                <a href="{{ url('consumables') }}">
-                                    <i class="fas fa-tint fa-fw"></i>
-                                    <span>{{ trans('general.consumables') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('view', \App\Models\Component::class)
-                            <li{!! (Request::is('components*') ? ' class="active"' : '') !!}>
-                                <a href="{{ route('components.index') }}">
-                                    <i class="far fa-hdd fa-fw"></i>
-                                    <span>{{ trans('general.components') }}</span>
-                                </a>
-                            </li>
-                        @endcan
-                        @can('view', \App\Models\PredefinedKit::class)
-                            <li{!! (Request::is('kits') ? ' class="active"' : '') !!}>
-                                <a href="{{ route('kits.index') }}">
-                                    <i class="fa fa-object-group fa-fw"></i>
-                                    <span>{{ trans('general.kits') }}</span>
-                                </a>
-                            </li>
-                        @endcan --}}
 
                         @can('view', \App\Models\User::class)
                             <li{!! (Request::is('users*') ? ' class="active"' : '') !!}>
@@ -769,11 +627,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     <li>
                                         <a href="{{ url('reports/unaccepted_assets') }}" {{ (Request::is('reports/unaccepted_assets') ? ' class="active"' : '') }}>
                                             {{ trans('general.unaccepted_asset_report') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('reports/accessories') }}" {{ (Request::is('reports/accessories') ? ' class="active"' : '') }}>
-                                            {{ trans('general.accessory_report') }}
                                         </a>
                                     </li>
                                 </ul>

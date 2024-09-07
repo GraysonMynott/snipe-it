@@ -165,42 +165,6 @@ class Location extends SnipeModel
     }
 
     /**
-     * Establishes the consumable -> location relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function consumables()
-    {
-        return $this->hasMany(\App\Models\Consumable::class, 'location_id');
-    }
-
-    /**
-     * Establishes the component -> location relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function components()
-    {
-        return $this->hasMany(\App\Models\Component::class, 'location_id');
-    }
-
-    /**
-     * Establishes the component -> accessory relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function accessories()
-    {
-        return $this->hasMany(\App\Models\Accessory::class, 'location_id');
-    }
-
-    /**
      * Find the parent of a location
      *
      * @author A. Gianotto <snipe@snipe.net>

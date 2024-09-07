@@ -76,33 +76,6 @@
                     "fileName": "export-{{ str_slug($category->name) }}-assets-{{ date('Y-m-d') }}",
                     "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
                     }'
-                                            @elseif ($category->category_type=='accessory')
-                                                data-columns="{{ \App\Presenters\AccessoryPresenter::dataTableLayout() }}"
-                                            data-cookie-id-table="categoryAccessoryTable"
-                                            id="categoryAccessoryTable"
-                                            data-id-table="categoryAccessoryTable"
-                                            data-export-options='{
-                      "fileName": "export-{{ str_slug($category->name) }}-accessories-{{ date('Y-m-d') }}",
-                      "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                      }'
-                                            @elseif ($category->category_type=='consumable')
-                                                data-columns="{{ \App\Presenters\ConsumablePresenter::dataTableLayout() }}"
-                                            data-cookie-id-table="categoryConsumableTable"
-                                            id="categoryConsumableTable"
-                                            data-id-table="categoryConsumableTable"
-                                            data-export-options='{
-                      "fileName": "export-{{ str_slug($category->name) }}-consumables-{{ date('Y-m-d') }}",
-                      "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                      }'
-                                            @elseif ($category->category_type=='component')
-                                                data-columns="{{ \App\Presenters\ComponentPresenter::dataTableLayout() }}"
-                                            data-cookie-id-table="categoryCompomnentTable"
-                                            id="categoryCompomnentTable"
-                                            data-id-table="categoryCompomnentTable"
-                                            data-export-options='{
-                      "fileName": "export-{{ str_slug($category->name) }}-components-{{ date('Y-m-d') }}",
-                      "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                      }'
                                             @elseif ($category->category_type=='license')
                                                 data-columns="{{ \App\Presenters\LicensePresenter::dataTableLayout() }}"
                                             data-cookie-id-table="categoryLicenseTable"

@@ -64,61 +64,6 @@
      </a>
   </div><!-- ./col -->
 
-
-{{--   <div class="col-lg-2 col-xs-6">
-    <!-- small box -->
-      <a href="{{ route('accessories.index') }}">
-    <div class="small-box bg-orange">
-      <div class="inner">
-        <h3> {{ number_format($counts['accessory']) }}</h3>
-        <p>{{ strtolower(trans('general.accessories')) }}</p>
-      </div>
-      <div class="icon" aria-hidden="true">
-        <i class="far fa-keyboard"></i>
-      </div>
-      @can('index', \App\Models\Accessory::class)
-          <a href="{{ route('accessories.index') }}" class="small-box-footer">{{ trans('general.view_all') }} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-      @endcan
-    </div>
-      </a>
-  </div><!-- ./col -->
-
-  <div class="col-lg-2 col-xs-6">
-    <!-- small box -->
-
-      <a href="{{ route('consumables.index') }}">
-    <div class="small-box bg-purple">
-      <div class="inner">
-        <h3> {{ number_format($counts['consumable']) }}</h3>
-        <p>{{ strtolower(trans('general.consumables')) }}</p>
-      </div>
-      <div class="icon" aria-hidden="true">
-        <i class="fas fa-tint"></i>
-      </div>
-      @can('index', \App\Models\Consumable::class)
-        <a href="{{ route('consumables.index') }}" class="small-box-footer">{{ trans('general.view_all') }} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-      @endcan
-    </div>
-  </div><!-- ./col -->
-
-  <div class="col-lg-2 col-xs-6">
-    <a href="{{ route('components.index') }}">
-   <!-- small box -->
-   <div class="small-box bg-yellow">
-     <div class="inner">
-       <h3>{{ number_format($counts['component']) }}</h3>
-       <p>{{ strtolower(trans('general.components')) }}</p>
-     </div>
-     <div class="icon" aria-hidden="true">
-       <i class="far fa-hdd"></i>
-     </div>
-       @can('view', \App\Models\License::class)
-         <a href="{{ route('components.index') }}" class="small-box-footer">{{ trans('general.view_all') }} <i class="fa fa-arrow-circle-right" aria-hidden="true"></i></a>
-       @endcan
-   </div>
-    </a>
- </div><!-- ./col --> --}}
-
  <div class="col-lg-2 col-xs-6">
     <a href="{{ route('users.index') }}">
    <!-- small box -->
@@ -175,16 +120,6 @@
                                 <a class="btn bg-maroon" style="width: 100%" href="{{ route('licenses.create') }}">{{ trans('general.new_license') }}</a>
                             @endcan
                         </div>
-                        {{-- <div class="col-md-3">
-                            @can('create', \App\Models\Accessory::class)
-                                <a class="btn bg-orange" style="width: 100%" href="{{ route('accessories.create') }}">{{ trans('general.new_accessory') }}</a>
-                            @endcan
-                        </div>
-                        <div class="col-md-3">
-                            @can('create', \App\Models\Consumable::class)
-                                <a class="btn bg-purple" style="width: 100%" href="{{ route('consumables.create') }}">{{ trans('general.new_consumable') }}</a>
-                            @endcan
-                        </div> --}}
                     </div>
                 </div>
             </div>
@@ -314,18 +249,6 @@
 										<i class="fas fa-barcode" aria-hidden="true"></i>
 										<span class="sr-only">{{ trans('general.asset_count') }}</span>
 									</th>
-									<th class="col-sm-1" data-visible="true" data-field="accessories_count" data-sortable="true">
-										<i class="far fa-keyboard" aria-hidden="true"></i>
-										<span class="sr-only">{{ trans('general.accessories_count') }}</span>
-									</th>
-									<th class="col-sm-1" data-visible="true" data-field="consumables_count" data-sortable="true">
-										<i class="fas fa-tint" aria-hidden="true"></i>
-										<span class="sr-only">{{ trans('general.consumables_count') }}</span>
-									</th>
-									<th class="col-sm-1" data-visible="true" data-field="components_count" data-sortable="true">
-										<i class="far fa-hdd" aria-hidden="true"></i>
-										<span class="sr-only">{{ trans('general.components_count') }}</span>
-									</th>
 									<th class="col-sm-1" data-visible="true" data-field="licenses_count" data-sortable="true">
 										<i class="far fa-save" aria-hidden="true"></i>
 										<span class="sr-only">{{ trans('general.licenses_count') }}</span>
@@ -443,18 +366,6 @@
                                 <th class="col-sm-1" data-visible="true" data-field="assets_count" data-sortable="true">
                                     <i class="fas fa-barcode" aria-hidden="true"></i>
                                     <span class="sr-only">{{ trans('general.asset_count') }}</span>
-                                </th>
-                                <th class="col-sm-1" data-visible="true" data-field="accessories_count" data-sortable="true">
-                                    <i class="far fa-keyboard" aria-hidden="true"></i>
-                                    <span class="sr-only">{{ trans('general.accessories_count') }}</span>
-                                </th>
-                                <th class="col-sm-1" data-visible="true" data-field="consumables_count" data-sortable="true">
-                                    <i class="fas fa-tint" aria-hidden="true"></i>
-                                    <span class="sr-only">{{ trans('general.consumables_count') }}</span>
-                                </th>
-                                <th class="col-sm-1" data-visible="true" data-field="components_count" data-sortable="true">
-                                    <i class="far fa-hdd" aria-hidden="true"></i>
-                                    <span class="sr-only">{{ trans('general.components_count') }}</span>
                                 </th>
                                 <th class="col-sm-1" data-visible="true" data-field="licenses_count" data-sortable="true">
                                     <i class="far fa-save" aria-hidden="true"></i>

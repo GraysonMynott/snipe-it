@@ -25,24 +25,6 @@
 </table>
 @endif
 
-@if ($accessories->count() > 0)
-## {{ $accessories->count() }} {{ trans('general.accessories') }}
-
-<table width="100%">
-    <tr><th align="left">{{ trans('mail.name') }} </th> <th></th> </tr>
-@foreach($accessories as $accessory)
-<tr>
-    <td>{{ $accessory->name }}</td>
-    @if (($snipeSettings->show_images_in_email =='1') && $accessory->getImageUrl())
-    <td>
-        <img src="{{ asset($accessory->getImageUrl()) }}" alt="Accessory" style="max-width: 64px;">
-    </td>
-    @endif
-</tr>
-@endforeach
-</table>
-@endif
-
 @if ($licenses->count() > 0)
 ## {{ $licenses->count() }} {{ trans('general.licenses') }}
 
@@ -51,19 +33,6 @@
 @foreach($licenses as $license)
 <tr>
     <td>{{ $license->name }}</td>
-</tr>
-@endforeach
-</table>
-@endif
-
-@if ($consumables->count() > 0)
-## {{ $consumables->count() }} {{ trans('general.consumables') }}
-
-<table width="100%">
-<tr><th align="left">{{ trans('mail.name') }} </th> <th></th> </tr>
-@foreach($consumables as $consumable)
-<tr>
-<td>{{ $consumable->name }}</td>
 </tr>
 @endforeach
 </table>

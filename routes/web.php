@@ -365,11 +365,6 @@ Route::group(['middleware' => ['auth']], function () {
         [ReportsController::class, 'exportLicenseReport']
     )->name('reports/export/licenses');
 
-    Route::get('reports/accessories', [ReportsController::class, 'getAccessoryReport'])->name('reports/accessories');
-    Route::get(
-        'reports/export/accessories',
-        [ReportsController::class, 'exportAccessoryReport']
-    )->name('reports/export/accessories');
     Route::get('reports/custom', [ReportsController::class, 'getCustomReport'])->name('reports/custom');
     Route::post('reports/custom', [ReportsController::class, 'postCustom']);
 

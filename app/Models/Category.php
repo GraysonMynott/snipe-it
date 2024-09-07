@@ -43,7 +43,7 @@ class Category extends SnipeModel
         'name'   => 'required|min:1|max:255|two_column_unique_undeleted:category_type',
         'require_acceptance'   => 'boolean',
         'use_default_eula'   => 'boolean',
-        'category_type'   => 'required|in:asset,accessory,consumable,component,license',
+        'category_type'   => 'required|in:asset,license',
     ];
 
     /**
@@ -105,18 +105,6 @@ class Category extends SnipeModel
     }
 
     /**
-     * Establishes the category -> accessories relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function accessories()
-    {
-        return $this->hasMany(\App\Models\Accessory::class);
-    }
-
-    /**
      * Establishes the category -> licenses relationship
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
@@ -126,30 +114,6 @@ class Category extends SnipeModel
     public function licenses()
     {
         return $this->hasMany(\App\Models\License::class);
-    }
-
-    /**
-     * Establishes the category -> consumables relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function consumables()
-    {
-        return $this->hasMany(\App\Models\Consumable::class);
-    }
-
-    /**
-     * Establishes the category -> consumables relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function components()
-    {
-        return $this->hasMany(\App\Models\Component::class);
     }
 
     /**
@@ -172,12 +136,6 @@ class Category extends SnipeModel
         switch ($this->category_type) {
             case 'asset':
                 return $this->assets->count();
-            case 'accessory':
-                return $this->accessories->count();
-            case 'component':
-                return $this->components->count();
-            case 'consumable':
-                return $this->consumables->count();
             case 'license':
                 return $this->licenses->count();
             default:

@@ -76,8 +76,6 @@ class Manufacturer extends SnipeModel
         return Gate::allows('delete', $this)
             && ($this->assets()->count() === 0)
             && ($this->licenses()->count() === 0)
-            && ($this->consumables()->count() === 0)
-            && ($this->accessories()->count() === 0)
             && ($this->deleted_at == '');
     }
 
@@ -94,15 +92,5 @@ class Manufacturer extends SnipeModel
     public function licenses()
     {
         return $this->hasMany(\App\Models\License::class, 'manufacturer_id');
-    }
-
-    public function accessories()
-    {
-        return $this->hasMany(\App\Models\Accessory::class, 'manufacturer_id');
-    }
-
-    public function consumables()
-    {
-        return $this->hasMany(\App\Models\Consumable::class, 'manufacturer_id');
     }
 }

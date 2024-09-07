@@ -8,7 +8,6 @@ use App\Models\LicenseSeat;
 use App\Models\Location;
 use App\Models\User;
 use App\Notifications\CheckoutAssetNotification;
-use App\Notifications\CheckoutConsumableNotification;
 use App\Notifications\CheckoutLicenseSeatNotification;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Notification;

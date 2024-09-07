@@ -233,8 +233,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
         return Gate::allows('delete', $this)
             && ($this->assets->count() === 0)
             && ($this->licenses->count() === 0)
-            && ($this->consumables->count() === 0)
-            && ($this->accessories->count() === 0)
             && ($this->managedLocations->count() === 0)
             && ($this->managesUsers->count() === 0)
             && ($this->deleted_at == '');
@@ -323,31 +321,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     }
 
     /**
-     * Establishes the user -> accessories relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function accessories()
-    {
-        return $this->belongsToMany(\App\Models\Accessory::class, 'accessories_users', 'assigned_to', 'accessory_id')
-            ->withPivot('id', 'created_at', 'note')->withTrashed()->orderBy('accessory_id');
-    }
-
-    /**
-     * Establishes the user -> consumables relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function consumables()
-    {
-        return $this->belongsToMany(\App\Models\Consumable::class, 'consumables_users', 'assigned_to', 'consumable_id')->withPivot('id','created_at','note')->withTrashed();
-    }
-
-    /**
      * Establishes the user -> license seats relationship
      *
      * @author A. Gianotto <snipe@snipe.net>
@@ -369,10 +342,8 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     Public function allAssignedCount() {
         $assetsCount = $this->assets()->count();
         $licensesCount = $this->licenses()->count();
-        $accessoriesCount = $this->accessories()->count();
-        $consumablesCount = $this->consumables()->count();
         
-        $totalCount = $assetsCount + $licensesCount + $accessoriesCount + $consumablesCount;
+        $totalCount = $assetsCount + $licensesCount;
     
         return (int) $totalCount;
         }
@@ -835,7 +806,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     public function getUserTotalCost(){
         $asset_cost= 0;
         $license_cost= 0;
-        $accessory_cost= 0;
         foreach ($this->assets as $asset){
             $asset_cost += $asset->purchase_cost;
             $this->asset_cost = $asset_cost;
@@ -844,12 +814,8 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
             $license_cost += $license->purchase_cost;
             $this->license_cost = $license_cost;
         }
-        foreach ($this->accessories as $accessory){
-            $accessory_cost += $accessory->purchase_cost;
-            $this->accessory_cost = $accessory_cost;
-        }
 
-        $this->total_user_cost = ($asset_cost + $accessory_cost + $license_cost);
+        $this->total_user_cost = ($asset_cost + $license_cost);
 
 
         return $this;

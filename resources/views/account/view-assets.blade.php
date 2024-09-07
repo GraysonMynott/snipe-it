@@ -61,28 +61,6 @@
             </a>
           </li>
 
-          <li>
-            <a href="#accessories" data-toggle="tab">
-            <span class="hidden-lg hidden-md">
-            <i class="far fa-keyboard fa-2x"></i>
-            </span>
-              <span class="hidden-xs hidden-sm">{{ trans('general.accessories') }}
-                {!! ($user->accessories->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($user->accessories->count()).'</badge>' : '' !!}
-            </span>
-            </a>
-          </li>
-
-          <li>
-            <a href="#consumables" data-toggle="tab">
-            <span class="hidden-lg hidden-md">
-                <i class="fas fa-tint fa-2x"></i>
-            </span>
-              <span class="hidden-xs hidden-sm">{{ trans('general.consumables') }}
-                {!! ($user->consumables->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($user->consumables->count()).'</badge>' : '' !!}
-            </span>
-            </a>
-          </li>
-
         </ul>
 
         <div class="tab-content">
@@ -528,107 +506,6 @@
               </table>
             </div> <!-- .table-responsive-->
           </div>
-
-          <div class="tab-pane" id="accessories">
-            <div class="table-responsive">
-              <table
-                      data-cookie-id-table="userAccessoryTable"
-                      data-id-table="userAccessoryTable"
-                      id="userAccessoryTable"
-                      data-search="true"
-                      data-pagination="true"
-                      data-side-pagination="client"
-                      data-show-columns="true"
-                      data-show-fullscreen="true"
-                      data-show-export="true"
-                      data-show-footer="true"
-                      data-show-refresh="false"
-                      data-sort-order="asc"
-                      data-sort-name="name"
-                      class="table table-striped snipe-table table-hover"
-                      data-export-options='{
-                    "fileName": "export-accessory-{{ str_slug($user->username) }}-{{ date('Y-m-d') }}",
-                    "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","delete","download","icon"]
-                    }'>
-                <thead>
-                <tr>
-                  <th class="col-md-5">{{ trans('general.name') }}</th>
-                  @can('self.view_purchase_cost')
-                    <th class="col-md-6" data-footer-formatter="sumFormatter" data-fieldname="purchase_cost">{{ trans('general.purchase_cost') }}</th>
-                  @endcan
-                  <th class="col-md-1 hidden-print">{{ trans('general.action') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($user->accessories as $accessory)
-                  <tr>
-                    <td>{{ $accessory->name }}</td>
-                    @can('self.view_purchase_cost')
-                      <td>
-                        {!! Helper::formatCurrencyOutput($accessory->purchase_cost) !!}
-                      </td>
-                    @endcan
-                    <td class="hidden-print">
-                      @can('checkin', $accessory)
-                        <a href="{{ route('accessories.checkin.show', array('accessoryID'=> $accessory->pivot->id, 'backto'=>'user')) }}" class="btn btn-primary btn-sm hidden-print">{{ trans('general.checkin') }}</a>
-                      @endcan
-                    </td>
-                  </tr>
-                @endforeach
-                </tbody>
-              </table>
-            </div>
-          </div><!-- /accessories-tab -->
-
-          <div class="tab-pane" id="consumables">
-            <div class="table-responsive">
-              <table
-                      data-cookie-id-table="userConsumableTable"
-                      data-id-table="userConsumableTable"
-                      id="userConsumableTable"
-                      data-search="true"
-                      data-pagination="true"
-                      data-side-pagination="client"
-                      data-show-columns="true"
-                      data-show-fullscreen="true"
-                      data-show-export="true"
-                      data-show-footer="true"
-                      data-show-refresh="false"
-                      data-sort-order="asc"
-                      data-sort-name="name"
-                      class="table table-striped snipe-table table-hover"
-                      data-export-options='{
-                    "fileName": "export-consumable-{{ str_slug($user->username) }}-{{ date('Y-m-d') }}",
-                    "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","delete","download","icon"]
-                    }'>
-                <thead>
-                <tr>
-                  <th class="col-md-3">{{ trans('general.name') }}</th>
-                  @can('self.view_purchase_cost')
-                    <th class="col-md-2" data-footer-formatter="sumFormatter" data-fieldname="purchase_cost">{{ trans('general.purchase_cost') }}</th>
-                  @endcan
-                  <th class="col-md-2">{{ trans('general.date') }}</th>
-                  <th class="col-md-5">{{ trans('general.notes') }}</th>
-                </tr>
-                </thead>
-                <tbody>
-                @foreach ($user->consumables as $consumable)
-                  <tr>
-                    <td>{{ $consumable->name }}</td>
-                    @can('self.view_purchase_cost')
-                      <td>
-                        {!! Helper::formatCurrencyOutput($consumable->purchase_cost) !!}
-                      </td>
-                    @endcan
-                    <td>{{ Helper::getFormattedDateObject($consumable->pivot->created_at, 'datetime',  false) }}</td>
-                    <td>{{ $consumable->pivot->note }}</td>
-                  </tr>
-                @endforeach
-                </tbody>
-              </table>
-            </div>
-          </div><!-- /consumables-tab -->
-
         </div><!-- /.tab-content -->
       </div><!-- nav-tabs-custom -->
     </div>

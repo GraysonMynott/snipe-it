@@ -426,19 +426,6 @@ class Asset extends Depreciable
 
 
     /**
-     * Get components assigned to this asset
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function components()
-    {
-        return $this->belongsToMany('\App\Models\Component', 'components_assets', 'asset_id', 'component_id')->withPivot('id', 'assigned_qty', 'created_at');
-    }
-
-
-    /**
      * Get depreciation attribute from associated asset model
      *
      * @todo Is this still needed?
@@ -957,13 +944,6 @@ class Asset extends Depreciable
         }
 
         return false;
-    }
-    public function getComponentCost(){
-        $cost = 0;
-        foreach($this->components as $component) {
-            $cost += $component->pivot->assigned_qty*$component->purchase_cost;
-        }
-        return $cost;
     }
 
     /**
