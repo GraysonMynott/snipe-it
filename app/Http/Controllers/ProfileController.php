@@ -197,8 +197,6 @@ class ProfileController extends Controller
         return view('users/print')
             ->with('assets', auth()->user()->assets)
             ->with('licenses', $show_user->licenses()->get())
-            ->with('accessories', $show_user->accessories()->get())
-            ->with('consumables', $show_user->consumables()->get())
             ->with('show_user', $show_user)
             ->with('settings', Setting::getSettings());
     }

@@ -74,17 +74,6 @@
                     </li>
 
                     <li>
-                        <a href="#components" data-toggle="tab">
-                          <span class="hidden-lg hidden-md">
-                            <i class="far fa-hdd fa-2x" aria-hidden="true"></i>
-                          </span>
-                          <span class="hidden-xs hidden-sm">{{ trans('general.components') }}
-                            {!! ($asset->components->count() > 0 ) ? '<span class="badge badge-secondary">'.number_format($asset->components->count()).'</span>' : '' !!}
-                          </span>
-                        </a>
-                    </li>
-
-                    <li>
                         <a href="#assets" data-toggle="tab">
                           <span class="hidden-lg hidden-md">
                             <i class="fas fa-barcode fa-2x" aria-hidden="true"></i>
@@ -510,25 +499,6 @@
                                                 @endif
                                                 {{ Helper::formatCurrencyOutput($asset->purchase_cost)}}
 
-                                            </div>
-                                        </div>
-                                    @endif
-                                    @if(($asset->components->count() > 0) && ($asset->purchase_cost))
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <strong>
-                                                    {{ trans('admin/hardware/table.components_cost') }}
-                                                </strong>
-                                            </div>
-                                            <div class="col-md-6">
-                                                @if (($asset->id) && ($asset->location))
-                                                    {{ $asset->location->currency }}
-                                                @elseif (($asset->id) && ($asset->location))
-                                                    {{ $asset->location->currency }}
-                                                @else
-                                                    {{ $snipeSettings->default_currency }}
-                                                @endif
-                                                {{Helper::formatCurrencyOutput($asset->getComponentCost())}}
                                             </div>
                                         </div>
                                     @endif
@@ -1078,62 +1048,6 @@
                             </div><!-- /col -->
                         </div> <!-- row -->
                     </div> <!-- /.tab-pane software -->
-
-                    <div class="tab-pane fade" id="components">
-                        <!-- checked out assets table -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                @if($asset->components->count() > 0)
-                                    <table class="table table-striped">
-                                        <thead>
-                                        <th>{{ trans('general.name') }}</th>
-                                        <th>{{ trans('general.qty') }}</th>
-                                        <th>{{ trans('general.purchase_cost') }}</th>
-                                        <th>{{trans('admin/hardware/form.serial')}}</th>
-                                        <th>{{trans('general.checkin')}}</th>
-                                        <th></th>
-                                        </thead>
-                                        <tbody>
-                                        <?php $totalCost = 0; ?>
-                                        @foreach ($asset->components as $component)
-
-
-                                            @if (is_null($component->deleted_at))
-                                                <tr>
-                                                    <td>
-                                                        <a href="{{ route('components.show', $component->id) }}">{{ $component->name }}</a>
-                                                    </td>
-                                                    <td>{{ $component->pivot->assigned_qty }}</td>
-                                                    <td>{{ Helper::formatCurrencyOutput($component->purchase_cost) }} each</td>
-                                                    <td>{{ $component->serial }}</td>
-                                                    <td>
-                                                        <a href="{{ route('components.checkin.show', $component->pivot->id) }}" class="btn btn-sm bg-purple" data-tooltip="true">{{ trans('general.checkin') }}</a>
-                                                    </td>
-
-                                                    <?php $totalCost = $totalCost + ($component->purchase_cost *$component->pivot->assigned_qty) ?>
-                                                </tr>
-                                            @endif
-                                        @endforeach
-                                        </tbody>
-
-                                        <tfoot>
-                                        <tr>
-                                            <td colspan="2">
-                                            </td>
-                                            <td>{{ $totalCost }}</td>
-                                        </tr>
-                                        </tfoot>
-                                    </table>
-                                @else
-                                    <div class="alert alert-info alert-block">
-                                        <i class="fas fa-info-circle"></i>
-                                        {{ trans('general.no_results') }}
-                                    </div>
-                                @endif
-                            </div>
-                        </div>
-                    </div> <!-- /.tab-pane components -->
-
 
                     <div class="tab-pane fade" id="assets">
                         <div class="row">

@@ -35,14 +35,11 @@ class CompaniesController extends Controller
             'users_count',
             'assets_count',
             'licenses_count',
-            'accessories_count',
-            'consumables_count',
-            'components_count',
         ];
 
         $companies = Company::withCount(['assets as assets_count'  => function ($query) {
             $query->AssetsForShow();
-        }])->withCount('licenses as licenses_count', 'accessories as accessories_count', 'consumables as consumables_count', 'components as components_count', 'users as users_count');
+        }])->withCount('licenses as licenses_count', 'users as users_count');
 
         if ($request->filled('search')) {
             $companies->TextSearch($request->input('search'));

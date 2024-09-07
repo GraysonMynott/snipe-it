@@ -32,8 +32,6 @@ class ViewAssetsController extends Controller
             'assets',
             'assets.model',
             'assets.model.fieldset.fields',
-            'consumables',
-            'accessories',
             'licenses',
         )->find(auth()->id());
 

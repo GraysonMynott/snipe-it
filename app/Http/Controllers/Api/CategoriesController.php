@@ -34,9 +34,6 @@ class CategoriesController extends Controller
             'require_acceptance',
             'checkin_email',
             'assets_count',
-            'accessories_count',
-            'consumables_count',
-            'components_count',
             'licenses_count',
             'image',
         ];
@@ -51,7 +48,7 @@ class CategoriesController extends Controller
             'require_acceptance',
             'checkin_email',
             'image'
-            ])->withCount('accessories as accessories_count', 'consumables as consumables_count', 'components as components_count', 'licenses as licenses_count');
+            ])->withCount('licenses as licenses_count');
 
 
         /*
@@ -140,7 +137,7 @@ class CategoriesController extends Controller
     public function show($id) : array
     {
         $this->authorize('view', Category::class);
-        $category = Category::withCount('assets as assets_count', 'accessories as accessories_count', 'consumables as consumables_count', 'components as components_count', 'licenses as licenses_count')->findOrFail($id);
+        $category = Category::withCount('assets as assets_count', 'licenses as licenses_count')->findOrFail($id);
         return (new CategoriesTransformer)->transformCategory($category);
 
     }
@@ -187,7 +184,7 @@ class CategoriesController extends Controller
     public function destroy($id) : JsonResponse
     {
         $this->authorize('delete', Category::class);
-        $category = Category::withCount('assets as assets_count', 'accessories as accessories_count', 'consumables as consumables_count', 'components as components_count', 'licenses as licenses_count')->findOrFail($id);
+        $category = Category::withCount('assets as assets_count', 'licenses as licenses_count')->findOrFail($id);
 
         if (! $category->isDeletable()) {
             return response()->json(

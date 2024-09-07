@@ -73,34 +73,6 @@
 @endif
 
 
-@if ($consumables = session()->get('consumables'))
-    @foreach ($consumables as $consumable)
-        <div class="col-md-12">
-            <div class="alert alert-info fade in">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <i class="fas fa-info-circle faa-pulse animated"></i>
-                <strong>{{ trans('general.consumable_information') }}: </strong>
-                <ul><li><b>{{ trans('general.consumable_name') }}</b> {{ $consumable->name }}</li></ul>
-            </div>
-        </div>
-    @endforeach
-@endif
-
-
-@if ($accessories = session()->get('accessories'))
-    @foreach ($accessories as $accessory)
-        <div class="col-md-12">
-            <div class="alert alert-info fade in">
-                <button type="button" class="close" data-dismiss="alert">&times;</button>
-                <i class="fas fa-info-circle faa-pulse animated"></i>
-                <strong>{{ trans('general.accessory_information') }}:</strong>
-                <ul><li><b>{{ trans('general.accessory_name') }}</b> {{ $accessory->name }}</li></ul>
-            </div>
-        </div>
-    @endforeach
-@endif
-
-
 @if ($message = session()->get('error'))
 <div class="col-md-12">
     <div class="alert alert alert-danger fade in">

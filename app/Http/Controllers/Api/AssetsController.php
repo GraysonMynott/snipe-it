@@ -382,16 +382,6 @@ class AssetsController extends Controller
 
         $total = $assets->count();
         $assets = $assets->skip($offset)->take($limit)->get();
-        
-
-        /**
-         * Include additional associated relationships
-         */  
-        if ($request->input('components')) {
-            $assets->loadMissing(['components' => function ($query) {
-                $query->orderBy('created_at', 'desc');
-            }]);
-        }
 
 
 

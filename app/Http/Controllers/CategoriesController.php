@@ -186,9 +186,6 @@ class CategoriesController extends Controller
             if ($category->category_type == 'asset') {
                 $category_type = 'hardware';
                 $category_type_route = 'assets';
-            } elseif ($category->category_type == 'accessory') {
-                $category_type = 'accessories';
-                $category_type_route = 'accessories';
             } else {
                 $category_type = $category->category_type;
                 $category_type_route = $category->category_type.'s';

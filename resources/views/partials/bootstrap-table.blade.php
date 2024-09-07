@@ -354,15 +354,6 @@
             if (value.type == 'asset') {
                 item_destination = 'hardware';
                 item_icon = 'fas fa-barcode';
-            } else if (value.type == 'accessory') {
-                item_destination = 'accessories';
-                item_icon = 'far fa-keyboard';
-            } else if (value.type == 'component') {
-                item_destination = 'components';
-                item_icon = 'far fa-hdd';
-            } else if (value.type == 'consumable') {
-                item_destination = 'consumables';
-                item_icon = 'fas fa-tint';
             } else if (value.type == 'license') {
                 item_destination = 'licenses';
                 item_icon = 'far fa-save';
@@ -488,9 +479,6 @@
 
     var formatters = [
         'hardware',
-        'accessories',
-        'consumables',
-        'components',
         'locations',
         'users',
         'manufacturers',
@@ -504,8 +492,7 @@
         'companies',
         'depreciations',
         'fieldsets',
-        'groups',
-        'kits'
+        'groups'
     ];
 
     for (var i in formatters) {
@@ -513,19 +500,6 @@
         window[formatters[i] + 'LinkObjFormatter'] = genericColumnObjLinkFormatter(formatters[i]);
         window[formatters[i] + 'ActionsFormatter'] = genericActionsFormatter(formatters[i]);
         window[formatters[i] + 'InOutFormatter'] = genericCheckinCheckoutFormatter(formatters[i]);
-    }
-
-    var child_formatters = [
-        ['kits', 'models'],
-        ['kits', 'licenses'],
-        ['kits', 'consumables'],
-        ['kits', 'accessories'],
-    ];
-
-    for (var i in child_formatters) {
-        var owner_name = child_formatters[i][0];
-        var child_name = child_formatters[i][1];
-        window[owner_name + '_' + child_name + 'ActionsFormatter'] = genericActionsFormatter(owner_name, child_name);
     }
 
 
@@ -818,14 +792,6 @@
 
     function linkNumberToUserLicensesFormatter(value, row) {
         return linkToUserSectionBasedOnCount(value, row.id, 'licenses');
-    }
-
-    function linkNumberToUserConsumablesFormatter(value, row) {
-        return linkToUserSectionBasedOnCount(value, row.id, 'consumables');
-    }
-
-    function linkNumberToUserAccessoriesFormatter(value, row) {
-        return linkToUserSectionBasedOnCount(value, row.id, 'accessories');
     }
 
     function linkNumberToUserManagedUsersFormatter(value, row) {

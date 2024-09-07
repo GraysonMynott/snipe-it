@@ -46,16 +46,8 @@
                       <span class="sr-only">{{ trans('general.assets') }}</span>
                     </th>
                     <th class="text-right">
-                      <i class="far fa-keyboard fa-fw" aria-hidden="true" style="font-size: 17px;"></i>
-                      <span class="sr-only">{{ trans('general.accessories') }}</span>
-                    </th>
-                    <th class="text-right">
                       <i class="far fa-save fa-fw" aria-hidden="true" style="font-size: 17px;"></i>
                       <span class="sr-only">{{ trans('general.licenses') }}</span>
-                    </th>
-                    <th class="text-right">
-                      <i class="fas fa-tint fa-fw" aria-hidden="true" style="font-size: 17px;"></i>
-                      <span class="sr-only">{{ trans('general.consumables') }}</span>
                     </th>
                     <th class="text-right">
                       <i class="fas fa-paperclip fa-fw" aria-hidden="true" style="font-size: 17px;"></i>
@@ -91,13 +83,7 @@
                       {{ number_format($user->assets->count())  }}
                     </td>
                     <td class="text-right">
-                      {{ number_format($user->accessories->count())  }}
-                    </td>
-                    <td class="text-right">
                       {{ number_format($user->licenses->count())  }}
-                    </td>
-                    <td class="text-right">
-                      {{ number_format($user->consumables->count())  }}
                     </td>
                     <td class="text-right">
                       {{ number_format($user->uploads->count())  }}

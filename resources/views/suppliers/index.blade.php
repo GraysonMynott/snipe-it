@@ -52,10 +52,7 @@
             <th data-searchable="true" data-sortable="true" data-field="fax" data-visible="false">{{ trans('admin/suppliers/table.fax') }}</th>
             <th data-sortable="true" data-field="url" data-visible="false" data-formatter="externalLinkFormatter">{{ trans('general.url') }}</th>
             <th data-searchable="false" data-sortable="true" data-field="assets_count">{{ trans('admin/suppliers/table.assets') }}</th>
-            <th data-searchable="false" data-sortable="true" data-field="accessories_count">{{ trans('general.accessories') }}</th>
             <th data-searchable="false" data-sortable="true" data-field="licenses_count">{{ trans('admin/suppliers/table.licenses') }}</th>
-            <th data-searchable="false" data-sortable="true" data-field="components_count">{{ trans('general.components') }}</th>
-            <th data-searchable="false" data-sortable="true" data-field="consumables_count">{{ trans('general.consumables') }}</th>
             <th data-switchable="false" data-formatter="suppliersActionsFormatter" data-searchable="false" data-sortable="false" data-field="actions">{{ trans('table.actions') }}</th>
           </tr>
         </thead>

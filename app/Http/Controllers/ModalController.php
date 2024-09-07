@@ -22,10 +22,6 @@ class ModalController extends Controller
         // These values should correspond to a file in resources/views/modals/
         $allowed_types = [
             'category',
-            'kit-model', 
-            'kit-license', 
-            'kit-consumable', 
-            'kit-accessory',
             'location',
             'manufacturer',
             'model',
@@ -41,11 +37,6 @@ class ModalController extends Controller
 
             if ($type == "statuslabel") {
             $view->with('statuslabel_types', Helper::statusTypeList());
-        }
-        if (in_array($type, ['kit-model', 'kit-license', 'kit-consumable', 'kit-accessory'])) {
-            $view->with('kitId', $itemId);
-            }
-            return $view;
         }
 
         abort(404,'Page not found');
