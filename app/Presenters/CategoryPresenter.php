@@ -49,13 +49,6 @@ class CategoryPresenter extends Presenter
                 'title' => trans('general.qty'),
                 'visible' => true,
             ], [
-                'field' => 'has_eula',
-                'searchable' => false,
-                'sortable' => false,
-                'title' => trans('admin/categories/table.eula_text'),
-                'visible' => false,
-                'formatter' => 'trueFalseFormatter',
-            ], [
                 'field' => 'checkin_email',
                 'searchable' => false,
                 'sortable' => true,
@@ -69,14 +62,7 @@ class CategoryPresenter extends Presenter
                 'sortable' => true,
                 'title' => trans('admin/categories/table.require_acceptance'),
                 'visible' => true,
-                'formatter' => 'trueFalseFormatter',
-            ], [
-                "field" => "use_default_eula",
-                "searchable" => false,
-                "sortable" => true,
-                "title" => trans('admin/categories/general.use_default_eula_column'),
-                'visible' => true,
-                "formatter" => 'trueFalseFormatter',
+                'formatter' => 'trueFalseFormatter',,
             ], [
                 'field' => 'created_at',
                 'searchable' => true,

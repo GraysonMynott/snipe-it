@@ -41,8 +41,6 @@ class Category extends SnipeModel
     public $rules = [
         'user_id' => 'numeric|nullable',
         'name'   => 'required|min:1|max:255|two_column_unique_undeleted:category_type',
-        'require_acceptance'   => 'boolean',
-        'use_default_eula'   => 'boolean',
         'category_type'   => 'required|in:asset,license',
     ];
 
@@ -66,10 +64,8 @@ class Category extends SnipeModel
     protected $fillable = [
         'category_type',
         'checkin_email',
-        'eula_text',
         'name',
         'require_acceptance',
-        'use_default_eula',
         'user_id',
     ];
 
@@ -184,26 +180,6 @@ class Category extends SnipeModel
     public function models()
     {
         return $this->hasMany(\App\Models\AssetModel::class, 'category_id');
-    }
-
-    /**
-     * Checks for a category-specific EULA, and if that doesn't exist,
-     * checks for a settings level EULA
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return string | null
-     */
-    public function getEula()
-    {
-
-        if ($this->eula_text) {
-            return Helper::parseEscapedMarkedown($this->eula_text);
-        } elseif ((Setting::getSettings()->default_eula_text) && ($this->use_default_eula == '1')) {
-            return Helper::parseEscapedMarkedown(Setting::getSettings()->default_eula_text);
-        } else {
-            return null;
-        }
     }
 
     /**
