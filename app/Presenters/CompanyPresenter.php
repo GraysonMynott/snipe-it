@@ -39,11 +39,12 @@ class CompanyPresenter extends Presenter
                 'formatter' => 'imageFormatter',
             ], [
                 'field' => 'phone',
-                'searchable' => false,
-                'sortable' => false,
+                'searchable' => true,
+                'sortable' => true,
                 'switchable' => true,
-                'title' => trans('general.phone'),
+                'title' => trans('admin/companies/table.phone'),
                 'visible' => true,
+                'formatter'    => 'phoneFormatter',
             ], [
                 'field' => 'users_count',
                 'searchable' => false,
