@@ -20,6 +20,8 @@ use Illuminate\Support\Facades\Log;
 class CheckoutableListener
 {
 
+    private array $skipNotificationsFor = [];
+
     /**
      * Notify the user and post to webhook about the checked out checkoutable
      * and add a record to the checkout_requests table.
