@@ -208,6 +208,9 @@ class CheckoutableListener
         switch (get_class($event->checkoutable)) {
             case Asset::class:
                 $notificationClass = CheckoutAssetNotification::class;
+                break;    
+            case LicenseSeat::class:
+                $notificationClass = CheckoutLicenseSeatNotification::class;
                 break;   
         }
 
