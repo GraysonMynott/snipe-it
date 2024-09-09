@@ -18,7 +18,6 @@ return new class extends Migration
             $table->integer('location_id')->nullable();
             $table->integer('company_id')->nullable()->index();
             $table->integer('user_id')->nullable();
-            $table->integer('supplier_id')->nullable();
             $table->integer('qty')->default(1);
             $table->string('order_number')->nullable();
             $table->date('purchase_date')->nullable();

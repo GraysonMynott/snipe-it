@@ -260,7 +260,6 @@ class RestoreFromBackup extends Command
             'public/uploads/locations',
             'public/uploads/manufacturers',
             'public/uploads/models',
-            'public/uploads/suppliers',
         ];
 
         $public_files = [

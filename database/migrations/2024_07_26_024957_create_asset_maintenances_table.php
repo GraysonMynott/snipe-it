@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('asset_maintenances', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('asset_id');
-            $table->unsignedInteger('supplier_id');
             $table->string('asset_maintenance_type');
             $table->string('title', 100);
             $table->boolean('is_warranty');

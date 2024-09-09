@@ -8,7 +8,6 @@ use App\Models\CustomField;
 use App\Models\Setting;
 use App\Models\Statuslabel;
 use App\Models\Company;
-use App\Models\Supplier;
 use App\Models\Location;
 use App\Models\AssetModel;
 use Illuminate\Database\Eloquent\Collection;
@@ -224,7 +223,6 @@ class ActionlogsTransformer
     public function changedInfo(array $clean_meta)
     {
         static $location = false;
-        static $supplier = false;
         static $model = false;
         static $status = false;
         static $company = false;
@@ -232,9 +230,6 @@ class ActionlogsTransformer
 
         if ($location === false) {
             $location = Location::select('id', 'name')->withTrashed()->get();
-        }
-        if ($supplier === false) {
-            $supplier = Supplier::select('id', 'name')->withTrashed()->get();
         }
         if ($model === false) {
             $model = AssetModel::select('id', 'name')->withTrashed()->get();
@@ -302,19 +297,6 @@ class ActionlogsTransformer
             $clean_meta['company_id']['new'] = $clean_meta['company_id']['new'] ? "[id: ".$clean_meta['company_id']['new']."] ". $newCompanyName : trans('general.unassigned');
             $clean_meta['Company'] = $clean_meta['company_id'];
             unset($clean_meta['company_id']);
-        }
-        if(array_key_exists('supplier_id', $clean_meta)) {
-
-            $oldSupplier = $supplier->find($clean_meta['supplier_id']['old']);
-            $oldSupplierName = $oldSupplier ? e($oldSupplier->name) : trans('admin/suppliers/message.deleted');
-
-            $newSupplier = $supplier->find($clean_meta['supplier_id']['new']);
-            $newSupplierName = $newSupplier ? e($newSupplier->name) : trans('admin/suppliers/message.deleted');
-
-            $clean_meta['supplier_id']['old'] = $clean_meta['supplier_id']['old'] ? "[id: ".$clean_meta['supplier_id']['old']."] ". $oldSupplierName : trans('general.unassigned');
-            $clean_meta['supplier_id']['new'] = $clean_meta['supplier_id']['new'] ? "[id: ".$clean_meta['supplier_id']['new']."] ". $newSupplierName : trans('general.unassigned');
-            $clean_meta['Supplier'] = $clean_meta['supplier_id'];
-            unset($clean_meta['supplier_id']);
         }
         if(array_key_exists('status_id', $clean_meta)) {
 

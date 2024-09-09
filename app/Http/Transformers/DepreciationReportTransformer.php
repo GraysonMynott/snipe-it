@@ -94,7 +94,6 @@ class DepreciationReportTransformer
             'status' => ($asset->assetstatus) ?  e($asset->present()->statusMeta) : null,
             'category' => (($asset->model) && ($asset->model->category)) ? e($asset->model->category->name) : null,
             'manufacturer' => (($asset->model) && ($asset->model->manufacturer)) ? e($asset->model->manufacturer->name) : null,
-            'supplier' => ($asset->supplier) ? e($asset->supplier->name) : null,
             'notes' => ($asset->notes) ? e($asset->notes) : null,
             'order_number' => ($asset->order_number) ? e($asset->order_number) : null,
             'location' => ($asset->location) ? e($asset->location->name) : null,

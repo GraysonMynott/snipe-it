@@ -18,7 +18,6 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportsController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\StatuslabelsController;
-use App\Http\Controllers\SuppliersController;
 use App\Http\Controllers\ViewAssetsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -96,13 +95,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('manufacturers', ManufacturersController::class, [
         'parameters' => ['manufacturer' => 'manufacturers_id'],
-    ]);
-
-    /*
-     * Suppliers
-     */
-    Route::resource('suppliers', SuppliersController::class, [
-        'parameters' => ['supplier' => 'supplier_id'],
     ]);
 
     /*

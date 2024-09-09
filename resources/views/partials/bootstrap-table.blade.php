@@ -487,7 +487,6 @@
         'models',
         'licenses',
         'categories',
-        'suppliers',
         'departments',
         'companies',
         'depreciations',

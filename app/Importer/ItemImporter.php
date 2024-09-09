@@ -8,7 +8,6 @@ use App\Models\Company;
 use App\Models\Location;
 use App\Models\Manufacturer;
 use App\Models\Statuslabel;
-use App\Models\Supplier;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Support\Facades\Log;
@@ -50,11 +49,6 @@ class ItemImporter extends Importer
         $item_status_name = $this->findCsvMatch($row, 'status');
         if ($this->shouldUpdateField($item_status_name)) {
             $this->item['status_id'] = $this->createOrFetchStatusLabel($item_status_name);
-        }
-
-        $item_supplier = $this->findCsvMatch($row, 'supplier');
-        if ($this->shouldUpdateField($item_supplier)) {
-            $this->item['supplier_id'] = $this->createOrFetchSupplier($item_supplier);
         }
 
         $item_department = $this->findCsvMatch($row, 'department');
@@ -461,42 +455,6 @@ class ItemImporter extends Importer
             return $location->id;
         }
         $this->logError($location, 'Location');
-
-        return null;
-    }
-
-    /**
-     * Fetch an existing supplier or create new if it doesn't exist
-     *
-     * @author Daniel Melzter
-     * @since 3.0
-     * @param $row array
-     * @return Supplier
-     */
-    public function createOrFetchSupplier($item_supplier)
-    {
-        if (empty($item_supplier)) {
-            $item_supplier = 'Unknown';
-        }
-
-        $supplier = Supplier::where(['name' => $item_supplier])->first();
-
-        if ($supplier) {
-            $this->log('Supplier '.$item_supplier.' already exists');
-
-            return $supplier->id;
-        }
-
-        $supplier = new Supplier();
-        $supplier->name = $item_supplier;
-        $supplier->user_id = $this->user_id;
-
-        if ($supplier->save()) {
-            $this->log('Supplier '.$item_supplier.' was created');
-
-            return $supplier->id;
-        }
-        $this->logError($supplier, 'Supplier');
 
         return null;
     }

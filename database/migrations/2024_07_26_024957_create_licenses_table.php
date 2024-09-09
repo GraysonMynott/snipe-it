@@ -27,7 +27,6 @@ return new class extends Migration
             $table->string('license_name', 120)->nullable();
             $table->string('license_email')->nullable();
             $table->boolean('depreciate')->nullable();
-            $table->integer('supplier_id')->nullable();
             $table->date('expiration_date')->nullable();
             $table->string('purchase_order')->nullable();
             $table->date('termination_date')->nullable();

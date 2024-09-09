@@ -325,33 +325,6 @@ return [
         ],
     ],
 
-    'Suppliers' => [
-        [
-            'permission' => 'suppliers.view',
-            'label'      => 'View ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'suppliers.create',
-            'label'      => 'Create ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'suppliers.edit',
-            'label'      => 'Edit  ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'suppliers.delete',
-            'label'      => 'Delete ',
-            'note'       => '',
-            'display'    => true,
-        ],
-    ],
-
 
     'Manufacturers' => [
         [

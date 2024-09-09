@@ -7,7 +7,6 @@ use App\Models\AssetModel;
 use App\Models\CustomField;
 use App\Models\Location;
 use App\Models\Statuslabel;
-use App\Models\Supplier;
 use App\Models\User;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -42,7 +41,6 @@ class AssetFactory extends Factory
             'purchase_date' => $this->faker->dateTimeBetween('-1 years', 'now', date_default_timezone_get())->format('Y-m-d'),
             'purchase_cost' => $this->faker->randomFloat(2, '299.99', '2999.99'),
             'order_number' => (string) $this->faker->numberBetween(1000000, 50000000),
-            'supplier_id' => Supplier::factory(),
             'requestable' => $this->faker->boolean(),
             'assigned_to' => null,
             'assigned_type' => null,

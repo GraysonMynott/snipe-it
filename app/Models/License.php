@@ -79,7 +79,6 @@ class License extends Depreciable
         'reassignable',
         'seats',
         'serial',
-        'supplier_id',
         'termination_date',
         'free_seat_count',
         'user_id',
@@ -628,18 +627,6 @@ class License extends Depreciable
         return $this->hasMany(\App\Models\LicenseSeat::class);
     }
 
-    /**
-     * Establishes the license -> supplier relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v1.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function supplier()
-    {
-        return $this->belongsTo(\App\Models\Supplier::class, 'supplier_id');
-    }
-
 
     /**
      * Gets the next available free seat - used by
@@ -707,20 +694,6 @@ class License extends Depreciable
     {
         return $query->leftJoin('manufacturers', 'licenses.manufacturer_id', '=', 'manufacturers.id')->select('licenses.*')
             ->orderBy('manufacturers.name', $order);
-    }
-
-    /**
-     * Query builder scope to order on supplier
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-     * @param  string                              $order         Order
-     *
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeOrderSupplier($query, $order)
-    {
-        return $query->leftJoin('suppliers', 'licenses.supplier_id', '=', 'suppliers.id')->select('licenses.*')
-            ->orderBy('suppliers.name', $order);
     }
 
     /**

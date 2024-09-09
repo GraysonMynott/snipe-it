@@ -29,7 +29,6 @@ return new class extends Migration
             $table->integer('manufacturer_id')->nullable();
             $table->string('model_number')->nullable();
             $table->string('image')->nullable();
-            $table->integer('supplier_id')->nullable();
             $table->text('notes')->nullable();
         });
     }

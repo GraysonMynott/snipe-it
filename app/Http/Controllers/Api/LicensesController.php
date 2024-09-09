@@ -24,7 +24,7 @@ class LicensesController extends Controller
     {
         $this->authorize('view', License::class);
 
-        $licenses = License::with('company', 'manufacturer', 'supplier','category')->withCount('freeSeats as free_seats_count');
+        $licenses = License::with('company', 'manufacturer', 'category')->withCount('freeSeats as free_seats_count');
 
         if ($request->filled('company_id')) {
             $licenses->where('company_id', '=', $request->input('company_id'));
@@ -56,10 +56,6 @@ class LicensesController extends Controller
 
         if ($request->filled('manufacturer_id')) {
             $licenses->where('manufacturer_id', '=', $request->input('manufacturer_id'));
-        }
-
-        if ($request->filled('supplier_id')) {
-            $licenses->where('supplier_id', '=', $request->input('supplier_id'));
         }
 
         if ($request->filled('category_id')) {
@@ -100,9 +96,6 @@ class LicensesController extends Controller
         switch ($request->input('sort')) {
                 case 'manufacturer':
                     $licenses = $licenses->leftJoin('manufacturers', 'licenses.manufacturer_id', '=', 'manufacturers.id')->orderBy('manufacturers.name', $order);
-                break;
-            case 'supplier':
-                $licenses = $licenses->leftJoin('suppliers', 'licenses.supplier_id', '=', 'suppliers.id')->orderBy('suppliers.name', $order);
                 break;
             case 'category':
                 $licenses = $licenses->leftJoin('categories', 'licenses.category_id', '=', 'categories.id')->orderBy('categories.name', $order);

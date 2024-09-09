@@ -34,7 +34,6 @@ return new class extends Migration
             $table->boolean('archived')->nullable()->default(false);
             $table->integer('warranty_months')->nullable();
             $table->boolean('depreciate')->nullable();
-            $table->integer('supplier_id')->nullable();
             $table->tinyInteger('requestable')->default(0);
             $table->integer('rtd_location_id')->nullable()->index();
             $table->string('_snipeit_mac_address_1')->nullable();
@@ -60,7 +59,6 @@ return new class extends Migration
             $table->index(['deleted_at', 'name']);
             $table->index(['deleted_at', 'rtd_location_id']);
             $table->index(['deleted_at', 'status_id']);
-            $table->index(['deleted_at', 'supplier_id']);
         });
     }
 

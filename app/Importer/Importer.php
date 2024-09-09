@@ -68,7 +68,6 @@ abstract class Importer
         'seats' => 'seats',
         'serial' => 'serial number',
         'status' => 'status',
-        'supplier' => 'supplier',
         'termination_date' => 'termination date',
         'warranty_months' => 'warranty',
         'full_name' => 'full name',

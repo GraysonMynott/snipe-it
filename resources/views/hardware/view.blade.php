@@ -536,25 +536,6 @@
                                         </div>
                                     @endif
 
-                                    @if ($asset->supplier)
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <strong>
-                                                    {{ trans('general.supplier') }}
-                                                </strong>
-                                            </div>
-                                            <div class="col-md-6">
-                                                @can ('superuser')
-                                                    <a href="{{ route('suppliers.show', $asset->supplier_id) }}">
-                                                        {{ $asset->supplier->name }}
-                                                    </a>
-                                                @else
-                                                    {{ $asset->supplier->name }}
-                                                @endcan
-                                            </div>
-                                        </div>
-                                    @endif
-
 
                                     @if ($asset->warranty_months)
                                         <div class="row">

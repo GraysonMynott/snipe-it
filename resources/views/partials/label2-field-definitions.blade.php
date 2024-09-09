@@ -340,9 +340,6 @@
                             <optgroup label="Status">
                                 <option value="assetstatus.name">{{trans('admin/statuslabels/table.name')}}</option>
                             </optgroup>
-                            <optgroup label="Supplier">
-                                <option value="supplier.name">{{trans('admin/suppliers/table.name')}}</option>
-                            </optgroup>
                             <optgroup label="Default Location">
                                 <option value="defaultLoc.name">{{trans('admin/hardware/form.default_location')}}</option>
                                 <option value="defaultLoc.phone">{{trans('admin/hardware/form.default_location_phone')}}</option>

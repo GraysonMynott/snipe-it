@@ -57,7 +57,6 @@ class MoveUploadsToNewDisk extends Command
         $public_uploads['departments'] = glob('public/uploads/departments'."/*.*");
         $public_uploads['locations'] = glob('public/uploads/locations'."/*.*");
         $public_uploads['manufacturers'] = glob('public/uploads/manufacturers'."/*.*");
-        $public_uploads['suppliers'] = glob('public/uploads/suppliers'."/*.*");
         $public_uploads['assetmodels'] = glob('public/uploads/models'."/*.*");
 
 

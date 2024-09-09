@@ -76,6 +76,7 @@ class Manufacturer extends SnipeModel
         return Gate::allows('delete', $this)
             && ($this->assets()->count() === 0)
             && ($this->licenses()->count() === 0)
+//            && ($this->software()->count() === 0)
             && ($this->deleted_at == '');
     }
 
@@ -93,4 +94,9 @@ class Manufacturer extends SnipeModel
     {
         return $this->hasMany(\App\Models\License::class, 'manufacturer_id');
     }
+
+//     public function software()
+//     {
+//         return $this->hasMany(\App\Models\Software::class, 'manufacturer_id');
+//     }
 }

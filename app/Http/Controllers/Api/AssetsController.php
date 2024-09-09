@@ -121,7 +121,7 @@ class AssetsController extends Controller
 
         $assets = Asset::select('assets.*')
             ->with('location', 'assetstatus', 'company', 'defaultLoc','assignedTo',
-                'model.category', 'model.manufacturer', 'model.fieldset','supplier'); //it might be tempting to add 'assetlog' here, but don't. It blows up update-heavy users.
+                'model.category', 'model.manufacturer', 'model.fieldset'); //it might be tempting to add 'assetlog' here, but don't. It blows up update-heavy users.
 
 
         if ($filter_non_deprecable_assets) {
@@ -296,10 +296,6 @@ class AssetsController extends Controller
             $assets->where('assets.rtd_location_id', '=', $request->input('rtd_location_id'));
         }
 
-        if ($request->filled('supplier_id')) {
-            $assets->where('assets.supplier_id', '=', $request->input('supplier_id'));
-        }
-
         if ($request->filled('asset_eol_date')) {
             $assets->where('assets.asset_eol_date', '=', $request->input('asset_eol_date'));
         }
@@ -363,9 +359,6 @@ class AssetsController extends Controller
                 break;
             case 'status_label':
                 $assets->OrderStatus($order);
-                break;
-            case 'supplier':
-                $assets->OrderSupplier($order);
                 break;
             case 'assigned_to':
                 $assets->OrderAssigned($order);
@@ -1110,7 +1103,7 @@ class AssetsController extends Controller
 
         $assets = Asset::select('assets.*')
             ->with('location', 'assetstatus', 'assetlog', 'company','assignedTo',
-                'model.category', 'model.manufacturer', 'model.fieldset', 'supplier', 'requests');
+                'model.category', 'model.manufacturer', 'model.fieldset', 'requests');
 
 
 

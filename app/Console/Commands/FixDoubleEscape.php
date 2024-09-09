@@ -42,7 +42,6 @@ class FixDoubleEscape extends Command
             \App\Models\License::class => ['name'],
             \App\Models\Company::class => ['name'],
             \App\Models\Manufacturer::class => ['name'],
-            \App\Models\Supplier::class => ['name'],
             \App\Models\Statuslabel::class => ['name'],
             \App\Models\Depreciation::class => ['name'],
             \App\Models\AssetModel::class => ['name'],

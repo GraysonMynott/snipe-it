@@ -14,7 +14,6 @@ use App\Models\License;
 use App\Models\Location;
 use App\Models\Manufacturer;
 use App\Models\Statuslabel;
-use App\Models\Supplier;
 use App\Models\User;
 use App\Policies\AssetModelPolicy;
 use App\Policies\AssetPolicy;
@@ -28,7 +27,6 @@ use App\Policies\LicensePolicy;
 use App\Policies\LocationPolicy;
 use App\Policies\ManufacturerPolicy;
 use App\Policies\StatuslabelPolicy;
-use App\Policies\SupplierPolicy;
 use App\Policies\UserPolicy;
 use Carbon\Carbon;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
@@ -55,7 +53,6 @@ class AuthServiceProvider extends ServiceProvider
         License::class => LicensePolicy::class,
         Location::class => LocationPolicy::class,
         Statuslabel::class => StatuslabelPolicy::class,
-        Supplier::class => SupplierPolicy::class,
         User::class => UserPolicy::class,
         Manufacturer::class => ManufacturerPolicy::class,
         Company::class => CompanyPolicy::class,
@@ -170,7 +167,6 @@ class AuthServiceProvider extends ServiceProvider
                 || $user->can('view', AssetModel::class)
                 || $user->can('view', Category::class)
                 || $user->can('view', Manufacturer::class)
-                || $user->can('view', Supplier::class)
                 || $user->can('view', Department::class)
                 || $user->can('view', Location::class)
                 || $user->can('view', Company::class)

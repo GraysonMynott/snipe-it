@@ -113,15 +113,6 @@ class SettingsServiceProvider extends ServiceProvider
             return 'manufacturers/';
         });
 
-        // Suppliers
-        \App::singleton('suppliers_upload_path', function () {
-            return 'suppliers/';
-        });
-
-        \App::singleton('suppliers_upload_url', function () {
-            return 'suppliers/';
-        });
-
         // Departments
         \App::singleton('departments_upload_path', function () {
             return 'departments/';

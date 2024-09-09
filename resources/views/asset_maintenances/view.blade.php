@@ -51,12 +51,6 @@ use Carbon\Carbon;
             {{ $assetMaintenance->asset->name }}
           </a>
         </div>
-        <div class="col-md-3 col-sm-3" style="padding-bottom: 10px; margin-left: 15px; word-wrap: break-word;">
-          <strong>{{ trans('general.supplier') }}: </strong>
-          <a href="{{ route('suppliers.show', $assetMaintenance->supplier_id) }}">
-            {{ $assetMaintenance->supplier->name }}
-          </a>
-        </div>
       </div>
       <!-- 2nd Row End -->
       <!-- 3rd Row Begin -->

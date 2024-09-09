@@ -34,7 +34,7 @@ class AssetMaintenancesController extends Controller
         $this->authorize('view', Asset::class);
 
         $maintenances = AssetMaintenance::select('asset_maintenances.*')
-            ->with('asset', 'asset.model', 'asset.location', 'asset.defaultLoc', 'supplier', 'asset.company',  'asset.assetstatus', 'admin');
+            ->with('asset', 'asset.model', 'asset.location', 'asset.defaultLoc', 'asset.company',  'asset.assetstatus', 'admin');
 
         if ($request->filled('search')) {
             $maintenances = $maintenances->TextSearch($request->input('search'));
@@ -42,10 +42,6 @@ class AssetMaintenancesController extends Controller
 
         if ($request->filled('asset_id')) {
             $maintenances->where('asset_id', '=', $request->input('asset_id'));
-        }
-
-        if ($request->filled('supplier_id')) {
-            $maintenances->where('asset_maintenances.supplier_id', '=', $request->input('supplier_id'));
         }
 
         if ($request->filled('asset_maintenance_type')) {
@@ -70,7 +66,6 @@ class AssetMaintenancesController extends Controller
                                 'asset_name',
                                 'serial',
                                 'user_id',
-                                'supplier',
                                 'is_warranty',
                                 'status_label',
                             ];
@@ -81,9 +76,6 @@ class AssetMaintenancesController extends Controller
         switch ($sort) {
             case 'user_id':
                 $maintenances = $maintenances->OrderAdmin($order);
-                break;
-            case 'supplier':
-                $maintenances = $maintenances->OrderBySupplier($order);
                 break;
             case 'asset_tag':
                 $maintenances = $maintenances->OrderByTag($order);

@@ -4,7 +4,6 @@ namespace Database\Seeders;
 
 use App\Models\Asset;
 use App\Models\Location;
-use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
@@ -16,18 +15,15 @@ class AssetSeeder extends Seeder
 {
     private $admin;
     private $locationIds;
-    private $supplierIds;
 
     public function run()
     {
         Asset::truncate();
 
         $this->ensureLocationsSeeded();
-        $this->ensureSuppliersSeeded();
 
         $this->admin = User::where('permissions->superuser', '1')->first() ?? User::factory()->firstAdmin()->create();
         $this->locationIds = Location::all()->pluck('id');
-        $this->supplierIds = Supplier::all()->pluck('id');
 
         Asset::factory()->count(2000)->laptopMbp()->state(new Sequence($this->getState()))->create();
         Asset::factory()->count(50)->laptopMbpPending()->state(new Sequence($this->getState()))->create();
@@ -70,18 +66,10 @@ class AssetSeeder extends Seeder
         }
     }
 
-    private function ensureSuppliersSeeded()
-    {
-        if (! Supplier::count()) {
-            $this->call(SupplierSeeder::class);
-        }
-    }
-
     private function getState()
     {
         return fn($sequence) => [
             'rtd_location_id' => $this->locationIds->random(),
-            'supplier_id' => $this->supplierIds->random(),
             'user_id' => $this->admin->id,
         ];
     }

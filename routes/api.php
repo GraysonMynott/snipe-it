@@ -812,36 +812,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'throttle:api']], functi
 
 
         /**
-        * Suppliers API routes
-        */
-        Route::group(['prefix' => 'suppliers'], function () {
-
-            Route::get('selectlist',
-                [
-                    Api\SuppliersController::class, 
-                    'selectlist'
-                ]
-            )->name('api.suppliers.selectlist');
-
-        }); 
-    
-        Route::resource('suppliers', 
-        Api\SuppliersController::class,
-        ['names' => [
-                'index' => 'api.suppliers.index',
-                'show' => 'api.suppliers.show',
-                'update' => 'api.suppliers.update',
-                'store' => 'api.suppliers.store',
-                'destroy' => 'api.suppliers.destroy',
-            ],
-        'except' => ['create', 'edit'],
-        'parameters' => ['supplier' => 'supplier_id'],
-        ]
-        ); // end suppliers API routes
-
-
-
-        /**
         * Users API routes
         */
         Route::group(['prefix' => 'users'], function () {

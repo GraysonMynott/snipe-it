@@ -90,7 +90,6 @@ class Asset extends Depreciable
         'company_id'     => 'integer',
         'location_id'    => 'integer',
         'rtd_company_id' => 'integer',
-        'supplier_id'    => 'integer',
         'created_at'     => 'datetime',
         'updated_at'   => 'datetime',
         'deleted_at'  => 'datetime',
@@ -114,7 +113,6 @@ class Asset extends Depreciable
         'purchase_date'    => 'nullable|date|date_format:Y-m-d',
         'serial'           => 'nullable|unique_undeleted:assets,serial',
         'purchase_cost'    => 'nullable|numeric|gte:0',
-        'supplier_id'      => 'nullable|exists:suppliers,id',
         'asset_eol_date'   => 'nullable|date',
         'eol_explicit'     => 'nullable|boolean',
         'byod'             => 'nullable|boolean',
@@ -146,7 +144,6 @@ class Asset extends Depreciable
         'rtd_location_id',
         'serial',
         'status_id',
-        'supplier_id',
         'warranty_months',
         'requestable',
         'last_checkout',
@@ -193,7 +190,6 @@ class Asset extends Depreciable
      */
     protected $searchableRelations = [
         'assetstatus'        => ['name'],
-        'supplier'           => ['name'],
         'company'            => ['name'],
         'defaultLoc'         => ['name'],
         'location'           => ['name'],
@@ -777,18 +773,6 @@ class Asset extends Depreciable
     public function licenseseats()
     {
         return $this->hasMany(\App\Models\LicenseSeat::class, 'asset_id');
-    }
-
-    /**
-     * Establishes the asset -> aupplier relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function supplier()
-    {
-        return $this->belongsTo(\App\Models\Supplier::class, 'supplier_id');
     }
 
     /**
@@ -1663,14 +1647,6 @@ class Asset extends Depreciable
                         });
                     });
                 }
-
-                if ($fieldname == 'supplier') {
-                    $query->where(function ($query) use ($search_val) {
-                        $query->whereHas('supplier', function ($query) use ($search_val) {
-                            $query->where('suppliers.name', 'LIKE', '%'.$search_val.'%');
-                        });
-                    });
-                }
             
 
             /**
@@ -1696,7 +1672,7 @@ class Asset extends Depreciable
              *
              */
 
-            if (($fieldname!='category') && ($fieldname!='model_number') && ($fieldname!='rtd_location') && ($fieldname!='location') && ($fieldname!='supplier')
+            if (($fieldname!='category') && ($fieldname!='model_number') && ($fieldname!='rtd_location') && ($fieldname!='location')
                 && ($fieldname!='status_label') && ($fieldname!='assigned_to') && ($fieldname!='model') && ($fieldname!='company') && ($fieldname!='manufacturer')) {
                     $query->where('assets.'.$fieldname, 'LIKE', '%' . $search_val . '%');
             }
@@ -1861,20 +1837,6 @@ class Asset extends Depreciable
     public function scopeOrderRtdLocation($query, $order)
     {
         return $query->leftJoin('locations as rtd_asset_locations', 'rtd_asset_locations.id', '=', 'assets.rtd_location_id')->orderBy('rtd_asset_locations.name', $order);
-    }
-
-
-    /**
-     * Query builder scope to order on supplier name
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-     * @param  text                              $order       Order
-     *
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeOrderSupplier($query, $order)
-    {
-        return $query->leftJoin('suppliers as suppliers_assets', 'assets.supplier_id', '=', 'suppliers_assets.id')->orderBy('suppliers_assets.name', $order);
     }
 
     /**

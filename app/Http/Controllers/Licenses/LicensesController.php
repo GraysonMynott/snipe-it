@@ -96,7 +96,6 @@ class LicensesController extends Controller
         $license->reassignable      = $request->input('reassignable', 0);
         $license->seats             = $request->input('seats');
         $license->serial            = $request->input('serial');
-        $license->supplier_id       = $request->input('supplier_id');
         $license->category_id       = $request->input('category_id');
         $license->termination_date  = $request->input('termination_date');
         $license->user_id           = Auth::id();
@@ -176,7 +175,6 @@ class LicensesController extends Controller
         $license->termination_date  = $request->input('termination_date');
         $license->seats             = e($request->input('seats'));
         $license->manufacturer_id   =  $request->input('manufacturer_id');
-        $license->supplier_id       = $request->input('supplier_id');
         $license->category_id       = $request->input('category_id');
         $license->min_amt           = $request->input('min_amt');
 
@@ -310,7 +308,6 @@ class LicensesController extends Controller
             $licenses= License::with('company',
                           'manufacturer',
                           'category',
-                          'supplier',
                           'adminuser',
                           'assignedusers')
                           ->orderBy('created_at', 'DESC');
@@ -333,7 +330,6 @@ class LicensesController extends Controller
                         trans('admin/licenses/table.deleted_at'),
                         trans('general.email'),
                         trans('admin/hardware/form.fully_depreciated'),
-                        trans('general.supplier'),
                         trans('admin/licenses/form.expiration'),
                         trans('admin/licenses/form.purchase_order'),
                         trans('admin/licenses/form.termination_date'),
@@ -366,7 +362,6 @@ class LicensesController extends Controller
                             $license->deleted_at,
                             $license->email,
                             ( $license->depreciate == '1') ? trans('general.yes') : trans('general.no'),
-                            ($license->supplier) ? $license->supplier->name: '',
                             $license->expiration_date,
                             $license->purchase_order,
                             $license->termination_date,

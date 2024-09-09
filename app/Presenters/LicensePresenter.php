@@ -67,14 +67,6 @@ class LicensePresenter extends Presenter
                 'visible' => false,
                 'formatter' => 'categoriesLinkObjFormatter',
             ], [
-                'field' => 'supplier',
-                'searchable' => true,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => trans('general.supplier'),
-                'visible' => false,
-                'formatter' => 'suppliersLinkObjFormatter',
-            ], [
                 'field' => 'manufacturer',
                 'searchable' => true,
                 'sortable' => true,

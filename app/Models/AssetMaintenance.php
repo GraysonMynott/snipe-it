@@ -26,7 +26,6 @@ class AssetMaintenance extends Model implements ICompanyableChild
     protected $table = 'asset_maintenances';
     protected $rules = [
         'asset_id'               => 'required|integer',
-        'supplier_id'            => 'required|integer',
         'asset_maintenance_type' => 'required',
         'title'                  => 'required|max:100',
         'is_warranty'            => 'boolean',
@@ -45,7 +44,6 @@ class AssetMaintenance extends Model implements ICompanyableChild
     protected $fillable = [
         'title',
         'asset_id',
-        'supplier_id',
         'asset_maintenance_type',
         'is_warranty',
         'start_date',
@@ -80,9 +78,7 @@ class AssetMaintenance extends Model implements ICompanyableChild
     protected $searchableRelations = [
         'asset'     => ['name', 'asset_tag', 'serial'],
         'asset.model'     => ['name', 'model_number'],
-        'asset.supplier' => ['name'],
         'asset.assetstatus' => ['name'],
-        'supplier' => ['name'],
     ];
 
     public function getCompanyableParents()
@@ -180,31 +176,11 @@ class AssetMaintenance extends Model implements ICompanyableChild
             ->withTrashed();
     }
 
-    public function supplier()
-    {
-        return $this->belongsTo(\App\Models\Supplier::class, 'supplier_id')
-                    ->withTrashed();
-    }
-
     /**
      * -----------------------------------------------
      * BEGIN QUERY SCOPES
      * -----------------------------------------------
      **/
-
-    /**
-     * Query builder scope to order on a supplier
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-     * @param  string                              $order       Order
-     *
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeOrderBySupplier($query, $order)
-    {
-        return $query->leftJoin('suppliers as suppliers_maintenances', 'asset_maintenances.supplier_id', '=', 'suppliers_maintenances.id')
-            ->orderBy('suppliers_maintenances.name', $order);
-    }
 
 
     /**

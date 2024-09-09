@@ -93,7 +93,6 @@ class AssetMaintenancesController extends Controller
         $this->authorize('update', Asset::class);
         // create a new model instance
         $assetMaintenance = new AssetMaintenance();
-        $assetMaintenance->supplier_id = $request->input('supplier_id');
         $assetMaintenance->is_warranty = $request->input('is_warranty');
         $assetMaintenance->cost = $request->input('cost');
         $assetMaintenance->notes = $request->input('notes');
@@ -188,7 +187,6 @@ class AssetMaintenancesController extends Controller
             return static::getInsufficientPermissionsRedirect();
         }
 
-        $assetMaintenance->supplier_id = $request->input('supplier_id');
         $assetMaintenance->is_warranty = $request->input('is_warranty');
         $assetMaintenance->cost =  $request->input('cost');
         $assetMaintenance->notes = $request->input('notes');

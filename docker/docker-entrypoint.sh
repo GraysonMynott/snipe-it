@@ -74,7 +74,6 @@ for dir in \
   'data/uploads/locations' \
   'data/uploads/manufacturers' \
   'data/uploads/models' \
-  'data/uploads/suppliers' \
   'dumps' \
   'keys'
 do

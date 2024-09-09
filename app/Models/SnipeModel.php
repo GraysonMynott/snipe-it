@@ -46,14 +46,6 @@ class SnipeModel extends Model
         // dd($this->attributes);
     }
 
-    public function setSupplierIdAttribute($value)
-    {
-        if ($value == '') {
-            $value = null;
-        }
-        $this->attributes['supplier_id'] = $value;
-    }
-
     public function setDepreciationIdAttribute($value)
     {
         if ($value == '') {

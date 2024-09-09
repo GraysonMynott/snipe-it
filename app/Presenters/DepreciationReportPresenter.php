@@ -98,12 +98,6 @@ class DepreciationReportPresenter extends Presenter
                 "title" => trans('general.manufacturer'),
                 "visible" => false,
             ],[
-                "field" => "supplier",
-                "searchable" => true,
-                "sortable" => true,
-                "title" => trans('general.supplier'),
-                "visible" => false,
-            ], [
                 "field" => "purchase_date",
                 "searchable" => true,
                 "sortable" => true,

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->integer('category_id')->nullable();
             $table->integer('location_id')->nullable();
             $table->integer('user_id')->nullable();
-            $table->integer('supplier_id')->nullable();
             $table->integer('qty')->default(0);
             $table->boolean('requestable')->default(false);
             $table->timestamps();

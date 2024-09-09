@@ -9,7 +9,6 @@ use App\Models\License;
 use App\Models\Location;
 use App\Models\Manufacturer;
 use App\Models\Statuslabel;
-use App\Models\Supplier;
 use App\Models\User;
 use Illuminate\Console\Command;
 
@@ -98,13 +97,6 @@ class Purge extends Command
             foreach ($categories as $category) {
                 $this->info('- Category "'.$category->name.'" deleted.');
                 $category->forceDelete();
-            }
-
-            $suppliers = Supplier::whereNotNull('deleted_at')->withTrashed()->get();
-            $this->info($suppliers->count().' suppliers purged.');
-            foreach ($suppliers as $supplier) {
-                $this->info('- Supplier "'.$supplier->name.'" deleted.');
-                $supplier->forceDelete();
             }
 
             $users = User::whereNotNull('deleted_at')->where('show_in_list', '!=', '0')->withTrashed()->get();

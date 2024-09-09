@@ -419,10 +419,6 @@ class ReportsController extends Controller
                 $header[] = trans('admin/hardware/form.order');
             }
 
-            if ($request->filled('supplier')) {
-                $header[] = trans('general.supplier');
-            }
-
             if ($request->filled('location')) {
                 $header[] = trans('admin/hardware/table.location');
             }
@@ -567,7 +563,7 @@ class ReportsController extends Controller
 
             $assets = Asset::select('assets.*')->with(
                 'location', 'assetstatus', 'company', 'defaultLoc', 'assignedTo',
-                'model.category', 'model.manufacturer', 'supplier');
+                'model.category', 'model.manufacturer');
             
             if ($request->filled('by_location_id')) {
                 $assets->whereIn('assets.location_id', $request->input('by_location_id'));
@@ -575,10 +571,6 @@ class ReportsController extends Controller
 
             if ($request->filled('by_rtd_location_id')) {
                 $assets->whereIn('assets.rtd_location_id', $request->input('by_rtd_location_id'));
-            }
-
-            if ($request->filled('by_supplier_id')) {
-                $assets->whereIn('assets.supplier_id', $request->input('by_supplier_id'));
             }
 
             if ($request->filled('by_company_id')) {
@@ -725,10 +717,6 @@ class ReportsController extends Controller
 
                     if ($request->filled('order')) {
                         $row[] = ($asset->order_number) ? $asset->order_number : '';
-                    }
-
-                    if ($request->filled('supplier')) {
-                        $row[] = ($asset->supplier) ? $asset->supplier->name : '';
                     }
                     
                     if ($request->filled('location')) {
@@ -968,7 +956,7 @@ class ReportsController extends Controller
     {
         $this->authorize('reports.view');
         // Grab all the improvements
-        $assetMaintenances = AssetMaintenance::with('asset', 'supplier')
+        $assetMaintenances = AssetMaintenance::with('asset')
                                              ->orderBy('created_at', 'DESC')
                                              ->get();
 
@@ -977,7 +965,6 @@ class ReportsController extends Controller
         $header = [
             trans('admin/hardware/table.asset_tag'),
             trans('admin/asset_maintenances/table.asset_name'),
-            trans('general.supplier'),
             trans('admin/asset_maintenances/form.asset_maintenance_type'),
             trans('admin/asset_maintenances/form.title'),
             trans('admin/asset_maintenances/form.start_date'),
@@ -993,7 +980,6 @@ class ReportsController extends Controller
             $row = [];
             $row[] = str_replace(',', '', e($assetMaintenance->asset->asset_tag));
             $row[] = str_replace(',', '', e($assetMaintenance->asset->name));
-            $row[] = str_replace(',', '', e($assetMaintenance->supplier->name));
             $row[] = e($assetMaintenance->improvement_type);
             $row[] = e($assetMaintenance->title);
             $row[] = e($assetMaintenance->start_date);

@@ -171,9 +171,6 @@ class BulkAssetsController extends Controller
             case 'status_label':
                 $assets->OrderStatus($order);
                 break;
-            case 'supplier':
-                $assets->OrderSupplier($order);
-                break;
             case 'assigned_to':
                 $assets->OrderAssigned($order);
                 break;
@@ -228,7 +225,6 @@ class BulkAssetsController extends Controller
         if (($request->filled('purchase_date'))
             || ($request->filled('expected_checkin'))
             || ($request->filled('purchase_cost'))
-            || ($request->filled('supplier_id'))
             || ($request->filled('order_number'))
             || ($request->filled('warranty_months'))
             || ($request->filled('rtd_location_id'))
@@ -259,7 +255,6 @@ class BulkAssetsController extends Controller
                     ->conditionallyAddItem('expected_checkin')
                     ->conditionallyAddItem('order_number')
                     ->conditionallyAddItem('requestable')
-                    ->conditionallyAddItem('supplier_id')
                     ->conditionallyAddItem('warranty_months')
                     ->conditionallyAddItem('next_audit_date');
                     foreach ($custom_field_columns as $key => $custom_field_column) {
