@@ -20,22 +20,9 @@ class AssetModelSeeder extends Seeder
         AssetModel::factory()->count(1)->cp1550Model()->create(['user_id' => $admin->id]);
         AssetModel::factory()->count(1)->cp1555Model()->create(['user_id' => $admin->id]);
         AssetModel::factory()->count(1)->cp1570Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp1575Model()->create(['user_id' => $admin->id]);
         AssetModel::factory()->count(1)->cp1590Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp1595Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp3200Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp5200Model()->create(['user_id' => $admin->id]);
+        AssetModel::factory()->count(1)->cpCloudguardModel()->create(['user_id' => $admin->id]);
 
-        // Switches
-        AssetModel::factory()->count(1)->arb6200Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->arb6300Model()->create(['user_id' => $admin->id]);
-
-        // Access Points
-        AssetModel::factory()->count(1)->arb505Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->arb515Model()->create(['user_id' => $admin->id]);
-        
-        // NetScaler
-        AssetModel::factory()->count(1)->polycomModel()->create(['user_id' => $admin->id]);
 
         $src = public_path('/img/demo/models/');
         $dst = 'models'.'/';

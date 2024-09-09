@@ -23,11 +23,11 @@ class ManufacturerFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->unique()->company(),
-            'user_id' => User::factory()->superuser(),
-            'support_phone' => $this->faker->phoneNumber(),
-            'url' => $this->faker->url(),
-            'support_email' => $this->faker->safeEmail(),
+            'name' => Null,
+            'user_id' => "1",
+            'support_phone' => Null,
+            'url' => Null,
+            'support_email' => Null,
         ];
     }
 

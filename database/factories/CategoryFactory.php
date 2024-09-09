@@ -23,187 +23,63 @@ class CategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->catchPhrase(),
+            'name' => Null,
             'category_type' => 'asset',
-            'checkin_email' => $this->faker->boolean(),
-            'eula_text' => $this->faker->paragraph(),
-            'require_acceptance' => false,
-            'use_default_eula' => $this->faker->boolean(),
-            'user_id' => User::factory()->superuser(),
+            'user_id' => "1",
         ];
     }
 
-    // usage: Category::factory()->assetLaptopCategory();
-    public function assetLaptopCategory()
+    // usage: Category::factory()->assetFirewallCategory();
+    public function assetFirewallCategory()
     {
         return $this->state([
-            'name' => 'Laptops',
-            'category_type' => 'asset',
-            'require_acceptance' => true,
-        ]);
-    }
-
-    // usage: Category::factory()->assetDesktopCategory();
-    public function assetDesktopCategory()
-    {
-        return $this->state([
-            'name' => 'Desktops',
-            'category_type' => 'asset',
-            'require_acceptance' => true,
-        ]);
-    }
-
-    // usage: Category::factory()->assetDisplayCategory();
-    public function assetDisplayCategory()
-    {
-        return $this->state([
-            'name' => 'Displays',
+            'name' => 'Firewall',
             'category_type' => 'asset',
         ]);
     }
 
-     // usage: Category::factory()->assetTabletCategory();
-     public function assetTabletCategory()
-     {
-         return $this->state([
-             'name' => 'Tablets',
-             'category_type' => 'asset',
-         ]);
-     }
-
-     // usage: Category::factory()->assetMobileCategory();
-     public function assetMobileCategory()
-     {
-         return $this->state([
-             'name' => 'Mobile Phones',
-             'category_type' => 'asset',
-         ]);
-     }
-
-     // usage: Category::factory()->assetConferenceCategory();
-     public function assetConferenceCategory()
-     {
-         return $this->state([
-             'name' => 'Conference Phones',
-             'category_type' => 'asset',
-         ]);
-     }
-
-
-     // usage: Category::factory()->assetVoipCategory();
-     public function assetVoipCategory()
-     {
-         return $this->state([
-             'name' => 'VOIP Phones',
-             'category_type' => 'asset',
-         ]);
-     }
-
-     // usage: Category::factory()->accessoryKeyboardCategory();
-     public function accessoryKeyboardCategory()
-     {
-         return $this->state([
-             'name' => 'Keyboards',
-             'category_type' => 'accessory',
-         ]);
-     }
-
-
-     // usage: Category::factory()->accessoryMouseCategory();
-     public function accessoryMouseCategory()
-     {
-         return $this->state([
-             'name' => 'Mouse',
-             'category_type' => 'accessory',
-         ]);
-     }
-
-     // usage: Category::factory()->componentHddCategory();
-     public function componentHddCategory()
-     {
-         return $this->state([
-             'name' => 'HDD/SSD',
-             'category_type' => 'component',
-         ]);
-     }
-
-     // usage: Category::factory()->componentRamCategory();
-     public function componentRamCategory()
-     {
-         return $this->state([
-             'name' => 'RAM',
-             'category_type' => 'component',
-         ]);
-     }
-
-     // usage: Category::factory()->consumablePaperCategory();
-     public function consumablePaperCategory()
-     {
-         return $this->state([
-             'name' => 'Printer Paper',
-             'category_type' => 'consumable',
-         ]);
-     }
-
-     // usage: Category::factory()->consumableInkCategory();
-     public function consumableInkCategory()
-     {
-         return $this->state([
-             'name' => 'Printer Ink',
-             'category_type' => 'consumable',
-         ]);
-     }
-
-     // usage: Category::factory()->licenseGraphicsCategory();
-     public function licenseGraphicsCategory()
-     {
-         return $this->state([
-             'name' => 'Graphics Software',
-             'category_type' => 'license',
-         ]);
-     }
-
-     // usage: Category::factory()->licenseGraphicsCategory();
-     public function licenseOfficeCategory()
-     {
-         return $this->state([
-             'name' => 'Office Software',
-             'category_type' => 'license',
-         ]);
-     }
-
-    public function forAccessories()
+    // usage: Category::factory()->assetServerCategory();
+    public function assetServerCategory()
     {
         return $this->state([
-            'category_type' => 'accessory',
-        ]);
-    }
-
-    public function forAssets()
-    {
-        return $this->state([
+            'name' => 'Server',
             'category_type' => 'asset',
         ]);
     }
 
-    public function forLicenses()
+    // usage: Category::factory()->assetSwitchCategory();
+    public function assetSwitchCategory()
     {
         return $this->state([
-            'category_type' => 'license',
+            'name' => 'Switch',
+            'category_type' => 'asset',
         ]);
     }
 
-    public function forComponents()
+    // usage: Category::factory()->assetRouterCategory();
+    public function assetRouterCategory()
     {
         return $this->state([
-            'category_type' => 'component',
+            'name' => 'Router',
+            'category_type' => 'asset',
         ]);
     }
 
-    public function forConsumables()
-    {
-        return $this->state([
-            'category_type' => 'consumable',
-        ]);
-    }
+     // usage: Category::factory()->assetAccessPointCategory();
+     public function assetWAPCategory()
+     {
+         return $this->state([
+             'name' => 'Wireless Access Point',
+             'category_type' => 'asset',
+         ]);
+     }
+
+     // usage: Category::factory()->assetNetScalerCategory();
+     public function assetNetScalerCategory()
+     {
+         return $this->state([
+             'name' => 'NetScaler',
+             'category_type' => 'asset',
+         ]);
+     }
 }
