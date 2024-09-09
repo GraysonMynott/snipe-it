@@ -31,6 +31,53 @@ class ManufacturerFactory extends Factory
         ];
     }
 
+    public function checkpoint()
+    {
+        return $this->state(function () {
+            return [
+                'name' => 'Check Point',
+                'url' => 'https://checkpoint.com',
+                'support_url' => 'https://usercenter.checkpoint.com',
+                'image' => 'checkpoint.png',
+            ];
+        });
+    }
+
+    public function aruba()
+    {
+        return $this->state(function () {
+            return [
+                'name' => 'Aruba',
+                'url' => 'https://arubanetworks.com',
+                'support_url' => 'https://networkingsupport.hpe.com',
+                'image' => 'aruba.png',
+            ];
+        });
+    }
+
+    public function cisco()
+    {
+        return $this->state(function () {
+            return [
+                'name' => 'Cisco',
+                'url' => 'https://cisco.com',
+                'support_url' => 'https://support.cisco.com',
+            ];
+        });
+    }
+
+    public function citrix()
+    {
+        return $this->state(function () {
+            return [
+                'name' => 'Citrix',
+                'url' => 'https://citrix.com',
+                'support_url' => 'https://support.citrix.com',
+                'image' => 'citrix.png',
+            ];
+        });
+    }
+
     public function apple()
     {
         return $this->state(function () {
@@ -44,44 +91,6 @@ class ManufacturerFactory extends Factory
         });
     }
 
-    public function microsoft()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Microsoft',
-                'url' => 'https://microsoft.com',
-                'support_url' => 'https://support.microsoft.com',
-                'warranty_lookup_url' => 'https://account.microsoft.com/devices',
-                'image' => 'microsoft.png',
-            ];
-        });
-    }
-
-    public function dell()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Dell',
-                'url' => 'https://dell.com',
-                'support_url' => 'https://support.dell.com',
-                'warranty_lookup_url' => 'https://www.dell.com/support/home/en-us/Products/?app=warranty',
-                'image' => 'dell.png',
-            ];
-        });
-    }
-
-    public function asus()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Asus',
-                'url' => 'https://asus.com',
-                'support_url' => 'https://support.asus.com',
-                'image' => 'asus.png',
-            ];
-        });
-    }
-
     public function hp()
     {
         return $this->state(function () {
@@ -90,78 +99,6 @@ class ManufacturerFactory extends Factory
                 'url' => 'https://hp.com',
                 'support_url' => 'https://support.hp.com',
                 'image' => 'hp.png',
-            ];
-        });
-    }
-
-    public function lenovo()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Lenovo',
-                'url' => 'https://lenovo.com',
-                'support_url' => 'https://support.lenovo.com',
-                'image' => 'lenovo.jpg',
-            ];
-        });
-    }
-
-    public function lg()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'LG',
-                'url' => 'https://lg.com',
-                'support_url' => 'https://support.lg.com',
-                'image' => 'lg.jpg',
-            ];
-        });
-    }
-
-    public function polycom()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Polycom',
-                'url' => 'https://polycom.com',
-                'support_url' => 'https://support.polycom.com',
-                'image' => 'polycom.png',
-            ];
-        });
-    }
-
-    public function adobe()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Adobe',
-                'url' => 'https://adobe.com',
-                'support_url' => 'https://support.adobe.com',
-                'image' => 'adobe.jpg',
-            ];
-        });
-    }
-
-    public function avery()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Avery',
-                'url' => 'https://avery.com',
-                'support_url' => 'https://support.avery.com',
-                'image' => 'avery.png',
-            ];
-        });
-    }
-
-    public function crucial()
-    {
-        return $this->state(function () {
-            return [
-                'name' => 'Crucial',
-                'url' => 'https://crucial.com',
-                'support_url' => 'https://support.crucial.com',
-                'image' => 'crucial.jpg',
             ];
         });
     }

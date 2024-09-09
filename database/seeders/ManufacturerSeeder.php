@@ -17,16 +17,11 @@ class ManufacturerSeeder extends Seeder
         $admin = User::where('permissions->superuser', '1')->first() ?? User::factory()->firstAdmin()->create();
 
         Manufacturer::factory()->count(1)->apple()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->microsoft()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->dell()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->asus()->create(['user_id' => $admin->id]);
         Manufacturer::factory()->count(1)->hp()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->lenovo()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->lg()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->polycom()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->adobe()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->avery()->create(['user_id' => $admin->id]);
-        Manufacturer::factory()->count(1)->crucial()->create(['user_id' => $admin->id]);
+        Manufacturer::factory()->count(1)->checkpoint()->create(['user_id' => $admin->id]);
+        Manufacturer::factory()->count(1)->aruba()->create(['user_id' => $admin->id]);
+        Manufacturer::factory()->count(1)->cisco()->create(['user_id' => $admin->id]);
+        Manufacturer::factory()->count(1)->citrix()->create(['user_id' => $admin->id]);
 
         $src = public_path('/img/demo/manufacturers/');
         $dst = 'manufacturers'.'/';
