@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('checkout_requests', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            
             $table->integer('user_id');
             $table->integer('requestable_id');
             $table->string('requestable_type');
             $table->integer('quantity')->default(1);
-            $table->timestamps();
             $table->dateTime('canceled_at')->nullable();
             $table->dateTime('fulfilled_at')->nullable();
             $table->dateTime('deleted_at')->nullable();

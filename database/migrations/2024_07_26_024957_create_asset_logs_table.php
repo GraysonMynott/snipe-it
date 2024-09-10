@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('asset_logs', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+            
             $table->integer('user_id')->nullable();
             $table->string('action_type');
             $table->integer('asset_id');
             $table->integer('checkedout_to')->nullable();
             $table->integer('location_id')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
             $table->string('asset_type', 100)->nullable();
             $table->text('note')->nullable();
             $table->text('filename')->nullable();

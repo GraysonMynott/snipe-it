@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('throttle', function (Blueprint $table) {
             $table->increments('id');
+            
             $table->unsignedInteger('user_id')->nullable()->index();
             $table->string('ip_address')->nullable();
             $table->integer('attempts')->default(0);

@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+            
             $table->string('name');
             $table->string('fax', 20)->nullable();
             $table->string('phone', 20)->nullable();
@@ -21,8 +24,6 @@ return new class extends Migration
             $table->integer('location_id')->nullable();
             $table->integer('manager_id')->nullable();
             $table->string('notes')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
             $table->string('image')->nullable();
         });
     }

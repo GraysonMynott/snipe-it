@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            
             $table->string('name')->unique();
             $table->string('phone', 20)->nullable();
-            $table->timestamps();
             $table->string('image')->nullable();
         });
     }

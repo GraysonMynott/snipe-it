@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('custom_fields', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+
             $table->string('name');
             $table->string('format');
             $table->string('element');
-            $table->timestamps();
             $table->integer('user_id')->nullable();
             $table->text('field_values')->nullable();
             $table->boolean('field_encrypted')->default(false);

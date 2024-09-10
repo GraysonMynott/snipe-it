@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('requested_assets', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+
             $table->integer('asset_id');
             $table->integer('user_id');
             $table->dateTime('accepted_at')->nullable();
             $table->dateTime('denied_at')->nullable();
             $table->string('notes');
-            $table->timestamps();
         });
     }
 

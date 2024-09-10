@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('checkout_acceptances', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->string('checkoutable_type');
             $table->unsignedBigInteger('checkoutable_id');
             $table->integer('assigned_to_id')->nullable();
@@ -20,8 +23,6 @@ return new class extends Migration
             $table->text('note')->nullable();
             $table->timestamp('accepted_at')->nullable();
             $table->timestamp('declined_at')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
             $table->text('stored_eula')->nullable();
             $table->string('stored_eula_file')->nullable();
 

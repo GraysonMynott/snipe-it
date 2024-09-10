@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('imports', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            
             $table->string('name')->nullable();
             $table->string('file_path');
             $table->integer('filesize');
             $table->string('import_type')->nullable();
-            $table->timestamps();
             $table->text('header_row')->nullable();
             $table->text('first_row')->nullable();
             $table->text('field_map')->nullable();

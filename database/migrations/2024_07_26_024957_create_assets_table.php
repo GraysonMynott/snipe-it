@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('assets', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamp('created_at')->nullable()->index();
+            $table->timestamp('updated_at')->nullable();
+            $table->softDeletes();
+            
             $table->string('name')->nullable();
             $table->string('asset_tag')->nullable();
             $table->integer('model_id')->nullable();
@@ -26,10 +30,7 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->text('image')->nullable();
             $table->integer('user_id')->nullable();
-            $table->timestamp('created_at')->nullable()->index();
-            $table->timestamp('updated_at')->nullable();
             $table->boolean('physical')->default(true);
-            $table->softDeletes();
             $table->integer('status_id')->nullable();
             $table->boolean('archived')->nullable()->default(false);
             $table->integer('warranty_months')->nullable();

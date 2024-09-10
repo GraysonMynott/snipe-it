@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('depreciations', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            
             $table->string('name');
             $table->integer('months');
             $table->decimal('depreciation_min')->nullable();
-            $table->timestamps();
             $table->integer('user_id')->nullable();
         });
     }

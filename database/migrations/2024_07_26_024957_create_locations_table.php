@@ -13,18 +13,19 @@ return new class extends Migration
     {
         Schema::create('locations', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->string('name')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
-            $table->timestamps();
             $table->integer('user_id')->nullable();
             $table->string('address')->nullable();
             $table->string('address2')->nullable();
             $table->string('zip', 10)->nullable();
             $table->string('fax', 20)->nullable();
             $table->string('phone', 20)->nullable();
-            $table->softDeletes();
             $table->integer('parent_id')->nullable()->index();
             $table->string('currency', 10)->nullable();
             $table->string('ldap_ou')->nullable();

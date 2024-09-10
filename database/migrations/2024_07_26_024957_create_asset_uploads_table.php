@@ -1,3 +1,4 @@
+<!-- Is this required? -->
 <?php
 
 use Illuminate\Database\Migrations\Migration;
@@ -13,11 +14,11 @@ return new class extends Migration
     {
         Schema::create('asset_uploads', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
             $table->integer('user_id')->nullable();
             $table->string('filename');
             $table->integer('asset_id');
             $table->string('filenotes')->nullable();
-            $table->timestamps();
             $table->softDeletes();
         });
     }

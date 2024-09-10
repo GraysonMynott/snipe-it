@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('action_logs', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamp('created_at')->nullable()->index();
+            $table->timestamp('updated_at')->nullable();
+            $table->softDeletes();
+            
             $table->integer('user_id')->nullable();
             $table->string('action_type')->index();
             $table->integer('target_id')->nullable();
@@ -24,9 +28,6 @@ return new class extends Migration
             $table->integer('item_id');
             $table->date('expected_checkin')->nullable();
             $table->integer('accepted_id')->nullable();
-            $table->timestamp('created_at')->nullable()->index();
-            $table->timestamp('updated_at')->nullable();
-            $table->softDeletes();
             $table->integer('thread_id')->nullable()->index();
             $table->integer('company_id')->nullable()->index();
             $table->string('accept_signature', 100)->nullable();

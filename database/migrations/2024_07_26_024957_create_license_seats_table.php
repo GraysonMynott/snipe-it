@@ -13,12 +13,13 @@ return new class extends Migration
     {
         Schema::create('license_seats', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->integer('license_id')->nullable()->index();
             $table->integer('assigned_to')->nullable();
             $table->text('notes')->nullable();
             $table->integer('user_id')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
             $table->integer('asset_id')->nullable();
 
             $table->index(['asset_id', 'license_id']);

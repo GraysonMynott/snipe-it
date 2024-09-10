@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->timestamps();
-            $table->integer('user_id')->nullable();
             $table->softDeletes();
+
+            $table->string('name');
+            $table->integer('user_id')->nullable();
             $table->longText('eula_text')->nullable();
             $table->boolean('use_default_eula')->default(false);
             $table->boolean('require_acceptance')->default(false);

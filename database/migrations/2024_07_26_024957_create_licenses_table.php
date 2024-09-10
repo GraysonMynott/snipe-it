@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('licenses', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+
             $table->string('name')->nullable();
             $table->text('serial')->nullable();
             $table->integer('seats')->default(1);
             $table->text('notes')->nullable();
             $table->integer('user_id')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
             $table->date('purchase_date')->nullable();
             $table->date('expiration_date')->nullable();
             $table->date('termination_date')->nullable();

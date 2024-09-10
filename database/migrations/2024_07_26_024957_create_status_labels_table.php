@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('status_labels', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 100)->nullable();
-            $table->integer('user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
+
+            $table->string('name', 100)->nullable();
+            $table->integer('user_id')->nullable();
             $table->boolean('deployable')->default(false);
             $table->boolean('pending')->default(false);
             $table->boolean('archived')->default(false);

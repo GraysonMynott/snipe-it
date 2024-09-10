@@ -13,9 +13,10 @@ return new class extends Migration
     {
         Schema::create('permission_groups', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            
             $table->string('name');
             $table->text('permissions')->nullable();
-            $table->timestamps();
             $table->integer('created_by')->nullable();
         });
     }

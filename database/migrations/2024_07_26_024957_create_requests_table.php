@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('requests', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+            
             $table->integer('asset_id');
             $table->integer('user_id')->nullable();
             $table->text('request_code');
-            $table->timestamps();
-            $table->softDeletes();
         });
     }
 

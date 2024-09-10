@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('manufacturers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
             $table->timestamps();
-            $table->integer('user_id')->nullable();
             $table->softDeletes();
+
+            $table->string('name');
+            $table->integer('user_id')->nullable();
             $table->string('url')->nullable();
             $table->string('support_url')->nullable();
             $table->string('warranty_lookup_url')->nullable();

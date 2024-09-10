@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('asset_maintenances', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            
             $table->unsignedInteger('asset_id');
             $table->string('asset_maintenance_type');
             $table->string('title', 100);
@@ -23,7 +25,6 @@ return new class extends Migration
             $table->longText('notes')->nullable();
             $table->decimal('cost', 20)->nullable();
             $table->dateTime('deleted_at')->nullable();
-            $table->timestamps();
             $table->integer('user_id')->nullable();
         });
     }

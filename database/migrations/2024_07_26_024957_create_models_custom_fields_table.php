@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('models_custom_fields', function (Blueprint $table) {
             $table->increments('id');
+            
             $table->integer('asset_model_id');
             $table->integer('custom_field_id');
             $table->text('default_value')->nullable();
