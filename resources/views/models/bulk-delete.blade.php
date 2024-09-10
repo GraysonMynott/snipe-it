@@ -36,6 +36,7 @@
                                 </td>
                                 <td class="col-md-1"><i class="fas fa-barcode" aria-hidden="true"></i></td>
                                 <td class="col-md-10">{{ trans('general.name') }}</td>
+                                <td class="col-md-10">{{ trans('general.manufacturer') }}</td>
                             </tr>
                             </thead>
                             <tbody>
@@ -46,6 +47,7 @@
                                     </td>
                                     <td>{{ $model->assets_count }}</td>
                                     <td>{{ $model->name }}</td>
+                                    <td>{{ $model->manufacturer }}</td>
 
                                 </tr>
                             @endforeach

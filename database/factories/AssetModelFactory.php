@@ -48,7 +48,6 @@ class AssetModelFactory extends Factory
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'image' => 'mbp.jpg',
                 'notes' => 'Check Point 1550 Appliance'
             ];
         });
@@ -65,7 +64,6 @@ class AssetModelFactory extends Factory
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'image' => 'mbp.jpg',
                 'notes' => 'Check Point 1555 Appliance'
             ];
         });
@@ -82,7 +80,6 @@ class AssetModelFactory extends Factory
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'image' => 'mbp.jpg',
                 'notes' => 'Check Point 1570 Appliance'
             ];
         });
@@ -99,7 +96,6 @@ class AssetModelFactory extends Factory
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'image' => 'mbp.jpg',
                 'notes' => 'Check Point 1590 Appliance'
             ];
         });
@@ -116,7 +112,6 @@ class AssetModelFactory extends Factory
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'image' => 'mbp.jpg',
                 'notes' => 'Check Point Cloudguard Virtual Machine'
             ];
         });

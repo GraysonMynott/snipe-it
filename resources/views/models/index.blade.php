@@ -40,9 +40,9 @@
               <div class="table-responsive">
                 <table
                         data-columns="{{ \App\Presenters\AssetModelPresenter::dataTableLayout() }}"
-                        data-cookie-id-table="asssetModelsTable"
+                        data-cookie-id-table="assetModelsTable"
                         data-pagination="true"
-                        data-id-table="asssetModelsTable"
+                        data-id-table="assetModelsTable"
                         data-search="true"
                         data-show-footer="true"
                         data-side-pagination="server"
@@ -53,7 +53,7 @@
                         data-show-export="true"
                         data-show-refresh="true"
                         data-sort-order="asc"
-                        id="asssetModelsTable"
+                        id="assetModelsTable"
                         class="table table-striped snipe-table"
                         data-url="{{ route('api.models.index', ['status' => request('status')]) }}"
                         data-export-options='{

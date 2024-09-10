@@ -23,15 +23,8 @@ class AssetModelPresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('general.id'),
                 'visible' => false,
-            ], [
-                'field' => 'company',
-                'searchable' => true,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => trans('admin/companies/table.title'),
-                'visible' => false,
-                'formatter' => 'companiesLinkObjFormatter',
-            ], [
+            ], 
+            [
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,
@@ -67,29 +60,12 @@ class AssetModelPresenter extends Presenter
                 'visible' => true,
             ],
             [
-                'field' => 'min_amt',
-                'searchable' => false,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => trans('mail.min_QTY'),
-                'visible' => true,
-            ],
-            [
                 'field' => 'assets_count',
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
                 'title' => trans('admin/models/table.numassets'),
                 'visible' => true,
-            ],
-            [
-                'field' => 'depreciation',
-                'searchable' => false,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => trans('general.depreciation'),
-                'visible' => false,
-                'formatter' => 'depreciationsLinkObjFormatter',
             ],
             [
                 'field' => 'category',
@@ -108,7 +84,7 @@ class AssetModelPresenter extends Presenter
                 'title' => trans('admin/hardware/form.eol_rate'),
                 'visible' => true,
             ],
-            [
+/*             [
                 'field' => 'fieldset',
                 'searchable' => false,
                 'sortable' => true,
@@ -116,15 +92,7 @@ class AssetModelPresenter extends Presenter
                 'title' => trans('admin/models/general.fieldset'),
                 'visible' => true,
                 'formatter' => 'fieldsetsLinkObjFormatter',
-            ],
-            [
-                'field' => 'requestable',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/general.requestable'),
-                'formatter' => 'trueFalseFormatter',
-            ],
+            ], */
             [
                 'field' => 'notes',
                 'searchable' => true,
