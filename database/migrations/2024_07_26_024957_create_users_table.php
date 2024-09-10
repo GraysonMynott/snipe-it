@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
+            $table->timestamps();
+            $table->softDeletes();
+            
             $table->string('email')->nullable();
             $table->string('password');
             $table->text('permissions')->nullable();
@@ -25,8 +28,6 @@ return new class extends Migration
             $table->string('reset_password_code')->nullable()->index();
             $table->string('first_name')->nullable();
             $table->string('last_name')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
             $table->string('website')->nullable();
             $table->string('country')->nullable();
             $table->string('gravatar')->nullable();
