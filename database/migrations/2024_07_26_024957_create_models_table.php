@@ -13,21 +13,21 @@ return new class extends Migration
     {
         Schema::create('models', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('model_number')->nullable();
-            $table->integer('min_amt')->nullable();
             $table->integer('manufacturer_id')->nullable();
+            $table->string('model_number')->nullable();
+            $table->string('name');
             $table->integer('category_id')->nullable();
+            $table->integer('min_amt')->nullable();                         // To be removed
             $table->timestamps();
-            $table->integer('depreciation_id')->nullable();
+            $table->integer('depreciation_id')->nullable();                 // TO be removed
             $table->integer('user_id')->nullable();
             $table->integer('eol')->nullable();
             $table->string('image')->nullable();
-            $table->boolean('deprecated_mac_address')->default(false);
+            $table->boolean('deprecated_mac_address')->default(false);      // To be removed
             $table->softDeletes();
-            $table->integer('fieldset_id')->nullable();
+            $table->integer('fieldset_id')->nullable();                     // To be removed?
             $table->text('notes')->nullable();
-            $table->tinyInteger('requestable')->default(0);
+            $table->tinyInteger('requestable')->default(0);                 // To be removed
         });
     }
 
