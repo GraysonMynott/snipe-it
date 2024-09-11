@@ -28,13 +28,13 @@
 
 <div class="row">
   <!-- panel -->
-  <div class="col-lg-2 col-xs-6">
+  <div class="col-lg-4 col-xs-6">
       <a href="{{ route('hardware.index') }}">
     <!-- small box -->
     <div class="small-box bg-teal">
       <div class="inner">
         <h3>{{ number_format(\App\Models\Asset::AssetsForShow()->count()) }}</h3>
-        <p>{{ strtolower(trans('general.assets')) }}</p>
+        <p>{{ trans('general.assets') }}</p>
       </div>
       <div class="icon" aria-hidden="true">
         <i class="fas fa-barcode" aria-hidden="true"></i>
@@ -46,13 +46,13 @@
       </a>
   </div><!-- ./col -->
 
-  <div class="col-lg-2 col-xs-6">
+  <div class="col-lg-4 col-xs-6">
      <a href="{{ route('licenses.index') }}">
     <!-- small box -->
     <div class="small-box bg-maroon">
       <div class="inner">
         <h3>{{ number_format($counts['license']) }}</h3>
-        <p>{{ strtolower(trans('general.licenses')) }}</p>
+        <p>{{ trans('general.licenses') }}</p>
       </div>
       <div class="icon" aria-hidden="true">
         <i class="far fa-save"></i>
@@ -64,13 +64,13 @@
      </a>
   </div><!-- ./col -->
 
- <div class="col-lg-2 col-xs-6">
+ <div class="col-lg-4 col-xs-6">
     <a href="{{ route('users.index') }}">
    <!-- small box -->
    <div class="small-box bg-light-blue">
      <div class="inner">
        <h3>{{ number_format($counts['user']) }}</h3>
-       <p>{{ strtolower(trans('general.people')) }}</p>
+       <p>{{ trans('general.people') }}</p>
      </div>
      <div class="icon" aria-hidden="true">
        <i class="fas fa-users"></i>
@@ -85,7 +85,7 @@
 </div>
 </div>
 
-@if ($counts['grand_total'] == 0)
+{{-- @if ($counts['grand_total'] == 0)
 
     <div class="row">
         <div class="col-md-12">
@@ -126,7 +126,7 @@
         </div>
     </div>
 
-@else
+@else --}}
 
 <!-- recent activity -->
 <div class="row">
@@ -386,7 +386,7 @@
     </div>
 
 
-@endif
+{{-- @endif --}}
 
 
 @stop
