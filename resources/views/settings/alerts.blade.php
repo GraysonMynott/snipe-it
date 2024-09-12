@@ -117,27 +117,27 @@
 
 
                         <!-- Alert interval -->
-                        <div class="form-group {{ $errors->has('audit_interval') ? 'error' : '' }}">
+                        <div class="form-group {{ $errors->has('patch_interval') ? 'error' : '' }}">
                             <div class="col-md-3">
-                                {{ Form::label('audit_interval', trans('admin/settings/general.audit_interval')) }}
+                                {{ Form::label('patch_interval', trans('admin/settings/general.patch_interval')) }}
                             </div>
                             <div class="input-group col-md-2">
-                                {{ Form::text('audit_interval', old('audit_interval', $setting->audit_interval), array('class' => 'form-control','placeholder' => '12', 'maxlength'=>'3', 'style'=>'width: 60px;')) }}
+                                {{ Form::text('patch_interval', old('patch_interval', $setting->patch_interval), array('class' => 'form-control','placeholder' => '12', 'maxlength'=>'3', 'style'=>'width: 60px;')) }}
                                 <span class="input-group-addon">{{ trans('general.months') }}</span>
                             </div>
                             <div class="col-md-9 col-md-offset-3">
-                                {!! $errors->first('audit_interval', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                                <p class="help-block">{{ trans('admin/settings/general.audit_interval_help') }}</p>
+                                {!! $errors->first('patch_interval', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
+                                <p class="help-block">{{ trans('admin/settings/general.patch_interval_help') }}</p>
                             </div>
                         </div>
 
                         <!-- Alert threshold -->
-                        <div class="form-group {{ $errors->has('audit_warning_days') ? 'error' : '' }}">
+                        <div class="form-group {{ $errors->has('patch_warning_days') ? 'error' : '' }}">
                             <div class="col-md-3">
-                                {{ Form::label('audit_warning_days', trans('admin/settings/general.audit_warning_days')) }}
+                                {{ Form::label('patch_warning_days', trans('admin/settings/general.patch_warning_days')) }}
                             </div>
                             <div class="input-group col-md-2">
-                                {{ Form::text('audit_warning_days', old('audit_warning_days', $setting->audit_warning_days), array('class' => 'form-control','placeholder' => '14', 'maxlength'=>'3', 'style'=>'width: 60px;')) }}
+                                {{ Form::text('patch_warning_days', old('patch_warning_days', $setting->patch_warning_days), array('class' => 'form-control','placeholder' => '14', 'maxlength'=>'3', 'style'=>'width: 60px;')) }}
                                 <span class="input-group-addon">{{ trans('general.days') }}</span>
 
 
@@ -145,8 +145,8 @@
 
                             </div>
                             <div class="col-md-9 col-md-offset-3">
-                                {!! $errors->first('audit_warning_days', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                                <p class="help-block">{{ trans('admin/settings/general.audit_warning_days_help') }}</p>
+                                {!! $errors->first('patch_warning_days', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
+                                <p class="help-block">{{ trans('admin/settings/general.patch_warning_days_help') }}</p>
                             </div>
                         </div>
 

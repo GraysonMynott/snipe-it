@@ -107,7 +107,7 @@
 
 
     function dateRowCheckStyle(value) {
-        if ((value.days_to_next_audit) && (value.days_to_next_audit < {{ $snipeSettings->audit_warning_days ?: 0 }})) {
+        if ((value.days_to_next_patch) && (value.days_to_next_patch < {{ $snipeSettings->patch_warning_days ?: 0 }})) {
             return { classes : "danger" }
         }
         return {};
@@ -265,8 +265,8 @@
         };
     }
 
-    function hardwareAuditFormatter(value, row) {
-        return '<a href="{{ config('app.url') }}/hardware/audit/' + row.id + '/" class="btn btn-sm bg-yellow" data-tooltip="true" title="Audit this item">{{ trans('general.audit') }}</a>';
+    function hardwarePatchFormatter(value, row) {
+        return '<a href="{{ config('app.url') }}/hardware/patch/' + row.id + '/" class="btn btn-sm bg-yellow" data-tooltip="true" title="Patch this item">{{ trans('general.patch') }}</a>';
     }
 
 
@@ -731,7 +731,7 @@
         }
     }
 
-    function auditImageFormatter(value){
+    function patchImageFormatter(value){
         if (value){
             return '<a href="' + value.url + '" data-toggle="lightbox" data-type="image"><img src="' + value.url + '" style="max-height: {{ $snipeSettings->thumbnail_max_h }}px; width: auto;" class="img-responsive"></a>'
         }

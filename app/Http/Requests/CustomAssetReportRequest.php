@@ -32,10 +32,10 @@ class CustomAssetReportRequest extends Request
             'expected_checkin_end'        => 'date|date_format:Y-m-d|nullable',
             'checkin_date_start'      => 'date|date_format:Y-m-d|nullable',
             'checkin_date_end'        => 'date|date_format:Y-m-d|nullable',
-            'last_audit_start'      => 'date|date_format:Y-m-d|nullable',
-            'last_audit_end'        => 'date|date_format:Y-m-d|nullable',
-            'next_audit_start'      => 'date|date_format:Y-m-d|nullable',
-            'next_audit_end'        => 'date|date_format:Y-m-d|nullable',
+            'last_patch_start'      => 'date|date_format:Y-m-d|nullable',
+            'last_patch_end'        => 'date|date_format:Y-m-d|nullable',
+            'next_patch_start'      => 'date|date_format:Y-m-d|nullable',
+            'next_patch_end'        => 'date|date_format:Y-m-d|nullable',
         ];
     }
 

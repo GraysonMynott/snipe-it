@@ -143,8 +143,8 @@ class AssetsController extends Controller
             $asset->rtd_location_id         = request('rtd_location_id', null);
             $asset->byod                    = request('byod', 0);
 
-            if (! empty($settings->audit_interval)) {
-                $asset->next_audit_date = Carbon::now()->addMonths($settings->audit_interval)->toDateString();
+            if (! empty($settings->patch_interval)) {
+                $asset->next_patch_date = Carbon::now()->addMonths($settings->patch_interval)->toDateString();
             }
 
             // Set location_id to rtd_location_id ONLY if the asset isn't being checked out
@@ -252,7 +252,7 @@ class AssetsController extends Controller
         $settings = Setting::getSettings();
 
         if (isset($asset)) {
-            $audit_log = Actionlog::where('action_type', '=', 'audit')
+            $patch_log = Actionlog::where('action_type', '=', 'patch')
                 ->where('item_id', '=', $assetId)
                 ->where('item_type', '=', Asset::class)
                 ->orderBy('created_at', 'DESC')->first();
@@ -273,7 +273,7 @@ class AssetsController extends Controller
             ];
 
             return view('hardware/view', compact('asset', 'qr_code', 'settings'))
-                ->with('use_currency', $use_currency)->with('audit_log', $audit_log);
+                ->with('use_currency', $use_currency)->with('patch_log', $patch_log);
         }
 
         return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.does_not_exist'));
@@ -299,7 +299,7 @@ class AssetsController extends Controller
         $asset->warranty_months = $request->input('warranty_months', null);
         $asset->purchase_cost = $request->input('purchase_cost', null);
         $asset->purchase_date = $request->input('purchase_date', null);
-        $asset->next_audit_date = $request->input('next_audit_date', null);
+        $asset->next_patch_date = $request->input('next_patch_date', null);
         if ($request->filled('purchase_date') && !$request->filled('asset_eol_date') && ($asset->model->eol > 0)) {
             $asset->purchase_date = $request->input('purchase_date', null); 
             $asset->asset_eol_date = Carbon::parse($request->input('purchase_date'))->addMonths($asset->model->eol)->format('Y-m-d');
@@ -811,10 +811,10 @@ class AssetsController extends Controller
 
     public function quickScan()
     {
-        $this->authorize('audit', Asset::class);
+        $this->authorize('patch', Asset::class);
         $dt = Carbon::now()->addMonths(12)->toDateString();
 
-        return view('hardware/quickscan')->with('next_audit_date', $dt);
+        return view('hardware/quickscan')->with('next_patch_date', $dt);
     }
 
     public function quickScanCheckin()
@@ -824,21 +824,21 @@ class AssetsController extends Controller
         return view('hardware/quickscan-checkin');
     }
 
-    public function audit($id)
+    public function patch($id)
     {
         $settings = Setting::getSettings();
-        $this->authorize('audit', Asset::class);
-        $dt = Carbon::now()->addMonths($settings->audit_interval)->toDateString();
+        $this->authorize('patch', Asset::class);
+        $dt = Carbon::now()->addMonths($settings->patch_interval)->toDateString();
         $asset = Asset::findOrFail($id);
 
-        return view('hardware/audit')->with('asset', $asset)->with('next_audit_date', $dt)->with('locations_list');
+        return view('hardware/patch')->with('asset', $asset)->with('next_patch_date', $dt)->with('locations_list');
     }
 
-    public function dueForAudit()
+    public function dueForPatch()
     {
-        $this->authorize('audit', Asset::class);
+        $this->authorize('patch', Asset::class);
 
-        return view('hardware/audit-due');
+        return view('hardware/patch-due');
     }
 
     public function dueForCheckin()
@@ -849,13 +849,13 @@ class AssetsController extends Controller
     }
 
 
-    public function auditStore(UploadFileRequest $request, $id)
+    public function patchStore(UploadFileRequest $request, $id)
     {
-        $this->authorize('audit', Asset::class);
+        $this->authorize('patch', Asset::class);
 
         $rules = [
             'location_id' => 'exists:locations,id|nullable|numeric',
-            'next_audit_date' => 'date|nullable',
+            'next_patch_date' => 'date|nullable',
         ];
 
         $validator = Validator::make($request->all(), $rules);
@@ -869,10 +869,10 @@ class AssetsController extends Controller
         /**
          * Even though we do a save() further down, we don't want to log this as a "normal" asset update,
          * which would trigger the Asset Observer and would log an asset *update* log entry (because the
-         * de-normed fields like next_audit_date on the asset itself will change on save()) *in addition* to
-         * the audit log entry we're creating through this controller.
+         * de-normed fields like next_patch_date on the asset itself will change on save()) *in addition* to
+         * the patch log entry we're creating through this controller.
          *
-         * To prevent this double-logging (one for update and one for audit), we skip the observer and bypass
+         * To prevent this double-logging (one for update and one for patch), we skip the observer and bypass
          * that de-normed update log entry by using unsetEventDispatcher(), BUT invoking unsetEventDispatcher()
          * will bypass normal model-level validation that's usually handled at the observer )
          *
@@ -883,11 +883,11 @@ class AssetsController extends Controller
          */
         $asset->unsetEventDispatcher();
 
-        $asset->next_audit_date = $request->input('next_audit_date');
-        $asset->last_audit_date = date('Y-m-d H:i:s');
+        $asset->next_patch_date = $request->input('next_patch_date');
+        $asset->last_patch_date = date('Y-m-d H:i:s');
 
         // Check to see if they checked the box to update the physical location,
-        // not just note it in the audit notes
+        // not just note it in the patch notes
         if ($request->input('update_location') == '1') {
             $asset->location_id = $request->input('location_id');
         }
@@ -902,11 +902,11 @@ class AssetsController extends Controller
             $file_name = null;
             // Create the image (if one was chosen.)
             if ($request->hasFile('image')) {
-                $file_name = $request->handleFile('private_uploads/audits/', 'audit-'.$asset->id, $request->file('image'));
+                $file_name = $request->handleFile('private_uploads/patches/', 'patch-'.$asset->id, $request->file('image'));
             }
 
-            $asset->logAudit($request->input('note'), $request->input('location_id'), $file_name);
-            return redirect()->route('assets.audit.due')->with('success', trans('admin/hardware/message.audit.success'));
+            $asset->logPatch($request->input('note'), $request->input('location_id'), $file_name);
+            return redirect()->route('assets.patch.due')->with('success', trans('admin/hardware/message.patch.success'));
         }
 
         return redirect()->back()->withInput()->withErrors($asset->getErrors());

@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Setting;
-use App\Notifications\AuditNotification;
+use App\Notifications\PatchNotification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
@@ -212,7 +212,7 @@ trait Loggable
      * @since [v4.0]
      * @return \App\Models\Actionlog
      */
-    public function logAudit($note, $location_id, $filename = null)
+    public function logPatch($note, $location_id, $filename = null)
     {
         $log = new Actionlog;
         $location = Location::find($location_id);
@@ -227,7 +227,7 @@ trait Loggable
         $log->note = $note;
         $log->user_id = auth()->id();
         $log->filename = $filename;
-        $log->logaction('audit');
+        $log->logaction('patch');
 
         $params = [
             'item' => $log->item,
@@ -236,7 +236,7 @@ trait Loggable
             'location' => ($location) ? $location->name : '',
             'note' => $note,
         ];
-        Setting::getSettings()->notify(new AuditNotification($params));
+        Setting::getSettings()->notify(new PatchNotification($params));
 
         return $log;
     }

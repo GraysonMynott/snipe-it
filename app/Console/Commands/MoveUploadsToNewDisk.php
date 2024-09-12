@@ -94,7 +94,7 @@ class MoveUploadsToNewDisk extends Command
 
         $private_uploads['assets'] = glob('storage/private_uploads/assets'."/*.*");
         $private_uploads['signatures'] = glob('storage/private_uploads/signatures'."/*.*");
-        $private_uploads['audits'] = glob('storage/private_uploads/audits'."/*.*");
+        $private_uploads['patches'] = glob('storage/private_uploads/patches'."/*.*");
         $private_uploads['assetmodels'] = glob('storage/private_uploads/assetmodels'."/*.*");
         $private_uploads['imports'] = glob('storage/private_uploads/imports'."/*.*");
         $private_uploads['licenses'] = glob('storage/private_uploads/licenses'."/*.*");

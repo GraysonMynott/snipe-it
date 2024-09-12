@@ -23,8 +23,8 @@ class AssetCountForSidebar
         $total_assets = 0;
         $total_due_for_checkin = 0;
         $total_overdue_for_checkin = 0;
-        $total_due_for_audit = 0;
-        $total_overdue_for_audit = 0;
+        $total_due_for_patch = 0;
+        $total_overdue_for_patch = 0;
 
         try {
             $settings = Setting::getSettings();
@@ -86,15 +86,15 @@ class AssetCountForSidebar
         }
 
         try {
-            $total_due_for_audit = Asset::DueForAudit($settings)->count();
-            view()->share('total_due_for_audit', $total_due_for_audit);
+            $total_due_for_patch = Asset::DueForPatch($settings)->count();
+            view()->share('total_due_for_patch', $total_due_for_patch);
         } catch (\Exception $e) {
             Log::debug($e);
         }
 
         try {
-            $total_overdue_for_audit = Asset::OverdueForAudit()->count();
-            view()->share('total_overdue_for_audit', $total_overdue_for_audit);
+            $total_overdue_for_patch = Asset::OverdueForPatch()->count();
+            view()->share('total_overdue_for_patch', $total_overdue_for_patch);
         } catch (\Exception $e) {
             Log::debug($e);
         }
@@ -114,7 +114,7 @@ class AssetCountForSidebar
         }
 
         view()->share('total_due_and_overdue_for_checkin', ($total_due_for_checkin + $total_overdue_for_checkin));
-        view()->share('total_due_and_overdue_for_audit', ($total_due_for_audit + $total_overdue_for_audit));
+        view()->share('total_due_and_overdue_for_patch', ($total_due_for_patch + $total_overdue_for_patch));
 
         return $next($request);
     }

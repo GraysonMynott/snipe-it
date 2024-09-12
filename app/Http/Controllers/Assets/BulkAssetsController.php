@@ -72,8 +72,8 @@ class BulkAssetsController extends Controller
             'updated_at',
             'purchase_date',
             'purchase_cost',
-            'last_audit_date',
-            'next_audit_date',
+            'last_patch_date',
+            'next_patch_date',
             'warranty_months',
             'checkout_counter',
             'checkin_counter',
@@ -232,10 +232,10 @@ class BulkAssetsController extends Controller
             || ($request->filled('company_id'))
             || ($request->filled('status_id'))
             || ($request->filled('model_id'))
-            || ($request->filled('next_audit_date'))
+            || ($request->filled('next_patch_date'))
             || ($request->filled('null_purchase_date'))
             || ($request->filled('null_expected_checkin_date'))
-            || ($request->filled('null_next_audit_date'))
+            || ($request->filled('null_next_patch_date'))
             || ($request->anyFilled($custom_field_columns))
 
         ) {
@@ -256,7 +256,7 @@ class BulkAssetsController extends Controller
                     ->conditionallyAddItem('order_number')
                     ->conditionallyAddItem('requestable')
                     ->conditionallyAddItem('warranty_months')
-                    ->conditionallyAddItem('next_audit_date');
+                    ->conditionallyAddItem('next_patch_date');
                     foreach ($custom_field_columns as $key => $custom_field_column) {
                         $this->conditionallyAddItem($custom_field_column); 
                    }
@@ -272,8 +272,8 @@ class BulkAssetsController extends Controller
                     $this->update_array['expected_checkin'] = null;
                 }
 
-                if ($request->input('null_next_audit_date')=='1') {
-                    $this->update_array['next_audit_date'] = null;
+                if ($request->input('null_next_patch_date')=='1') {
+                    $this->update_array['next_patch_date'] = null;
                 }
 
                 if ($request->filled('purchase_cost')) {

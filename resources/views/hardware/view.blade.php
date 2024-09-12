@@ -19,15 +19,15 @@
             </div>
         @endif
 
-        @if ($asset->checkInvalidNextAuditDate())
+        @if ($asset->checkInvalidNextPatchDate())
             <div class="col-md-12">
                 <div class="callout callout-warning">
                     <p><strong>{{ trans('general.warning',
                         [
-                            'warning' => trans('admin/hardware/message.warning_audit_date_mismatch',
+                            'warning' => trans('admin/hardware/message.warning_patch_date_mismatch',
                                     [
-                                        'last_audit_date' => Helper::getFormattedDateObject($asset->last_audit_date, 'date', false),
-                                        'next_audit_date' => Helper::getFormattedDateObject($asset->next_audit_date, 'date', false)
+                                        'last_patch_date' => Helper::getFormattedDateObject($asset->last_patch_date, 'date', false),
+                                        'next_patch_date' => Helper::getFormattedDateObject($asset->next_patch_date, 'date', false)
                                     ]
                                     )
                         ]
@@ -235,34 +235,34 @@
                                         </div>
                                     @endif
 
-                                    @if ((isset($audit_log)) && ($audit_log->created_at))
+                                    @if ((isset($patch_log)) && ($patch_log->created_at))
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('general.last_audit') }}
+                                                    {{ trans('general.last_patch') }}
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
-                                                {!! $asset->checkInvalidNextAuditDate() ? '<i class="fas fa-exclamation-triangle text-orange" aria-hidden="true"></i>' : '' !!}
-                                                {{ Helper::getFormattedDateObject($audit_log->created_at, 'date', false) }}
-                                                @if ($audit_log->user)
-                                                    (by {{ link_to_route('users.show', $audit_log->user->present()->fullname(), [$audit_log->user->id]) }})
+                                                {!! $asset->checkInvalidNextPatchDate() ? '<i class="fas fa-exclamation-triangle text-orange" aria-hidden="true"></i>' : '' !!}
+                                                {{ Helper::getFormattedDateObject($patch_log->created_at, 'date', false) }}
+                                                @if ($patch_log->user)
+                                                    (by {{ link_to_route('users.show', $patch_log->user->present()->fullname(), [$patch_log->user->id]) }})
                                                 @endif
 
                                             </div>
                                         </div>
                                     @endif
 
-                                    @if ($asset->next_audit_date)
+                                    @if ($asset->next_patch_date)
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('general.next_audit_date') }}
+                                                    {{ trans('general.next_patch_date') }}
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
-                                                {!! $asset->checkInvalidNextAuditDate() ? '<i class="fas fa-exclamation-triangle text-orange" aria-hidden="true"></i>' : '' !!}
-                                                {{ Helper::getFormattedDateObject($asset->next_audit_date, 'date', false) }}
+                                                {!! $asset->checkInvalidNextPatchDate() ? '<i class="fas fa-exclamation-triangle text-orange" aria-hidden="true"></i>' : '' !!}
+                                                {{ Helper::getFormattedDateObject($asset->next_patch_date, 'date', false) }}
                                             </div>
                                         </div>
                                     @endif
@@ -652,11 +652,11 @@
                                         </div>
                                     @endcan
 
-                                    @can('audit', \App\Models\Asset::class)
+                                    @can('patch', \App\Models\Asset::class)
                                         <div class="col-md-12" style="padding-top: 5px;">
                                             <span class="tooltip-wrapper"{!! (!$asset->model ? ' data-tooltip="true" title="'.trans('admin/hardware/general.model_invalid_fix').'"' : '') !!}>
-                                                <a href="{{ route('asset.audit.create', $asset->id)  }}" class="btn btn-sm btn-primary btn-block hidden-print{{ (!$asset->model ? ' disabled' : '') }}">
-                                                 {{ trans('general.audit') }}
+                                                <a href="{{ route('asset.patch.create', $asset->id)  }}" class="btn btn-sm btn-primary btn-block hidden-print{{ (!$asset->model ? ' disabled' : '') }}">
+                                                 {{ trans('general.patch') }}
                                             </a>
                                             </span>
                                         </div>

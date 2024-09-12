@@ -38,11 +38,11 @@ class AssetObserver
             $same_checkin_counter = (($attributes['checkin_counter'] == $attributesOriginal['checkin_counter']));
         }
 
-        // If the asset isn't being checked out or audited, log the update.
+        // If the asset isn't being checked out or patched, log the update.
         // (Those other actions already create log entries.)
 	    if (($attributes['assigned_to'] == $attributesOriginal['assigned_to'])
 	    && ($same_checkout_counter) && ($same_checkin_counter)
-            && ((isset( $attributes['next_audit_date']) ? $attributes['next_audit_date'] : null) == (isset($attributesOriginal['next_audit_date']) ? $attributesOriginal['next_audit_date']: null))
+            && ((isset( $attributes['next_patch_date']) ? $attributes['next_patch_date'] : null) == (isset($attributesOriginal['next_patch_date']) ? $attributesOriginal['next_patch_date']: null))
             && ($attributes['last_checkout'] == $attributesOriginal['last_checkout']) && (!$restoring_or_deleting))
         {
             $changed = [];

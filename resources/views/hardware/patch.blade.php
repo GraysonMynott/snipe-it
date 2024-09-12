@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    {{ trans('general.audit') }}
+    {{ trans('general.patch') }}
     @parent
 @stop
 
@@ -23,7 +23,7 @@
 
                 {{ Form::open([
                   'method' => 'POST',
-                  'route' => ['asset.audit.store', $asset->id],
+                  'route' => ['asset.patch.store', $asset->id],
                   'files' => true,
                   'class' => 'form-horizontal' ]) }}
 
@@ -77,22 +77,22 @@
                                 <label class="form-control">
                                     <input type="checkbox" value="1" name="update_location" {{ old('update_location') == '1' ? ' checked="checked"' : '' }}> {{ trans('admin/hardware/form.asset_location') }}
                                 </label>
-                                <p class="help-block">{!! trans('help.audit_help') !!}</p>
+                                <p class="help-block">{!! trans('help.patch_help') !!}</p>
                             </div>
 
                         </div>
 
 
-                        <!-- Show last audit date -->
+                        <!-- Show last patch date -->
                         <div class="form-group">
                             <label class="control-label col-md-3">
-                                {{ trans('general.last_audit') }}
+                                {{ trans('general.last_patch') }}
                             </label>
                             <div class="col-md-8">
 
                                 <p class="form-control-static">
-                                    @if ($asset->last_audit_date)
-                                        {{ Helper::getFormattedDateObject($asset->last_audit_date, 'datetime', false) }}
+                                    @if ($asset->last_patch_date)
+                                        {{ Helper::getFormattedDateObject($asset->last_patch_date, 'datetime', false) }}
                                     @else
                                         {{ trans('admin/settings/general.none') }}
                                     @endif
@@ -101,18 +101,18 @@
                         </div>
 
 
-                        <!-- Next Audit -->
-                        <div class="form-group{{ $errors->has('next_audit_date') ? ' has-error' : '' }}">
-                            <label for="next_audit_date" class="col-sm-3 control-label">
-                                {{ trans('general.next_audit_date') }}
+                        <!-- Next Patch -->
+                        <div class="form-group{{ $errors->has('next_patch_date') ? ' has-error' : '' }}">
+                            <label for="next_patch_date" class="col-sm-3 control-label">
+                                {{ trans('general.next_patch_date') }}
                             </label>
                             <div class="col-md-8">
                                 <div class="input-group date col-md-5" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-clear-btn="true">
-                                    <input type="text" class="form-control" placeholder="{{ trans('general.next_audit_date') }}" name="next_audit_date" id="next_audit_date" value="{{ old('next_audit_date', $next_audit_date) }}">
+                                    <input type="text" class="form-control" placeholder="{{ trans('general.next_patch_date') }}" name="next_patch_date" id="next_patch_date" value="{{ old('next_patch_date', $next_patch_date) }}">
                                     <span class="input-group-addon"><i class="fas fa-calendar" aria-hidden="true"></i></span>
                                 </div>
-                                {!! $errors->first('next_audit_date', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-                                 <p class="help-block">{!! trans('general.next_audit_date_help') !!}</p>
+                                {!! $errors->first('next_patch_date', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
+                                 <p class="help-block">{!! trans('general.next_patch_date_help') !!}</p>
                             </div>
                         </div>
 
@@ -128,8 +128,8 @@
                             </div>
                         </div>
 
-                        <!-- Audit Image -->
-                        @include ('partials.forms.edit.image-upload', ['help_text' => trans('general.audit_images_help')])
+                        <!-- Patch Image -->
+                        @include ('partials.forms.edit.image-upload', ['help_text' => trans('general.patch_images_help')])
 
 
                     </div> <!--/.box-body-->
@@ -137,7 +137,7 @@
                         <a class="btn btn-link" href="{{ URL::previous() }}"> {{ trans('button.cancel') }}</a>
                         <button type="submit" class="btn btn-success pull-right{{ (!$asset->model ? ' disabled' : '') }}"{!! (!$asset->model ? ' data-tooltip="true" title="'.trans('admin/hardware/general.model_invalid_fix').'" disabled' : '') !!}>
                             <i class="fas fa-check icon-white" aria-hidden="true"></i>
-                            {{ trans('general.audit') }}
+                            {{ trans('general.patch') }}
                         </button>
                     </div>
                 </form>

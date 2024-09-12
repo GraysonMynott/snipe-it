@@ -42,7 +42,7 @@ class SendExpectedCheckinAlerts extends Command
     public function handle()
     {
         $settings = Setting::getSettings();
-        $interval = $settings->audit_warning_days ?? 0;
+        $interval = $settings->patch_warning_days ?? 0;
         $today = Carbon::now();
         $interval_date = $today->copy()->addDays($interval);
         

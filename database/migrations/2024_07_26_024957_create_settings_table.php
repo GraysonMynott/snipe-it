@@ -101,8 +101,8 @@ return new class extends Migration
             $table->boolean('pwd_secure_uncommon')->default(false);
             $table->string('pwd_secure_complexity')->nullable();
             $table->integer('pwd_secure_min')->default(8);
-            $table->integer('audit_interval')->nullable();
-            $table->integer('audit_warning_days')->nullable();
+            $table->integer('patch_interval')->nullable();
+            $table->integer('patch_warning_days')->nullable();
             $table->boolean('show_url_in_emails')->default(false);
             $table->string('custom_forgot_pass_url')->nullable();
             $table->boolean('show_alerts_in_menu')->default(true);

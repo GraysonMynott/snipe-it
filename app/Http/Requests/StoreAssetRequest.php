@@ -30,7 +30,7 @@ class StoreAssetRequest extends ImageUploadRequest
             ? Company::getIdForCurrentUser($this->company_id)
             : $this->company_id;
 
-        $this->parseLastAuditDate();
+        $this->parseLastPatchDate();
 
         $this->merge([
             'asset_tag' => $this->asset_tag ?? Asset::autoincrement_asset(),
@@ -63,14 +63,14 @@ class StoreAssetRequest extends ImageUploadRequest
         );
     }
 
-    private function parseLastAuditDate(): void
+    private function parseLastPatchDate(): void
     {
-        if ($this->input('last_audit_date')) {
+        if ($this->input('last_patch_date')) {
             try {
-                $lastAuditDate = Carbon::parse($this->input('last_audit_date'));
+                $lastPatchDate = Carbon::parse($this->input('last_patch_date'));
 
                 $this->merge([
-                    'last_audit_date' => $lastAuditDate->startOfDay()->format('Y-m-d H:i:s'),
+                    'last_patch_date' => $lastPatchDate->startOfDay()->format('Y-m-d H:i:s'),
                 ]);
             } catch (InvalidFormatException $e) {
                 // we don't need to do anything here...

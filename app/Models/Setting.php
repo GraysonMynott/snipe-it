@@ -73,8 +73,8 @@ class Setting extends Model
           'login_remote_user_header_name'       => 'string|nullable',
           'thumbnail_max_h'                     => 'numeric|max:500|min:25',
           'pwd_secure_min'                      => 'numeric|required|min:8',
-          'audit_warning_days'                  => 'numeric|nullable',
-          'audit_interval'                      => 'numeric|nullable',
+          'patch_warning_days'                  => 'numeric|nullable',
+          'patch_interval'                      => 'numeric|nullable',
           'custom_forgot_pass_url'              => 'url|nullable',
           'privacy_policy_link'                 => 'nullable|url',
           'google_client_id'                    => 'nullable|ends_with:apps.googleusercontent.com'

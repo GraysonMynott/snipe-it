@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    {{ trans('general.bulkaudit') }}
+    {{ trans('general.bulkpatch') }}
     @parent
 @stop
 
@@ -19,7 +19,7 @@
     
 
     <div class="row">
-    {{ Form::open(['method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form', 'id' => 'audit-form' ]) }}
+    {{ Form::open(['method' => 'POST', 'class' => 'form-horizontal', 'role' => 'form', 'id' => 'patch-form' ]) }}
         <!-- left column -->
         <div class="col-md-6">
             <div class="box box-default">
@@ -27,9 +27,9 @@
                     <div class="box-body">
                     {{csrf_field()}}
 
-                    <!-- Next Audit -->
+                    <!-- Next Patch -->
                         <div class="form-group {{ $errors->has('asset_tag') ? 'error' : '' }}">
-                            {{ Form::label('asset_tag', trans('general.asset_tag'), array('class' => 'col-md-3 control-label', 'id' => 'audit_tag')) }}
+                            {{ Form::label('asset_tag', trans('general.asset_tag'), array('class' => 'col-md-3 control-label', 'id' => 'patch_tag')) }}
                             <div class="col-md-9">
                                 <div class="input-group date col-md-5" data-date-format="yyyy-mm-dd">
                                     <input type="text" class="form-control" name="asset_tag" id="asset_tag" value="{{ old('asset_tag') }}">
@@ -58,15 +58,15 @@
                         </div>
 
 
-                        <!-- Next Audit -->
-                        <div class="form-group {{ $errors->has('next_audit_date') ? 'error' : '' }}">
-                            {{ Form::label('next_audit_date', trans('general.next_audit_date'), array('class' => 'col-md-3 control-label')) }}
+                        <!-- Next Patch -->
+                        <div class="form-group {{ $errors->has('next_patch_date') ? 'error' : '' }}">
+                            {{ Form::label('next_patch_date', trans('general.next_patch_date'), array('class' => 'col-md-3 control-label')) }}
                             <div class="col-md-9">
                                 <div class="input-group date col-md-5" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-clear-btn="true">
-                                    <input type="text" class="form-control" placeholder="{{ trans('general.next_audit_date') }}" name="next_audit_date" id="next_audit_date" value="{{ old('next_audit_date', $next_audit_date) }}">
+                                    <input type="text" class="form-control" placeholder="{{ trans('general.next_patch_date') }}" name="next_patch_date" id="next_patch_date" value="{{ old('next_patch_date', $next_patch_date) }}">
                                     <span class="input-group-addon"><i class="fas fa-calendar" aria-hidden="true"></i></span>
                                 </div>
-                                {!! $errors->first('next_audit_date', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
+                                {!! $errors->first('next_patch_date', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
                             </div>
                         </div>
 
@@ -85,7 +85,7 @@
                     </div> <!--/.box-body-->
                     <div class="box-footer">
                         <a class="btn btn-link" href="{{ route('hardware.index') }}"> {{ trans('button.cancel') }}</a>
-                        <button type="submit" id="audit_button" class="btn btn-success pull-right"><i class="fas fa-check icon-white" aria-hidden="true"></i> {{ trans('general.audit') }}</button>
+                        <button type="submit" id="patch_button" class="btn btn-success pull-right"><i class="fas fa-check icon-white" aria-hidden="true"></i> {{ trans('general.patch') }}</button>
                     </div>
 
 
@@ -98,20 +98,20 @@
         </div> <!--/.col-md-6-->
 
         <div class="col-md-6">
-            <div class="box box-default" id="audited-div" style="display: none">
+            <div class="box box-default" id="patched-div" style="display: none">
                 <div class="box-header with-border">
-                    <h2 class="box-title"> {{ trans('general.bulkaudit_status') }} (<span id="audit-counter">0</span> {{ trans('general.assets_audited') }}) </h2>
+                    <h2 class="box-title"> {{ trans('general.bulkpatch_status') }} (<span id="patch-counter">0</span> {{ trans('general.assets_patched') }}) </h2>
                 </div>
                 <div class="box-body">
     
-                    <table id="audited" class="table table-striped snipe-table">
+                    <table id="patched" class="table table-striped snipe-table">
                         <thead>
                         <tr>
                             <th>{{ trans('general.asset_tag') }}</th>
-                            <th>{{ trans('general.bulkaudit_status') }}</th>
+                            <th>{{ trans('general.bulkpatch_status') }}</th>
                             <th></th>
                         </tr>
-                        <tr id="audit-loader" style="display: none;">
+                        <tr id="patch-loader" style="display: none;">
                             <td colspan="3">
                                 <i class="fas fa-spinner spin" aria-hidden="true"></i> {{ trans('admin/hardware/form.processing_spinner') }}
                             </td>
@@ -133,17 +133,17 @@
 @section('moar_scripts')
     <script nonce="{{ csrf_token() }}">
 
-        $("#audit-form").submit(function (event) {
-            $('#audited-div').show();
-            $('#audit-loader').show();
+        $("#patch-form").submit(function (event) {
+            $('#patched-div').show();
+            $('#patch-loader').show();
 
             event.preventDefault();
 
-            var form = $("#audit-form").get(0);
-            var formData = $('#audit-form').serializeArray();
+            var form = $("#patch-form").get(0);
+            var formData = $('#patch-form').serializeArray();
 
             $.ajax({
-                url: "{{ route('api.asset.audit') }}",
+                url: "{{ route('api.asset.patch') }}",
                 type : 'POST',
                 headers: {
                     "X-Requested-With": 'XMLHttpRequest',
@@ -153,18 +153,18 @@
                 data : formData,
                 success : function (data) {
                     if (data.status == 'success') {
-                        $('#audited tbody').prepend("<tr class='success'><td>" + data.payload.asset_tag + "</td><td>" + data.messages + "</td><td><i class='fas fa-check text-success'></i></td></tr>");
+                        $('#patched tbody').prepend("<tr class='success'><td>" + data.payload.asset_tag + "</td><td>" + data.messages + "</td><td><i class='fas fa-check text-success'></i></td></tr>");
                         incrementOnSuccess();
                     } else {
-                        handleAuditFail(data);
+                        handlePatchFail(data);
                     }
                     $('input#asset_tag').val('');
                 },
                 error: function (data) {
-                    handleAuditFail(data);
+                    handlePatchFail(data);
                 },
                 complete: function() {
-                    $('#audit-loader').hide();
+                    $('#patch-loader').hide();
                 }
 
             });
@@ -172,7 +172,7 @@
             return false;
         });
 
-        function handleAuditFail (data) {
+        function handlePatchFail (data) {
             if (data.asset_tag) {
                 var asset_tag = data.asset_tag;
             } else {
@@ -183,16 +183,16 @@
             } else {
                 var messages = '';
             }
-            $('#audited tbody').prepend("<tr class='danger'><td>" + data.payload.asset_tag + "</td><td>" + messages + "</td><td><i class='fas fa-times text-danger'></i></td></tr>");
+            $('#patched tbody').prepend("<tr class='danger'><td>" + data.payload.asset_tag + "</td><td>" + messages + "</td><td><i class='fas fa-times text-danger'></i></td></tr>");
         }
 
         function incrementOnSuccess() {
-            var x = parseInt($('#audit-counter').html());
+            var x = parseInt($('#patch-counter').html());
             y = x + 1;
-            $('#audit-counter').html(y);
+            $('#patch-counter').html(y);
         }
 
-        $("#audit_tag").focus();
+        $("#patch_tag").focus();
 
     </script>
 @stop

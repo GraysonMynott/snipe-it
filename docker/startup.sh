@@ -23,7 +23,7 @@ for dir in \
   'data/private_uploads' \
   'data/private_uploads/assets' \
   'data/private_uploads/accessories' \
-  'data/private_uploads/audits' \
+  'data/private_uploads/patches' \
   'data/private_uploads/components' \
   'data/private_uploads/consumables' \
   'data/private_uploads/eula-pdfs' \

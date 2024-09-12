@@ -281,44 +281,44 @@ class Actionlog extends SnipeModel
     }
 
     /**
-     * Calculate the number of days until the next audit
+     * Calculate the number of days until the next patch
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v4.0]
      * @return int
      */
-    public function daysUntilNextAudit($monthInterval = 12, $asset = null)
+    public function daysUntilNextPatch($monthInterval = 12, $asset = null)
     {
         $now = Carbon::now();
-        $last_audit_date = $this->created_at;
-        $next_audit = $last_audit_date->addMonth($monthInterval);
-        $next_audit_days = $now->diffInDays($next_audit);
+        $last_patch_date = $this->created_at;
+        $next_patch = $last_patch_date->addMonth($monthInterval);
+        $next_patch_days = $now->diffInDays($next_patch);
 
-        // Override the default setting for interval if the asset has its own next audit date
-        if (($asset) && ($asset->next_audit_date)) {
-            $override_default_next = \Carbon::parse($asset->next_audit_date);
-            $next_audit_days = $override_default_next->diffInDays($now);
+        // Override the default setting for interval if the asset has its own next patch date
+        if (($asset) && ($asset->next_patch_date)) {
+            $override_default_next = \Carbon::parse($asset->next_patch_date);
+            $next_patch_days = $override_default_next->diffInDays($now);
         }
 
-        return $next_audit_days;
+        return $next_patch_days;
     }
 
     /**
-     * Calculate the date of the next audit
+     * Calculate the date of the next patch
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v4.0]
      * @return \Datetime
      */
-    public function calcNextAuditDate($monthInterval = 12, $asset = null)
+    public function calcNextPatchDate($monthInterval = 12, $asset = null)
     {
-        $last_audit_date = Carbon::parse($this->created_at);
+        $last_patch_date = Carbon::parse($this->created_at);
         // If there is an asset-specific next date already given,
-        if (($asset) && ($asset->next_audit_date)) {
-            return \Carbon::parse($asset->next_audit_date);
+        if (($asset) && ($asset->next_patch_date)) {
+            return \Carbon::parse($asset->next_patch_date);
         }
 
-        return  \Carbon::parse($last_audit_date)->addMonths($monthInterval)->toDateString();
+        return  \Carbon::parse($last_patch_date)->addMonths($monthInterval)->toDateString();
     }
 
     /**

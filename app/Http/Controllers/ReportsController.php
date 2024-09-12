@@ -134,15 +134,15 @@ class ReportsController extends Controller
 
 
     /**
-     * Displays audit report.
+     * Displays patch report.
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v4.0]
      */
-    public function audit() : View
+    public function patch() : View
     {
         $this->authorize('reports.view');
-        return view('reports/audit');
+        return view('reports/patch');
     }
 
 
@@ -532,12 +532,12 @@ class ReportsController extends Controller
                 $header[] = trans('general.deleted');
             }
 
-            if ($request->filled('last_audit_date')) {
-                $header[] = trans('general.last_audit');
+            if ($request->filled('last_patch_date')) {
+                $header[] = trans('general.last_patch');
             }
 
-            if ($request->filled('next_audit_date')) {
-                $header[] = trans('general.next_audit_date');
+            if ($request->filled('next_patch_date')) {
+                $header[] = trans('general.next_patch_date');
             }
 
             if ($request->filled('notes')) {
@@ -637,15 +637,15 @@ class ReportsController extends Controller
                     $assets->whereBetween('assets.expected_checkin', [$request->input('expected_checkin_start'), $request->input('expected_checkin_end')]);
             }
 
-            if (($request->filled('last_audit_start')) && ($request->filled('last_audit_end'))) {
-                    $last_audit_start = Carbon::parse($request->input('last_audit_start'))->startOfDay();
-                    $last_audit_end = Carbon::parse($request->input('last_audit_end'))->endOfDay();
+            if (($request->filled('last_patch_start')) && ($request->filled('last_patch_end'))) {
+                    $last_patch_start = Carbon::parse($request->input('last_patch_start'))->startOfDay();
+                    $last_patch_end = Carbon::parse($request->input('last_patch_end'))->endOfDay();
 
-                    $assets->whereBetween('assets.last_audit_date', [$last_audit_start, $last_audit_end]);
+                    $assets->whereBetween('assets.last_patch_date', [$last_patch_start, $last_patch_end]);
             }
 
-            if (($request->filled('next_audit_start')) && ($request->filled('next_audit_end'))) {
-                $assets->whereBetween('assets.next_audit_date', [$request->input('next_audit_start'), $request->input('next_audit_end')]);
+            if (($request->filled('next_patch_start')) && ($request->filled('next_patch_end'))) {
+                $assets->whereBetween('assets.next_patch_date', [$request->input('next_patch_start'), $request->input('next_patch_end')]);
             }
             if ($request->filled('exclude_archived')) {
                 $assets->notArchived();
@@ -883,12 +883,12 @@ class ReportsController extends Controller
                         $row[] = ($asset->deleted_at) ? $asset->deleted_at : '';
                     }
 
-                    if ($request->filled('last_audit_date')) {
-                        $row[] = ($asset->last_audit_date) ? $asset->last_audit_date : '';
+                    if ($request->filled('last_patch_date')) {
+                        $row[] = ($asset->last_patch_date) ? $asset->last_patch_date : '';
                     }
 
-                    if ($request->filled('next_audit_date')) {
-                        $row[] = ($asset->next_audit_date) ? $asset->next_audit_date : '';
+                    if ($request->filled('next_patch_date')) {
+                        $row[] = ($asset->next_patch_date) ? $asset->next_patch_date : '';
                     }
 
                     if ($request->filled('notes')) {

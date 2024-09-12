@@ -7,7 +7,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\SlackMessage;
 use Illuminate\Notifications\Notification;
 
-class AuditNotification extends Notification
+class PatchNotification extends Notification
 {
     use Queueable;
     /**
@@ -47,7 +47,7 @@ class AuditNotification extends Notification
         $channel = ($this->settings->webhook_channel) ? $this->settings->webhook_channel : '';
         return (new SlackMessage)
             ->success()
-            ->content(class_basename(get_class($this->params['item'])).' Audited')
+            ->content(class_basename(get_class($this->params['item'])).' Patched')
             ->from(($this->settings->webhook_botname) ? $this->settings->webhook_botname : 'Snipe-Bot')
             ->to($channel)
             ->attachment(function ($attachment) {

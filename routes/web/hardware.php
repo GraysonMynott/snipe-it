@@ -24,9 +24,9 @@ Route::group(
     
     function () {
         
-        Route::get('bulkaudit',
+        Route::get('bulkpatch',
             [AssetsController::class, 'quickScan']
-        )->name('assets.bulkaudit');
+        )->name('assets.bulkpatch');
 
         Route::get('quickscancheckin',
             [AssetsController::class, 'quickScanCheckin']
@@ -46,21 +46,21 @@ Route::group(
             [AssetsController::class, 'scan']
         )->name('asset.scan');
 
-        Route::get('audit/due',
-            [AssetsController::class, 'dueForAudit']
-        )->name('assets.audit.due');
+        Route::get('patch/due',
+            [AssetsController::class, 'dueForPatch']
+        )->name('assets.patch.due');
 
         Route::get('checkins/due',
             [AssetsController::class, 'dueForCheckin']
         )->name('assets.checkins.due');
         
-        Route::get('audit/{id}',
-            [AssetsController::class, 'audit']
-        )->name('asset.audit.create');
+        Route::get('patch/{id}',
+            [AssetsController::class, 'patch']
+        )->name('asset.patch.create');
 
-        Route::post('audit/{id}',
-            [AssetsController::class, 'auditStore']
-        )->name('asset.audit.store');
+        Route::post('patch/{id}',
+            [AssetsController::class, 'patchStore']
+        )->name('asset.patch.store');
 
         Route::get('history',
             [AssetsController::class, 'getImportHistory']

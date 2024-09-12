@@ -63,12 +63,6 @@ class Asset extends Depreciable
     protected $table = 'assets';
 
     /**
-     * Leaving this commented out, since we need to test further, but this would eager load the model relationship every single
-     * time the asset model is loaded.
-     */
-     // protected $with = ['model'];
-
-    /**
     * Whether the model should inject it's identifier to the unique
     * validation rules before attempting validation. If this property
     * is not set in the model it will default to true.
@@ -83,8 +77,8 @@ class Asset extends Depreciable
         'last_checkout' => 'datetime',
         'last_checkin' => 'datetime',
         'expected_checkin' => 'datetime:m-d-Y',
-        'last_audit_date' => 'datetime',
-        'next_audit_date' => 'datetime:m-d-Y',
+        'last_patch_date' => 'datetime',
+        'next_patch_date' => 'datetime:m-d-Y',
         'model_id'       => 'integer',
         'status_id'      => 'integer',
         'company_id'     => 'integer',
@@ -105,9 +99,9 @@ class Asset extends Depreciable
         'last_checkout'    => 'nullable|date_format:Y-m-d H:i:s',
         'last_checkin'     => 'nullable|date_format:Y-m-d H:i:s',
         'expected_checkin' => 'nullable|date',
-        'last_audit_date'  => 'nullable|date_format:Y-m-d H:i:s',
-        // 'next_audit_date'  => 'nullable|date|after:last_audit_date',
-        'next_audit_date'  => 'nullable|date',
+        'last_patch_date'  => 'nullable|date_format:Y-m-d H:i:s',
+        // 'next_patch_date'  => 'nullable|date|after:last_patch_date',
+        'next_patch_date'  => 'nullable|date',
         'location_id'      => 'nullable|exists:locations,id',
         'rtd_location_id'  => 'nullable|exists:locations,id',
         'purchase_date'    => 'nullable|date|date_format:Y-m-d',
@@ -151,8 +145,8 @@ class Asset extends Depreciable
         'byod',
         'asset_eol_date',
         'eol_explicit',
-        'last_audit_date',
-        'next_audit_date',
+        'last_patch_date',
+        'next_patch_date',
         'asset_eol_date',
         'last_checkin',
         'last_checkout',
@@ -176,8 +170,8 @@ class Asset extends Depreciable
       'updated_at',
       'purchase_date',
       'expected_checkin',
-      'next_audit_date',
-      'last_audit_date',
+      'next_patch_date',
+      'last_patch_date',
       'last_checkin',
       'last_checkout',
       'asset_eol_date',
@@ -891,15 +885,15 @@ class Asset extends Depreciable
 
 
     /**
-     * Determine whether this asset's next audit date is before the last audit date
+     * Determine whether this asset's next patch date is before the last patch date
      *
      * @return bool
      * @since [v6.4.1]
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * */
-    public function checkInvalidNextAuditDate()
+    public function checkInvalidNextPatchDate()
     {
-        if (($this->last_audit_date) && ($this->next_audit_date) && ($this->last_audit_date > $this->next_audit_date)) {
+        if (($this->last_patch_date) && ($this->next_patch_date) && ($this->last_patch_date > $this->next_patch_date)) {
             return true;
         }
         return false;
@@ -937,7 +931,7 @@ class Asset extends Depreciable
      **/
 
     /**
-     * Make sure the next_audit_date is formatted as Y-m-d.
+     * Make sure the next_patch_date is formatted as Y-m-d.
      *
      * This is kind of dumb and confusing, since we already cast it that way AND it's a date field
      * in the database, but here we are.
@@ -946,7 +940,7 @@ class Asset extends Depreciable
      * @return void
      */
 
-    protected function nextAuditDate(): Attribute
+    protected function nextPatchDate(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d') : null,
@@ -954,7 +948,7 @@ class Asset extends Depreciable
         );
     }
 
-    protected function lastAuditDate(): Attribute
+    protected function lastPatchDate(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null,
@@ -1184,18 +1178,18 @@ class Asset extends Depreciable
     }
 
     /**
-     * Query builder scope for Assets that are due for auditing, based on the assets.next_audit_date
-     * and settings.audit_warning_days.
+     * Query builder scope for Assets that are due for patching, based on the assets.next_patch_date
+     * and settings.patch_warning_days.
      *
-     * This is/will be used in the artisan command snipeit:upcoming-audits and also
-     * for an upcoming API call for retrieving a report on assets that will need to be audited.
+     * This is/will be used in the artisan command snipeit:upcoming-patches and also
+     * for an upcoming API call for retrieving a report on assets that will need to be patched.
      *
-     * Due for audit soon:
-     * next_audit_date greater than or equal to now (must be in the future)
-     * and (next_audit_date - threshold days) <= now ()
+     * Due for patch soon:
+     * next_patch_date greater than or equal to now (must be in the future)
+     * and (next_patch_date - threshold days) <= now ()
      *
      * Example:
-     * next_audit_date = May 4, 2025
+     * next_patch_date = May 4, 2025
      * threshold for alerts = 30 days
      * now = May 4, 2019
      *
@@ -1206,23 +1200,23 @@ class Asset extends Depreciable
      * @return \Illuminate\Database\Query\Builder          Modified query builder
      */
 
-    public function scopeDueForAudit($query, $settings)
+    public function scopeDueForPatch($query, $settings)
     {
-        $interval = $settings->audit_warning_days ?? 0;
+        $interval = $settings->patch_warning_days ?? 0;
         $today = Carbon::now();
         $interval_date = $today->copy()->addDays($interval)->format('Y-m-d');
 
-        return $query->whereNotNull('assets.next_audit_date')
-            ->whereBetween('assets.next_audit_date', [$today->format('Y-m-d'), $interval_date])
+        return $query->whereNotNull('assets.next_patch_date')
+            ->whereBetween('assets.next_patch_date', [$today->format('Y-m-d'), $interval_date])
             ->where('assets.archived', '=', 0)
             ->NotArchived();
     }
 
     /**
-     * Query builder scope for Assets that are OVERDUE for auditing, based on the assets.next_audit_date
-     * and settings.audit_warning_days. It checks to see if assets.next audit_date is before now
+     * Query builder scope for Assets that are OVERDUE for patching, based on the assets.next_patch_date
+     * and settings.patch_warning_days. It checks to see if assets.next patch_date is before now
      *
-     * This is/will be used in the artisan command snipeit:upcoming-audits and also
+     * This is/will be used in the artisan command snipeit:upcoming-patches and also
      * for an upcoming API call for retrieving a report on overdue assets.
      *
      * @author A. Gianotto <snipe@snipe.net>
@@ -1232,20 +1226,20 @@ class Asset extends Depreciable
      * @return \Illuminate\Database\Query\Builder          Modified query builder
      */
 
-    public function scopeOverdueForAudit($query)
+    public function scopeOverdueForPatch($query)
     {
-        return $query->whereNotNull('assets.next_audit_date')
-            ->where('assets.next_audit_date', '<', Carbon::now()->format('Y-m-d'))
+        return $query->whereNotNull('assets.next_patch_date')
+            ->where('assets.next_patch_date', '<', Carbon::now()->format('Y-m-d'))
             ->where('assets.archived', '=', 0)
             ->NotArchived();
     }
 
     /**
-     * Query builder scope for Assets that are due for auditing OR overdue, based on the assets.next_audit_date
-     * and settings.audit_warning_days.
+     * Query builder scope for Assets that are due for patching OR overdue, based on the assets.next_patch_date
+     * and settings.patch_warning_days.
      *
-     * This is/will be used in the artisan command snipeit:upcoming-audits and also
-     * for an upcoming API call for retrieving a report on assets that will need to be audited.
+     * This is/will be used in the artisan command snipeit:upcoming-patches and also
+     * for an upcoming API call for retrieving a report on assets that will need to be patched.
      *
      * @author A. Gianotto <snipe@snipe.net>
      * @since v4.6.16
@@ -1254,20 +1248,20 @@ class Asset extends Depreciable
      * @return \Illuminate\Database\Query\Builder          Modified query builder
      */
 
-    public function scopeDueOrOverdueForAudit($query, $settings)
+    public function scopeDueOrOverdueForPatch($query, $settings)
     {
 
         return $query->where(function ($query) {
-            $query->OverdueForAudit();
+            $query->OverdueForPatch();
         })->orWhere(function ($query) use ($settings) {
-            $query->DueForAudit($settings);
+            $query->DueForPatch($settings);
         });
     }
 
 
     /**
      * Query builder scope for Assets that are DUE for checkin, based on the assets.expected_checkin
-     * and settings.audit_warning_days. It checks to see if assets.expected_checkin is now
+     * and settings.patch_warning_days. It checks to see if assets.expected_checkin is now
      *
      * @author A. Gianotto <snipe@snipe.net>
      * @since v6.4.0
@@ -1276,7 +1270,7 @@ class Asset extends Depreciable
 
     public function scopeDueForCheckin($query, $settings)
     {
-        $interval = $settings->audit_warning_days ?? 0;
+        $interval = $settings->patch_warning_days ?? 0;
         $today = Carbon::now();
         $interval_date = $today->copy()->addDays($interval)->format('Y-m-d');
 

@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    {{ trans_choice('general.audit_due_days', $settings->audit_warning_days, ['days' => $settings->audit_warning_days]) }}
+    {{ trans_choice('general.patch_due_days', $settings->patch_warning_days, ['days' => $settings->patch_warning_days]) }}
 @stop
 
 
@@ -18,19 +18,19 @@
                 <ul class="nav nav-tabs hidden-print">
 
                     <li class="active">
-                        <a href="#due" data-toggle="tab">{{ trans('general.audit_due') }}
+                        <a href="#due" data-toggle="tab">{{ trans('general.patch_due') }}
                           <span class="hidden-lg hidden-md">
                             <i class="far fa-file fa-2x" aria-hidden="true"></i>
                           </span>
-                            <span class="badge">{{ (isset($total_due_for_audit)) ? $total_due_for_audit : '' }}</span>
+                            <span class="badge">{{ (isset($total_due_for_patch)) ? $total_due_for_patch : '' }}</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#overdue" data-toggle="tab">{{ trans('general.audit_overdue') }}
+                        <a href="#overdue" data-toggle="tab">{{ trans('general.patch_overdue') }}
                             <span class="hidden-lg hidden-md">
                             <i class="far fa-file fa-2x" aria-hidden="true"></i>
                           </span>
-                            <span class="badge">{{ (isset($total_overdue_for_audit)) ? $total_overdue_for_audit : '' }}</span>
+                            <span class="badge">{{ (isset($total_overdue_for_patch)) ? $total_overdue_for_patch : '' }}</span>
                         </a>
                     </li>
                 </ul>
@@ -50,10 +50,10 @@
                         <div class="col-md-12">
                             <table
                                     data-click-to-select="true"
-                                    data-columns="{{ \App\Presenters\AssetAuditPresenter::dataTableLayout() }}"
-                                            data-cookie-id-table="dueAssetAuditListing"
+                                    data-columns="{{ \App\Presenters\AssetPatchPresenter::dataTableLayout() }}"
+                                            data-cookie-id-table="dueAssetPatchListing"
                                     data-pagination="true"
-                                            data-id-table="dueAssetAuditListing"
+                                            data-id-table="dueAssetPatchListing"
                                     data-search="true"
                                     data-side-pagination="server"
                                     data-show-columns="true"
@@ -66,11 +66,11 @@
                                             data-toolbar="#dueAssetEditToolbar"
                                             data-bulk-button-id="#dueAssetEditButton"
                                             data-bulk-form-id="#dueAssetEditForm"
-                                            id="#dueAssetAuditListing"
+                                            id="#dueAssetPatchListing"
                                     class="table table-striped snipe-table"
-                                            data-url="{{ route('api.assets.list-upcoming', ['action' => 'audits', 'upcoming_status' => 'due']) }}"
+                                            data-url="{{ route('api.assets.list-upcoming', ['action' => 'patches', 'upcoming_status' => 'due']) }}"
                                     data-export-options='{
-                "fileName": "export-assets-due-audit-{{ date('Y-m-d') }}",
+                "fileName": "export-assets-due-patch-{{ date('Y-m-d') }}",
                 "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
                 }'>
                             </table>
@@ -92,10 +92,10 @@
                                 <div class="col-md-12">
                                     <table
                                         data-click-to-select="true"
-                                        data-columns="{{ \App\Presenters\AssetAuditPresenter::dataTableLayout() }}"
-                                        data-cookie-id-table="overdueAssetAuditListing"
+                                        data-columns="{{ \App\Presenters\AssetPatchPresenter::dataTableLayout() }}"
+                                        data-cookie-id-table="overdueAssetPatchListing"
                                         data-pagination="true"
-                                        data-id-table="overdueAssetAuditListing"
+                                        data-id-table="overdueAssetPatchListing"
                                         data-search="true"
                                         data-side-pagination="server"
                                         data-show-columns="true"
@@ -108,11 +108,11 @@
                                         data-toolbar="#overdueAssetEditToolbar"
                                         data-bulk-button-id="#overdueAssetEditButton"
                                         data-bulk-form-id="#overdueAssetEditForm"
-                                        id="#overdueAssetAuditListing"
+                                        id="#overdueAssetPatchListing"
                                         class="table table-striped snipe-table"
-                                        data-url="{{ route('api.assets.list-upcoming', ['action' => 'audits', 'upcoming_status' => 'overdue']) }}"
+                                        data-url="{{ route('api.assets.list-upcoming', ['action' => 'patches', 'upcoming_status' => 'overdue']) }}"
                                         data-export-options='{
-            "fileName": "export-assets-overdue-audit-{{ date('Y-m-d') }}",
+            "fileName": "export-assets-overdue-patch-{{ date('Y-m-d') }}",
             "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
             }'>
                                     </table>

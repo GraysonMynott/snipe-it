@@ -234,7 +234,7 @@ class RestoreFromBackup extends Command
             'storage/private_uploads/accessories',
             'storage/private_uploads/assetmodels',
             'storage/private_uploads/assets', // these are asset _files_, not the pictures.
-            'storage/private_uploads/audits',
+            'storage/private_uploads/patches',
             'storage/private_uploads/components',
             'storage/private_uploads/consumables',
             'storage/private_uploads/eula-pdfs',

@@ -347,33 +347,33 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'throttle:api']], functi
         )->name('api.assets.show.byserial')
         ->where('any', '.*');
 
-        // LEGACY URL - Get assets that are due or overdue for audit
-        Route::get('audit/{status}',
+        // LEGACY URL - Get assets that are due or overdue for patch
+        Route::get('patch/{status}',
         [
             Api\AssetsController::class, 
             'index'
         ]
-        )->name('api.asset.to-audit');
+        )->name('api.asset.to-patch');
 
 
 
-        // This gets the "due or overdue" API endpoints for audits and checkins
+        // This gets the "due or overdue" API endpoints for patches and checkins
         Route::get('{action}/{upcoming_status}',
               [
                   Api\AssetsController::class,
                   'index'
               ]
         )->name('api.assets.list-upcoming')
-        ->where(['action' => 'audits|checkins', 'upcoming_status' => 'due|overdue|due-or-overdue']);
+        ->where(['action' => 'patches|checkins', 'upcoming_status' => 'due|overdue|due-or-overdue']);
 
 
 
-        Route::post('audit',
+        Route::post('patch',
         [
             Api\AssetsController::class, 
-            'audit'
+            'patch'
         ]
-        )->name('api.asset.audit');
+        )->name('api.asset.patch');
 
         Route::post('{id}/checkin',
         [

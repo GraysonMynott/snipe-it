@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    {{ trans('general.audit_report') }}
+    {{ trans('general.patch_report') }}
     @parent
 @stop
 
@@ -15,17 +15,17 @@
                 <div class="box-body">
 
                     <table
-                            data-cookie-id-table="auditReport"
+                            data-cookie-id-table="patchReport"
                             data-pagination="true"
-                            data-id-table="auditReport"
+                            data-id-table="patchReport"
                             data-search="true"
                             data-side-pagination="server"
                             data-show-columns="true"
                             data-show-export="true"
                             data-show-refresh="true"
                             data-sort-order="asc"
-                            id="auditReport"
-                            data-url="{{ route('api.activity.index', ['action_type' => 'audit']) }}"
+                            id="patchReport"
+                            data-url="{{ route('api.activity.index', ['action_type' => 'patch']) }}"
                             class="table table-striped snipe-table"
                             data-export-options='{
                         "fileName": "activity-report-{{ date('Y-m-d') }}",
@@ -34,13 +34,13 @@
 
                         <thead>
                         <tr>
-                            <th class="col-sm-1" data-field="file" data-visible="false" data-formatter="auditImageFormatter">{{ trans('admin/hardware/table.image') }}</th>
-                            <th class="col-sm-2" data-field="created_at" data-formatter="dateDisplayFormatter">{{ trans('general.audit') }}</th>
+                            <th class="col-sm-1" data-field="file" data-visible="false" data-formatter="patchImageFormatter">{{ trans('admin/hardware/table.image') }}</th>
+                            <th class="col-sm-2" data-field="created_at" data-formatter="dateDisplayFormatter">{{ trans('general.patch') }}</th>
                             <th class="col-sm-2" data-field="admin" data-formatter="usersLinkObjFormatter">{{ trans('general.admin') }}</th>
                             <th class="col-sm-2" data-field="item" data-formatter="polymorphicItemFormatter">{{ trans('general.item') }}</th>
                             <th class="col-sm-1" data-field="location" data-formatter="locationsLinkObjFormatter">{{ trans('general.location') }}</th>
-                            <th class="col-sm-2" data-field="next_audit_date" data-formatter="dateDisplayFormatter">{{ trans('general.next_audit_date') }}</th>
-                            <th class="col-sm-1" data-field="days_to_next_audit">{{ trans('general.days_to_next_audit') }}</th>
+                            <th class="col-sm-2" data-field="next_patch_date" data-formatter="dateDisplayFormatter">{{ trans('general.next_patch_date') }}</th>
+                            <th class="col-sm-1" data-field="days_to_next_patch">{{ trans('general.days_to_next_patch') }}</th>
 
                             <th class="col-sm-2" data-field="note">{{ trans('general.notes') }}</th>
                         </tr>

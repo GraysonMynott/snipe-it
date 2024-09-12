@@ -598,8 +598,8 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="{{ route('reports.audit') }}" {{ (Request::is('reports.audit') ? ' class="active"' : '') }}>
-                                            {{ trans('general.audit_report') }}</a>
+                                        <a href="{{ route('reports.patch') }}" {{ (Request::is('reports.patch') ? ' class="active"' : '') }}>
+                                            {{ trans('general.patch_report') }}</a>
                                     </li>
                                     <li>
                                         <a href="{{ url('reports/depreciation') }}" {{ (Request::is('reports/depreciation') ? ' class="active"' : '') }}>

@@ -92,8 +92,8 @@ return [
         ],
 
         [
-            'permission' => 'assets.audit',
-            'label'      => 'Audit ',
+            'permission' => 'assets.patch',
+            'label'      => 'Patch ',
             'note'       => 'Allows the user to mark an asset as physically inventoried.',
             'display'    => true,
         ],

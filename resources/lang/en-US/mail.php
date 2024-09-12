@@ -84,7 +84,7 @@ return [
     'the_following_item' => 'The following item has been checked in: ',
     'to_reset' => 'To reset your :web password, complete this form:',
     'type' => 'Type',
-    'upcoming-audits' => 'There is :count asset that is coming up for audit within :threshold days.|There are :count assets that are coming up for audit within :threshold days.',
+    'upcoming-patches' => 'There is :count asset that is coming up for patch within :threshold days.|There are :count assets that are coming up for patch within :threshold days.',
     'user' => 'User',
     'username' => 'Username',
     'unaccepted_asset_reminder' => 'You have Unaccepted Assets.',

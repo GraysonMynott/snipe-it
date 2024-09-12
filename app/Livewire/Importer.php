@@ -240,8 +240,8 @@ class Importer extends Component
             'last_checkin' => trans('admin/hardware/table.last_checkin_date'),
             'last_checkout' => trans('admin/hardware/table.checkout_date'),
             'expected_checkin' => trans('admin/hardware/form.expected_checkin'),
-            'last_audit_date' => trans('general.last_audit'),
-            'next_audit_date' => trans('general.next_audit_date'),
+            'last_patch_date' => trans('general.last_patch'),
+            'next_patch_date' => trans('general.next_patch_date'),
         ];
 
         $this->consumables_fields = [
@@ -461,9 +461,9 @@ class Importer extends Component
                     'Min Quantity',
                     'Minimum Quantity',
                 ],
-            'next_audit_date' =>
+            'next_patch_date' =>
                 [
-                    'Next Audit',
+                    'Next Patch',
                 ],
             'last_checkout' =>
                 [

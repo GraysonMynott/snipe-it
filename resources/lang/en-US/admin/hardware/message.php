@@ -9,7 +9,7 @@ return [
     'no_tag' 	        => 'No asset tag provided.',
     'does_not_exist_or_not_requestable' => 'That asset does not exist or is not requestable.',
     'assoc_users'	 	=> 'This asset is currently checked out to a user and cannot be deleted. Please check the asset in first, and then try deleting again. ',
-    'warning_audit_date_mismatch' 	=> 'This asset\'s next audit date (:next_audit_date) is before the last audit date (:last_audit_date). Please update the next audit date.',
+    'warning_patch_date_mismatch' 	=> 'This asset\'s next patch date (:next_patch_date) is before the last patch date (:last_patch_date). Please update the next patch date.',
 
     'create' => [
         'error'   		=> 'Asset was not created, please try again. :(',
@@ -33,9 +33,9 @@ return [
         'nothing_updated'   => 'No assets were selected, so nothing was restored.', 
     ],
 
-    'audit' => [
-        'error'   		=> 'Asset audit unsuccessful: :error ',
-        'success' 		=> 'Asset audit successfully logged.',
+    'patch' => [
+        'error'   		=> 'Asset patch unsuccessful: :error ',
+        'success' 		=> 'Asset patch successfully logged.',
     ],
 
 

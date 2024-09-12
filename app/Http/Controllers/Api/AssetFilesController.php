@@ -131,8 +131,8 @@ class AssetFilesController extends Controller
             $file = 'private_uploads/assets/'.$log->filename;
             Log::debug('Checking for '.$file);
 
-            if ($log->action_type == 'audit') {
-                $file = 'private_uploads/audits/'.$log->filename;
+            if ($log->action_type == 'patch') {
+                $file = 'private_uploads/patches/'.$log->filename;
             }
 
             // Check the file actually exists on the filesystem

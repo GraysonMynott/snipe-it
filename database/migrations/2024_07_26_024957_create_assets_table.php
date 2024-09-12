@@ -44,8 +44,8 @@ return new class extends Migration
             $table->date('expected_checkin')->nullable();
             $table->unsignedInteger('company_id')->nullable()->index();
             $table->string('assigned_type')->nullable();
-            $table->dateTime('last_audit_date')->nullable();
-            $table->date('next_audit_date')->nullable();
+            $table->dateTime('last_patch_date')->nullable();
+            $table->date('next_patch_date')->nullable();
             $table->integer('location_id')->nullable();
             $table->integer('checkin_counter')->default(0);
             $table->integer('checkout_counter')->default(0);

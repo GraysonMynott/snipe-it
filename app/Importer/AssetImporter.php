@@ -102,8 +102,8 @@ class AssetImporter extends ItemImporter
         $this->item['last_checkin'] = trim($this->findCsvMatch($row, 'last_checkin'));
         $this->item['last_checkout'] = trim($this->findCsvMatch($row, 'last_checkout'));
         $this->item['expected_checkin'] = trim($this->findCsvMatch($row, 'expected_checkin'));
-        $this->item['last_audit_date'] = trim($this->findCsvMatch($row, 'last_audit_date'));
-        $this->item['next_audit_date'] = trim($this->findCsvMatch($row, 'next_audit_date'));
+        $this->item['last_patch_date'] = trim($this->findCsvMatch($row, 'last_patch_date'));
+        $this->item['next_patch_date'] = trim($this->findCsvMatch($row, 'next_patch_date'));
         $this->item['asset_eol_date'] = trim($this->findCsvMatch($row, 'asset_eol_date'));
         $this->item['asset_tag'] = $asset_tag;
 
@@ -145,12 +145,12 @@ class AssetImporter extends ItemImporter
             $item['expected_checkin'] = $this->parseOrNullDate('expected_checkin');
         }
 
-        if ($this->item['last_audit_date']!='') {
-            $item['last_audit_date'] = $this->parseOrNullDate('last_audit_date');
+        if ($this->item['last_patch_date']!='') {
+            $item['last_patch_date'] = $this->parseOrNullDate('last_patch_date');
         }
 
-        if ($this->item['next_audit_date']!='') {
-            $item['next_audit_date'] = $this->parseOrNullDate('next_audit_date');
+        if ($this->item['next_patch_date']!='') {
+            $item['next_patch_date'] = $this->parseOrNullDate('next_patch_date');
         }
 
         if ($this->item['asset_eol_date']!='') {

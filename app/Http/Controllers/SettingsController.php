@@ -613,22 +613,22 @@ class SettingsController extends Controller
             return redirect()->to('admin')->with('error', trans('admin/settings/message.update.error'));
         }
 
-        // Check if the audit interval has changed - if it has, we want to update ALL of the assets audit dates
-        if ($request->input('audit_interval') != $setting->audit_interval) {
+        // Check if the patch interval has changed - if it has, we want to update ALL of the assets patch dates
+        if ($request->input('patch_interval') != $setting->patch_interval) {
 
-            // This could be a negative number if the user is trying to set the audit interval to a lower number than it was before
-            $audit_diff_months = ((int)$request->input('audit_interval') - (int)($setting->audit_interval));
+            // This could be a negative number if the user is trying to set the patch interval to a lower number than it was before
+            $patch_diff_months = ((int)$request->input('patch_interval') - (int)($setting->patch_interval));
 
             // Batch update the dates. We have to use this method to avoid time limit exceeded errors on very large datasets,
             // but it DOES mean this change doesn't get logged in the action logs, since it skips the observer.
             // @see https://stackoverflow.com/questions/54879160/laravel-observer-not-working-on-bulk-insert
-            $affected = Asset::whereNotNull('next_audit_date')
+            $affected = Asset::whereNotNull('next_patch_date')
                 ->whereNull('deleted_at')
                 ->update(
-                    ['next_audit_date' => DB::raw('DATE_ADD(next_audit_date, INTERVAL '.$audit_diff_months.' MONTH)')]
+                    ['next_patch_date' => DB::raw('DATE_ADD(next_patch_date, INTERVAL '.$patch_diff_months.' MONTH)')]
             );
 
-            Log::debug($affected .' assets affected by audit interval update');
+            Log::debug($affected .' assets affected by patch interval update');
 
 
         }
@@ -643,8 +643,8 @@ class SettingsController extends Controller
         $setting->alerts_enabled = $request->input('alerts_enabled', '0');
         $setting->alert_interval = $request->input('alert_interval');
         $setting->alert_threshold = $request->input('alert_threshold');
-        $setting->audit_interval = $request->input('audit_interval');
-        $setting->audit_warning_days = $request->input('audit_warning_days');
+        $setting->patch_interval = $request->input('patch_interval');
+        $setting->patch_warning_days = $request->input('patch_warning_days');
         $setting->show_alerts_in_menu = $request->input('show_alerts_in_menu', '0');
 
         if ($setting->save()) {

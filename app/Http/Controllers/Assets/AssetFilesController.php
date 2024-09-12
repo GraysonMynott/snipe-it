@@ -73,8 +73,8 @@ class AssetFilesController extends Controller
 
             $file = 'private_uploads/assets/'.$log->filename;
 
-            if ($log->action_type == 'audit') {
-                $file = 'private_uploads/audits/'.$log->filename;
+            if ($log->action_type == 'patch') {
+                $file = 'private_uploads/patches/'.$log->filename;
             }
 
             if (! Storage::exists($file)) {

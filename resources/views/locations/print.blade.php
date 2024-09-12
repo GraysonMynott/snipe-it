@@ -154,14 +154,14 @@
 <br>
 <table>
     <tr>
-        <td>{{ trans('admin/locations/table.signed_by_asset_auditor') }}</td>
+        <td>{{ trans('admin/locations/table.signed_by_asset_patchor') }}</td>
         <td><br>------------------------------------------------------ &nbsp;&nbsp;&nbsp;<br></td>
         <td>{{ trans('admin/locations/table.date') }}</td>
         <td><br>------------------------------ &nbsp;&nbsp;&nbsp;<br></td>
     </tr>
 
     <tr>
-        <td>{{ trans('admin/locations/table.signed_by_finance_auditor') }}</td>
+        <td>{{ trans('admin/locations/table.signed_by_finance_patchor') }}</td>
         <td><br>------------------------------------------------------ &nbsp;&nbsp;&nbsp;<br></td>
         <td>{{ trans('admin/locations/table.date') }}</td>
         <td><br>------------------------------ &nbsp;&nbsp;&nbsp;<br></td>

@@ -97,8 +97,8 @@ class AssetsController extends Controller
             'updated_at',
             'purchase_date',
             'purchase_cost',
-            'last_audit_date',
-            'next_audit_date',
+            'last_patch_date',
+            'next_patch_date',
             'warranty_months',
             'checkout_counter',
             'checkin_counter',
@@ -150,20 +150,20 @@ class AssetsController extends Controller
 
 
         /**
-         * Handle due and overdue audits and checkin dates
+         * Handle due and overdue patches and checkin dates
          */
         switch ($action) {
-            case 'audits':
+            case 'patches':
 
                 switch ($upcoming_status) {
                     case 'due':
-                        $assets->DueForAudit($settings);
+                        $assets->DueForPatch($settings);
                         break;
                     case 'overdue':
-                        $assets->OverdueForAudit();
+                        $assets->OverdueForPatch();
                         break;
                     case 'due-or-overdue':
-                        $assets->DueOrOverdueForAudit($settings);
+                        $assets->DueOrOverdueForPatch($settings);
                         break;
                 }
                 break;
@@ -184,7 +184,7 @@ class AssetsController extends Controller
             }
 
         /**
-         * End handling due and overdue audits and checkin dates
+         * End handling due and overdue patches and checkin dates
          */
 
 
@@ -983,19 +983,19 @@ class AssetsController extends Controller
 
 
     /**
-     * Mark an asset as audited
+     * Mark an asset as patched
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @param int $id
      * @since [v4.0]
      */
-    public function audit(Request $request) : JsonResponse
+    public function patch(Request $request) : JsonResponse
 
     {
-        $this->authorize('audit', Asset::class);
+        $this->authorize('patch', Asset::class);
 
         $settings = Setting::getSettings();
-        $dt = Carbon::now()->addMonths($settings->audit_interval)->toDateString();
+        $dt = Carbon::now()->addMonths($settings->patch_interval)->toDateString();
 
         // No tag passed - return an error
         if (!$request->filled('asset_tag')) {
@@ -1014,10 +1014,10 @@ class AssetsController extends Controller
             /**
              * Even though we do a save() further down, we don't want to log this as a "normal" asset update,
              * which would trigger the Asset Observer and would log an asset *update* log entry (because the
-             * de-normed fields like next_audit_date on the asset itself will change on save()) *in addition* to
-             * the audit log entry we're creating through this controller.
+             * de-normed fields like next_patch_date on the asset itself will change on save()) *in addition* to
+             * the patch log entry we're creating through this controller.
              *
-             * To prevent this double-logging (one for update and one for audit), we skip the observer and bypass
+             * To prevent this double-logging (one for update and one for patch), we skip the observer and bypass
              * that de-normed update log entry by using unsetEventDispatcher(), BUT invoking unsetEventDispatcher()
              * will bypass normal model-level validation that's usually handled at the observer )
              *
@@ -1027,39 +1027,39 @@ class AssetsController extends Controller
              * @see \App\Observers\AssetObserver::updating()
              */
             $asset->unsetEventDispatcher();
-            $asset->next_audit_date = $dt;
+            $asset->next_patch_date = $dt;
 
-            if ($request->filled('next_audit_date')) {
-                $asset->next_audit_date = $request->input('next_audit_date');
+            if ($request->filled('next_patch_date')) {
+                $asset->next_patch_date = $request->input('next_patch_date');
             }
 
             // Check to see if they checked the box to update the physical location,
-            // not just note it in the audit notes
+            // not just note it in the patch notes
             if ($request->input('update_location') == '1') {
                 $asset->location_id = $request->input('location_id');
             }
 
-            $asset->last_audit_date = date('Y-m-d H:i:s');
+            $asset->last_patch_date = date('Y-m-d H:i:s');
 
             /**
              * Invoke Watson Validating to check the asset itself and check to make sure it saved correctly.
              * We have to invoke this manually because of the unsetEventDispatcher() above.)
              */
             if ($asset->isValid() && $asset->save()) {
-                $asset->logAudit(request('note'), request('location_id'));
+                $asset->logPatch(request('note'), request('location_id'));
 
                 return response()->json(Helper::formatStandardApiResponse('success', [
                     'asset_tag'=> e($asset->asset_tag),
                     'note'=> e($request->input('note')),
-                    'next_audit_date' => Helper::getFormattedDateObject($asset->next_audit_date),
-                ], trans('admin/hardware/message.audit.success')));
+                    'next_patch_date' => Helper::getFormattedDateObject($asset->next_patch_date),
+                ], trans('admin/hardware/message.patch.success')));
             }
 
             // Asset failed validation or was not able to be saved
             return response()->json(Helper::formatStandardApiResponse('error', [
                 'asset_tag'=> e($asset->asset_tag),
                 'error'=> $asset->getErrors()->first(),
-            ], trans('admin/hardware/message.audit.error', ['error' => $asset->getErrors()->first()])), 200);
+            ], trans('admin/hardware/message.patch.error', ['error' => $asset->getErrors()->first()])), 200);
 
         }
 
@@ -1067,8 +1067,8 @@ class AssetsController extends Controller
         // No matching asset for the asset tag that was passed.
         return response()->json(Helper::formatStandardApiResponse('error', [
             'asset_tag'=> e($request->input('asset_tag')),
-            'error'=> trans('admin/hardware/message.audit.error'),
-        ], trans('admin/hardware/message.audit.error', ['error' => trans('admin/hardware/message.does_not_exist')])), 200);
+            'error'=> trans('admin/hardware/message.patch.error'),
+        ], trans('admin/hardware/message.patch.error', ['error' => trans('admin/hardware/message.does_not_exist')])), 200);
 
 
     }

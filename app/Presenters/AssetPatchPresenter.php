@@ -8,7 +8,7 @@ use DateTime;
 /**
  * Class AssetPresenter
  */
-class AssetAuditPresenter extends Presenter
+class AssetPatchPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
@@ -50,7 +50,7 @@ class AssetAuditPresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('admin/hardware/table.image'),
                 'visible' => false,
-                'formatter' => 'auditImageFormatter',
+                'formatter' => 'patchImageFormatter',
             ], [
                 'field' => 'asset_tag',
                 'searchable' => true,
@@ -219,18 +219,18 @@ class AssetAuditPresenter extends Presenter
                 'title' => trans('admin/hardware/form.expected_checkin'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'last_audit_date',
+                'field' => 'last_patch_date',
                 'searchable' => false,
                 'sortable' => true,
                 'visible' => true,
-                'title' => trans('general.last_audit'),
+                'title' => trans('general.last_patch'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'next_audit_date',
+                'field' => 'next_patch_date',
                 'searchable' => false,
                 'sortable' => true,
                 'visible' => true,
-                'title' => trans('general.next_audit_date'),
+                'title' => trans('general.next_patch_date'),
                 'formatter' => 'dateDisplayFormatter',
             ],
         ];
@@ -264,7 +264,7 @@ class AssetAuditPresenter extends Presenter
             'sortable' => false,
             'switchable' => false,
             'title' => trans('table.actions'),
-            'formatter' => 'hardwareAuditFormatter',
+            'formatter' => 'hardwarePatchFormatter',
         ];
 
         return json_encode($layout);

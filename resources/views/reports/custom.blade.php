@@ -162,13 +162,13 @@
               </label>
 
               <label class="form-control">
-                {{ Form::checkbox('last_audit_date', '1', '1') }}
-                {{ trans('general.last_audit') }}
+                {{ Form::checkbox('last_patch_date', '1', '1') }}
+                {{ trans('general.last_patch') }}
               </label>
 
               <label class="form-control">
-                {{ Form::checkbox('next_audit_date', '1', '1') }}
-                {{ trans('general.next_audit_date') }}
+                {{ Form::checkbox('next_patch_date', '1', '1') }}
+                {{ trans('general.next_patch_date') }}
               </label>
 
               <label class="form-control">
@@ -378,36 +378,36 @@
 
             </div>
 
-              <!-- Last Audit Date -->
-              <div class="form-group last_audit-range{{ ($errors->has('last_audit_start') || $errors->has('last_audit_end')) ? ' has-error' : '' }}">
-                  <label for="last_audit_start" class="col-md-3 control-label">{{ trans('general.last_audit') }}</label>
+              <!-- Last Patch Date -->
+              <div class="form-group last_patch-range{{ ($errors->has('last_patch_start') || $errors->has('last_patch_end')) ? ' has-error' : '' }}">
+                  <label for="last_patch_start" class="col-md-3 control-label">{{ trans('general.last_patch') }}</label>
                   <div class="input-daterange input-group col-md-7" id="datepicker">
-                      <input type="text" class="form-control" name="last_audit_start" aria-label="last_audit_start" value="{{ old('last_audit_start') }}">
+                      <input type="text" class="form-control" name="last_patch_start" aria-label="last_patch_start" value="{{ old('last_patch_start') }}">
                       <span class="input-group-addon">to</span>
-                      <input type="text" class="form-control" name="last_audit_end" aria-label="last_audit_end" value="{{ old('last_audit_end') }}">
+                      <input type="text" class="form-control" name="last_patch_end" aria-label="last_patch_end" value="{{ old('last_patch_end') }}">
                   </div>
 
-                  @if ($errors->has('last_audit_start') || $errors->has('last_audit_end'))
+                  @if ($errors->has('last_patch_start') || $errors->has('last_patch_end'))
                       <div class="col-md-9 col-lg-offset-3">
-                          {!! $errors->first('last_audit_start', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-                          {!! $errors->first('last_audit_end', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
+                          {!! $errors->first('last_patch_start', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
+                          {!! $errors->first('last_patch_end', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
                       </div>
                   @endif
               </div>
 
-              <!-- Next Audit Date -->
-              <div class="form-group next_audit-range{{ ($errors->has('next_audit_start') || $errors->has('next_audit_end')) ? ' has-error' : '' }}">
-                  <label for="next_audit_start" class="col-md-3 control-label">{{ trans('general.next_audit_date') }}</label>
+              <!-- Next Patch Date -->
+              <div class="form-group next_patch-range{{ ($errors->has('next_patch_start') || $errors->has('next_patch_end')) ? ' has-error' : '' }}">
+                  <label for="next_patch_start" class="col-md-3 control-label">{{ trans('general.next_patch_date') }}</label>
                   <div class="input-daterange input-group col-md-7" id="datepicker">
-                      <input type="text" class="form-control" name="next_audit_start" aria-label="next_audit_start" value="{{ old('next_audit_start') }}">
+                      <input type="text" class="form-control" name="next_patch_start" aria-label="next_patch_start" value="{{ old('next_patch_start') }}">
                       <span class="input-group-addon">to</span>
-                      <input type="text" class="form-control" name="next_audit_end" aria-label="next_audit_end" value="{{ old('next_audit_end') }}">
+                      <input type="text" class="form-control" name="next_patch_end" aria-label="next_patch_end" value="{{ old('next_patch_end') }}">
                   </div>
 
-                  @if ($errors->has('next_audit_start') || $errors->has('next_audit_end'))
+                  @if ($errors->has('next_patch_start') || $errors->has('next_patch_end'))
                       <div class="col-md-9 col-lg-offset-3">
-                          {!! $errors->first('next_audit_start', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-                          {!! $errors->first('next_audit_end', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
+                          {!! $errors->first('next_patch_start', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
+                          {!! $errors->first('next_patch_end', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
                       </div>
                   @endif
               </div>
@@ -487,14 +487,14 @@
           format: 'yyyy-mm-dd'
       });
 
-      $('.last_audit-range .input-daterange').datepicker({
+      $('.last_patch-range .input-daterange').datepicker({
           clearBtn: true,
           todayHighlight: true,
           endDate:'0d',
           format: 'yyyy-mm-dd'
       });
 
-      $('.next_audit-range .input-daterange').datepicker({
+      $('.next_patch-range .input-daterange').datepicker({
           clearBtn: true,
           todayHighlight: true,
           format: 'yyyy-mm-dd'

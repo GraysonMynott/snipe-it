@@ -31,7 +31,7 @@ class SecurityHeaders
         // Ugh. Feature-Policy is dumb and clumsy and mostly irrelevant for Snipe-IT,
         // since we don't provide any way to IFRAME anything in in the first place.
         // There is currently no easy way to default ALL THE THINGS to 'none', but
-        // security audits will still ding you if you don't have this header, even
+        // security patches will still ding you if you don't have this header, even
         // though we don't allow IFRAMING in the first place.
         //
         // So for security and compliance sake, here we are. Sigh.

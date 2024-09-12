@@ -328,9 +328,9 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth']], function () {
 });
 
 Route::group(['middleware' => ['auth']], function () {
-    Route::get('reports/audit', 
-        [ReportsController::class, 'audit']
-    )->name('reports.audit');
+    Route::get('reports/patch', 
+        [ReportsController::class, 'patch']
+    )->name('reports.patch');
 
     Route::get(
         'reports/depreciation',

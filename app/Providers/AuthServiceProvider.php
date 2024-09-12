@@ -186,7 +186,7 @@ class AuthServiceProvider extends ServiceProvider
                 || $user->can('create', Asset::class)    
                 || $user->can('checkout', Asset::class)
                 || $user->can('checkin', Asset::class)
-                || $user->can('audit', Asset::class)       
+                || $user->can('patch', Asset::class)       
                 || $user->can('update', License::class)   
                 || $user->can('create', License::class)   
                 || $user->can('update', User::class)

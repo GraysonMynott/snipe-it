@@ -151,28 +151,28 @@
             </div>
           </div>
 
-          <!-- Next audit Date -->
-          <div class="form-group {{ $errors->has('next_audit_date') ? ' has-error' : '' }}">
-            <label for="next_audit_date" class="col-md-3 control-label">{{ trans('general.next_audit_date') }}</label>
+          <!-- Next patch Date -->
+          <div class="form-group {{ $errors->has('next_patch_date') ? ' has-error' : '' }}">
+            <label for="next_patch_date" class="col-md-3 control-label">{{ trans('general.next_patch_date') }}</label>
             <div class="col-md-4">
               <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
-                <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="next_audit_date" id="next_audit_date" value="{{ old('next_audit_date') }}">
+                <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="next_patch_date" id="next_patch_date" value="{{ old('next_patch_date') }}">
                 <span class="input-group-addon"><i class="fas fa-calendar" aria-hidden="true"></i></span>
               </div>
 
-              {!! $errors->first('next_audit_date', '<span class="alert-msg" aria-hidden="true">
+              {!! $errors->first('next_patch_date', '<span class="alert-msg" aria-hidden="true">
                 <i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
 
 
             </div>
             <div class="col-md-5">
               <label class="form-control">
-                {{ Form::checkbox('null_next_audit_date', '1', false) }}
+                {{ Form::checkbox('null_next_patch_date', '1', false) }}
                 {{ trans_choice('general.set_to_null', count($assets), ['asset_count' => count($assets)]) }}
               </label>
             </div>
             <div class="col-md-8 col-md-offset-3">
-              <p class="help-block">{!! trans('general.next_audit_date_help') !!}</p>
+              <p class="help-block">{!! trans('general.next_patch_date_help') !!}</p>
             </div>
           </div>
 

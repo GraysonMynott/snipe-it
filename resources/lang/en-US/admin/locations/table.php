@@ -35,8 +35,8 @@ return [
     'asset_expected_checkin'    => 'Expected Checkin',
     'date'                      => 'Date:',
     'phone'                     => 'Location Phone',
-    'signed_by_asset_auditor'   => 'Signed By (Asset Auditor):',
-    'signed_by_finance_auditor' => 'Signed By (Finance Auditor):',
+    'signed_by_asset_patchor'   => 'Signed By (Asset Patchor):',
+    'signed_by_finance_patchor' => 'Signed By (Finance Patchor):',
     'signed_by_location_manager' => 'Signed By (Location Manager):',
     'signed_by'                 => 'Signed Off By:',
 ];
