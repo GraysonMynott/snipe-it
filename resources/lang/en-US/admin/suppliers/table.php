@@ -10,7 +10,6 @@ return array(
     'country'               => 'Country',
     'create'                => 'Create Supplier',
     'email'                 => 'Email',
-    'fax'                   => 'Fax',
     'id'                    => 'ID',
     'licenses'              => 'Licenses',
     'name'                  => 'Supplier Name',

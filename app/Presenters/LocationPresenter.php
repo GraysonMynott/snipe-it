@@ -156,15 +156,6 @@ class LocationPresenter extends Presenter
                 'formatter'    => 'phoneFormatter',
             ],
             [
-                'field' => 'fax',
-                'searchable' => true,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => trans('admin/suppliers/table.fax'),
-                'visible' => false,
-                'formatter'    => 'phoneFormatter',
-            ],
-            [
                 'field' => 'ldap_ou',
                 'searchable' => true,
                 'sortable' => true,

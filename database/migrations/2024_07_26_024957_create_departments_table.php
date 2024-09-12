@@ -17,7 +17,6 @@ return new class extends Migration
             $table->softDeletes();
             
             $table->string('name');
-            $table->string('fax', 20)->nullable();
             $table->string('phone', 20)->nullable();
             $table->integer('user_id');
             $table->integer('company_id')->nullable()->index();

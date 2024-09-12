@@ -29,7 +29,6 @@ class DepartmentsController extends Controller
             'departments.id',
             'departments.name',
             'departments.phone',
-            'departments.fax',
             'departments.location_id',
             'departments.company_id',
             'departments.manager_id',

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->string('address2')->nullable();
             $table->string('zip', 10)->nullable();
-            $table->string('fax', 20)->nullable();
             $table->string('phone', 20)->nullable();
             $table->integer('parent_id')->nullable()->index();
             $table->string('currency', 10)->nullable();

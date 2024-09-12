@@ -45,7 +45,6 @@ class Department extends SnipeModel
         'user_id',
         'name',
         'phone',
-        'fax',
         'location_id',
         'company_id',
         'manager_id',
@@ -59,7 +58,7 @@ class Department extends SnipeModel
      *
      * @var array
      */
-    protected $searchableAttributes = ['name', 'notes', 'phone', 'fax'];
+    protected $searchableAttributes = ['name', 'notes', 'phone'];
 
     /**
      * The relations and their attributes that should be included when searching the model.

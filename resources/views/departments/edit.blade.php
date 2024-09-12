@@ -17,7 +17,6 @@
     @endif
 
     @include ('partials.forms.edit.phone')
-    @include ('partials.forms.edit.fax')
 
     <!-- Manager -->
     @include ('partials.forms.edit.user-select', ['translated_name' => trans('admin/users/table.manager'), 'fieldname' => 'manager_id'])
