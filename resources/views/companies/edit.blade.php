@@ -10,6 +10,7 @@
 @section('inputFields')
 @include ('partials.forms.edit.name', ['translated_name' => trans('admin/companies/table.name')])
 @include ('partials.forms.edit.phone')
+@include ('partials.forms.edit.email')
 @include ('partials.forms.edit.image-upload', ['image_path' => app('companies_upload_path')])
 
 @stop
