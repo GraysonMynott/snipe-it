@@ -17,6 +17,7 @@ return new class extends Migration
             
             $table->string('name')->unique();
             $table->string('phone', 20)->nullable();
+            $table->string('email', 60)->nullable();
             $table->string('image')->nullable();
         });
     }

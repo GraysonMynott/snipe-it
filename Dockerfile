@@ -116,7 +116,8 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # Get dependencies
 USER docker
-RUN composer install --no-dev --working-dir=/var/www/html
+#RUN composer install --no-dev --working-dir=/var/www/html
+RUN composer install --working-dir=/var/www/html
 USER root
 
 ############### APPLICATION INSTALL/INIT #################
