@@ -17,11 +17,11 @@ class AssetModelSeeder extends Seeder
         $admin = User::where('permissions->superuser', '1')->first() ?? User::factory()->firstAdmin()->create();
 
         // Firewalls
-        AssetModel::factory()->count(1)->cp1550Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp1555Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp1570Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cp1590Model()->create(['user_id' => $admin->id]);
-        AssetModel::factory()->count(1)->cpCloudguardModel()->create(['user_id' => $admin->id]);
+        AssetModel::factory()->count(1)->ckp1550Model()->create(['user_id' => $admin->id]);
+        AssetModel::factory()->count(1)->ckp1555Model()->create(['user_id' => $admin->id]);
+        AssetModel::factory()->count(1)->ckp1570Model()->create(['user_id' => $admin->id]);
+        AssetModel::factory()->count(1)->ckp1590Model()->create(['user_id' => $admin->id]);
+        AssetModel::factory()->count(1)->ckpCloudguardModel()->create(['user_id' => $admin->id]);
 
 
         $src = public_path('/img/demo/models/');

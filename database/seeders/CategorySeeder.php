@@ -18,7 +18,7 @@ class CategorySeeder extends Seeder
         Category::factory()->count(1)->assetServerCategory()->create(['user_id' => $admin->id]);
         Category::factory()->count(1)->assetSwitchCategory()->create(['user_id' => $admin->id]);
         Category::factory()->count(1)->assetRouterCategory()->create(['user_id' => $admin->id]);
-        Category::factory()->count(1)->assetAccessPointCategory()->create(['user_id' => $admin->id]);
+        Category::factory()->count(1)->assetWAPCategory()->create(['user_id' => $admin->id]);
         Category::factory()->count(1)->assetNetScalerCategory()->create(['user_id' => $admin->id]);
     }
 }
