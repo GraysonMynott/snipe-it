@@ -21,7 +21,7 @@ class AssetModel extends SnipeModel
 {
     use HasFactory;
     use SoftDeletes;
-    protected $presenter = AssetModelPresenter::class;
+    protected $presenter = \App\Presenters\AssetModelPresenter::class;
     use Loggable, Requestable, Presentable;
 
     protected $table = 'models';
@@ -31,10 +31,10 @@ class AssetModel extends SnipeModel
     protected $rules = [
         'name'              => 'required|min:1|max:255',
         'model_number'      => 'max:255|nullable',
-        'min_amt'           => 'integer|min:0|nullable',
         'category_id'       => 'required|integer|exists:categories,id',
         'manufacturer_id'   => 'integer|exists:manufacturers,id|nullable',
         'eol'               => 'integer:min:0|max:240|nullable',
+        'eos'               => 'integer:min:0|max:240|nullable',
     ];
 
     /**
@@ -54,12 +54,11 @@ class AssetModel extends SnipeModel
      */
     protected $fillable = [
         'category_id',
-        'depreciation_id',
         'eol',
+        'eos',
         'fieldset_id',
         'image',
         'manufacturer_id',
-        'min_amt',
         'model_number',
         'name',
         'notes',
@@ -81,7 +80,6 @@ class AssetModel extends SnipeModel
      * @var array
      */
     protected $searchableRelations = [
-        'depreciation' => ['name'],
         'category'     => ['name'],
         'manufacturer' => ['name'],
     ];
@@ -92,6 +90,7 @@ class AssetModel extends SnipeModel
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * TODO: Rename to getAssets()
      */
     public function assets()
     {
@@ -104,22 +103,11 @@ class AssetModel extends SnipeModel
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
+     * TODO: Rename to getCategory()
      */
     public function category()
     {
         return $this->belongsTo(\App\Models\Category::class, 'category_id');
-    }
-
-    /**
-     * Establishes the model -> depreciation relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v1.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function depreciation()
-    {
-        return $this->belongsTo(\App\Models\Depreciation::class, 'depreciation_id');
     }
 
     /**
@@ -196,22 +184,6 @@ class AssetModel extends SnipeModel
             && ($this->deleted_at == '');
     }
 
-    /**
-     * Get uploads for this model
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function uploads()
-    {
-        return $this->hasMany('\App\Models\Actionlog', 'item_id')
-            ->where('item_type', '=', AssetModel::class)
-            ->where('action_type', '=', 'uploaded')
-            ->whereNotNull('filename')
-            ->orderBy('created_at', 'desc');
-    }
-
 
     /**
      * -----------------------------------------------
@@ -233,21 +205,6 @@ class AssetModel extends SnipeModel
     public function scopeInCategory($query, array $categoryIdListing)
     {
         return $query->whereIn('category_id', $categoryIdListing);
-    }
-
-    /**
-     * scopeRequestable
-     * Get all models that are requestable by a user.
-     *
-     * @param       $query
-     *
-     * @return $query
-     * @author  Daniel Meltzer <dmeltzer.devel@gmail.com>
-     * @version v3.5
-     */
-    public function scopeRequestableModels($query)
-    {
-        return $query->where('requestable', '1');
     }
 
     /**

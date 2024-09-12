@@ -130,18 +130,11 @@ class AssetsController extends Controller
 
             $asset->company_id              = Company::getIdForCurrentUser($request->input('company_id'));
             $asset->model_id                = $request->input('model_id');
-            $asset->order_number            = $request->input('order_number');
             $asset->notes                   = $request->input('notes');
             $asset->user_id                 = Auth::id();
             $asset->status_id               = request('status_id');
-            $asset->warranty_months         = request('warranty_months', null);
-            $asset->purchase_cost           = request('purchase_cost');
-            $asset->purchase_date           = request('purchase_date', null);
             $asset->asset_eol_date          = request('asset_eol_date', null);
-            $asset->assigned_to             = request('assigned_to', null);
-            $asset->requestable             = request('requestable', 0);
             $asset->rtd_location_id         = request('rtd_location_id', null);
-            $asset->byod                    = request('byod', 0);
 
             if (! empty($settings->patch_interval)) {
                 $asset->next_patch_date = Carbon::now()->addMonths($settings->patch_interval)->toDateString();
@@ -297,35 +290,11 @@ class AssetsController extends Controller
 
         $asset->status_id = $request->input('status_id', null);
         $asset->warranty_months = $request->input('warranty_months', null);
-        $asset->purchase_cost = $request->input('purchase_cost', null);
         $asset->purchase_date = $request->input('purchase_date', null);
         $asset->next_patch_date = $request->input('next_patch_date', null);
-        if ($request->filled('purchase_date') && !$request->filled('asset_eol_date') && ($asset->model->eol > 0)) {
-            $asset->purchase_date = $request->input('purchase_date', null); 
-            $asset->asset_eol_date = Carbon::parse($request->input('purchase_date'))->addMonths($asset->model->eol)->format('Y-m-d');
-            $asset->eol_explicit = false;
-        } elseif ($request->filled('asset_eol_date')) {
-           $asset->asset_eol_date = $request->input('asset_eol_date', null);
-           $months = Carbon::parse($asset->asset_eol_date)->diffInMonths($asset->purchase_date);
-           if($asset->model->eol) {
-               if($months != $asset->model->eol > 0) {
-                   $asset->eol_explicit = true;
-               } else {
-                   $asset->eol_explicit = false;
-               }
-           } else {
-               $asset->eol_explicit = true;
-           }
-        } elseif (!$request->filled('asset_eol_date') && (($asset->model->eol) == 0)) {
-           $asset->asset_eol_date = null;
-		   $asset->eol_explicit = false;
-        }
-        $asset->expected_checkin = $request->input('expected_checkin', null);
 
         // If the box isn't checked, it's not in the request at all.
-        $asset->requestable = $request->filled('requestable');
         $asset->rtd_location_id = $request->input('rtd_location_id', null);
-        $asset->byod = $request->input('byod', 0);
 
         $status = Statuslabel::find($asset->status_id);
 
@@ -354,7 +323,6 @@ class AssetsController extends Controller
         $asset->serial = $serial[1];
         $asset->company_id = Company::getIdForCurrentUser($request->input('company_id'));
         $asset->model_id = $request->input('model_id');
-        $asset->order_number = $request->input('order_number');
         $asset->asset_tag = $asset_tag[1];
         $asset->notes = $request->input('notes');
 

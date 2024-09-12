@@ -115,39 +115,11 @@ class AssetPresenter extends Presenter
                 'visible' => false,
                 'formatter' => 'manufacturersLinkObjFormatter',
             ], [
-                'field' => 'purchase_date',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.purchase_date'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
                 'field' => 'age',
                 'searchable' => false,
                 'sortable' => false,
                 'visible' => false,
                 'title' => trans('general.age'),
-            ], [
-                'field' => 'purchase_cost',
-                'searchable' => true,
-                'sortable' => true,
-                'title' => trans('general.purchase_cost'),
-                'footerFormatter' => 'sumFormatter',
-                'class' => 'text-right',
-            ], [
-                "field" => "book_value",
-                "searchable" => false,
-                "sortable" => false,
-                "title" => trans('admin/hardware/table.book_value'),
-                "footerFormatter" => 'sumFormatter',
-                "class" => "text-right",
-            ], [
-                'field' => 'order_number',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.order_number'),
-                'formatter' => 'orderNumberObjFilterFormatter',
             ], [
                 'field' => 'eol',
                 'searchable' => false,
@@ -162,25 +134,11 @@ class AssetPresenter extends Presenter
                 'title' => trans('admin/hardware/form.eol_date'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'warranty_months',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/form.warranty'),
-            ], [
-                'field' => 'warranty_expires',
-                'searchable' => false,
-                'sortable' => false,
-                'visible' => false,
-                'title' => trans('admin/hardware/form.warranty_expires'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
                 'field' => 'notes',
                 'searchable' => true,
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('general.notes'),
-
             ], [
                 'field' => 'created_at',
                 'searchable' => false,

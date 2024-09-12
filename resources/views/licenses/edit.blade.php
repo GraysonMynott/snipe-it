@@ -87,35 +87,4 @@
 <!-- Notes -->
 @include ('partials.forms.edit.notes')
 
-<!-- Order Details -->
-<div class="form-group">
-    <div class="col-md-9 col-sm-9 col-md-offset-3">
-        <a id="order_info" class="text-primary">
-            <i class="fa fa-caret-right fa-2x" id="order_info_icon"></i>
-            <strong>{{ trans('admin/hardware/form.order_details') }}</strong>
-        </a>
-
-    </div>
-
-    <div id='order_details' class="col-md-12" style="display:none">
-        <br>
-
-        <!-- Software/License Purchase Order Number -->
-        @include ('partials.forms.edit.order_number')
-
-        <!-- Software/License Purchase Date -->
-        @include ('partials.forms.edit.purchase_date')
-
-        @php
-            $currency_type = null;
-            if ($item->id && $item->location) {
-                $currency_type = $item->location->currency;
-            }
-        @endphp
-
-        @include ('partials.forms.edit.purchase_cost', ['currency_type' => $currency_type])
-
-    </div>
-</div>
-
 @stop

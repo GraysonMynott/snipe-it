@@ -7,13 +7,9 @@ use App\Models\Actionlog;
 use App\Models\Asset;
 use App\Models\AssetModel;
 use App\Models\Category;
-use App\Models\AssetMaintenance;
-use App\Models\CheckoutAcceptance;
 use App\Models\CustomField;
-use App\Models\Depreciation;
 use App\Models\License;
 use App\Models\Setting;
-use App\Notifications\CheckoutAssetNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -79,12 +75,7 @@ class ReportsController extends Controller
             trans('admin/hardware/table.asset_tag'),
             trans('admin/hardware/table.title'),
             trans('admin/hardware/table.serial'),
-            trans('admin/hardware/table.checkoutto'),
             trans('admin/hardware/table.location'),
-            trans('admin/hardware/table.purchase_date'),
-            trans('admin/hardware/table.purchase_cost'),
-            trans('admin/hardware/table.book_value'),
-            trans('admin/hardware/table.diff'),
         ];
 
         //we insert the CSV header
@@ -96,12 +87,6 @@ class ReportsController extends Controller
             $row[] = e($asset->asset_tag);
             $row[] = e($asset->name);
             $row[] = e($asset->serial);
-
-            if ($target = $asset->assignedTo) {
-                $row[] = e($target->present()->name());
-            } else {
-                $row[] = ''; // Empty string if unassigned
-            }
 
             if (($asset->assigned_to > 0) && ($location = $asset->location)) {
                 if ($location->city) {
@@ -115,16 +100,6 @@ class ReportsController extends Controller
                 $row[] = '';  // Empty string if location is not set
             }
 
-            if ($asset->location) {
-                $currency = e($asset->location->currency);
-            } else {
-                $currency = e(Setting::getSettings()->default_currency);
-            }
-
-            $row[] = $asset->purchase_date;
-            $row[] = $currency.Helper::formatCurrencyOutput($asset->purchase_cost);
-            $row[] = $currency.Helper::formatCurrencyOutput($asset->getDepreciatedValue());
-            $row[] = $currency.Helper::formatCurrencyOutput(($asset->purchase_cost - $asset->getDepreciatedValue()));
             $csv->insertOne($row);
         }
 
@@ -295,9 +270,6 @@ class ReportsController extends Controller
             trans('admin/licenses/form.seats'),
             trans('admin/licenses/form.remaining_seats'),
             trans('admin/licenses/form.expiration'),
-            trans('general.purchase_date'),
-            trans('general.depreciation'),
-            trans('general.purchase_cost'),
         ];
 
         $header = array_map('trim', $header);
@@ -311,9 +283,6 @@ class ReportsController extends Controller
             $row[] = e($license->seats);
             $row[] = $license->remaincount();
             $row[] = $license->expiration_date;
-            $row[] = $license->purchase_date;
-            $row[] = ($license->depreciation != '') ? '' : e($license->depreciation->name);
-            $row[] = '"'.Helper::formatCurrencyOutput($license->purchase_cost).'"';
 
             $rows[] = implode(',', $row);
         }
@@ -403,13 +372,6 @@ class ReportsController extends Controller
             if ($request->filled('serial')) {
                 $header[] = trans('admin/hardware/table.serial');
             }
-            if ($request->filled('purchase_date')) {
-                $header[] = trans('admin/hardware/table.purchase_date');
-            }
-
-            if (($request->filled('purchase_cost')) || ($request->filled('depreciation'))) {
-                $header[] = trans('admin/hardware/table.purchase_cost');
-            }
 
             if ($request->filled('eol')) {
                 $header[] = trans('admin/hardware/table.eol');
@@ -442,11 +404,6 @@ class ReportsController extends Controller
                 $header[] = trans('general.state');
                 $header[] = trans('general.country');
                 $header[] = trans('general.zip');
-            }
-
-            if ($request->filled('assigned_to')) {
-                $header[] = trans('admin/hardware/table.checkoutto');
-                $header[] = trans('general.type');
             }
 
             if ($request->filled('username')) {
@@ -495,29 +452,6 @@ class ReportsController extends Controller
 
             if ($request->filled('status')) {
                 $header[] = trans('general.status');
-            }
-
-            if ($request->filled('warranty')) {
-                $header[] = trans('admin/hardware/form.warranty');
-                $header[] = trans('admin/hardware/form.warranty_expires');
-            }
-
-            if ($request->filled('depreciation')) {
-                $header[] = trans('admin/hardware/table.book_value');
-                $header[] = trans('admin/hardware/table.diff');
-                $header[] = trans('admin/hardware/form.fully_depreciated');
-            }
-
-            if ($request->filled('checkout_date')) {
-                $header[] = trans('admin/hardware/table.checkout_date');
-            }
-
-            if ($request->filled('checkin_date')) {
-                $header[] = trans('admin/hardware/table.last_checkin_date');
-            }
-
-            if ($request->filled('expected_checkin')) {
-                $header[] = trans('admin/hardware/form.expected_checkin');
             }
 
             if ($request->filled('created_at')) {
@@ -591,10 +525,6 @@ class ReportsController extends Controller
 
             if ($request->filled('by_manufacturer_id')) {
                 $assets->ByManufacturer($request->input('by_manufacturer_id'));
-            }
-
-            if ($request->filled('by_order_number')) {
-                $assets->where('assets.order_number', $request->input('by_order_number'));
             }
 
             if ($request->filled('by_status_id')) {
@@ -703,20 +633,8 @@ class ReportsController extends Controller
                         $row[] = ($asset->serial) ? $asset->serial : '';
                     }
 
-                    if ($request->filled('purchase_date')) {
-                        $row[] = ($asset->purchase_date) ? $asset->purchase_date : '';
-                    }
-
-                    if ($request->filled('purchase_cost')) {
-                        $row[] = ($asset->purchase_cost) ? Helper::formatCurrencyOutput($asset->purchase_cost) : '';
-                    }
-
                     if ($request->filled('eol')) {
                             $row[] = ($asset->asset_eol_date) ? $asset->asset_eol_date : '';
-                    }
-
-                    if ($request->filled('order')) {
-                        $row[] = ($asset->order_number) ? $asset->order_number : '';
                     }
                     
                     if ($request->filled('location')) {
@@ -849,14 +767,6 @@ class ReportsController extends Controller
                         $row[] = $asset->present()->warranty_expires();
                     }
 
-                    if ($request->filled('depreciation')) {
-                            $depreciation = $asset->getDepreciatedValue();
-                            $diff = ($asset->purchase_cost - $depreciation);
-                        $row[] = Helper::formatCurrencyOutput($depreciation);
-                        $row[] = Helper::formatCurrencyOutput($diff);
-                        $row[] = (($asset->depreciation) && ($asset->depreciated_date())) ? $asset->depreciated_date()->format('Y-m-d') : '';
-                    }
-
                     if ($request->filled('checkout_date')) {
                         $row[] = ($asset->last_checkout) ? $asset->last_checkout : '';
                     }
@@ -929,77 +839,6 @@ class ReportsController extends Controller
             'Content-Type' => 'text/csv',
             'Content-Disposition' => 'attachment; filename="custom-assets-report-'.date('Y-m-d-his').'.csv"',
         ]);
-
-        return $response;
-    }
-
-    /**
-     * getImprovementsReport
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    public function getAssetMaintenancesReport() : View
-    {
-        $this->authorize('reports.view');
-
-        return view('reports.asset_maintenances');
-    }
-
-    /**
-     * exportImprovementsReport
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    public function exportAssetMaintenancesReport() : Response
-    {
-        $this->authorize('reports.view');
-        // Grab all the improvements
-        $assetMaintenances = AssetMaintenance::with('asset')
-                                             ->orderBy('created_at', 'DESC')
-                                             ->get();
-
-        $rows = [];
-
-        $header = [
-            trans('admin/hardware/table.asset_tag'),
-            trans('admin/asset_maintenances/table.asset_name'),
-            trans('admin/asset_maintenances/form.asset_maintenance_type'),
-            trans('admin/asset_maintenances/form.title'),
-            trans('admin/asset_maintenances/form.start_date'),
-            trans('admin/asset_maintenances/form.completion_date'),
-            trans('admin/asset_maintenances/form.asset_maintenance_time'),
-            trans('admin/asset_maintenances/form.cost'),
-        ];
-
-        $header = array_map('trim', $header);
-        $rows[] = implode(',', $header);
-
-        foreach ($assetMaintenances as $assetMaintenance) {
-            $row = [];
-            $row[] = str_replace(',', '', e($assetMaintenance->asset->asset_tag));
-            $row[] = str_replace(',', '', e($assetMaintenance->asset->name));
-            $row[] = e($assetMaintenance->improvement_type);
-            $row[] = e($assetMaintenance->title);
-            $row[] = e($assetMaintenance->start_date);
-            $row[] = e($assetMaintenance->completion_date);
-            if (is_null($assetMaintenance->asset_maintenance_time)) {
-                $improvementTime = intval(Carbon::now()
-                                                 ->diffInDays(Carbon::parse($assetMaintenance->start_date)));
-            } else {
-                $improvementTime = intval($assetMaintenance->asset_maintenance_time);
-            }
-            $row[]  = $improvementTime;
-            $row[]  = trans('general.currency') . Helper::formatCurrencyOutput($assetMaintenance->cost);
-            $rows[] = implode(',', $row);
-        }
-
-        // spit out a csv
-        $csv      = implode("\n", $rows);
-        $response = response()->make($csv, 200);
-        $response->header('Content-Type', 'text/csv');
-        $response->header('Content-disposition', 'attachment;filename=report.csv');
 
         return $response;
     }
@@ -1155,7 +994,6 @@ class ReportsController extends Controller
             trans('admin/hardware/form.model'),
             trans('admin/hardware/form.name'),
             trans('admin/hardware/table.asset_tag'),
-            trans('admin/hardware/table.checkoutto'),
         ];
 
         $header = array_map('trim', $header);
@@ -1170,7 +1008,6 @@ class ReportsController extends Controller
                 $row[]  = str_replace(',', '', e($item['assetItem']->model->name));
                 $row[]  = str_replace(',', '', e($item['assetItem']->name));
                 $row[]  = str_replace(',', '', e($item['assetItem']->asset_tag));
-                $row[]  = str_replace(',', '', e(($item['acceptance']->assignedTo) ? $item['acceptance']->assignedTo->present()->name() : trans('admin/reports/general.deleted_user')));
                 $rows[] = implode(',', $row);
             }
         }

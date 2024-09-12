@@ -94,14 +94,7 @@ class AssetImporter extends ItemImporter
 
         $this->item['notes'] = trim($this->findCsvMatch($row, 'asset_notes'));
         $this->item['image'] = trim($this->findCsvMatch($row, 'image'));
-        $this->item['requestable'] = trim(($this->fetchHumanBoolean($this->findCsvMatch($row, 'requestable'))) == 1) ? '1' : 0;
-        $asset->requestable = $this->item['requestable'];
-        $this->item['warranty_months'] = intval(trim($this->findCsvMatch($row, 'warranty_months')));
         $this->item['model_id'] = $this->createOrFetchAssetModel($row);
-        $this->item['byod'] = ($this->fetchHumanBoolean(trim($this->findCsvMatch($row, 'byod'))) == 1) ? '1' : 0;
-        $this->item['last_checkin'] = trim($this->findCsvMatch($row, 'last_checkin'));
-        $this->item['last_checkout'] = trim($this->findCsvMatch($row, 'last_checkout'));
-        $this->item['expected_checkin'] = trim($this->findCsvMatch($row, 'expected_checkin'));
         $this->item['last_patch_date'] = trim($this->findCsvMatch($row, 'last_patch_date'));
         $this->item['next_patch_date'] = trim($this->findCsvMatch($row, 'next_patch_date'));
         $this->item['asset_eol_date'] = trim($this->findCsvMatch($row, 'asset_eol_date'));

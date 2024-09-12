@@ -306,21 +306,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     }
 
     /**
-     * Establishes the user -> maintenances relationship
-     *
-     * This would only be used to return maintenances that this user
-     * created.
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function assetmaintenances()
-    {
-        return $this->hasMany(\App\Models\AssetMaintenance::class, 'user_id')->withTrashed();
-    }
-
-    /**
      * Establishes the user -> license seats relationship
      *
      * @author A. Gianotto <snipe@snipe.net>
@@ -802,23 +787,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     public function preferredLocale()
     {
         return $this->locale;
-    }
-    public function getUserTotalCost(){
-        $asset_cost= 0;
-        $license_cost= 0;
-        foreach ($this->assets as $asset){
-            $asset_cost += $asset->purchase_cost;
-            $this->asset_cost = $asset_cost;
-        }
-        foreach ($this->licenses as $license){
-            $license_cost += $license->purchase_cost;
-            $this->license_cost = $license_cost;
-        }
-
-        $this->total_user_cost = ($asset_cost + $license_cost);
-
-
-        return $this;
     }
     public function scopeUserLocation($query, $location, $search){
 

@@ -109,49 +109,10 @@
             </div>
           </div> <!--/form-group-->
 
-
-
-          <!-- Purchase Cost -->
-          <div class="form-group {{ $errors->has('purchase_cost') ? ' has-error' : '' }}">
-            <label for="purchase_cost" class="col-md-3 control-label">
-              {{ trans('admin/hardware/form.cost') }}
-            </label>
-            <div class="input-group col-md-3">
-              <span class="input-group-addon">{{ $snipeSettings->default_currency }}</span>
-                <input type="text" class="form-control"  maxlength="10" placeholder="{{ trans('admin/hardware/form.cost') }}" name="purchase_cost" id="purchase_cost" value="{{ old('purchase_cost') }}">
-                {!! $errors->first('purchase_cost', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-            </div>
-          </div>
-
           <!-- Company -->
           @include ('partials.forms.edit.company-select', ['translated_name' => trans('general.company'), 'fieldname' => 'company_id'])
 
-          <!-- Order Number -->
-          <div class="form-group {{ $errors->has('order_number') ? ' has-error' : '' }}">
-            <label for="order_number" class="col-md-3 control-label">
-              {{ trans('admin/hardware/form.order') }}
-            </label>
-            <div class="col-md-7">
-              <input class="form-control" type="text" maxlength="200" name="order_number" id="order_number" value="{{ old('order_number') }}" />
-              {!! $errors->first('order_number', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-            </div>
-          </div>
-
-          <!-- Warranty -->
-          <div class="form-group {{ $errors->has('warranty_months') ? ' has-error' : '' }}">
-            <label for="warranty_months" class="col-md-3 control-label">
-              {{ trans('admin/hardware/form.warranty') }}
-            </label>
-            <div class="col-md-3">
-              <div class="input-group">
-                <input class="col-md-3 form-control" maxlength="4" type="text" name="warranty_months" id="warranty_months" value="{{ old('warranty_months') }}" />
-                <span class="input-group-addon">{{ trans('admin/hardware/form.months') }}</span>
-                {!! $errors->first('warranty_months', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
-              </div>
-            </div>
-          </div>
-
-          <!-- Next patch Date -->
+          <!-- Next Patch Date -->
           <div class="form-group {{ $errors->has('next_patch_date') ? ' has-error' : '' }}">
             <label for="next_patch_date" class="col-md-3 control-label">{{ trans('general.next_patch_date') }}</label>
             <div class="col-md-4">
@@ -173,27 +134,6 @@
             </div>
             <div class="col-md-8 col-md-offset-3">
               <p class="help-block">{!! trans('general.next_patch_date_help') !!}</p>
-            </div>
-          </div>
-
-          <!-- Requestable -->
-          <div class="form-group {{ $errors->has('requestable') ? ' has-error' : '' }}">
-            <div class="control-label col-md-3">
-              <strong>{{ trans('admin/hardware/form.requestable') }}</strong>
-            </div>
-            <div class="col-md-7">
-              <label class="form-control">
-                <input type="radio" name="requestable" value="1">
-                {{ trans('general.yes')}}
-              </label>
-              <label class="form-control">
-                <input type="radio" name="requestable" value="0">
-                {{ trans('general.no')}}
-              </label>
-              <label class="form-control">
-                <input type="radio" name="requestable" value="" checked>
-                {{ trans('general.do_not_change')}}
-              </label>
             </div>
           </div>
 

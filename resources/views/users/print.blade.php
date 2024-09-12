@@ -116,7 +116,6 @@
                 <th data-field="asset_location" data-sortable="true" data-visible="false">{{ trans('general.location') }}</th>
                 <th data-field="asset_serial" data-sortable="true" data-visible="true">{{ trans('admin/hardware/form.serial') }}</th>
                 <th data-field="asset_checkout_date" data-sortable="true" data-visible="true">{{ trans('admin/hardware/table.checkout_date') }}</th>
-                <th data-field="signature" data-sortable="true" data-visible="true">{{ trans('general.signature') }}</th>
             </thead>
             <tbody>
             @foreach ($assets as $asset)
@@ -135,13 +134,7 @@
                     <td>{{ ($asset->defaultLoc) ? $asset->defaultLoc->name : '' }}</td>
                     <td>{{ ($asset->location) ? $asset->location->name : '' }}</td>
                     <td>{{ $asset->serial }}</td>
-                    <td>
-                        {{ Helper::getFormattedDateObject($asset->last_checkout, 'datetime', false) }}</td>
-                    <td>
-                        @if (($asset->assetlog->first()) && ($asset->assetlog->first()->accept_signature!=''))
-                            <img style="width:auto;height:100px;" src="{{ asset('/') }}display-sig/{{ $asset->assetlog->first()->accept_signature }}">
-                        @endif
-                    </td>
+                    <td>{{ Helper::getFormattedDateObject($asset->last_checkout, 'datetime', false) }}</td>
                 </tr>
                 @if ($settings->show_assigned_assets)
                     @php
@@ -163,13 +156,7 @@
                             <td>{{ ($asset->defaultLoc) ? $asset->defaultLoc->name : '' }}</td>
                             <td>{{ ($asset->location) ? $asset->location->name : '' }}</td>
                             <td>{{ $asset->serial }}</td>
-                            <td>
-                                {{ Helper::getFormattedDateObject($asset->last_checkout, 'datetime', false) }}</td>
-                            <td>
-                                @if (($asset->assetlog->first()) && ($asset->assetlog->first()->accept_signature!=''))
-                                    <img style="width:auto;height:100px;" src="{{ asset('/') }}display-sig/{{ $asset->assetlog->first()->accept_signature }}">
-                                @endif
-                            </td>
+                            <td>{{ Helper::getFormattedDateObject($asset->last_checkout, 'datetime', false) }}</td>
                         </tr>
                         @php
                             $assignedCounter++

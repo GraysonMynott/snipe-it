@@ -82,8 +82,7 @@ class LicensePresenter extends Presenter
                 'searchable' => false,
                 'sortable' => true,
                 'title' => trans('admin/accessories/general.remaining'),
-            ],
-            [
+            ], [
                 'field' => 'min_amt',
                 'searchable' => false,
                 'sortable' => true,
@@ -96,16 +95,14 @@ class LicensePresenter extends Presenter
                 'visible' => false,
                 'title' => trans('general.purchase_date'),
                 'formatter' => 'dateDisplayFormatter',
-            ],
-            [
+            ], [
                 'field' => 'termination_date',
                 'searchable' => true,
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('admin/licenses/form.termination_date'),
                 'formatter' => 'dateDisplayFormatter',
-            ],
-            [
+            ], [
                 'field' => 'depreciation',
                 'searchable' => true,
                 'sortable' => true,
@@ -113,9 +110,7 @@ class LicensePresenter extends Presenter
                 'title' => trans('admin/hardware/form.depreciation'),
                 'visible' => false,
                 'formatter' => 'depreciationsLinkObjFormatter',
-            ],
-
-            [
+            ], [
                 'field' => 'maintained',
                 'searchable' => false,
                 'sortable' => true,
@@ -129,27 +124,6 @@ class LicensePresenter extends Presenter
                 'visible' => false,
                 'title' => trans('admin/licenses/form.reassignable'),
                 'formatter' => 'trueFalseFormatter',
-            ],
-            [
-                'field' => 'purchase_cost',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.purchase_cost'),
-                'footerFormatter' => 'sumFormatterQuantity',
-                'class' => 'text-right',
-            ], [
-                'field' => 'purchase_order',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/licenses/form.purchase_order'),
-            ], [
-                'field' => 'order_number',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.order_number'),
             ], [
                 'field' => 'created_at',
                 'searchable' => false,

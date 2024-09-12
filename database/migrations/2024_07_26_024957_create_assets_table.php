@@ -24,8 +24,6 @@ return new class extends Migration
             $table->date('purchase_date')->nullable();
             $table->date('asset_eol_date')->nullable();
             $table->boolean('eol_explicit')->default(false);
-            $table->decimal('purchase_cost', 20)->nullable();
-            $table->string('order_number')->nullable();
             $table->integer('assigned_to')->nullable();
             $table->text('notes')->nullable();
             $table->text('image')->nullable();
@@ -33,9 +31,6 @@ return new class extends Migration
             $table->boolean('physical')->default(true);
             $table->integer('status_id')->nullable();
             $table->boolean('archived')->nullable()->default(false);
-            $table->integer('warranty_months')->nullable();
-            $table->boolean('depreciate')->nullable();
-            $table->tinyInteger('requestable')->default(0);
             $table->integer('rtd_location_id')->nullable()->index();
             $table->string('_snipeit_mac_address_1')->nullable();
             $table->string('accepted')->nullable();
@@ -47,11 +42,6 @@ return new class extends Migration
             $table->dateTime('last_patch_date')->nullable();
             $table->date('next_patch_date')->nullable();
             $table->integer('location_id')->nullable();
-            $table->integer('checkin_counter')->default(0);
-            $table->integer('checkout_counter')->default(0);
-            $table->integer('requests_counter')->default(0);
-            $table->boolean('byod')->nullable()->default(false);
-
             $table->index(['assigned_type', 'assigned_to']);
             $table->index(['deleted_at', 'asset_tag']);
             $table->index(['deleted_at', 'assigned_type', 'assigned_to']);

@@ -20,8 +20,6 @@ class AssetObserver
     {
         $attributes = $asset->getAttributes();
         $attributesOriginal = $asset->getRawOriginal();
-        $same_checkout_counter = false;
-        $same_checkin_counter = false;
         $restoring_or_deleting = false;
 
 
@@ -30,20 +28,11 @@ class AssetObserver
             $restoring_or_deleting = (($attributes['deleted_at'] != $attributesOriginal['deleted_at']));
         }
 
-        if (array_key_exists('checkout_counter', $attributes) && array_key_exists('checkout_counter', $attributesOriginal)){
-            $same_checkout_counter = (($attributes['checkout_counter'] == $attributesOriginal['checkout_counter']));
-        }
-
-        if (array_key_exists('checkin_counter', $attributes)  && array_key_exists('checkin_counter', $attributesOriginal)){
-            $same_checkin_counter = (($attributes['checkin_counter'] == $attributesOriginal['checkin_counter']));
-        }
-
         // If the asset isn't being checked out or patched, log the update.
         // (Those other actions already create log entries.)
 	    if (($attributes['assigned_to'] == $attributesOriginal['assigned_to'])
-	    && ($same_checkout_counter) && ($same_checkin_counter)
-            && ((isset( $attributes['next_patch_date']) ? $attributes['next_patch_date'] : null) == (isset($attributesOriginal['next_patch_date']) ? $attributesOriginal['next_patch_date']: null))
-            && ($attributes['last_checkout'] == $attributesOriginal['last_checkout']) && (!$restoring_or_deleting))
+	        && ((isset( $attributes['next_patch_date']) ? $attributes['next_patch_date'] : null) == (isset($attributesOriginal['next_patch_date']) ? $attributesOriginal['next_patch_date']: null))
+            && (!$restoring_or_deleting))
         {
             $changed = [];
 

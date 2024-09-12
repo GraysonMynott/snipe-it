@@ -121,28 +121,6 @@ class AssetPatchPresenter extends Presenter
                 'visible' => false,
                 'formatter' => 'manufacturersLinkObjFormatter',
             ], [
-                'field' => 'purchase_date',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.purchase_date'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
-                'field' => 'purchase_cost',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.purchase_cost'),
-                'footerFormatter' => 'sumFormatter',
-                'class' => 'text-right',
-            ], [
-                'field' => 'order_number',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.order_number'),
-                'formatter' => 'orderNumberObjFilterFormatter',
-            ], [
                 'field' => 'eol',
                 'searchable' => false,
                 'sortable' => false,
@@ -150,46 +128,11 @@ class AssetPatchPresenter extends Presenter
                 'title' => trans('general.eol'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'warranty_months',
-                'searchable' => true,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/form.warranty'),
-            ], [
-                'field' => 'warranty_expires',
-                'searchable' => false,
-                'sortable' => false,
-                'visible' => false,
-                'title' => trans('admin/hardware/form.warranty_expires'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
                 'field' => 'notes',
                 'searchable' => true,
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('general.notes'),
-
-            ], [
-                'field' => 'checkout_counter',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.checkouts_count'),
-
-            ], [
-                'field' => 'checkin_counter',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.checkins_count'),
-
-            ], [
-                'field' => 'requests_counter',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.user_requests_count'),
-
             ], [
                 'field' => 'created_at',
                 'searchable' => false,
@@ -203,20 +146,6 @@ class AssetPatchPresenter extends Presenter
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('general.updated_at'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
-                'field' => 'last_checkout',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/table.checkout_date'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
-                'field' => 'expected_checkin',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/form.expected_checkin'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
                 'field' => 'last_patch_date',

@@ -24,7 +24,6 @@ return new class extends Migration
             $table->string('db_column')->nullable();
             $table->text('help_text')->nullable();
             $table->boolean('show_in_email')->default(false);
-            $table->boolean('show_in_requestable_list')->nullable()->default(false);
             $table->boolean('is_unique')->nullable()->default(false);
             $table->boolean('display_in_user_view')->nullable()->default(false);
             $table->boolean('auto_add_to_fieldsets')->nullable()->default(false);

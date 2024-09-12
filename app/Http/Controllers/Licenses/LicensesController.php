@@ -88,11 +88,6 @@ class LicensesController extends Controller
         $license->manufacturer_id   = $request->input('manufacturer_id');
         $license->name              = $request->input('name');
         $license->notes             = $request->input('notes');
-        $license->order_number      = $request->input('order_number');
-        $license->purchase_cost     = $request->input('purchase_cost');
-        $license->purchase_date     = $request->input('purchase_date');
-        $license->purchase_order    = $request->input('purchase_order');
-        $license->purchase_order    = $request->input('purchase_order');
         $license->reassignable      = $request->input('reassignable', 0);
         $license->seats             = $request->input('seats');
         $license->serial            = $request->input('serial');
@@ -166,10 +161,6 @@ class LicensesController extends Controller
         $license->maintained        = $request->input('maintained',0);
         $license->name              = $request->input('name');
         $license->notes             = $request->input('notes');
-        $license->order_number      = $request->input('order_number');
-        $license->purchase_cost     = $request->input('purchase_cost');
-        $license->purchase_date     = $request->input('purchase_date');
-        $license->purchase_order    = $request->input('purchase_order');
         $license->reassignable      = $request->input('reassignable', 0);
         $license->serial            = $request->input('serial');
         $license->termination_date  = $request->input('termination_date');
@@ -319,9 +310,6 @@ class LicensesController extends Controller
                         trans('general.company'),
                         trans('general.name'),
                         trans('general.serial_number'),
-                        trans('general.purchase_date'),
-                        trans('general.purchase_cost'),
-                        trans('general.order_number'),
                         trans('general.licenses_available'),
                         trans('admin/licenses/table.seats'),
                         trans('general.created_by'),
@@ -331,7 +319,6 @@ class LicensesController extends Controller
                         trans('general.email'),
                         trans('admin/hardware/form.fully_depreciated'),
                         trans('admin/licenses/form.expiration'),
-                        trans('admin/licenses/form.purchase_order'),
                         trans('admin/licenses/form.termination_date'),
                         trans('admin/licenses/form.maintained'),
                         trans('general.manufacturer'),
@@ -352,8 +339,6 @@ class LicensesController extends Controller
                             $license->name,
                             $license->serial,
                             $license->purchase_date,
-                            $license->purchase_cost,
-                            $license->order_number,
                             $license->free_seat_count,
                             $license->seats,
                             ($license->adminuser ? $license->adminuser->present()->fullName() : trans('admin/reports/general.deleted_user')),
@@ -361,11 +346,8 @@ class LicensesController extends Controller
                             $license->updated_at,
                             $license->deleted_at,
                             $license->email,
-                            ( $license->depreciate == '1') ? trans('general.yes') : trans('general.no'),
                             $license->expiration_date,
-                            $license->purchase_order,
                             $license->termination_date,
-                            ( $license->maintained == '1') ? trans('general.yes') : trans('general.no'),
                             $license->manufacturer ? $license->manufacturer->name: '',
                             $license->category ? $license->category->name: '',
                             $license->min_amt,

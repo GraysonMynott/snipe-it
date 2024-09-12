@@ -38,14 +38,6 @@ class LicensesController extends Controller
             $licenses->where('licenses.serial', '=', $request->input('product_key'));
         }
 
-        if ($request->filled('order_number')) {
-            $licenses->where('order_number', '=', $request->input('order_number'));
-        }
-
-        if ($request->filled('purchase_order')) {
-            $licenses->where('purchase_order', '=', $request->input('purchase_order'));
-        }
-
         if ($request->filled('license_name')) {
             $licenses->where('license_name', '=', $request->input('license_name'));
         }
@@ -111,10 +103,7 @@ class LicensesController extends Controller
                     [
                         'id',
                         'name',
-                        'purchase_cost',
                         'expiration_date',
-                        'purchase_order',
-                        'order_number',
                         'notes',
                         'purchase_date',
                         'serial',

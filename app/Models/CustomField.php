@@ -53,12 +53,10 @@ class CustomField extends Model
         'field_encrypted' => 'nullable|boolean',
         'auto_add_to_fieldsets' => 'boolean',
         'show_in_listview' => 'boolean',
-        'show_in_requestable_list' => 'boolean',
         'show_in_email' => 'boolean',
     ];
 
     protected $casts = [
-        'show_in_requestable_list'  => 'boolean',
     ];
 
     /**
@@ -79,7 +77,6 @@ class CustomField extends Model
         'auto_add_to_fieldsets',
         'show_in_listview',
         'show_in_email',
-        'show_in_requestable_list',
     ];
 
     /**

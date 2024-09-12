@@ -37,9 +37,7 @@
 
 
 <p>
-    {{ trans('general.assigned_date') }}: {{$check_out_date}}<br>
     {{ trans('general.assignee') }}: {{$assigned_to}}<br>
-    {{ trans('general.accepted_date') }}: {{$accepted_date}}
 </p>
 
 

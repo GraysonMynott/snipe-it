@@ -7,28 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class SnipeModel extends Model
 {
-    // Setters that are appropriate across multiple models.
-    public function setPurchaseDateAttribute($value)
-    {
-        if ($value == '') {
-            $value = null;
-        }
-        $this->attributes['purchase_date'] = $value;
-    }
-
-    /**
-     * @param $value
-     */
-    public function setPurchaseCostAttribute($value)
-    {
-        $value = Helper::ParseCurrency($value);
-
-        if ($value == 0) {
-            $value = null;
-        }
-        $this->attributes['purchase_cost'] = $value;
-    }
-
     public function setLocationIdAttribute($value)
     {
         if ($value == '') {

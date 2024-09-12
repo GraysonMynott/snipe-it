@@ -42,20 +42,6 @@ class Asset extends Depreciable
     use Acceptable;
 
     /**
-     * Run after the checkout acceptance was declined by the user
-     * 
-     * @param  User   $acceptedBy
-     * @param  string $signature
-     */ 
-    public function declinedCheckout(User $declinedBy, $signature)
-    {
-      $this->assigned_to = null;
-      $this->assigned_type = null;
-      $this->accepted = null;      
-      $this->save();        
-    }
-
-    /**
     * The database table used by the model.
     *
     * @var string
@@ -74,9 +60,6 @@ class Asset extends Depreciable
     protected $casts = [
         'purchase_date' => 'date',
         'eol_explicit' => 'boolean',
-        'last_checkout' => 'datetime',
-        'last_checkin' => 'datetime',
-        'expected_checkin' => 'datetime:m-d-Y',
         'last_patch_date' => 'datetime',
         'next_patch_date' => 'datetime:m-d-Y',
         'model_id'       => 'integer',
@@ -95,10 +78,6 @@ class Asset extends Depreciable
         'asset_tag'        => 'required|min:1|max:255|unique_undeleted:assets,asset_tag|not_array',
         'name'             => 'nullable|max:255',
         'company_id'       => 'nullable|integer|exists:companies,id',
-        'warranty_months'  => 'nullable|numeric|digits_between:0,240',
-        'last_checkout'    => 'nullable|date_format:Y-m-d H:i:s',
-        'last_checkin'     => 'nullable|date_format:Y-m-d H:i:s',
-        'expected_checkin' => 'nullable|date',
         'last_patch_date'  => 'nullable|date_format:Y-m-d H:i:s',
         // 'next_patch_date'  => 'nullable|date|after:last_patch_date',
         'next_patch_date'  => 'nullable|date',
@@ -106,14 +85,9 @@ class Asset extends Depreciable
         'rtd_location_id'  => 'nullable|exists:locations,id',
         'purchase_date'    => 'nullable|date|date_format:Y-m-d',
         'serial'           => 'nullable|unique_undeleted:assets,serial',
-        'purchase_cost'    => 'nullable|numeric|gte:0',
         'asset_eol_date'   => 'nullable|date',
         'eol_explicit'     => 'nullable|boolean',
-        'byod'             => 'nullable|boolean',
-        'order_number'     => 'nullable|string|max:191',
         'notes'            => 'nullable|string|max:65535',
-        'assigned_to'      => 'nullable|integer',
-        'requestable'      => 'nullable|boolean',
     ];
 
 
@@ -132,24 +106,14 @@ class Asset extends Depreciable
         'model_id',
         'name',
         'notes',
-        'order_number',
-        'purchase_cost',
-        'purchase_date',
         'rtd_location_id',
         'serial',
         'status_id',
-        'warranty_months',
-        'requestable',
-        'last_checkout',
-        'expected_checkin',
-        'byod',
         'asset_eol_date',
         'eol_explicit',
         'last_patch_date',
         'next_patch_date',
         'asset_eol_date',
-        'last_checkin',
-        'last_checkout',
     ];
 
     use Searchable;
@@ -163,17 +127,11 @@ class Asset extends Depreciable
       'name',
       'asset_tag',
       'serial',
-      'order_number',
-      'purchase_cost',
       'notes',
       'created_at',
       'updated_at',
-      'purchase_date',
-      'expected_checkin',
       'next_patch_date',
       'last_patch_date',
-      'last_checkin',
-      'last_checkout',
       'asset_eol_date',
     ];
 
@@ -271,104 +229,6 @@ class Asset extends Depreciable
     public function company()
     {
         return $this->belongsTo(\App\Models\Company::class, 'company_id');
-    }
-
-    /**
-     * Determines if an asset is available for checkout.
-     * This checks to see if it's checked out to an invalid (deleted) user
-     * OR if the assigned_to and deleted_at fields on the asset are empty AND
-     * that the status is deployable
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
-     * @return bool
-     */
-    public function availableForCheckout()
-    {
-
-        // This asset is not currently assigned to anyone and is not deleted...
-        if ((! $this->assigned_to) && (! $this->deleted_at)) {
-
-            // The asset status is not archived and is deployable
-            if (($this->assetstatus) && ($this->assetstatus->archived == '0')
-                && ($this->assetstatus->deployable == '1'))
-            {
-                return true;
-
-            }
-        }
-        return false;
-    }
-
-
-    /**
-     * Checks the asset out to the target
-     *
-     * @todo The admin parameter is never used. Can probably be removed.
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @param User $user
-     * @param User $admin
-     * @param Carbon $checkout_at
-     * @param Carbon $expected_checkin
-     * @param string $note
-     * @param null $name
-     * @return bool
-     * @since [v3.0]
-     * @return bool
-     */
-    public function checkOut($target, $admin = null, $checkout_at = null, $expected_checkin = null, $note = null, $name = null, $location = null)
-    {
-        if (! $target) {
-            return false;
-        }
-        if ($this->is($target)) {
-            throw new CheckoutNotAllowed('You cannot check an asset out to itself.');
-        }
-
-        if ($expected_checkin) {
-            $this->expected_checkin = $expected_checkin;
-        }
-
-        $this->last_checkout = $checkout_at;
-        $this->name = $name;
-
-        $this->assignedTo()->associate($target);
-
-        if ($location != null) {
-            $this->location_id = $location;
-        } else {
-            if (isset($target->location)) {
-                $this->location_id = $target->location->id;
-            }
-            if ($target instanceof Location) {
-                $this->location_id = $target->id;
-            }
-        }
-
-        $originalValues = $this->getRawOriginal();
-
-        // attempt to detect change in value if different from today's date
-        if ($checkout_at && strpos($checkout_at, date('Y-m-d')) === false) {
-            $originalValues['action_date'] = date('Y-m-d H:i:s');
-        }
-
-        if ($this->save()) {
-            if (is_int($admin)) {
-                $checkedOutBy = User::findOrFail($admin);
-            } elseif (get_class($admin) === \App\Models\User::class) {
-                $checkedOutBy = $admin;
-            } else {
-                $checkedOutBy = auth()->user();
-            }
-            event(new CheckoutableCheckedOut($this, $target, $checkedOutBy, $note, $originalValues));
-
-            $this->increment('checkout_counter', 1);
-
-            return true;
-        }
-
-        return false;
     }
 
     /**
@@ -669,20 +529,6 @@ class Asset extends Depreciable
             ->withTrashed();
     }
 
-
-    /**
-     * Get maintenances for this asset
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @since 1.0
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function assetmaintenances()
-    {
-        return $this->hasMany(\App\Models\AssetMaintenance::class, 'asset_id')
-                  ->orderBy('created_at', 'desc');
-    }
-
     /**
      * Get action logs history for this asset
      *
@@ -977,24 +823,6 @@ class Asset extends Depreciable
         return Attribute::make(
             get: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d') : null,
             set: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d') : null,
-        );
-    }
-
-    /**
-     * This sets the requestable to a boolean 0 or 1. This accounts for forms or API calls that
-     * explicitly pass the requestable field but it has a null or empty value.
-     *
-     * This will also correctly parse a 1/0 if "true"/"false" is passed.
-     *
-     * @param $value
-     * @return void
-     */
-
-    protected function requestable(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => (int) filter_var($value, FILTER_VALIDATE_BOOLEAN),
-            set: fn ($value) => (int) filter_var($value, FILTER_VALIDATE_BOOLEAN),
         );
     }
 
@@ -1494,7 +1322,6 @@ class Asset extends Depreciable
                 })->orWhere('assets.name', 'LIKE', '%'.$search.'%')
                     ->orWhere('assets.asset_tag', 'LIKE', '%'.$search.'%')
                     ->orWhere('assets.serial', 'LIKE', '%'.$search.'%')
-                    ->orWhere('assets.order_number', 'LIKE', '%'.$search.'%')
                     ->orWhere('assets.notes', 'LIKE', '%'.$search.'%');
             }
 
@@ -1551,20 +1378,8 @@ class Asset extends Depreciable
                     $query->where('assets.serial', 'LIKE', '%'.$search_val.'%');
                 }
 
-                if ($fieldname == 'purchase_date') {
-                    $query->where('assets.purchase_date', 'LIKE', '%'.$search_val.'%');
-                }
-
-                if ($fieldname == 'purchase_cost') {
-                    $query->where('assets.purchase_cost', 'LIKE', '%'.$search_val.'%');
-                }
-
                 if ($fieldname == 'notes') {
                     $query->where('assets.notes', 'LIKE', '%'.$search_val.'%');
-                }
-
-                if ($fieldname == 'order_number') {
-                    $query->where('assets.order_number', 'LIKE', '%'.$search_val.'%');
                 }
 
                 if ($fieldname == 'status_label') {

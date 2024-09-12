@@ -80,12 +80,6 @@ class DepreciationReportPresenter extends Presenter
                 "title" => trans('admin/hardware/table.status'),
                 "visible" => true,
             ], [
-                "field" => "checked_out_to",
-                "searchable" => true,
-                "sortable" => true,
-                "title" => trans('admin/hardware/table.checkoutto'),
-                "visible" => false,
-            ], [
                 "field" => "location",
                 "searchable" => true,
                 "sortable" => true,
@@ -98,69 +92,13 @@ class DepreciationReportPresenter extends Presenter
                 "title" => trans('general.manufacturer'),
                 "visible" => false,
             ],[
-                "field" => "purchase_date",
-                "searchable" => true,
-                "sortable" => true,
-                "visible" => true,
-                "title" => trans('general.purchase_date'),
-                "formatter" => "dateDisplayFormatter"
-            ], [
-                "field" => "currency",
-                "searchable" => false,
-                "sortable" => false,
-                "visible" => false,
-                "title" =>  'Currency',
-            ], [
-                "field" => "purchase_cost",
-                "searchable" => true,
-                "sortable" => true,
-                "visible" => true,
-                "title" => trans('general.purchase_cost'),
-                "footerFormatter" => 'sumFormatter',
-                "class" => "text-right",
-            ], [
-                "field" => "order_number",
-                "searchable" => true,
-                "sortable" => true,
-                "visible" => false,
-                "title" => trans('general.order_number'),
-            ],  [
                 "field" => "eol",
                 "searchable" => false,
                 "sortable" => false,
                 "visible" => false,
                 "title" => trans('general.eol'),
                 "formatter" => "dateDisplayFormatter"
-            ], [
-                "field" => "book_value",
-                "searchable" => true,
-                "sortable" => true,
-                "visible" => true,
-                "title" => trans('admin/hardware/table.book_value'),
-                "footerFormatter" => 'sumFormatter',
-                "class" => "text-right",
-            ], [
-                "field" => "monthly_depreciation",
-                "searchable" => true,
-                "sortable" => true,
-                "visible" => true,
-                "title" => trans('admin/hardware/table.monthly_depreciation')
-            ],[
-                "field" => "diff",
-                "searchable" => false,
-                "sortable" => false,
-                "visible" => true,
-                "title" => trans('admin/hardware/table.diff'),
-                "footerFormatter" => 'sumFormatter',
-                "class" => "text-right",
-            ],[
-                "field" => "warranty_expires",
-                "searchable" => false,
-                "sortable" => false,
-                "visible" => false,
-                "title" => trans('admin/hardware/form.warranty_expires'),
-                "formatter" => "dateDisplayFormatter"
-            ], 
+            ],
         ];
 
         return json_encode($layout);

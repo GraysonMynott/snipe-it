@@ -79,7 +79,6 @@ class AssetModelsController extends Controller
         $model->category_id = $request->input('category_id');
         $model->notes = $request->input('notes');
         $model->user_id = Auth::id();
-        $model->requestable = $request->has('requestable');
 
         if ($request->input('fieldset_id') != '') {
             $model->fieldset_id = $request->input('fieldset_id');
@@ -149,7 +148,6 @@ class AssetModelsController extends Controller
         $model->manufacturer_id = $request->input('manufacturer_id');
         $model->category_id = $request->input('category_id');
         $model->notes = $request->input('notes');
-        $model->requestable = $request->input('requestable', '0');
 
         $this->removeCustomFieldsDefaultValues($model);
 
@@ -165,11 +163,9 @@ class AssetModelsController extends Controller
             if ($model->wasChanged('eol')) {
                     if ($model->eol > 0) {
                         $newEol = $model->eol; 
-                        $model->assets()->whereNotNull('purchase_date')->where('eol_explicit', false)
-                            ->update(['asset_eol_date' => DB::raw('DATE_ADD(purchase_date, INTERVAL ' . $newEol . ' MONTH)')]);
-                        } elseif ($model->eol == 0) {
-    						$model->assets()->whereNotNull('purchase_date')->where('eol_explicit', false)
-    							->update(['asset_eol_date' => DB::raw('null')]);
+                        $model->assets()->update(['asset_eol_date' => DB::raw('DATE_ADD(purchase_date, INTERVAL ' . $newEol . ' MONTH)')]);
+                    } elseif ($model->eol == 0) {
+    						$model->assets()->update(['asset_eol_date' => DB::raw('null')]);
 					}
                 }
             return redirect()->route('models.index')->with('success', trans('admin/models/message.update.success'));

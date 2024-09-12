@@ -10,7 +10,6 @@ return array(
     'maintained'        => 'Maintained',
     'name'              => 'Software Name',
     'no_depreciation'   => 'Do Not Depreciate',
-    'purchase_order'    => 'Purchase Order Number',
     'reassignable'      => 'Reassignable',
     'remaining_seats'   => 'Remaining Seats',
     'seats'             => 'Seats',

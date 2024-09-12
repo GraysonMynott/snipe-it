@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\AssetMaintenancesController;
 use App\Http\Controllers\Assets\AssetsController;
 use App\Http\Controllers\Assets\BulkAssetsController;
 use App\Http\Controllers\Assets\AssetCheckoutController;
@@ -31,12 +30,6 @@ Route::group(
         Route::get('quickscancheckin',
             [AssetsController::class, 'quickScanCheckin']
         )->name('hardware/quickscancheckin');
-
-        // Asset Maintenances
-        Route::resource('maintenances', 
-            AssetMaintenancesController::class, [
-            'parameters' => ['maintenance' => 'maintenance_id', 'asset' => 'asset_id'],
-        ]);
 
         Route::get('requested', [
             AssetsController::class, 'getRequestedIndex']

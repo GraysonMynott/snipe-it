@@ -46,7 +46,12 @@ final class Company extends SnipeModel
      * 
      * @var array
      */
-    protected $searchableAttributes = ['name', 'phone', 'created_at', 'updated_at'];
+    protected $searchableAttributes = [
+        'name', 
+        'phone', 
+        'created_at', 
+        'updated_at'
+    ];
 
     /**
      * The relations and their attributes that should be included when searching the model.
@@ -63,6 +68,7 @@ final class Company extends SnipeModel
     protected $fillable = [
         'name',
         'phone',
+        'email',
     ];
 
     private static function isFullMultipleCompanySupportEnabled()
@@ -114,6 +120,19 @@ final class Company extends SnipeModel
                     return static::getIdFromInput($unescaped_input);
                 }
             }
+        }
+    }
+
+    /**
+     * @param $unescaped_input
+     * @return int|mixed|string|null
+     */
+    public static function getIdForUser($unescaped_input)
+    {
+        if (! static::isFullMultipleCompanySupportEnabled() || auth()->user()->isSuperUser()) {
+            return static::getIdFromInput($unescaped_input);
+        } else {
+            return static::getIdForCurrentUser($unescaped_input);
         }
     }
 
@@ -183,35 +202,44 @@ final class Company extends SnipeModel
     public function isDeletable()
     {
         return Gate::allows('delete', $this)
-                && ($this->assets()->count() === 0)
-                && ($this->users()->count() === 0);
+            && ($this->assets()->count() === 0)
+            && ($this->licenses()->count() === 0)
+            && ($this->users()->count() === 0);
     }
 
     /**
-     * @param $unescaped_input
-     * @return int|mixed|string|null
+     * Retrieve a list(?) of users belonging to this company
+     * TODO: Rename to getUsers()
      */
-    public static function getIdForUser($unescaped_input)
-    {
-        if (! static::isFullMultipleCompanySupportEnabled() || auth()->user()->isSuperUser()) {
-            return static::getIdFromInput($unescaped_input);
-        } else {
-            return static::getIdForCurrentUser($unescaped_input);
-        }
-    }
-
-
     public function users()
     {
         return $this->hasMany(User::class, 'company_id');
     }
 
+    /**
+     * Retrieve a list(?) of assetss belonging to this company
+     * TODO: Rename to getAssets()
+     */
     public function assets()
     {
         return $this->hasMany(Asset::class, 'company_id');
     }
 
+    /**
+     * Retrieve a list(?) of licenses belonging to this company
+     * TODO: Rename to getLicenses()
+     * Really, the licenses hsould belong to accounts under the company, rather than the company itself
+     */
     public function licenses()
+    {
+        return $this->hasMany(License::class, 'company_id');
+    }
+
+    /**
+     * Retrieve a list(?) of accounts belonging to this company
+     * TODO: Implement...
+     */
+    public function getAccounts()
     {
         return $this->hasMany(License::class, 'company_id');
     }

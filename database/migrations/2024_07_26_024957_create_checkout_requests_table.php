@@ -16,8 +16,6 @@ return new class extends Migration
             $table->timestamps();
             
             $table->integer('user_id');
-            $table->integer('requestable_id');
-            $table->string('requestable_type');
             $table->integer('quantity')->default(1);
             $table->dateTime('canceled_at')->nullable();
             $table->dateTime('fulfilled_at')->nullable();

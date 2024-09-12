@@ -135,26 +135,6 @@ Route::group(['middleware' => 'auth', 'prefix' => 'modals'], function () {
 
 /*
 |--------------------------------------------------------------------------
-| Log Routes
-|--------------------------------------------------------------------------
-|
-| Register all the admin routes.
-|
-*/
-
-Route::group(['middleware' => 'auth'], function () {
-    Route::get(
-        'display-sig/{filename}',
-        [ActionlogController::class, 'displaySig']
-    )->name('log.signature.view');
-    Route::get(
-        'stored-eula-file/{filename}',
-        [ActionlogController::class, 'getStoredEula']
-    )->name('log.storedeula.download');
-});
-
-/*
-|--------------------------------------------------------------------------
 | Admin Routes
 |--------------------------------------------------------------------------
 |
@@ -331,54 +311,52 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('reports/patch', 
         [ReportsController::class, 'patch']
     )->name('reports.patch');
-
-    Route::get(
-        'reports/depreciation',
-        [ReportsController::class, 'getDeprecationReport']
-    )->name('reports/depreciation');
-    Route::get(
-        'reports/export/depreciation',
-        [ReportsController::class, 'exportDeprecationReport']
-    )->name('reports/export/depreciation');
-    Route::get(
-        'reports/asset_maintenances',
-        [ReportsController::class, 'getAssetMaintenancesReport']
-    )->name('reports/asset_maintenances');
-    Route::get(
-        'reports/export/asset_maintenances',
-        [ReportsController::class, 'exportAssetMaintenancesReport']
-    )->name('reports/export/asset_maintenances');
+    
     Route::get(
         'reports/licenses',
         [ReportsController::class, 'getLicenseReport']
     )->name('reports/licenses');
+    
     Route::get(
         'reports/export/licenses',
         [ReportsController::class, 'exportLicenseReport']
     )->name('reports/export/licenses');
 
-    Route::get('reports/custom', [ReportsController::class, 'getCustomReport'])->name('reports/custom');
-    Route::post('reports/custom', [ReportsController::class, 'postCustom']);
+    Route::get(
+        'reports/custom', 
+        [ReportsController::class, 'getCustomReport']
+    )->name('reports/custom');
+
+    Route::post(
+        'reports/custom', 
+        [ReportsController::class, 'postCustom']
+    );
 
     Route::get(
         'reports/activity',
         [ReportsController::class, 'getActivityReport']
     )->name('reports.activity');
 
-    Route::post('reports/activity', [ReportsController::class, 'postActivityReport']);
+    Route::post(
+        'reports/activity', 
+        [ReportsController::class, 'postActivityReport']
+    );
 
     Route::get(
         'reports/unaccepted_assets/{deleted?}',
         [ReportsController::class, 'getAssetAcceptanceReport']
     )->name('reports/unaccepted_assets');
+
     Route::post(
         'reports/unaccepted_assets/sent_reminder',
         [ReportsController::class, 'sentAssetAcceptanceReminder']
     )->name('reports/unaccepted_assets_sent_reminder');
+
     Route::delete(
         'reports/unaccepted_assets/{acceptanceId}/delete',
         [ReportsController::class, 'deleteAssetAcceptance']
     )->name('reports/unaccepted_assets_delete');
+    
     Route::post(
         'reports/unaccepted_assets/{deleted?}',
         [ReportsController::class, 'postAssetAcceptanceReport']

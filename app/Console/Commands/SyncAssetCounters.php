@@ -51,10 +51,6 @@ class SyncAssetCounters extends Command
                 if ($assets->count() > 0) {
 
                     foreach ($assets as $asset) {
-
-                        $asset->checkin_counter = (int) $asset->checkins_count;
-                        $asset->checkout_counter = (int) $asset->checkouts_count;
-                        $asset->requests_counter = (int) $asset->user_requests_count;
                         $asset->unsetEventDispatcher();
                         $asset->save();
                         $bar->advance();

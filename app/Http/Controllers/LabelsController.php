@@ -34,7 +34,6 @@ class LabelsController extends Controller
         $exampleAsset->asset_tag = '100001';
         $exampleAsset->serial = 'SN9876543210';
         $exampleAsset->asset_eol_date = '2025-01-01';
-        $exampleAsset->order_number = '12345';
         $exampleAsset->purchase_date = '2023-01-01';
         $exampleAsset->status_id = 1;
 

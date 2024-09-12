@@ -36,9 +36,6 @@ class AssetsTransformer
                 'id' => (int) $asset->model->id,
                 'name'=> e($asset->model->name),
             ] : null,
-            'byod' => ($asset->byod ? true : false),
-            'requestable' => ($asset->requestable ? true : false),
-
             'model_number' => (($asset->model) && ($asset->model->model_number)) ? e($asset->model->model_number) : null,
             'eol' => (($asset->asset_eol_date != '') && ($asset->purchase_date != '')) ? Carbon::parse($asset->asset_eol_date)->diffInMonths($asset->purchase_date).' months' : null,
             'asset_eol_date' => ($asset->asset_eol_date != '') ? Helper::getFormattedDateObject($asset->asset_eol_date, 'date') : null,
@@ -57,7 +54,6 @@ class AssetsTransformer
                 'name'=> e($asset->model->manufacturer->name),
             ] : null,
             'notes' => ($asset->notes) ? Helper::parseEscapedMarkedownInline($asset->notes) : null,
-            'order_number' => ($asset->order_number) ? e($asset->order_number) : null,
             'company' => ($asset->company) ? [
                 'id' => (int) $asset->company->id,
                 'name'=> e($asset->company->name),
@@ -71,8 +67,6 @@ class AssetsTransformer
                 'name'=> e($asset->defaultLoc->name),
             ] : null,
             'image' => ($asset->getImageUrl()) ? $asset->getImageUrl() : null,
-            'qr' => ($setting->qr_code=='1') ? config('app.url').'/uploads/barcodes/qr-'.str_slug($asset->asset_tag).'-'.str_slug($asset->id).'.png' : null,
-            'alt_barcode' => ($setting->alt_barcode_enabled=='1') ? config('app.url').'/uploads/barcodes/'.str_slug($setting->alt_barcode).'-'.str_slug($asset->asset_tag).'.png' : null,
             'assigned_to' => $this->transformAssignedTo($asset),
             'warranty_months' =>  ($asset->warranty_months > 0) ? e($asset->warranty_months.' '.trans('admin/hardware/form.months')) : null,
             'warranty_expires' => ($asset->warranty_months > 0) ? Helper::getFormattedDateObject($asset->warranty_expires, 'date') : null,
@@ -81,17 +75,6 @@ class AssetsTransformer
             'last_patch_date' => Helper::getFormattedDateObject($asset->last_patch_date, 'datetime'),
             'next_patch_date' => Helper::getFormattedDateObject($asset->next_patch_date, 'date'),
             'deleted_at' => Helper::getFormattedDateObject($asset->deleted_at, 'datetime'),
-            'purchase_date' => Helper::getFormattedDateObject($asset->purchase_date, 'date'),
-            'age' => $asset->purchase_date ? $asset->purchase_date->diffForHumans() : '',
-            'last_checkout' => Helper::getFormattedDateObject($asset->last_checkout, 'datetime'),
-            'last_checkin' => Helper::getFormattedDateObject($asset->last_checkin, 'datetime'),
-            'expected_checkin' => Helper::getFormattedDateObject($asset->expected_checkin, 'date'),
-            'purchase_cost' => Helper::formatCurrencyOutput($asset->purchase_cost),
-            'checkin_counter' => (int) $asset->checkin_counter,
-            'checkout_counter' => (int) $asset->checkout_counter,
-            'requests_counter' => (int) $asset->requests_counter,
-            'user_can_checkout' => (bool) $asset->availableForCheckout(),
-            'book_value' => Helper::formatCurrencyOutput($asset->getLinearDepreciatedValue()),
         ];
 
 
@@ -140,36 +123,11 @@ class AssetsTransformer
         }
 
         $permissions_array['available_actions'] = [
-            'checkout'      => ($asset->deleted_at=='' && Gate::allows('checkout', Asset::class)) ? true : false,
-            'checkin'       => ($asset->deleted_at=='' && Gate::allows('checkin', Asset::class)) ? true : false,
             'clone'         => Gate::allows('create', Asset::class) ? true : false,
             'restore'       => ($asset->deleted_at!='' && Gate::allows('create', Asset::class)) ? true : false,
             'update'        => ($asset->deleted_at=='' && Gate::allows('update', Asset::class)) ? true : false,
             'delete'        => ($asset->deleted_at=='' && $asset->assigned_to =='' && Gate::allows('delete', Asset::class) && ($asset->deleted_at == '')) ? true : false,
-        ];      
-
-
-        if (request('components')=='true') {
-        
-            if ($asset->components) {
-                $array['components'] = [];
-    
-                foreach ($asset->components as $component) {
-                    $array['components'][] = [
-                        
-                            'id' => $component->id,
-                            'pivot_id' => $component->pivot->id,
-                            'name' => e($component->name),
-                            'qty' => $component->pivot->assigned_qty,
-                            'price_cost' => $component->purchase_cost,
-                            'purchase_total' => $component->purchase_cost * $component->pivot->assigned_qty,
-                            'checkout_date' => Helper::getFormattedDateObject($component->pivot->created_at, 'datetime') ,
-                        
-                    ];
-                }
-            }
-
-        }
+        ];
         
         $array += $permissions_array;
 

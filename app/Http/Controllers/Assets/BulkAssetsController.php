@@ -62,23 +62,12 @@ class BulkAssetsController extends Controller
             'asset_tag',
             'serial',
             'model_number',
-            'last_checkout',
             'notes',
-            'expected_checkin',
-            'order_number',
             'image',
-            'assigned_to',
             'created_at',
             'updated_at',
-            'purchase_date',
-            'purchase_cost',
             'last_patch_date',
             'next_patch_date',
-            'warranty_months',
-            'checkout_counter',
-            'checkin_counter',
-            'requests_counter',
-            'byod',
             'asset_eol_date',
         ];
 
@@ -222,19 +211,12 @@ class BulkAssetsController extends Controller
          * its checkout status.
          */
 
-        if (($request->filled('purchase_date'))
-            || ($request->filled('expected_checkin'))
-            || ($request->filled('purchase_cost'))
-            || ($request->filled('order_number'))
-            || ($request->filled('warranty_months'))
-            || ($request->filled('rtd_location_id'))
-            || ($request->filled('requestable'))
+        if (($request->filled('rtd_location_id'))
             || ($request->filled('company_id'))
             || ($request->filled('status_id'))
             || ($request->filled('model_id'))
             || ($request->filled('next_patch_date'))
             || ($request->filled('null_purchase_date'))
-            || ($request->filled('null_expected_checkin_date'))
             || ($request->filled('null_next_patch_date'))
             || ($request->anyFilled($custom_field_columns))
 
@@ -252,10 +234,6 @@ class BulkAssetsController extends Controller
                  * extra work to make sure the data makes sense.
                  */
                 $this->conditionallyAddItem('purchase_date')
-                    ->conditionallyAddItem('expected_checkin')
-                    ->conditionallyAddItem('order_number')
-                    ->conditionallyAddItem('requestable')
-                    ->conditionallyAddItem('warranty_months')
                     ->conditionallyAddItem('next_patch_date');
                     foreach ($custom_field_columns as $key => $custom_field_column) {
                         $this->conditionallyAddItem($custom_field_column); 
@@ -274,10 +252,6 @@ class BulkAssetsController extends Controller
 
                 if ($request->input('null_next_patch_date')=='1') {
                     $this->update_array['next_patch_date'] = null;
-                }
-
-                if ($request->filled('purchase_cost')) {
-                    $this->update_array['purchase_cost'] =  $request->input('purchase_cost');
                 }
 
                 if ($request->filled('company_id')) {
@@ -492,84 +466,7 @@ class BulkAssetsController extends Controller
 
         return redirect($bulk_back_url)->with('error', trans('admin/hardware/message.delete.nothing_updated'));
     }
-
-    /**
-     * Show Bulk Checkout Page
-     */
-    public function showCheckout() : View
-    {
-        $this->authorize('checkout', Asset::class);
-        return view('hardware/bulk-checkout');
-    }
-
-    /**
-     * Process Multiple Checkout Request
-     */
-    public function storeCheckout(AssetCheckoutRequest $request) : RedirectResponse | ModelNotFoundException
-    {
-
-        $this->authorize('checkout', Asset::class);
-
-        try {
-            $admin = auth()->user();
-
-            $target = $this->determineCheckoutTarget();
-
-            if (! is_array($request->get('selected_assets'))) {
-                return redirect()->route('hardware.bulkcheckout.show')->withInput()->with('error', trans('admin/hardware/message.checkout.no_assets_selected'));
-            }
-
-            $asset_ids = array_filter($request->get('selected_assets'));
-
-            if (request('checkout_to_type') == 'asset') {
-                foreach ($asset_ids as $asset_id) {
-                    if ($target->id == $asset_id) {
-                        return redirect()->back()->with('error', 'You cannot check an asset out to itself.');
-                    }
-                }
-            }
-            $checkout_at = date('Y-m-d H:i:s');
-            if (($request->filled('checkout_at')) && ($request->get('checkout_at') != date('Y-m-d'))) {
-                $checkout_at = e($request->get('checkout_at'));
-            }
-
-            $expected_checkin = '';
-
-            if ($request->filled('expected_checkin')) {
-                $expected_checkin = e($request->get('expected_checkin'));
-            }
-
-            $errors = [];
-            DB::transaction(function () use ($target, $admin, $checkout_at, $expected_checkin, $errors, $asset_ids, $request) {
-                foreach ($asset_ids as $asset_id) {
-                    $asset = Asset::findOrFail($asset_id);
-                    $this->authorize('checkout', $asset);
-
-                    $error = $asset->checkOut($target, $admin, $checkout_at, $expected_checkin, e($request->get('note')), $asset->name, null);
-
-                    if ($target->location_id != '') {
-                        $asset->location_id = $target->location_id;
-                        $asset->unsetEventDispatcher();
-                        $asset->save();
-                    }
-
-                    if ($error) {
-                        array_merge_recursive($errors, $asset->getErrors()->toArray());
-                    }
-                }
-            });
-
-            if (! $errors) {
-                // Redirect to the new asset page
-                return redirect()->to('hardware')->with('success', trans('admin/hardware/message.checkout.success'));
-            }
-            // Redirect to the asset management page with error
-            return redirect()->route('hardware.bulkcheckout.show')->with('error', trans('admin/hardware/message.checkout.error'))->withErrors($errors);
-        } catch (ModelNotFoundException $e) {
-            return redirect()->route('hardware.bulkcheckout.show')->with('error', $e->getErrors());
-        }
-        
-    }
+    
     public function restore(Request $request) : RedirectResponse
     {
         $this->authorize('update', Asset::class);

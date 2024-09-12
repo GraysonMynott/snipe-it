@@ -86,26 +86,14 @@ class AssetsController extends Controller
             'asset_tag',
             'serial',
             'model_number',
-            'last_checkout',
-            'last_checkin',
             'notes',
-            'expected_checkin',
-            'order_number',
             'image',
             'assigned_to',
             'created_at',
             'updated_at',
-            'purchase_date',
-            'purchase_cost',
             'last_patch_date',
             'next_patch_date',
-            'warranty_months',
-            'checkout_counter',
-            'checkin_counter',
-            'requests_counter',
-            'byod',
             'asset_eol_date',
-            'requestable',
         ];
 
         $filter = [];
@@ -225,24 +213,9 @@ class AssetsController extends Controller
                         ->where('status_alias.archived', '=', 1);
                 });
                 break;
-            case 'Requestable':
-                $assets->where('assets.requestable', '=', 1)
-                    ->join('status_labels AS status_alias', function ($join) {
-                        $join->on('status_alias.id', '=', 'assets.status_id')
-                            ->where('status_alias.deployable', '=', 1)
-                            ->where('status_alias.pending', '=', 0)
-                            ->where('status_alias.archived', '=', 0);
-                    });
-
-                break;
             case 'Deployed':
                 // more sad, horrible workarounds for laravel bugs when doing full text searches
                 $assets->whereNotNull('assets.assigned_to');
-                break;
-            case 'byod':
-                // This is kind of redundant, since we already check for byod=1 above, but this keeps the
-                // sidebar nav links a little less chaotic
-                $assets->where('assets.byod', '=', '1');
                 break;
             default:
 
@@ -274,10 +247,6 @@ class AssetsController extends Controller
 
         if ($request->filled('serial')) {
             $assets->where('assets.serial', '=', $request->input('serial'));
-        }
-
-        if ($request->input('requestable') == 'true') {
-            $assets->where('assets.requestable', '=', '1');
         }
 
         if ($request->filled('model_id')) {
@@ -315,14 +284,6 @@ class AssetsController extends Controller
 
         if ($request->filled('depreciation_id')) {
             $assets->ByDepreciationId($request->input('depreciation_id'));
-        }
-
-        if ($request->filled('byod')) {
-            $assets->where('assets.byod', '=', $request->input('byod'));
-        }
-
-        if ($request->filled('order_number')) {
-            $assets->where('assets.order_number', '=', strval($request->get('order_number')));
         }
 
         // This is kinda gross, but we need to do this because the Bootstrap Tables
@@ -782,205 +743,6 @@ class AssetsController extends Controller
 
     }
 
-    /**
-     * Checkout an asset by its tag.
-     *
-     * @author [N. Butler]
-     * @param string $tag
-     * @since [v6.0.5]
-     */
-    public function checkoutByTag(AssetCheckoutRequest $request, $tag) : JsonResponse
-    {
-        if ($asset = Asset::where('asset_tag', $tag)->first()) {
-            return $this->checkout($request, $asset->id);
-        }
-        return response()->json(Helper::formatStandardApiResponse('error', null, 'Asset not found'), 200);
-    }
-
-    /**
-     * Checkout an asset
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @param int $assetId
-     * @since [v4.0]
-     */
-    public function checkout(AssetCheckoutRequest $request, $asset_id) : JsonResponse
-    {
-        $this->authorize('checkout', Asset::class);
-        $asset = Asset::findOrFail($asset_id);
-
-        if (! $asset->availableForCheckout()) {
-            return response()->json(Helper::formatStandardApiResponse('error', ['asset'=> e($asset->asset_tag)], trans('admin/hardware/message.checkout.not_available')));
-        }
-
-        $this->authorize('checkout', $asset);
-
-        $error_payload = [];
-        $error_payload['asset'] = [
-            'id' => $asset->id,
-            'asset_tag' => $asset->asset_tag,
-        ];
-
-        // This item is checked out to a location
-        if (request('checkout_to_type') == 'location') {
-            $target = Location::find(request('assigned_location'));
-            $asset->location_id = ($target) ? $target->id : '';
-            $error_payload['target_id'] = $request->input('assigned_location');
-            $error_payload['target_type'] = 'location';
-
-        } elseif (request('checkout_to_type') == 'asset') {
-            $target = Asset::where('id', '!=', $asset_id)->find(request('assigned_asset'));
-            // Override with the asset's location_id if it has one
-            $asset->location_id = (($target) && (isset($target->location_id))) ? $target->location_id : '';
-            $error_payload['target_id'] = $request->input('assigned_asset');
-            $error_payload['target_type'] = 'asset';
-
-        } elseif (request('checkout_to_type') == 'user') {
-            // Fetch the target and set the asset's new location_id
-            $target = User::find(request('assigned_user'));
-            $asset->location_id = (($target) && (isset($target->location_id))) ? $target->location_id : '';
-            $error_payload['target_id'] = $request->input('assigned_user');
-            $error_payload['target_type'] = 'user';
-        }
-
-        if ($request->filled('status_id')) {
-            $asset->status_id = $request->get('status_id');
-        }
-
-        if (! isset($target)) {
-            return response()->json(Helper::formatStandardApiResponse('error', $error_payload, 'Checkout target for asset '.e($asset->asset_tag).' is invalid - '.$error_payload['target_type'].' does not exist.'));
-        }
-
-        $checkout_at = request('checkout_at', date('Y-m-d H:i:s'));
-        $expected_checkin = request('expected_checkin', null);
-        $note = request('note', null);
-        // Using `->has` preserves the asset name if the name parameter was not included in request.
-        $asset_name = request()->has('name') ? request('name') : $asset->name;
-
-        // Set the location ID to the RTD location id if there is one
-        // Wait, why are we doing this? This overrides the stuff we set further up, which makes no sense.
-        // TODO: Follow up here. WTF. Commented out for now. 
-
-
-//        if ((isset($target->rtd_location_id)) && ($asset->rtd_location_id!='')) {
-//            $asset->location_id = $target->rtd_location_id;
-//        }
-
-        if ($asset->checkOut($target, auth()->user(), $checkout_at, $expected_checkin, $note, $asset_name, $asset->location_id)) {
-            return response()->json(Helper::formatStandardApiResponse('success', ['asset'=> e($asset->asset_tag)], trans('admin/hardware/message.checkout.success')));
-        }
-
-        return response()->json(Helper::formatStandardApiResponse('error', ['asset'=> e($asset->asset_tag)], trans('admin/hardware/message.checkout.error')));
-    }
-
-
-    /**
-     * Checkin an asset
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @param int $assetId
-     * @since [v4.0]
-     */
-    public function checkin(Request $request, $asset_id) : JsonResponse
-    {
-        $asset = Asset::with('model')->findOrFail($asset_id);
-        $this->authorize('checkin', $asset);
-
-        $target = $asset->assignedTo;
-        if (is_null($target)) {
-            return response()->json(Helper::formatStandardApiResponse('error', [
-                'asset_tag'=> e($asset->asset_tag),
-                'model' => e($asset->model->name),
-                'model_number' => e($asset->model->model_number)
-            ], trans('admin/hardware/message.checkin.already_checked_in')));
-        }
-
-        $asset->expected_checkin = null;
-        //$asset->last_checkout = null;
-        $asset->last_checkin = now();
-        $asset->assignedTo()->disassociate($asset);
-        $asset->accepted = null;
-
-        if ($request->has('name')) {
-            $asset->name = $request->input('name');
-        }
-
-        $this->migrateLegacyLocations($asset);
-
-        $asset->location_id = $asset->rtd_location_id;
-
-        if ($request->filled('location_id')) {
-            $asset->location_id = $request->input('location_id');
-
-            if ($request->input('update_default_location')){
-                $asset->rtd_location_id = $request->input('location_id');
-            }
-        }
-
-        if ($request->has('status_id')) {
-            $asset->status_id = $request->input('status_id');
-        }
-        
-        $checkin_at = $request->filled('checkin_at') ? $request->input('checkin_at').' '. date('H:i:s') : date('Y-m-d H:i:s');
-        $originalValues = $asset->getRawOriginal();
-
-        if (($request->filled('checkin_at')) && ($request->get('checkin_at') != date('Y-m-d'))) {
-            $originalValues['action_date'] = $checkin_at;
-        }
-
-        $asset->licenseseats->each(function (LicenseSeat $seat) {
-            $seat->update(['assigned_to' => null]);
-        });
-
-        // Get all pending Acceptances for this asset and delete them
-        CheckoutAcceptance::pending()
-            ->whereHasMorph(
-                'checkoutable',
-                [Asset::class],
-                function (Builder $query) use ($asset) {
-                    $query->where('id', $asset->id);
-                })
-            ->get()
-            ->map(function ($acceptance) {
-                $acceptance->delete();
-            });
-
-        if ($asset->save()) {
-            event(new CheckoutableCheckedIn($asset, $target, auth()->user(), $request->input('note'), $checkin_at, $originalValues));
-
-            return response()->json(Helper::formatStandardApiResponse('success', [
-                'asset_tag'=> e($asset->asset_tag),
-                'model' => e($asset->model->name),
-                'model_number' => e($asset->model->model_number)
-            ], trans('admin/hardware/message.checkin.success')));
-        }
-
-        return response()->json(Helper::formatStandardApiResponse('error', ['asset'=> e($asset->asset_tag)], trans('admin/hardware/message.checkin.error')));
-    }
-
-    /**
-     * Checkin an asset by asset tag
-     *
-     * @author [A. Janes] [<ajanes@adagiohealth.org>]
-     * @since [v6.0]
-     */
-    public function checkinByTag(Request $request, $tag = null) : JsonResponse
-    {
-        $this->authorize('checkin', Asset::class);
-        if(null == $tag && null !== ($request->input('asset_tag'))) {
-            $tag = $request->input('asset_tag');
-        }
-        $asset = Asset::where('asset_tag', $tag)->first();
-
-        if ($asset) {
-            return $this->checkin($request, $asset->id);
-        }
-
-        return response()->json(Helper::formatStandardApiResponse('error', [
-            'asset'=> e($tag)
-        ], 'Asset with tag '.e($tag).' not found'));
-    }
-
 
     /**
      * Mark an asset as patched
@@ -1071,85 +833,5 @@ class AssetsController extends Controller
         ], trans('admin/hardware/message.patch.error', ['error' => trans('admin/hardware/message.does_not_exist')])), 200);
 
 
-    }
-
-
-
-    /**
-     * Returns JSON listing of all requestable assets
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     */
-    public function requestable(Request $request) : JsonResponse | array
-    {
-        $this->authorize('viewRequestable', Asset::class);
-
-        $allowed_columns = [
-            'name',
-            'asset_tag',
-            'serial',
-            'model_number',
-            'image',
-            'purchase_cost',
-            'expected_checkin',
-        ];
-
-        $all_custom_fields = CustomField::all(); //used as a 'cache' of custom fields throughout this page load
-
-        foreach ($all_custom_fields as $field) {
-            $allowed_columns[] = $field->db_column_name();
-        }
-
-        $assets = Asset::select('assets.*')
-            ->with('location', 'assetstatus', 'assetlog', 'company','assignedTo',
-                'model.category', 'model.manufacturer', 'model.fieldset', 'requests');
-
-
-
-
-        if ($request->filled('search')) {
-            $assets->TextSearch($request->input('search'));
-        }
-        
-        // Search custom fields by column name
-        foreach ($all_custom_fields as $field) {
-            if ($request->filled($field->db_column_name())) {
-                $assets->where($field->db_column_name(), '=', $request->input($field->db_column_name()));
-            }
-        }
-
-        $order = $request->input('order') === 'asc' ? 'asc' : 'desc';
-        $sort_override = str_replace('custom_fields.', '', $request->input('sort'));
-
-        // This handles all the pivot sorting (versus the assets.* fields
-        // in the allowed_columns array)
-        $column_sort = in_array($sort_override, $allowed_columns) ? $sort_override : 'assets.created_at';
-
-        switch ($request->input('sort')) {
-            case 'model':
-                $assets->OrderModels($order);
-                break;
-            case 'model_number':
-                $assets->OrderModelNumber($order);
-                break;
-            case 'location':
-                $assets->OrderLocation($order);
-                break;
-            default:
-                $assets->orderBy($column_sort, $order);
-                break;
-        }
-
-        $assets->requestableAssets();
-
-        // Make sure the offset and limit are actually integers and do not exceed system limits
-        $offset = ($request->input('offset') > $assets->count()) ? $assets->count() : app('api_offset_value');
-        $limit = app('api_limit_value');
-
-        $total = $assets->count();
-        $assets = $assets->skip($offset)->take($limit)->get();
-
-        return (new AssetsTransformer)->transformRequestedAssets($assets, $total);
     }
 }

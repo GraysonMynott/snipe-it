@@ -28,13 +28,8 @@
                     <th class="col-sm-1">{{ trans('general.name') }}</th>
                     @endif
                     <th class="col-sm-1">{{ trans('admin/hardware/table.serial') }}</th>
-                    <th class="col-sm-1">{{ trans('admin/hardware/table.checkoutto') }}</th>
                     <th class="col-sm-1">{{ trans('admin/hardware/table.location') }}</th>
-                    <th class="col-sm-1">{{ trans('admin/hardware/table.purchase_date') }}</th>
                     <th class="col-sm-1">{{ trans('admin/hardware/table.eol') }}</th>
-                    <th class="col-sm-1">{{ trans('admin/hardware/table.purchase_cost') }}</th>
-                    <th class="col-sm-1">{{ trans('admin/hardware/table.book_value') }}</th>
-                    <th class="col-sm-1">{{ trans('admin/hardware/table.diff') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -47,40 +42,14 @@
                     @endif
                     <td>{{ $asset->serial }}</td>
                     <td>
-                        @if ($asset->assigned_to != '')
-                            {!!  $asset->assignedTo->present->nameUrl()  !!}
-                        @endif
-                    </td>
-                    <td>
                         @if (($asset->checkedOutToUser()) && ($asset->assignedTo->assetLoc))
                             {{ $asset->assignedTo->assetLoc->city }}, {{ $asset->assignedTo->assetLoc->state}}
                         @endif
                     </td>
-                    <td>{{ $asset->purchase_date }}</td>
-
                     <td>
                         @if ($asset->model->eol) {{ $asset->present()->eol_date() }}
                         @endif
                     </td>
-
-                    @if ($asset->purchase_cost > 0)
-                    <td class="align-right">
-                        {{ $snipeSettings->default_currency }}
-                        {{ Helper::formatCurrencyOutput($asset->purchase_cost) }}
-                    </td>
-                    <td class="align-right">
-                        {{ $snipeSettings->default_currency }}
-                        {{ number_format($asset->depreciate()) }}
-                    </td>
-                    <td class="align-right">
-                        {{ $snipeSettings->default_currency }}
-                        -{{ number_format(($asset->purchase_cost - $asset->depreciate())) }}
-                    </td>
-                    @else {{-- purchase_cost > 0 --}}
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    @endif
                 </tr>
                 @endforeach
             </tbody>

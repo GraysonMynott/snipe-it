@@ -632,28 +632,6 @@
 
                     </div>
                     @endif
-                   @if($user->getUserTotalCost()->total_user_cost > 0)
-                   <div class="row">
-                       <div class="col-md-3">
-                           {{ trans('admin/users/table.total_assets_cost') }}
-                       </div>
-                       <div class="col-md-9">
-                           {{Helper::formatCurrencyOutput($user->getUserTotalCost()->total_user_cost)}}
-
-                           <a id="optional_info" class="text-primary">
-                               <i class="fa fa-caret-right fa-2x" id="optional_info_icon"></i>
-                               <strong>{{ trans('admin/hardware/form.optional_infos') }}</strong>
-                           </a>
-                       </div>
-                           <div id="optional_details" class="col-md-12" style="display:none">
-                               <div class="col-md-3" style="border-top:none;"></div>
-                               <div class="col-md-9" style="border-top:none;">
-                               {{trans('general.assets').': '. Helper::formatCurrencyOutput($user->getUserTotalCost()->asset_cost)}}<br>
-                               {{trans('general.licenses').': '. Helper::formatCurrencyOutput($user->getUserTotalCost()->license_cost)}}<br>
-                               </div>
-                           </div>
-                   </div><!--/.row-->
-                   @endif
                   </div> <!--/end striped container-->
                 </div> <!-- end col-md-9 -->
           </div> <!--/.row-->
@@ -721,9 +699,6 @@
                 <tr>
                   <th class="col-md-5">{{ trans('general.name') }}</th>
                   <th>{{ trans('admin/licenses/form.license_key') }}</th>
-                  <th data-footer-formatter="sumFormatter" data-fieldname="purchase_cost">{{ trans('general.purchase_cost') }}</th>
-                  <th>{{ trans('admin/licenses/form.purchase_order') }}</th>
-                  <th>{{ trans('general.order_number') }}</th>
                   <th class="col-md-1 hidden-print">{{ trans('general.action') }}</th>
                 </tr>
               </thead>
@@ -739,15 +714,6 @@
                     @else
                       ------------
                     @endcan
-                  </td>
-                  <td class="col-md-2">
-                    {{ Helper::formatCurrencyOutput($license->purchase_cost) }}
-                  </td>
-                  <td>
-                    {{ $license->purchase_order }}
-                  </td>
-                  <td>
-                    {{ $license->order_number }}
                   </td>
                   <td class="hidden-print col-md-2">
                     @can('update', $license)

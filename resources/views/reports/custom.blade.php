@@ -82,11 +82,6 @@
               </label>
 
               <label class="form-control">
-                {{ Form::checkbox('purchase_cost', '1', '1') }}
-                {{ trans('admin/hardware/form.cost') }}
-              </label>
-
-              <label class="form-control">
                 {{ Form::checkbox('eol', '1', '1') }}
                 {{ trans('admin/hardware/table.eol') }}
               </label>
@@ -280,17 +275,9 @@
             @include ('partials.forms.edit.model-select', ['translated_name' => trans('general.asset_model'), 'fieldname' => 'by_model_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
             @include ('partials.forms.edit.manufacturer-select', ['translated_name' => trans('general.manufacturer'), 'fieldname' => 'by_manufacturer_id', 'hide_new' => 'true'])
             @include ('partials.forms.edit.category-select', ['translated_name' => trans('general.category'), 'fieldname' => 'by_category_id', 'hide_new' => 'true', 'category_type' => 'asset'])
-              @include ('partials.forms.edit.status-select', ['translated_name' => trans('admin/hardware/form.status'), 'fieldname' => 'by_status_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
+            @include ('partials.forms.edit.status-select', ['translated_name' => trans('admin/hardware/form.status'), 'fieldname' => 'by_status_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
 
-            <!-- Order Number -->
-            <div class="form-group">
-              <label for="by_order_number" class="col-md-3 control-label">{{ trans('general.order_number') }}</label>
-              <div class="col-md-7">
-                <input class="form-control" type="text" name="by_order_number" value="" aria-label="by_order_number">
-              </div>
-            </div>
-
-          <!-- Purchase Date -->
+            <!-- Purchase Date -->
             <div class="form-group purchase-range{{ ($errors->has('purchase_start') || $errors->has('purchase_end')) ? ' has-error' : '' }}">
               <label for="purchase_start" class="col-md-3 control-label">{{ trans('general.purchase_date') }} {{  trans('general.range') }}</label>
               <div class="input-daterange input-group col-md-7" id="datepicker">

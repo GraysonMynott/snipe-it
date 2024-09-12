@@ -183,8 +183,6 @@ class AcceptanceController extends Controller
                 'item_serial' => $item->serial,
                 'eula' => $item->getEula(),
                 'note' => $request->input('note'),
-                'check_out_date' => Carbon::parse($acceptance->created_at)->format('Y-m-d'),
-                'accepted_date' => Carbon::parse($acceptance->accepted_at)->format('Y-m-d'),
                 'assigned_to' => $assigned_to,
                 'company_name' => $branding_settings->site_name,
                 'signature' => ($sig_filename) ? storage_path() . '/private_uploads/signatures/' . $sig_filename : null,

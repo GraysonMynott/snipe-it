@@ -25,17 +25,12 @@
     {{ trans('general.archived') }}
   @elseif (Request::get('status')=='Deleted')
     {{ trans('general.deleted') }}
-  @elseif (Request::get('status')=='byod')
-    {{ trans('general.byod') }}
   @endif
 @else
 {{ trans('general.all') }}
 @endif
 {{ trans('general.assets') }}
 
-  @if (Request::has('order_number'))
-    : Order #{{ strval(Request::get('order_number')) }}
-  @endif
 @stop
 
 {{-- Page title --}}
@@ -88,7 +83,6 @@
                 class="table table-striped snipe-table"
                 data-url="{{ route('api.assets.index',
                     array('status' => e(Request::get('status')),
-                    'order_number'=>e(strval(Request::get('order_number'))),
                     'company_id'=>e(Request::get('company_id')),
                     'status_id'=>e(Request::get('status_id')))) }}"
                 data-export-options='{

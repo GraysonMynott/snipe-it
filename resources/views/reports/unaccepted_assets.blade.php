@@ -61,7 +61,6 @@
                 <th class="col-sm-1" data-sortable="true" >{{ trans('admin/hardware/form.model') }}</th>
                 <th class="col-sm-1" data-sortable="true" >{{ trans('admin/hardware/form.name') }}</th>
                 <th class="col-sm-1" data-sortable="true" >{{ trans('admin/hardware/table.asset_tag') }}</th>
-                <th class="col-sm-1" data-sortable="true" >{{ trans('admin/hardware/table.checkoutto') }}</th>
                 <th class="col-md-1"><span class="line"></span>{{ trans('table.actions') }}</th>
               </tr>
             </thead>
@@ -76,23 +75,8 @@
                     <td>{!! $item['assetItem']->present()->modelUrl() !!}</td>
                     <td>{!! $item['assetItem']->present()->nameUrl() !!}</td>
                     <td>{{ $item['assetItem']->asset_tag }}</td>
-                    <td @if($item['acceptance']->assignedTo === null || $item['acceptance']->assignedTo->trashed()) style="text-decoration: line-through" @endif>{!! ($item['acceptance']->assignedTo) ? $item['acceptance']->assignedTo->present()->nameUrl() : trans('admin/reports/general.deleted_user') !!}</td>
                     <td class="white-space: nowrap;">
                         <nobr>
-                        @if(!$item['acceptance']->trashed())
-                           <form method="post" class="white-space: nowrap;" action="{{ route('reports/unaccepted_assets_sent_reminder') }}">
-                            @if ($item['acceptance']->assignedTo)
-                                @csrf
-                               <input type="hidden" name="acceptance_id" value="{{ $item['acceptance']->id }}">
-                                <button class="btn btn-sm btn-warning" data-tooltip="true" data-title="{{ trans('admin/reports/general.send_reminder') }}">
-                                    <i class="fa fa-repeat" aria-hidden="true"></i>
-                                </button>
-
-                            @endif
-                            <a href="{{ route('reports/unaccepted_assets_delete', ['acceptanceId' => $item['acceptance']->id]) }}" class="btn btn-sm btn-danger delete-asset" data-tooltip="true" data-toggle="modal" data-content="{{ trans('general.delete_confirm', ['item' =>trans('admin/reports/general.acceptance_request')]) }}" data-title="{{  trans('general.delete') }}" onClick="return false;"><i class="fa fa-trash"></i></a>
-                           </form>
-                        @endif
-
                         </nobr>
                     </td>
                   </tr>

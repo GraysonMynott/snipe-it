@@ -434,20 +434,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                             <span class="badge">{{ (isset($total_pending_sidebar)) ? $total_pending_sidebar : '' }}</span>
                                         </a>
                                     </li>
-{{--                                     <li{!! (Request::query('status') == 'Undeployable' ? ' class="active"' : '') !!} ><a
-                                                href="{{ url('hardware?status=Undeployable') }}"><i
-                                                    class="fas fa-times text-red fa-fw"></i>
-                                            {{ trans('general.undeployable') }}
-                                            <span class="badge">{{ (isset($total_undeployable_sidebar)) ? $total_undeployable_sidebar : '' }}</span>
-                                        </a>
-                                    </li>
-                                    <li{!! (Request::query('status') == 'byod' ? ' class="active"' : '') !!}><a
-                                                href="{{ url('hardware?status=byod') }}"><i
-                                                    class="fas fa-times text-red fa-fw"></i>
-                                            {{ trans('general.byod') }}
-                                            <span class="badge">{{ (isset($total_byod_sidebar)) ? $total_byod_sidebar : '' }}</span>
-                                        </a>
-                                    </li> --}}
                                     <li{!! (Request::query('status') == 'Archived' ? ' class="active"' : '') !!}><a
                                                 href="{{ url('hardware?status=Archived') }}"><i
                                                     class="fas fa-times text-red fa-fw"></i>

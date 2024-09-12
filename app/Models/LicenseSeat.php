@@ -11,7 +11,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class LicenseSeat extends SnipeModel implements ICompanyableChild
 {
-    use CompanyableChildTrait;
     use HasFactory;
     use Loggable;
     use SoftDeletes;
@@ -33,11 +32,6 @@ class LicenseSeat extends SnipeModel implements ICompanyableChild
     ];
 
     use Acceptable;
-
-    public function getCompanyableParents()
-    {
-        return ['asset', 'license'];
-    }
 
     /**
      * Determine whether the user should be required to accept the license

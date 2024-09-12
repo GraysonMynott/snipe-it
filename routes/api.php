@@ -318,27 +318,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'throttle:api']], functi
         )->name('api.assets.show.bytag')
         ->where('any', '.*');
 
-        Route::post('bytag/{any}/checkout',
-            [
-                Api\AssetsController::class, 
-                'checkoutByTag'
-            ]
-        )->name('api.assets.checkout.bytag');
-
-        Route::post('bytag/{any}/checkin',
-            [
-                Api\AssetsController::class,
-                'checkinbytag'
-            ]
-        )->name('api.asset.checkinbytagPath');
-
-        Route::post('checkinbytag',
-            [
-                Api\AssetsController::class,
-                'checkinbytag'
-            ]
-        )->name('api.asset.checkinbytag');
-
         Route::get('byserial/{any}',
             [
                 Api\AssetsController::class, 
@@ -436,23 +415,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'throttle:api']], functi
             ],
         'except' => ['create', 'edit'],
         'parameters' => ['asset' => 'asset_id'],
-        ]
-        ); // end assets API routes
-
-        /**
-         * Asset maintenances API routes
-         */
-        Route::resource('maintenances', 
-        Api\AssetMaintenancesController::class,
-        ['names' => [
-                'index' => 'api.maintenances.index',
-                'show' => 'api.maintenances.show',
-                'update' => 'api.maintenances.update',
-                'store' => 'api.maintenances.store',
-                'destroy' => 'api.maintenances.destroy',
-            ],
-        'except' => ['create', 'edit'],
-        'parameters' => ['maintenance' => 'maintenance_id'],
         ]
         ); // end assets API routes
 

@@ -37,7 +37,6 @@ class Actionlog extends SnipeModel
         'note',
         'target_id',
         'target_type',
-        'stored_eula'
     ];
 
     use Searchable;

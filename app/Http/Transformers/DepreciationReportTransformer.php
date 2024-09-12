@@ -30,57 +30,6 @@ class DepreciationReportTransformer
     public function transformAsset(Asset $asset)
     {
 
-        /**
-         * Set some default values here
-         */
-        $purchase_cost = null;
-        $depreciated_value = null;
-        $monthly_depreciation = null;
-        $diff = null;
-        $checkout_target = null;
-
-        /**
-         * If there is a location set and a currency set, use that for display
-         */
-        if ($asset->location && $asset->location->currency) {
-            $purchase_cost_currency = $asset->location->currency;
-        } else {
-            $purchase_cost_currency = \App\Models\Setting::getSettings()->default_currency;
-        }
-
-        /**
-         * If there is a NOT an empty purchase cost (meaning not null or '' but it *could* be zero),
-         * format the purchase cost. We coould do this inline in the transformer, but we need that value 
-         * for the other calculations that come after, like diff, etc.
-         */
-        if ($asset->purchase_cost!='') {
-            $purchase_cost = $asset->purchase_cost;
-        }
-       
-
-        /**
-         * Override the previously set null values if there is a valid model and associated depreciation
-         */
-        if (($asset->model) && ($asset->model->depreciation)) {
-            $depreciated_value = Helper::formatCurrencyOutput($asset->getDepreciatedValue());
-            if($asset->model->eol==0 || $asset->model->eol==null ){
-                $monthly_depreciation = Helper::formatCurrencyOutput($asset->purchase_cost / $asset->model->depreciation->months);
-            }
-            else {
-                $monthly_depreciation = Helper::formatCurrencyOutput(($asset->model->eol > 0 ? ($asset->purchase_cost / $asset->model->eol) : 0));
-            }
-            $diff = Helper::formatCurrencyOutput(($asset->purchase_cost - $asset->getDepreciatedValue()));
-        }
-
-
-        if ($asset->assigned) {
-            $checkout_target = $asset->assigned->name;
-            if ($asset->checkedOutToUser()) {
-                $checkout_target = $asset->assigned->getFullNameAttribute();
-            } 
-
-        }
-                   
         $array = [
     
             'company' => ($asset->company) ? e($asset->company->name) : null,
@@ -95,21 +44,8 @@ class DepreciationReportTransformer
             'category' => (($asset->model) && ($asset->model->category)) ? e($asset->model->category->name) : null,
             'manufacturer' => (($asset->model) && ($asset->model->manufacturer)) ? e($asset->model->manufacturer->name) : null,
             'notes' => ($asset->notes) ? e($asset->notes) : null,
-            'order_number' => ($asset->order_number) ? e($asset->order_number) : null,
             'location' => ($asset->location) ? e($asset->location->name) : null,
-            'warranty_expires' => ($asset->warranty_months > 0) ?  Helper::getFormattedDateObject($asset->warranty_expires, 'date') : null,
-            'currency' => $purchase_cost_currency,
-            'purchase_date' => Helper::getFormattedDateObject($asset->purchase_date, 'date'),
-            'purchase_cost' => Helper::formatCurrencyOutput($asset->purchase_cost),
-            'book_value' => Helper::formatCurrencyOutput($depreciated_value),
-            'monthly_depreciation' => $monthly_depreciation,
-            'checked_out_to' => ($checkout_target) ? e($checkout_target) : null,
-            'diff' =>  Helper::formatCurrencyOutput($diff),
-            'number_of_months' =>  ($asset->model && $asset->model->depreciation) ? e($asset->model->depreciation->months) : null,
-            'depreciation' => (($asset->model) && ($asset->model->depreciation)) ?  e($asset->model->depreciation->name) : null,
             
-
-        
         ];
 
         return $array;

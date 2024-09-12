@@ -63,9 +63,6 @@ class LicenseImporter extends ItemImporter
         }
         $this->item['license_email'] = trim($this->findCsvMatch($row, 'license_email'));
         $this->item['license_name'] = trim($this->findCsvMatch($row, 'license_name'));
-        $this->item['maintained'] = trim($this->findCsvMatch($row, 'maintained'));
-        $this->item['purchase_order'] = trim($this->findCsvMatch($row, 'purchase_order'));
-        $this->item['order_number'] = trim($this->findCsvMatch($row, 'order_number'));
         $this->item['reassignable'] = trim($this->findCsvMatch($row, 'reassignable'));
         $this->item['manufacturer'] = $this->createOrFetchManufacturer(trim($this->findCsvMatch($row, 'manufacturer')));
 

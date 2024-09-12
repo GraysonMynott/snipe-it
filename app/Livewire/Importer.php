@@ -173,30 +173,9 @@ class Importer extends Component
         $this->progress_bar_class = 'progress-bar-warning';
         $this->importTypes = [
             'asset' =>      trans('general.assets'),
-            'accessory' =>  trans('general.accessories'),
-            'consumable' => trans('general.consumables'),
-            'component' =>  trans('general.components'),
             'license' =>    trans('general.licenses'),
             'user' =>       trans('general.users'),
             'location' =>    trans('general.locations'),
-        ];
-
-        /**
-         * These are the item-type specific columns
-         */
-        $this->accessories_fields  = [
-            'company' => trans('general.company'),
-            'location' => trans('general.location'),
-            'quantity' => trans('general.qty'),
-            'item_name' => trans('general.item_name_var', ['item' => trans('general.accessory')]),
-            'model_number' => trans('general.model_no'),
-            'notes' => trans('general.notes'),
-            'category' => trans('general.category'),
-            'min_amt' => trans('mail.min_QTY'),
-            'purchase_cost' => trans('general.purchase_cost'),
-            'purchase_date' => trans('general.purchase_date'),
-            'manufacturer' => trans('general.manufacturer'),
-            'order_number' => trans('general.order_number'),
         ];
 
         $this->assets_fields = [
@@ -205,76 +184,23 @@ class Importer extends Component
             'item_name' => trans('general.item_name_var', ['item' => trans('general.asset')]),
             'asset_tag' => trans('general.asset_tag'),
             'asset_model' => trans('general.model_name'),
-            'byod' => trans('general.byod'),
             'model_number' => trans('general.model_no'),
             'status' => trans('general.status'),
             'warranty_months' => trans('admin/hardware/form.warranty'),
             'category' => trans('general.category'),
-            'requestable' => trans('admin/hardware/general.requestable'),
             'serial' => trans('general.serial_number'),
-            'purchase_cost' => trans('general.purchase_cost'),
-            'purchase_date' => trans('general.purchase_date'),
-            'purchase_order' => trans('admin/licenses/form.purchase_order'),
             'asset_notes' => trans('general.item_notes', ['item' => trans('admin/hardware/general.asset')]),
             'model_notes' => trans('general.item_notes', ['item' => trans('admin/hardware/form.model')]),
             'manufacturer' => trans('general.manufacturer'),
-            'order_number' => trans('general.order_number'),
             'image' => trans('general.importer.image_filename'),
             'asset_eol_date' => trans('admin/hardware/form.eol_date'),
-            /**
-             * Checkout fields:
-             * Assets can be checked out to other assets, people, or locations, but we currently
-             * only support checkout to people and locations in the importer
-             **/
-            'checkout_class' => trans('general.importer.checkout_type'),
-            'first_name' => trans('general.importer.checked_out_to_first_name'),
-            'last_name' => trans('general.importer.checked_out_to_last_name'),
-            'full_name' => trans('general.importer.checked_out_to_fullname'),
-            'email' => trans('general.importer.checked_out_to_email'),
-            'username' => trans('general.importer.checked_out_to_username'),
-            'checkout_location' => trans('general.importer.checkout_location'),
+
             /**
              * These are here so users can import history, to replace the dinosaur that
              * was the history importer
              */
-            'last_checkin' => trans('admin/hardware/table.last_checkin_date'),
-            'last_checkout' => trans('admin/hardware/table.checkout_date'),
-            'expected_checkin' => trans('admin/hardware/form.expected_checkin'),
             'last_patch_date' => trans('general.last_patch'),
             'next_patch_date' => trans('general.next_patch_date'),
-        ];
-
-        $this->consumables_fields = [
-            'company' => trans('general.company'),
-            'location' => trans('general.location'),
-            'quantity' => trans('general.qty'),
-            'item_name' => trans('general.item_name_var', ['item' => trans('general.consumable')]),
-            'model_number' => trans('general.model_no'),
-            'notes' => trans('general.notes'),
-            'min_amt' => trans('mail.min_QTY'),
-            'category' => trans('general.category'),
-            'purchase_cost' => trans('general.purchase_cost'),
-            'purchase_date' => trans('general.purchase_date'),
-            'checkout_class' => trans('general.importer.checkout_type'),
-            'manufacturer' => trans('general.manufacturer'),
-            'order_number' => trans('general.order_number'),
-            'item_no' => trans('admin/consumables/general.item_no'),
-        ];
-
-        $this->components_fields = [
-            'company' => trans('general.company'),
-            'location' => trans('general.location'),
-            'quantity' => trans('general.qty'),
-            'item_name' => trans('general.item_name_var', ['item' => trans('general.component')]),
-            'model_number' => trans('general.model_no'),
-            'notes' => trans('general.notes'),
-            'category' => trans('general.category'),
-            'min_amt' => trans('mail.min_QTY'),
-            'purchase_cost' => trans('general.purchase_cost'),
-            'purchase_date' => trans('general.purchase_date'),
-            'manufacturer' => trans('general.manufacturer'),
-            'order_number' => trans('general.order_number'),
-            'serial' => trans('general.serial_number'),
         ];
 
         $this->licenses_fields = [
@@ -286,14 +212,10 @@ class Importer extends Component
             'full_name' => trans('general.importer.checked_out_to_fullname'),
             'license_email' => trans('admin/licenses/form.to_email'),
             'license_name' => trans('admin/licenses/form.to_name'),
-            'purchase_order' => trans('admin/licenses/form.purchase_order'),
-            'order_number' => trans('general.order_number'),
             'reassignable' => trans('admin/licenses/form.reassignable'),
             'seats' => trans('admin/licenses/form.seats'),
             'notes' => trans('general.notes'),
             'category' => trans('general.category'),
-            'purchase_cost' => trans('general.purchase_cost'),
-            'purchase_date' => trans('general.purchase_date'),
             'maintained' => trans('admin/licenses/form.maintained'),
             'checkout_class' => trans('general.importer.checkout_type'),
             'serial' => trans('general.license_serial'),

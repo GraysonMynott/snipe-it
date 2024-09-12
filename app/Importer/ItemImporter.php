@@ -65,13 +65,6 @@ class ItemImporter extends Importer
 
         $this->item['name'] = $this->findCsvMatch($row, 'item_name');
         $this->item['notes'] = $this->findCsvMatch($row, 'notes');
-        $this->item['order_number'] = $this->findCsvMatch($row, 'order_number');
-        $this->item['purchase_cost'] = $this->findCsvMatch($row, 'purchase_cost');
-
-        $this->item['purchase_date'] = null;
-        if ($this->findCsvMatch($row, 'purchase_date') != '') {
-            $this->item['purchase_date'] = date('Y-m-d', strtotime($this->findCsvMatch($row, 'purchase_date')));
-        }
 
 //        $this->item['asset_eol_date'] = null;
 //        if ($this->findCsvMatch($row, 'asset_eol_date') != '') {
@@ -87,35 +80,8 @@ class ItemImporter extends Importer
 
 
         $this->item['qty'] = $this->findCsvMatch($row, 'quantity');
-        $this->item['requestable'] = $this->findCsvMatch($row, 'requestable');
         $this->item['user_id'] = $this->user_id;
         $this->item['serial'] = $this->findCsvMatch($row, 'serial');
-        // NO need to call this method if we're running the user import.
-        // TODO: Merge these methods.
-        $this->item['checkout_class'] = $this->findCsvMatch($row, 'checkout_class');
-        if (get_class($this) !== UserImporter::class) {
-            // $this->item["user"] = $this->createOrFetchUser($row);
-            $this->item['checkout_target'] = $this->determineCheckout($row);
-        }
-    }
-
-    /**
-     * Parse row to determine what (if anything) we should checkout to.
-     * @param  array $row CSV Row being parsed
-     * @return ?SnipeModel      Model to be checked out to
-     */
-    protected function determineCheckout($row)
-    {
-        // Locations don't get checked out to anyone/anything
-        if (get_class($this) == LocationImporter::class) {
-            return;
-        }
-
-        if (strtolower($this->item['checkout_class']) === 'location' && $this->findCsvMatch($row, 'checkout_location') != null ) {
-            return Location::findOrFail($this->createOrFetchLocation($this->findCsvMatch($row, 'checkout_location')));
-        }
-
-        return $this->createOrFetchUser($row);
     }
 
     /**
