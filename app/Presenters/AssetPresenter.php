@@ -94,20 +94,6 @@ class AssetPresenter extends Presenter
                 'visible' => true,
                 'formatter' => 'statuslabelsLinkObjFormatter',
             ], [
-                'field' => 'assigned_to',
-                'searchable' => true,
-                'sortable' => true,
-                'title' => trans('admin/hardware/form.checkedout_to'),
-                'visible' => true,
-                'formatter' => 'polymorphicItemFormatter',
-            ], [
-                'field' => 'employee_number',
-                'searchable' => false,
-                'sortable' => false,
-                'title' => trans('general.employee_number'),
-                'visible' => false,
-                'formatter' => 'employeeNumFormatter',
-            ], [
                 'field' => 'location',
                 'searchable' => true,
                 'sortable' => true,
@@ -155,7 +141,7 @@ class AssetPresenter extends Presenter
                 "title" => trans('admin/hardware/table.book_value'),
                 "footerFormatter" => 'sumFormatter',
                 "class" => "text-right",
-            ],[
+            ], [
                 'field' => 'order_number',
                 'searchable' => true,
                 'sortable' => true,
@@ -168,8 +154,7 @@ class AssetPresenter extends Presenter
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('admin/hardware/form.eol_rate'),
-            ],
-            [
+            ], [
                 'field' => 'asset_eol_date',
                 'searchable' => true,
                 'sortable' => true,
@@ -190,40 +175,11 @@ class AssetPresenter extends Presenter
                 'title' => trans('admin/hardware/form.warranty_expires'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'requestable',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/general.requestable'),
-                'formatter' => 'trueFalseFormatter',
-
-            ], [
                 'field' => 'notes',
                 'searchable' => true,
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('general.notes'),
-
-            ], [
-                'field' => 'checkout_counter',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.checkouts_count'),
-
-            ], [
-                'field' => 'checkin_counter',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.checkins_count'),
-
-            ], [
-                'field' => 'requests_counter',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.user_requests_count'),
 
             ], [
                 'field' => 'created_at',
@@ -240,27 +196,6 @@ class AssetPresenter extends Presenter
                 'title' => trans('general.updated_at'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'last_checkout',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/table.checkout_date'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
-                'field' => 'last_checkin',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/table.last_checkin_date'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
-                'field' => 'expected_checkin',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('admin/hardware/form.expected_checkin'),
-                'formatter' => 'dateDisplayFormatter',
-            ], [
                 'field' => 'last_patch_date',
                 'searchable' => false,
                 'sortable' => true,
@@ -274,14 +209,6 @@ class AssetPresenter extends Presenter
                 'visible' => false,
                 'title' => trans('general.next_patch_date'),
                 'formatter' => 'dateDisplayFormatter',
-            ], [
-                'field' => 'byod',
-                'searchable' => false,
-                'sortable' => true,
-                'visible' => false,
-                'title' => trans('general.byod'),
-                'formatter' => 'trueFalseFormatter',
-
             ],
         ];
 
@@ -312,16 +239,6 @@ class AssetPresenter extends Presenter
                 'visible' => ($field->show_in_listview == '1') ? true : false,
             ];
         }
-
-        $layout[] = [
-            'field' => 'checkincheckout',
-            'searchable' => false,
-            'sortable' => false,
-            'switchable' => false,
-            'title' => trans('general.checkin').'/'.trans('general.checkout'),
-            'visible' => true,
-            'formatter' => 'hardwareInOutFormatter',
-        ];
 
         $layout[] = [
             'field' => 'actions',
