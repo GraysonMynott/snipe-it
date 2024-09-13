@@ -54,11 +54,6 @@ class LicensesController extends Controller
             $licenses->where('category_id', '=', $request->input('category_id'));
         }
 
-        if ($request->filled('depreciation_id')) {
-            $licenses->where('depreciation_id', '=', $request->input('depreciation_id'));
-        }
-
-
         if (($request->filled('maintained')) && ($request->input('maintained')=='true')) {
             $licenses->where('maintained','=',1);
         } elseif (($request->filled('maintained')) && ($request->input('maintained')=='false')) {
@@ -92,9 +87,6 @@ class LicensesController extends Controller
             case 'category':
                 $licenses = $licenses->leftJoin('categories', 'licenses.category_id', '=', 'categories.id')->orderBy('categories.name', $order);
                 break;
-            case 'depreciation':
-                $licenses = $licenses->leftJoin('depreciations', 'licenses.depreciation_id', '=', 'depreciations.id')->orderBy('depreciations.name', $order);
-                break;
             case 'company':
                 $licenses = $licenses->leftJoin('companies', 'licenses.company_id', '=', 'companies.id')->orderBy('companies.name', $order);
                 break;
@@ -114,7 +106,6 @@ class LicensesController extends Controller
                         'free_seats_count',
                         'seats',
                         'termination_date',
-                        'depreciation_id',
                         'min_amt',
                     ];
                 $sort = in_array($request->input('sort'), $allowed_columns) ? e($request->input('sort')) : 'created_at';

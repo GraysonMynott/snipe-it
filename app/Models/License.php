@@ -61,7 +61,6 @@ class License extends Depreciable
      */
     protected $fillable = [
         'company_id',
-        'depreciation_id',
         'expiration_date',
         'license_email',
         'license_name', //actually licensed_to

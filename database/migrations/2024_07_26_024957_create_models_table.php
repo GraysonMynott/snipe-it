@@ -26,8 +26,6 @@ return new class extends Migration
             $table->text('notes')->nullable();
             $table->tinyInteger('requestable')->default(0);                 // To be removed
             $table->integer('min_amt')->nullable();                         // To be removed
-            $table->integer('depreciation_id')->nullable();                 // To be removed
-            $table->boolean('deprecated_mac_address')->default(false);      // To be removed
             $table->integer('fieldset_id')->nullable();                     // To be removed?
         });
     }

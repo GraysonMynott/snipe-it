@@ -54,7 +54,6 @@ class AssetModelsController extends Controller
         $this->authorize('create', AssetModel::class);
 
         return view('models/edit')->with('category_type', 'asset')
-            ->with('depreciation_list', Helper::depreciationList())
             ->with('item', new AssetModel);
     }
 
@@ -71,7 +70,6 @@ class AssetModelsController extends Controller
         $model = new AssetModel;
 
         $model->eol = $request->input('eol');
-        $model->depreciation_id = $request->input('depreciation_id');
         $model->name = $request->input('name');
         $model->model_number = $request->input('model_number');
         $model->min_amt = $request->input('min_amt');
@@ -111,7 +109,7 @@ class AssetModelsController extends Controller
         $this->authorize('update', AssetModel::class);
         if ($item = AssetModel::find($modelId)) {
             $category_type = 'asset';
-            return view('models/edit', compact('item', 'category_type'))->with('depreciation_list', Helper::depreciationList());
+            return view('models/edit', compact('item', 'category_type'));
 
         }
 
@@ -140,7 +138,6 @@ class AssetModelsController extends Controller
 
         $model = $request->handleImages($model);
 
-        $model->depreciation_id = $request->input('depreciation_id');
         $model->eol = $request->input('eol');
         $model->name = $request->input('name');
         $model->model_number = $request->input('model_number');
@@ -292,7 +289,6 @@ class AssetModelsController extends Controller
 
         // Show the page
         return view('models/edit')
-            ->with('depreciation_list', Helper::depreciationList())
             ->with('item', $model)
             ->with('model_id', $model_to_clone->id)
             ->with('clone_model', $model_to_clone);
@@ -342,11 +338,9 @@ class AssetModelsController extends Controller
             } else {
                 $nochange = ['NC' => 'No Change'];
                 $fieldset_list = $nochange + Helper::customFieldsetList();
-                $depreciation_list = $nochange + Helper::depreciationList();
 
                 return view('models/bulk-edit', compact('models'))
-                    ->with('fieldset_list', $fieldset_list)
-                    ->with('depreciation_list', $depreciation_list);
+                    ->with('fieldset_list', $fieldset_list);
             }
         }
 
@@ -376,9 +370,6 @@ class AssetModelsController extends Controller
         }
         if ($request->input('fieldset_id') != 'NC') {
             $update_array['fieldset_id'] = $request->input('fieldset_id');
-        }
-        if ($request->input('depreciation_id') != 'NC') {
-            $update_array['depreciation_id'] = $request->input('depreciation_id');
         }
 
         

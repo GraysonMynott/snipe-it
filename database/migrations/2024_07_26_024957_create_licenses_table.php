@@ -32,10 +32,8 @@ return new class extends Migration
             $table->integer('category_id')->nullable();
 
             $table->integer('min_amt')->nullable();                         // To be removed
-            $table->integer('depreciation_id')->nullable();                 // To be removed
             $table->string('license_name', 120)->nullable();                // To be removed
             $table->string('license_email')->nullable();                    // To be removed
-            $table->boolean('depreciate')->nullable();                      // To be removed
         });
     }
 

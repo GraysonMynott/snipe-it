@@ -96,13 +96,6 @@ Route::group(['middleware' => 'auth'], function () {
     ]);
 
     /*
-     * Depreciations
-     */
-    Route::resource('depreciations', DepreciationsController::class, [
-         'parameters' => ['depreciation' => 'depreciation_id'],
-    ]);
-
-    /*
      * Status Labels
      */
     Route::resource('statuslabels', StatuslabelsController::class, [

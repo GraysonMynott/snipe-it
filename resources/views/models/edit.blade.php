@@ -14,7 +14,6 @@
 @include ('partials.forms.edit.category-select', ['translated_name' => trans('admin/categories/general.category_name'), 'fieldname' => 'category_id', 'required' => 'true', 'category_type' => 'asset'])
 @include ('partials.forms.edit.manufacturer-select', ['translated_name' => trans('general.manufacturer'), 'fieldname' => 'manufacturer_id'])
 @include ('partials.forms.edit.model_number')
-@include ('partials.forms.edit.depreciation')
 @include ('partials.forms.edit.minimum_quantity')
 
 <!-- EOL -->
@@ -39,7 +38,6 @@
 @livewire('custom-field-set-default-values-for-model',["model_id" => $item->id ?? $model_id ?? null  ])
 
 @include ('partials.forms.edit.notes')
-@include ('partials.forms.edit.requestable', ['requestable_text' => trans('admin/models/general.requestable')])
 @include ('partials.forms.edit.image-upload', ['image_path' => app('models_upload_path')])
 
 

@@ -130,32 +130,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'throttle:api']], functi
         ]
     ); // end companies API routes
 
-
-      /**
-         * Depreciations API routes
-        */
-        Route::resource('depreciations', 
-        Api\DepreciationsController::class,
-        ['names' => [
-                'index' => 'api.depreciations.index',
-                'show' => 'api.depreciations.show',
-                'update' => 'api.depreciations.update',
-                'store' => 'api.depreciations.store',
-                'destroy' => 'api.depreciations.destroy',
-            ],
-        'except' => ['create', 'edit'],
-        'parameters' => ['depreciations' => 'depreciation_id'],
-        ]
-        ); // end depreciations API routes
-
-
-        Route::get('reports/depreciation',
-        [
-            Api\AssetsController::class, 
-            'index'
-        ]
-        )->name('api.depreciation-report.index');
-
        
         
         /**

@@ -112,10 +112,10 @@ class AssetsController extends Controller
                 'model.category', 'model.manufacturer', 'model.fieldset'); //it might be tempting to add 'assetlog' here, but don't. It blows up update-heavy users.
 
 
-        if ($filter_non_deprecable_assets) {
-            $non_deprecable_models = AssetModel::select('id')->whereNotNull('depreciation_id')->get();
-            $assets->InModelList($non_deprecable_models->toArray());
-        }
+//        if ($filter_non_deprecable_assets) {
+//            $non_deprecable_models = AssetModel::select('id')->whereNotNull('depreciation_id')->get();
+//            $assets->InModelList($non_deprecable_models->toArray());
+//        }
 
 
 
@@ -280,10 +280,6 @@ class AssetsController extends Controller
 
         if ($request->filled('manufacturer_id')) {
             $assets->ByManufacturer($request->input('manufacturer_id'));
-        }
-
-        if ($request->filled('depreciation_id')) {
-            $assets->ByDepreciationId($request->input('depreciation_id'));
         }
 
         // This is kinda gross, but we need to do this because the Bootstrap Tables

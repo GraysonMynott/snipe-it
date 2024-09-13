@@ -46,8 +46,7 @@ class BulkAssetModelsController extends Controller
             $nochange = ['NC' => 'No Change'];
 
             return view('models/bulk-edit', compact('models'))
-                ->with('fieldset_list', $nochange + Helper::customFieldsetList())
-                ->with('depreciation_list', $nochange + Helper::depreciationList());
+                ->with('fieldset_list', $nochange + Helper::customFieldsetList());
         }
 
         return redirect()->route('models.index')
@@ -76,9 +75,6 @@ class BulkAssetModelsController extends Controller
         }
         if ($request->input('fieldset_id') != 'NC') {
             $update_array['fieldset_id'] = $request->input('fieldset_id');
-        }
-        if ($request->input('depreciation_id') != 'NC') {
-            $update_array['depreciation_id'] = $request->input('depreciation_id');
         }
 
 

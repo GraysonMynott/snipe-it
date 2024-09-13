@@ -48,10 +48,6 @@ class AssetModelsTransformer
             'image' => ($assetmodel->image != '') ? Storage::disk('public')->url('models/'.e($assetmodel->image)) : null,
             'model_number' => e($assetmodel->model_number),
             'min_amt'   => ($assetmodel->min_amt) ? (int) $assetmodel->min_amt : null,
-            'depreciation' => ($assetmodel->depreciation) ? [
-                'id' => (int) $assetmodel->depreciation->id,
-                'name'=> e($assetmodel->depreciation->name),
-            ] : null,
             'assets_count' => (int) $assetmodel->assets_count,
             'category' => ($assetmodel->category) ? [
                 'id' => (int) $assetmodel->category->id,
