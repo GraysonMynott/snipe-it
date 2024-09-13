@@ -88,7 +88,6 @@ class AssetsController extends Controller
             'model_number',
             'notes',
             'image',
-            'assigned_to',
             'created_at',
             'updated_at',
             'last_patch_date',
@@ -108,7 +107,7 @@ class AssetsController extends Controller
         }
 
         $assets = Asset::select('assets.*')
-            ->with('location', 'assetstatus', 'company', 'defaultLoc','assignedTo',
+            ->with('location', 'assetstatus', 'company', 'defaultLoc',
                 'model.category', 'model.manufacturer', 'model.fieldset'); //it might be tempting to add 'assetlog' here, but don't. It blows up update-heavy users.
 
 
@@ -193,7 +192,7 @@ class AssetsController extends Controller
                         ->where('status_alias.archived', '=', 0);
                 });
                 break;
-            case 'RTD':
+/*             case 'RTD':
                 $assets->whereNull('assets.assigned_to')
                     ->join('status_labels AS status_alias', function ($join) {
                         $join->on('status_alias.id', '=', 'assets.status_id')
@@ -201,7 +200,7 @@ class AssetsController extends Controller
                             ->where('status_alias.pending', '=', 0)
                             ->where('status_alias.archived', '=', 0);
                     });
-                break;
+                break; */
             case 'Undeployable':
                 $assets->Undeployable();
                 break;
@@ -214,9 +213,9 @@ class AssetsController extends Controller
                 });
                 break;
             case 'Deployed':
-                // more sad, horrible workarounds for laravel bugs when doing full text searches
-                $assets->whereNotNull('assets.assigned_to');
-                break;
+//                // more sad, horrible workarounds for laravel bugs when doing full text searches
+//                $assets->whereNotNull('assets.assigned_to');
+//                break;
             default:
 
                 if ((! $request->filled('status_id')) && ($settings->show_archived_in_list != '1')) {
@@ -269,11 +268,6 @@ class AssetsController extends Controller
             $assets->where('assets.asset_eol_date', '=', $request->input('asset_eol_date'));
         }
 
-        if (($request->filled('assigned_to')) && ($request->filled('assigned_type'))) {
-            $assets->where('assets.assigned_to', '=', $request->input('assigned_to'))
-                ->where('assets.assigned_type', '=', $request->input('assigned_type'));
-        }
-
         if ($request->filled('company_id')) {
             $assets->where('assets.company_id', '=', $request->input('company_id'));
         }
@@ -317,9 +311,6 @@ class AssetsController extends Controller
             case 'status_label':
                 $assets->OrderStatus($order);
                 break;
-            case 'assigned_to':
-                $assets->OrderAssigned($order);
-                break;
             default:
                 $assets->orderBy($column_sort, $order);
                 break;
@@ -353,7 +344,7 @@ class AssetsController extends Controller
     public function showByTag(Request $request, $tag) : JsonResponse | array
     {
         $this->authorize('index', Asset::class);
-        $assets = Asset::where('asset_tag', $tag)->with('assetstatus')->with('assignedTo');
+        $assets = Asset::where('asset_tag', $tag)->with('assetstatus');
 
         // Check if they've passed ?deleted=true
         if ($request->input('deleted', 'false') == 'true') {
@@ -391,7 +382,7 @@ class AssetsController extends Controller
     public function showBySerial(Request $request, $serial) : JsonResponse | array
     {
         $this->authorize('index', Asset::class);
-        $assets = Asset::where('serial', $serial)->with('assetstatus')->with('assignedTo');
+        $assets = Asset::where('serial', $serial)->with('assetstatus');
 
         // Check if they've passed ?deleted=true
         if ($request->input('deleted', 'false') == 'true') {
@@ -418,7 +409,7 @@ class AssetsController extends Controller
     public function show(Request $request, $id) : JsonResponse | array
     {
         if ($asset = Asset::with('assetstatus')
-            ->with('assignedTo')->withTrashed()
+            ->withTrashed()
             ->withCount('checkins as checkins_count', 'checkouts as checkouts_count', 'userRequests as user_requests_count')->find($id)) {
             $this->authorize('view', $asset);
 
@@ -454,10 +445,8 @@ class AssetsController extends Controller
             'assets.name',
             'assets.asset_tag',
             'assets.model_id',
-            'assets.assigned_to',
-            'assets.assigned_type',
             'assets.status_id',
-            ])->with('model', 'assetstatus', 'assignedTo')->NotArchived();
+            ])->with('model', 'assetstatus')->NotArchived();
 
         if ($request->filled('assetStatusType') && $request->input('assetStatusType') === 'RTD') {
             $assets = $assets->RTD();
@@ -559,24 +548,13 @@ class AssetsController extends Controller
         }
 
         if ($asset->save()) {
-            if ($request->get('assigned_user')) {
-                $target = User::find(request('assigned_user'));
-            } elseif ($request->get('assigned_asset')) {
-                $target = Asset::find(request('assigned_asset'));
-            } elseif ($request->get('assigned_location')) {
-                $target = Location::find(request('assigned_location'));
-            }
-            if (isset($target)) {
-                $asset->checkOut($target, auth()->user(), date('Y-m-d H:i:s'), '', 'Checked out on asset creation', e($request->get('name')));
-            }
-
             if ($asset->image) {
                 $asset->image = $asset->getImageUrl();
             }
 
             return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/hardware/message.create.success')));
 
-            return response()->json(Helper::formatStandardApiResponse('success', (new AssetsTransformer)->transformAsset($asset), trans('admin/hardware/message.create.success')));
+//            return response()->json(Helper::formatStandardApiResponse('success', (new AssetsTransformer)->transformAsset($asset), trans('admin/hardware/message.create.success')));
         }
 
         return response()->json(Helper::formatStandardApiResponse('error', null, $asset->getErrors()), 200);
@@ -645,21 +623,6 @@ class AssetsController extends Controller
 
 
             if ($asset->save()) {
-                if (($request->filled('assigned_user')) && ($target = User::find($request->get('assigned_user')))) {
-                        $location = $target->location_id;
-                } elseif (($request->filled('assigned_asset')) && ($target = Asset::find($request->get('assigned_asset')))) {
-                    $location = $target->location_id;
-
-                    Asset::where('assigned_type', \App\Models\Asset::class)->where('assigned_to', $id)
-                        ->update(['location_id' => $target->location_id]);
-                } elseif (($request->filled('assigned_location')) && ($target = Location::find($request->get('assigned_location')))) {
-                    $location = $target->id;
-                }
-
-                if (isset($target)) {
-                    $asset->checkOut($target, auth()->user(), date('Y-m-d H:i:s'), '', 'Checked out on asset update', e($request->get('name')), $location);
-                }
-
                 if ($asset->image) {
                     $asset->image = $asset->getImageUrl();
                 }
@@ -691,10 +654,6 @@ class AssetsController extends Controller
 
         if ($asset = Asset::find($id)) {
             $this->authorize('delete', $asset);
-
-            DB::table('assets')
-                ->where('id', $asset->id)
-                ->update(['assigned_to' => null]);
 
             $asset->delete();
 
