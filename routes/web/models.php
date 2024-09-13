@@ -6,8 +6,6 @@ use App\Http\Controllers\BulkAssetModelsController;
 use Illuminate\Support\Facades\Route;
 
 // Asset Model Management
-
-
 Route::group(['prefix' => 'models', 'middleware' => ['auth']], function () {
 
     Route::post('{modelID}/upload',

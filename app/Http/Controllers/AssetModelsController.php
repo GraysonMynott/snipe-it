@@ -13,10 +13,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Log;
 use \Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 use \Illuminate\Http\RedirectResponse;
 
 
@@ -69,14 +69,14 @@ class AssetModelsController extends Controller
         $this->authorize('create', AssetModel::class);
         $model = new AssetModel;
 
-        $model->eol = $request->input('eol');
-        $model->name = $request->input('name');
-        $model->model_number = $request->input('model_number');
-        $model->min_amt = $request->input('min_amt');
-        $model->manufacturer_id = $request->input('manufacturer_id');
-        $model->category_id = $request->input('category_id');
-        $model->notes = $request->input('notes');
-        $model->user_id = Auth::id();
+        $model->name = $request->input('name');                             // Name of Model
+        $model->model_number = $request->input('model_number');             // Model number
+        $model->category_id = $request->input('category_id');               // Category ID (from Category table)
+        $model->manufacturer_id = $request->input('manufacturer_id');       // Manufacturer ID (from Manufacturer table)
+        $model->eol = $request->input('eol');                               // Model end of life
+        $model->eos = $request->input('eos');                               // Model end of support
+        $model->notes = $request->input('notes');                           // Model notes
+        $model->user_id = Auth::id();                                       // User ID of creator?
 
         if ($request->input('fieldset_id') != '') {
             $model->fieldset_id = $request->input('fieldset_id');
@@ -115,7 +115,6 @@ class AssetModelsController extends Controller
 
         return redirect()->route('models.index')->with('error', trans('admin/models/message.does_not_exist'));
     }
-
 
     /**
      * Validates and processes form data from the edit
@@ -214,11 +213,11 @@ class AssetModelsController extends Controller
      * @since [v1.0]
      * @param int $id
      */
-    public function getRestore($id) : RedirectResponse
+    public function getRestore($modelId) : RedirectResponse
     {
         $this->authorize('create', AssetModel::class);
 
-        if ($model = AssetModel::withTrashed()->find($id)) {
+        if ($model = AssetModel::withTrashed()->find($modelId)) {
 
             if ($model->deleted_at == '') {
                 return redirect()->back()->with('error', trans('general.not_deleted', ['item_type' => trans('general.asset_model')]));
@@ -249,7 +248,6 @@ class AssetModelsController extends Controller
 
     }
 
-
     /**
      * Get the model information to present to the model view page
      *
@@ -266,7 +264,8 @@ class AssetModelsController extends Controller
             return view('models/view', compact('model'));
         }
 
-        return redirect()->route('models.index')->with('error', trans('admin/models/message.does_not_exist'));
+        return redirect()->route('models.index')
+            ->with('error', trans('admin/models/message.does_not_exist'));
     }
 
     /**
@@ -294,7 +293,6 @@ class AssetModelsController extends Controller
             ->with('clone_model', $model_to_clone);
     }
 
-
     /**
      * Get the custom fields form
      *
@@ -306,8 +304,6 @@ class AssetModelsController extends Controller
     {
         return view('models.custom_fields_form')->with('model', AssetModel::find($modelId));
     }
-
-
 
     /**
      * Returns a view that allows the user to bulk edit model attrbutes
@@ -347,8 +343,6 @@ class AssetModelsController extends Controller
         return redirect()->route('models.index')
             ->with('error', 'You must select at least one model to edit.');
     }
-
-
 
     /**
      * Returns a view that allows the user to bulk edit model attrbutes

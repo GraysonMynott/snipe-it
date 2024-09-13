@@ -53,16 +53,16 @@ class AssetModel extends SnipeModel
      * @var array
      */
     protected $fillable = [
+        'name',
+        'model_number',
         'category_id',
+        'manufacturer_id',
         'eol',
         'eos',
-        'fieldset_id',
-        'image',
-        'manufacturer_id',
-        'model_number',
-        'name',
         'notes',
         'user_id',
+        'fieldset_id',
+        'image',
     ];
 
     use Searchable;
