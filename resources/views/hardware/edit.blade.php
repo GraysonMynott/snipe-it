@@ -50,7 +50,7 @@
 @include ('partials.forms.edit.serial', ['fieldname'=> 'serials[1]', 'old_val_name' => 'serials.1', 'translated_serial' => trans('admin/hardware/form.serial')])
 
 <!-- Asset MAC Address -->
-@include ('partials.forms.edit.mac_address', ['fieldname'=> 'mac_address', 'old_val_name' => 'mac_address.1', 'translated_mac_address' => trans('admin/hardware/form.mac_address')])
+@include ('partials.forms.edit.mac-address', ['fieldname'=> 'mac_address', 'old_val_name' => 'mac_address.1', 'translated_mac_address' => trans('admin/hardware/form.mac_address')])
 
 <!-- Asset Model -->
 @include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/hardware/form.model'), 'fieldname' => 'model_id', 'field_req' => true])
