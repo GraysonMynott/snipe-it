@@ -5,7 +5,6 @@ use App\Models\Asset;
 use App\Models\AssetModel;
 use App\Models\CustomField;
 use App\Models\CustomFieldset;
-use App\Models\Depreciation;
 use App\Models\Setting;
 use App\Models\Statuslabel;
 use App\Models\License;
@@ -593,21 +592,6 @@ class Helper
             + ['archived' => trans('admin/hardware/general.archived')];
 
         return $statuslabel_types;
-    }
-
-    /**
-     * Get the list of depreciations in an array to make a dropdown menu
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.5]
-     * @return array
-     */
-    public static function depreciationList()
-    {
-        $depreciation_list = ['' => 'Do Not Depreciate'] + Depreciation::orderBy('name', 'asc')
-                ->pluck('name', 'id')->toArray();
-
-        return $depreciation_list;
     }
 
     /**
@@ -1220,7 +1204,7 @@ class Helper
      * @return string[]
      */
     public static function SettingUrls(){
-        $settings=['#','fields.index', 'statuslabels.index', 'models.index', 'categories.index', 'manufacturers.index', 'departments.index', 'locations.index', 'companies.index', 'depreciations.index'];
+        $settings=['#','fields.index', 'statuslabels.index', 'models.index', 'categories.index', 'manufacturers.index', 'departments.index', 'locations.index', 'companies.index'];
 
         return $settings;
         }

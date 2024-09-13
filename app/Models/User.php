@@ -43,7 +43,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
         'city',
         'company_id',
         'country',
-        'department_id',
         'email',
         'employee_num',
         'first_name',
@@ -131,7 +130,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
      */
     protected $searchableRelations = [
         'userloc'    => ['name'],
-        'department' => ['name'],
         'groups'     => ['name'],
         'company'    => ['name'],
         'manager'    => ['first_name', 'last_name', 'username'],
@@ -249,18 +247,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     public function company()
     {
         return $this->belongsTo(\App\Models\Company::class, 'company_id');
-    }
-
-    /**
-     * Establishes the user -> department relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function department()
-    {
-        return $this->belongsTo(\App\Models\Department::class, 'department_id');
     }
 
     /**
@@ -739,19 +725,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     public function scopeOrderLocation($query, $order)
     {
         return $query->leftJoin('locations as locations_users', 'users.location_id', '=', 'locations_users.id')->orderBy('locations_users.name', $order);
-    }
-
-    /**
-     * Query builder scope to order on department
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-     * @param  string                              $order         Order
-     *
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeOrderDepartment($query, $order)
-    {
-        return $query->leftJoin('departments as departments_users', 'users.department_id', '=', 'departments_users.id')->orderBy('departments_users.name', $order);
     }
 
     /**

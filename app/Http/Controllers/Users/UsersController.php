@@ -184,7 +184,7 @@ class UsersController extends Controller
     {
 
         $this->authorize('update', User::class);
-        $user = User::with('assets', 'assets.model', 'consumables', 'accessories', 'licenses', 'userloc')->withTrashed()->find($id);
+        $user = User::with('assets', 'assets.model', 'licenses', 'userloc')->withTrashed()->find($id);
 
         if ($user) {
 
@@ -230,7 +230,7 @@ class UsersController extends Controller
         $permissions = $request->input('permissions', []);
         app('request')->request->set('permissions', $permissions);
 
-        $user = User::with('assets', 'assets.model', 'consumables', 'accessories', 'licenses', 'userloc')->withTrashed()->find($id);
+        $user = User::with('assets', 'assets.model', 'licenses', 'userloc')->withTrashed()->find($id);
 
         // User is valid - continue...
         if ($user) {
@@ -412,7 +412,7 @@ class UsersController extends Controller
         // Make sure the user can view users at all
         $this->authorize('view', User::class);
 
-        $user = User::with('assets', 'assets.model', 'consumables', 'accessories', 'licenses', 'userloc')->withTrashed()->find($userId);
+        $user = User::with('assets', 'assets.model', 'licenses', 'userloc')->withTrashed()->find($userId);
 
         // Make sure they can view this particular user
         $this->authorize('view', $user);
@@ -447,7 +447,7 @@ class UsersController extends Controller
         app('request')->request->set('permissions', $permissions);
 
 
-        $user_to_clone = User::with('assets', 'assets.model', 'consumables', 'accessories', 'licenses', 'userloc')->withTrashed()->find($id);
+        $user_to_clone = User::with('assets', 'assets.model', 'licenses', 'userloc')->withTrashed()->find($id);
         // Make sure they can view this particular user
         $this->authorize('view', $user_to_clone);
 
@@ -503,8 +503,6 @@ class UsersController extends Controller
 
             $users = User::with(
                 'assets',
-                'accessories',
-                'consumables',
                 'department',
                 'licenses',
                 'manager',
@@ -527,8 +525,6 @@ class UsersController extends Controller
                         trans('general.department'),
                         trans('general.assets'),
                         trans('general.licenses'),
-                        trans('general.accessories'),
-                        trans('general.consumables'),
                         trans('general.groups'),
                         trans('general.permissions'),
                         trans('general.notes'),
@@ -572,8 +568,6 @@ class UsersController extends Controller
                             ($user->department) ? $user->department->name : '',
                             $user->assets->count(),
                             $user->licenses->count(),
-                            $user->accessories->count(),
-                            $user->consumables->count(),
                             $user_groups,
                             $permissionstring,
                             $user->notes,
@@ -612,13 +606,9 @@ class UsersController extends Controller
         $this->authorize('view', $user);
 
         $assets = Asset::where('assigned_to', $id)->where('assigned_type', User::class)->with('model', 'model.category')->get();
-        $accessories = $user->accessories()->get();
-        $consumables = $user->consumables()->get();
 
         return view('users/print')->with('assets', $assets)
             ->with('licenses', $user->licenses()->get())
-            ->with('accessories', $accessories)
-            ->with('consumables', $consumables)
             ->with('show_user', $user)
             ->with('settings', Setting::getSettings());
     }

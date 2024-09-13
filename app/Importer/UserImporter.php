@@ -140,40 +140,6 @@ class UserImporter extends ItemImporter
         $this->logError($user, 'User');
         return;
     }
-
-    /**
-     * Fetch an existing department, or create new if it doesn't exist
-     *
-     * @author Daniel Melzter
-     * @since 5.0
-     * @param $department_name string
-     * @return int id of department created/found
-     */
-    public function createOrFetchDepartment($department_name)
-    {
-        if (is_null($department_name) || $department_name == ''){
-            return null;
-        }
-
-
-        $department = Department::where(['name' => $department_name])->first();
-        if ($department) {
-            $this->log('A matching department ' . $department_name . ' already exists');
-            return $department->id;
-        }
-
-        $department = new department();
-        $department->name = $department_name;
-        $department->user_id = $this->user_id;
-
-        if ($department->save()) {
-            $this->log('department ' . $department_name . ' was created');
-            return $department->id;
-        }
-
-        $this->logError($department, 'Department');
-        return null;
-    }
     
     public function sendWelcome($send = true)
     {

@@ -284,28 +284,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     </a>
                                     <ul class="dropdown-menu">
                                         <!-- User image -->
-{{--                                         <li {!! (Request::is('account/profile') ? ' class="active"' : '') !!}>
-                                            <a href="{{ route('view-assets') }}">
-                                                <i class="fas fa-check fa-fw" aria-hidden="true"></i>
-                                                {{ trans('general.viewassets') }}
-                                            </a></li>
-
-                                        @can('viewRequestable', \App\Models\Asset::class)
-                                            <li {!! (Request::is('account/requested') ? ' class="active"' : '') !!}>
-                                                <a href="{{ route('account.requested') }}">
-                                                    <i class="fas fa-check fa-disk fa-fw" aria-hidden="true"></i>
-                                                    {{ trans('general.requested_assets_menu') }}
-                                                </a></li>
-                                        @endcan
-
-                                        <li {!! (Request::is('account/accept') ? ' class="active"' : '') !!}>
-                                            <a href="{{ route('account.accept') }}">
-                                                <i class="fas fa-check fa-disk fa-fw"></i>
-                                                {{ trans('general.accept_assets_menu') }}
-                                            </a>
-                                        </li> --}}
-
-
                                         @can('self.profile')
                                         <li>
                                             <a href="{{ route('profile') }}">
@@ -552,14 +530,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                             </a>
                                         </li>
                                     @endcan
-
-                                    @can('view', \App\Models\Depreciation::class)
-                                        <li>
-                                            <a href="{{ route('depreciations.index') }}" {{ (Request::is('/depreciations') ? ' class="active"' : '') }}>
-                                                {{ trans('general.depreciation') }}
-                                            </a>
-                                        </li>
-                                    @endcan
                                 </ul>
                             </li>
                         @endcan
@@ -588,39 +558,13 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                             {{ trans('general.patch_report') }}</a>
                                     </li>
                                     <li>
-                                        <a href="{{ url('reports/depreciation') }}" {{ (Request::is('reports/depreciation') ? ' class="active"' : '') }}>
-                                            {{ trans('general.depreciation_report') }}
-                                        </a>
-                                    </li>
-                                    <li>
                                         <a href="{{ url('reports/licenses') }}" {{ (Request::is('reports/licenses') ? ' class="active"' : '') }}>
                                             {{ trans('general.license_report') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('reports/asset_maintenances') }}" {{ (Request::is('reports/asset_maintenances') ? ' class="active"' : '') }}>
-                                            {{ trans('general.asset_maintenance_report') }}
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="{{ url('reports/unaccepted_assets') }}" {{ (Request::is('reports/unaccepted_assets') ? ' class="active"' : '') }}>
-                                            {{ trans('general.unaccepted_asset_report') }}
                                         </a>
                                     </li>
                                 </ul>
                             </li>
                         @endcan
-
-{{--                         @can('viewRequestable', \App\Models\Asset::class)
-                            <li{!! (Request::is('account/requestable-assets') ? ' class="active"' : '') !!}>
-                                <a href="{{ route('requestable-assets') }}">
-                                    <i class="fa fa-laptop fa-fw"></i>
-                                    <span>{{ trans('general.requestable_items') }}</span>
-                                </a>
-                            </li>
-                        @endcan --}}
-
-
                     </ul>
                 </section>
                 <!-- /.sidebar -->

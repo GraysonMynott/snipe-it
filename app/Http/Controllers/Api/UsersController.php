@@ -46,7 +46,6 @@ class UsersController extends Controller
             'users.country',
             'users.created_at',
             'users.deleted_at',
-            'users.department_id',
             'users.email',
             'users.employee_num',
             'users.first_name',
@@ -74,7 +73,7 @@ class UsersController extends Controller
             'users.autoassign_licenses',
             'users.website',
 
-        ])->with('manager', 'groups', 'userloc', 'company', 'department', 'assets', 'licenses', 'createdBy', 'managesUsers', 'managedLocations')
+        ])->with('manager', 'groups', 'userloc', 'company', 'assets', 'licenses', 'createdBy', 'managesUsers', 'managedLocations')
             ->withCount('assets as assets_count', 'licenses as licenses_count', 'managesUsers as manages_users_count', 'managedLocations as manages_locations_count');
 
 
@@ -136,10 +135,6 @@ class UsersController extends Controller
 
         if ($request->filled('group_id')) {
             $users = $users->ByGroup($request->get('group_id'));
-        }
-
-        if ($request->filled('department_id')) {
-            $users = $users->where('users.department_id', '=', $request->input('department_id'));
         }
 
         if ($request->filled('manager_id')) {
@@ -209,9 +204,6 @@ class UsersController extends Controller
                 break;
             case 'location':
                 $users = $users->OrderLocation($order);
-                break;
-            case 'department':
-                $users = $users->OrderDepartment($order);
                 break;
             case 'created_by':
                 $users = $users->OrderByCreatedBy($order);

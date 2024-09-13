@@ -57,7 +57,6 @@ class LicensesController extends Controller
         ];
 
         return view('licenses/edit')
-            ->with('depreciation_list', Helper::depreciationList())
             ->with('maintained_list', $maintained_list)
             ->with('item', new License);
     }
@@ -80,7 +79,6 @@ class LicensesController extends Controller
         $license = new License();
         // Save the license data
         $license->company_id        = Company::getIdForCurrentUser($request->input('company_id'));
-        $license->depreciation_id   = $request->input('depreciation_id');
         $license->expiration_date   = $request->input('expiration_date');
         $license->license_email     = $request->input('license_email');
         $license->license_name      = $request->input('license_name');
@@ -128,7 +126,6 @@ class LicensesController extends Controller
         ];
 
         return view('licenses/edit', compact('item'))
-            ->with('depreciation_list', Helper::depreciationList())
             ->with('maintained_list', $maintained_list);
     }
 
@@ -154,7 +151,6 @@ class LicensesController extends Controller
         $this->authorize('update', $license);
 
         $license->company_id        = Company::getIdForCurrentUser($request->input('company_id'));
-        $license->depreciation_id   = $request->input('depreciation_id');
         $license->expiration_date   = $request->input('expiration_date');
         $license->license_email     = $request->input('license_email');
         $license->license_name      = $request->input('license_name');
@@ -275,7 +271,6 @@ class LicensesController extends Controller
 
         // Show the page
         return view('licenses/edit')
-        ->with('depreciation_list', Helper::depreciationList())
         ->with('item', $license)
         ->with('maintained_list', $maintained_list);
     }
@@ -313,11 +308,9 @@ class LicensesController extends Controller
                         trans('general.licenses_available'),
                         trans('admin/licenses/table.seats'),
                         trans('general.created_by'),
-                        trans('general.depreciation'),
                         trans('general.updated_at'),
                         trans('admin/licenses/table.deleted_at'),
                         trans('general.email'),
-                        trans('admin/hardware/form.fully_depreciated'),
                         trans('admin/licenses/form.expiration'),
                         trans('admin/licenses/form.termination_date'),
                         trans('admin/licenses/form.maintained'),
@@ -342,7 +335,6 @@ class LicensesController extends Controller
                             $license->free_seat_count,
                             $license->seats,
                             ($license->adminuser ? $license->adminuser->present()->fullName() : trans('admin/reports/general.deleted_user')),
-                            $license->depreciation ? $license->depreciation->name: '',
                             $license->updated_at,
                             $license->deleted_at,
                             $license->email,
