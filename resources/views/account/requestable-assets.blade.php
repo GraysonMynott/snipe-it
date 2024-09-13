@@ -113,7 +113,7 @@
                                     <tr role="row">
                                         <th class="col-md-1" data-sortable="true">{{ trans('general.image') }}</th>
                                         <th class="col-md-6" data-sortable="true">{{ trans('admin/hardware/table.asset_model') }}</th>
-                                        <th class="col-md-3" data-sortable="true">{{ trans('admin/accessories/general.remaining') }}</th>
+                                        <th class="col-md-3" data-sortable="true">{{ trans('admin/licenses/general.remaining') }}</th>
 
                                         <th class="col-md-2 actions" data-sortable="false">{{ trans('table.actions') }}</th>
                                     </tr>

@@ -3,7 +3,6 @@
 namespace App\Importer;
 
 use App\Models\CustomField;
-use App\Models\Department;
 use App\Models\Setting;
 use App\Models\User;
 use Carbon\CarbonImmutable;
@@ -79,7 +78,6 @@ abstract class Importer
         'phone_number' => 'phone number',
         'first_name' => 'first name',
         'last_name' => 'last name',
-        'department' => 'department',
         'manager_name' => 'manager full name',
         'manager_username' => 'manager username',
         'min_amt' => 'minimum quantity',
@@ -296,7 +294,6 @@ abstract class Importer
             'last_name' => $this->findCsvMatch($row, 'last_name'),
             'email'     => $this->findCsvMatch($row, 'email'),
             'manager_id'=>  '',
-            'department_id' =>  '',
             'username'  => $this->findCsvMatch($row, 'username'),
             'activated'  => $this->fetchHumanBoolean($this->findCsvMatch($row, 'activated')),
             'remote'    => $this->fetchHumanBoolean(($this->findCsvMatch($row, 'remote'))),
@@ -365,7 +362,6 @@ abstract class Importer
         $user->username = $user_array['username'];
         $user->email = $user_array['email'];
         $user->manager_id = $user_array['manager_id'] ?? null;
-        $user->department_id = $user_array['department_id'] ?? null;
         $user->activated = 1;
         $user->password = $this->tempPassword;
 
@@ -490,39 +486,6 @@ abstract class Importer
     public function fetchHumanBoolean($value)
     {
         return (int) filter_var($value, FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * Fetch an existing department, or create new if it doesn't exist
-     *
-     * @author A. Gianotto
-     * @since 4.6.5
-     * @param $user_department string
-     * @return int id of company created/found
-     */
-    public function createOrFetchDepartment($user_department_name)
-    {
-        if ($user_department_name != '') {
-            $department = Department::where('name', '=', $user_department_name)->first();
-
-            if ($department) {
-                $this->log('A matching Department '.$user_department_name.' already exists');
-
-                return $department->id;
-            }
-
-            $department = new Department();
-            $department->name = $user_department_name;
-
-            if ($department->save()) {
-                $this->log('Department '.$user_department_name.' was created');
-
-                return $department->id;
-            }
-            $this->logError($department, 'Department');
-        }
-
-        return null;
     }
 
     /**

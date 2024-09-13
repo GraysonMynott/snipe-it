@@ -507,14 +507,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                         </li>
                                     @endcan
 
-                                    @can('view', \App\Models\Department::class)
-                                        <li>
-                                            <a href="{{ route('departments.index') }}" {{ (Request::is('/departments') ? ' class="active"' : '') }}>
-                                                {{ trans('general.departments') }}
-                                            </a>
-                                        </li>
-                                    @endcan
-
                                     @can('view', \App\Models\Location::class)
                                         <li>
                                             <a href="{{ route('locations.index') }}" {{ (Request::is('/locations') ? ' class="active"' : '') }}>

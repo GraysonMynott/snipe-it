@@ -88,14 +88,6 @@ class SnipeModel extends Model
         $this->attributes['rtd_location_id'] = $value;
     }
 
-    public function setDepartmentIdAttribute($value)
-    {
-        if ($value == '') {
-            $value = null;
-        }
-        $this->attributes['department_id'] = $value;
-    }
-
     public function setManagerIdAttribute($value)
     {
         if ($value == '') {

@@ -38,13 +38,10 @@ class Importer extends Component
     public $file_id; // TODO: I can't figure out *why* we need this, but it really seems like we do. I can't seem to pull the id from the activeFile for some reason?
 
     // Make these variables public - we set the properties in the constructor so we can localize them (versus the old static arrays)
-    public $accessories_fields;
     public $assets_fields;
     public $users_fields;
     public $licenses_fields;
     public $locations_fields;
-    public $consumables_fields;
-    public $components_fields;
     public $aliases_fields;
 
     protected $rules = [
@@ -82,15 +79,6 @@ class Importer extends Component
         switch ($type) {
             case 'asset':
                 $results = $this->assets_fields;
-                break;
-            case 'accessory':
-                $results = $this->accessories_fields;
-                break;
-            case 'consumable':
-                $results = $this->consumables_fields;
-                break;
-            case 'component':
-                $results = $this->components_fields;
                 break;
             case 'license':
                 $results = $this->licenses_fields;
@@ -228,7 +216,6 @@ class Importer extends Component
             'id' => trans('general.id'),
             'company' => trans('general.company'),
             'location' => trans('general.location'),
-            'department' => trans('general.department'),
             'first_name' => trans('general.first_name'),
             'last_name' => trans('general.last_name'),
             'notes' => trans('general.notes'),
@@ -275,10 +262,7 @@ class Importer extends Component
                 [
                     'item name',
                     'asset name',
-                    'accessory name',
                     'user name',
-                    'consumable name',
-                    'component name',
                     'name',
                 ],
             'item_no' => [

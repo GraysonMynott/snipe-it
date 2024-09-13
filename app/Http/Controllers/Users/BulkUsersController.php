@@ -106,7 +106,6 @@ class BulkUsersController extends Controller
         ];
 
         $this->conditionallyAddItem('location_id')
-            ->conditionallyAddItem('department_id')
             ->conditionallyAddItem('company_id')
             ->conditionallyAddItem('locale')
             ->conditionallyAddItem('remote')
@@ -128,10 +127,6 @@ class BulkUsersController extends Controller
          */
         if ($request->input('null_location_id')=='1') {
             $this->update_array['location_id'] = null;
-        }
-
-        if ($request->input('null_department_id')=='1') {
-            $this->update_array['department_id'] = null;
         }
 
         if ($request->input('null_manager_id')=='1') {

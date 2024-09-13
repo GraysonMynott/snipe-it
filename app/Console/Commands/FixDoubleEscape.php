@@ -43,10 +43,8 @@ class FixDoubleEscape extends Command
             \App\Models\Company::class => ['name'],
             \App\Models\Manufacturer::class => ['name'],
             \App\Models\Statuslabel::class => ['name'],
-            \App\Models\Depreciation::class => ['name'],
             \App\Models\AssetModel::class => ['name'],
             \App\Models\Group::class => ['name'],
-            \App\Models\Department::class => ['name'],
             \App\Models\Location::class => ['name'],
             \App\Models\User::class => ['first_name', 'last_name'],
         ];

@@ -487,7 +487,6 @@
         'models',
         'licenses',
         'categories',
-        'departments',
         'companies',
         'depreciations',
         'fieldsets',
@@ -639,13 +638,6 @@
             return '<a href="{{ config('app.url') }}/hardware/' + row.asset.id + '">' + row.asset.asset_tag + '</a>';
         }
         return '';
-
-    }
-
-    function departmentNameLinkFormatter(value, row) {
-        if ((row.assigned_user) && (row.assigned_user.department) && (row.assigned_user.department.name)) {
-            return '<a href="{{ config('app.url') }}/departments/' + row.assigned_user.department.id + '">' + row.assigned_user.department.name + '</a>';
-        }
 
     }
 

@@ -418,10 +418,6 @@ class ReportsController extends Controller
                 $header[] = trans('admin/users/table.manager');
             }
 
-            if ($request->filled('department')) {
-                $header[] = trans('general.department');
-            }
-
             if ($request->filled('title')) {
                 $header[] = trans('admin/users/table.title');
             }
@@ -517,10 +513,6 @@ class ReportsController extends Controller
 
             if ($request->filled('by_category_id')) {
                 $assets->InCategory($request->input('by_category_id'));
-            }
-
-            if ($request->filled('by_dept_id')) {
-                $assets->CheckedOutToTargetInDepartment($request->input('by_dept_id'));
             }
 
             if ($request->filled('by_manufacturer_id')) {
@@ -689,14 +681,6 @@ class ReportsController extends Controller
                     if ($request->filled('manager')) {
                         if ($asset->checkedOutToUser()) {
                             $row[] = (($asset->assignedto) && ($asset->assignedto->manager)) ? $asset->assignedto->manager->present()->fullName : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
-                    }
-
-                    if ($request->filled('department')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = (($asset->assignedto) && ($asset->assignedto->department)) ? $asset->assignedto->department->name : '';
                         } else {
                             $row[] = ''; // Empty string if unassigned
                         }

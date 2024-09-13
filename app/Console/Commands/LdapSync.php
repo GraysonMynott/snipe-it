@@ -2,7 +2,6 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Department;
 use App\Models\Group;
 use Illuminate\Console\Command;
 use App\Models\Setting;
@@ -229,7 +228,6 @@ class LdapSync extends Command
                 $item['telephone'] = $results[$i][$ldap_result_phone][0] ?? '';
                 $item['jobtitle'] = $results[$i][$ldap_result_jobtitle][0] ?? '';
                 $item['country'] = $results[$i][$ldap_result_country][0] ?? '';
-                $item['department'] = $results[$i][$ldap_result_dept][0] ?? '';
                 $item['manager'] = $results[$i][$ldap_result_manager][0] ?? '';
                 $item['location'] = $results[$i][$ldap_result_location][0] ?? '';
 
@@ -239,9 +237,6 @@ class LdapSync extends Command
                                 'name' => $item['location'],
                         ]);
                 }
-                $department = Department::firstOrCreate([
-                    'name' => $item['department'],
-                ]);
 
                 $user = User::where('username', $item['username'])->first();
                 if ($user) {
@@ -279,9 +274,6 @@ class LdapSync extends Command
             }
             if($ldap_result_country != null){
                 $user->country = $item['country'];
-            }
-            if($ldap_result_dept  != null){
-                $user->department_id = $department->id;
             }
             if($ldap_result_location != null){
                 $user->location_id = $location ? $location->id : null;

@@ -53,7 +53,6 @@ class SnipeSCIMConfig extends \ArieTimmerman\Laravel\SCIMServer\SCIMConfig
 
                 // Enterprise validations:
                 $enterprise_prefix . 'employeeNumber' => 'nullable|string',
-                $enterprise_prefix . 'department' => 'nullable|string',
                 $enterprise_prefix . 'manager' => 'nullable',
                 $enterprise_prefix . 'manager.value' => 'nullable|string'
             ],
@@ -199,25 +198,6 @@ class SnipeSCIMConfig extends \ArieTimmerman\Laravel\SCIMServer\SCIMConfig
 
                 'urn:ietf:params:scim:schemas:extension:enterprise:2.0:User' => [
                     'employeeNumber' => AttributeMapping::eloquent('employee_num'),
-                    'department' => (new AttributeMapping())->setAdd( // FIXME parent?
-                        function ($value, &$object) {
-                            $department = Department::where("name", $value)->first();
-                            if ($department) {
-                                $object->department_id = $department->id;
-                            }
-                        }
-                    )->setReplace(
-                        function ($value, &$object) {
-                            $department = Department::where("name", $value)->first();
-                            if ($department) {
-                                $object->department_id = $department->id;
-                            }
-                        }
-                    )->setRead(
-                        function (&$object) {
-                            return $object->department ? $object->department->name : null;
-                        }
-                    ),
                     'manager' => [
                         // FIXME - manager writes are disabled. This kinda works but it leaks errors all over the place. Not cool.
                         // '$ref' => (new AttributeMapping())->ignoreWrite()->ignoreRead(),

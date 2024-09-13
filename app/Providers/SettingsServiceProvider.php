@@ -113,15 +113,6 @@ class SettingsServiceProvider extends ServiceProvider
             return 'manufacturers/';
         });
 
-        // Departments
-        \App::singleton('departments_upload_path', function () {
-            return 'departments/';
-        });
-
-        \App::singleton('departments_upload_url', function () {
-            return 'departments/';
-        });
-
         // Company paths and URLs
         \App::singleton('companies_upload_path', function () {
             return 'companies/';
@@ -129,33 +120,6 @@ class SettingsServiceProvider extends ServiceProvider
 
         \App::singleton('companies_upload_url', function () {
             return 'companies/';
-        });
-
-        // Accessories paths and URLs
-        \App::singleton('accessories_upload_path', function () {
-            return 'accessories/';
-        });
-
-        \App::singleton('accessories_upload_url', function () {
-            return 'accessories/';
-        });
-
-        // Consumables paths and URLs
-        \App::singleton('consumables_upload_path', function () {
-            return 'consumables/';
-        });
-
-        \App::singleton('consumables_upload_url', function () {
-            return 'consumables/';
-        });
-
-        // Components paths and URLs
-        \App::singleton('components_upload_path', function () {
-            return 'components/';
-        });
-
-        \App::singleton('components_upload_url', function () {
-            return 'components/';
         });
 
         // Set the monetary locale to the configured locale to make helper::parseFloat work.

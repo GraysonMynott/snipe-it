@@ -63,14 +63,10 @@ rm -rf \
 # Create data directories
 for dir in \
   'data/private_uploads' \
-  'data/uploads/accessories' \
   'data/uploads/avatars' \
   'data/uploads/barcodes' \
   'data/uploads/categories' \
   'data/uploads/companies' \
-  'data/uploads/components' \
-  'data/uploads/consumables' \
-  'data/uploads/departments' \
   'data/uploads/locations' \
   'data/uploads/manufacturers' \
   'data/uploads/models' \

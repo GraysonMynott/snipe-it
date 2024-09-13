@@ -88,7 +88,6 @@ class ManufacturerPresenter extends Presenter
                 'visible' => false,
                 'formatter' => 'externalLinkFormatter',
             ],
-
             [
                 'field' => 'assets_count',
                 'searchable' => false,
@@ -105,24 +104,6 @@ class ManufacturerPresenter extends Presenter
                 'switchable' => true,
                 'title' => ' <span class="hidden-md hidden-lg">Licenses</span>'
                     .'<span class="hidden-xs"><i class="far fa-save fa-lg"></i></span>',
-                'visible' => true,
-            ],
-            [
-                'field' => 'consumables_count',
-                'searchable' => false,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => ' <span class="hidden-md hidden-lg">Consumables</span>'
-                    .'<span class="hidden-xs"><i class="fas fa-tint fa-lg"></i></span>',
-                'visible' => true,
-            ],
-            [
-                'field' => 'accessories_count',
-                'searchable' => false,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => ' <span class="hidden-md hidden-lg">Accessories</span>'
-                    .'<span class="hidden-xs"><i class="far fa-keyboard fa-lg"></i></span>',
                 'visible' => true,
             ],
             [

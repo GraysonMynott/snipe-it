@@ -8,8 +8,6 @@ use App\Models\Category;
 use App\Models\Company;
 use App\Models\CustomField;
 use App\Models\CustomFieldset;
-use App\Models\Department;
-use App\Models\Depreciation;
 use App\Models\License;
 use App\Models\Location;
 use App\Models\Manufacturer;
@@ -21,8 +19,6 @@ use App\Policies\CategoryPolicy;
 use App\Policies\CompanyPolicy;
 use App\Policies\CustomFieldPolicy;
 use App\Policies\CustomFieldsetPolicy;
-use App\Policies\DepartmentPolicy;
-use App\Policies\DepreciationPolicy;
 use App\Policies\LicensePolicy;
 use App\Policies\LocationPolicy;
 use App\Policies\ManufacturerPolicy;
@@ -48,8 +44,6 @@ class AuthServiceProvider extends ServiceProvider
         Category::class => CategoryPolicy::class,
         CustomField::class => CustomFieldPolicy::class,
         CustomFieldset::class => CustomFieldsetPolicy::class,
-        Department::class => DepartmentPolicy::class,
-        Depreciation::class => DepreciationPolicy::class,
         License::class => LicensePolicy::class,
         Location::class => LocationPolicy::class,
         Statuslabel::class => StatuslabelPolicy::class,
@@ -163,13 +157,11 @@ class AuthServiceProvider extends ServiceProvider
                 || $user->can('view', AssetModel::class)
                 || $user->can('view', Category::class)
                 || $user->can('view', Manufacturer::class)
-                || $user->can('view', Department::class)
                 || $user->can('view', Location::class)
                 || $user->can('view', Company::class)
                 || $user->can('view', Manufacturer::class)
                 || $user->can('view', CustomField::class)
-                || $user->can('view', CustomFieldset::class)
-                || $user->can('view', Depreciation::class);
+                || $user->can('view', CustomFieldset::class);
         });
 
 

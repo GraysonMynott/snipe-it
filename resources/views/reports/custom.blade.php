@@ -122,11 +122,6 @@
               </label>
 
               <label class="form-control">
-                {{ Form::checkbox('depreciation', '1', '1') }}
-                {{ trans('general.depreciation') }}
-              </label>
-
-              <label class="form-control">
                 {{ Form::checkbox('checkout_date', '1', '1') }}
                 {{ trans('admin/hardware/table.checkout_date') }}
               </label>
@@ -202,11 +197,6 @@
               </label>
 
               <label class="form-control">
-                {{ Form::checkbox('department', '1', '1') }}
-                {{ trans('general.department') }}
-              </label>
-
-              <label class="form-control">
                 {{ Form::checkbox('title', '1', '1') }}
                 {{ trans('admin/users/table.title') }}
               </label>
@@ -271,7 +261,6 @@
             @include ('partials.forms.edit.company-select', ['translated_name' => trans('general.company'),'multiple' => 'true', 'fieldname' => 'by_company_id[]', 'hide_new' => 'true'])
             @include ('partials.forms.edit.location-select', ['translated_name' => trans('general.location'), 'multiple' => 'true', 'fieldname' => 'by_location_id[]', 'hide_new' => 'true'])
             @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.default_location'), 'multiple' => 'true', 'fieldname' => 'by_rtd_location_id[]', 'hide_new' => 'true'])
-            @include ('partials.forms.edit.department-select', ['translated_name' => trans('general.department'), 'fieldname' => 'by_dept_id', 'hide_new' => 'true'])
             @include ('partials.forms.edit.model-select', ['translated_name' => trans('general.asset_model'), 'fieldname' => 'by_model_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
             @include ('partials.forms.edit.manufacturer-select', ['translated_name' => trans('general.manufacturer'), 'fieldname' => 'by_manufacturer_id', 'hide_new' => 'true'])
             @include ('partials.forms.edit.category-select', ['translated_name' => trans('general.category'), 'fieldname' => 'by_category_id', 'hide_new' => 'true', 'category_type' => 'asset'])

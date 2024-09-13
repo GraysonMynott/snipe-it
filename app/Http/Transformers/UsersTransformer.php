@@ -46,10 +46,6 @@ class UsersTransformer
                 'country' => ($user->country) ? e($user->country) : null,
                 'zip' => ($user->zip) ? e($user->zip) : null,
                 'email' => ($user->email) ? e($user->email) : null,
-                'department' => ($user->department) ? [
-                    'id' => (int) $user->department->id,
-                    'name'=> e($user->department->name),
-                ] : null,
                 'location' => ($user->userloc) ? [
                     'id' => (int) $user->userloc->id,
                     'name'=> e($user->userloc->name),
@@ -63,8 +59,6 @@ class UsersTransformer
                 'two_factor_optin' => ($user->two_factor_active()) ? true : false,
                 'assets_count' => (int) $user->assets_count,
                 'licenses_count' => (int) $user->licenses_count,
-                'accessories_count' => (int) $user->accessories_count,
-                'consumables_count' => (int) $user->consumables_count,
                 'manages_users_count' => (int) $user->manages_users_count,
                 'manages_locations_count' => (int) $user->manages_locations_count,
                 'company' => ($user->company) ? ['id' => (int) $user->company->id, 'name'=> e($user->company->name)] : null,

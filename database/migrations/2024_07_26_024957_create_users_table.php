@@ -47,7 +47,6 @@ return new class extends Migration
             $table->string('two_factor_secret', 32)->nullable();
             $table->boolean('two_factor_enrolled')->default(false);
             $table->boolean('two_factor_optin')->default(false);
-            $table->integer('department_id')->nullable();
             $table->string('address')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();

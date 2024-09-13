@@ -52,7 +52,7 @@ class MergeUsersByUsername extends Command
 
             $bad_users = User::where('username', '=', trim($parts[0]))
                 ->whereNull('deleted_at')
-                ->with('assets', 'manager', 'userlog', 'licenses', 'consumables', 'accessories', 'managedLocations','uploads', 'acceptances')
+                ->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads', 'acceptances')
                 ->get();
 
 
@@ -74,18 +74,6 @@ class MergeUsersByUsername extends Command
                 foreach ($bad_user->licenses as $license) {
                     $this->info('Updating license '.$license->name.' '.$license->id.' to user '.$user->id);
                     $bad_user->licenses()->updateExistingPivot($license->id, ['assigned_to' => $user->id]);
-                }
-
-                // Walk the list of consumables
-                foreach ($bad_user->consumables as $consumable) {
-                    $this->info('Updating consumable '.$consumable->id.' to user '.$user->id);
-                    $bad_user->consumables()->updateExistingPivot($consumable->id, ['assigned_to' => $user->id]);
-                }
-
-                // Walk the list of accessories
-                foreach ($bad_user->accessories as $accessory) {
-                    $this->info('Updating accessory '.$accessory->id.' to user '.$user->id);
-                    $bad_user->accessories()->updateExistingPivot($accessory->id, ['assigned_to' => $user->id]);
                 }
 
                 // Walk the list of logs

@@ -119,7 +119,7 @@ class CheckinLicenseSeatNotification extends Notification
             ->fact(htmlspecialchars_decode($item->present()->name), '', 'header')
             ->fact(trans('mail.License_Checkin_Notification')." by ", $admin->present()->fullName() ?: 'CLI tool')
             ->fact(trans('mail.checkedin_from'), $target->present()->fullName())
-            ->fact(trans('admin/consumables/general.remaining'), $item->availCount()->count())
+            ->fact(trans('admin/licenses/general.remaining'), $item->availCount()->count())
             ->fact(trans('mail.notes'), $note ?: '');
     }
     public function toGoogleChat()
@@ -141,7 +141,7 @@ class CheckinLicenseSeatNotification extends Notification
                             KeyValue::create(
                                 trans('mail.checkedin_from') ?: '',
                                 $target->present()->fullName() ?:  '',
-                                trans('admin/consumables/general.remaining').': '.$item->availCount()->count(),
+                                trans('admin/licenses/general.remaining').': '.$item->availCount()->count(),
                             )
                                 ->onClick(route('licenses.show', $item->id))
                         )

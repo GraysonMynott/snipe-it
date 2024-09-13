@@ -32,7 +32,6 @@ class SaveUserRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'department_id' => 'nullable|exists:departments,id',
             'manager_id' => 'nullable|exists:users,id',
         ];
 

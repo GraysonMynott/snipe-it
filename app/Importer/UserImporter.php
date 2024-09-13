@@ -3,7 +3,6 @@
 namespace App\Importer;
 
 use App\Models\Asset;
-use App\Models\Department;
 use App\Models\Setting;
 use App\Models\User;
 use App\Notifications\WelcomeNotification;
@@ -61,17 +60,11 @@ class UserImporter extends ItemImporter
         $this->item['zip'] = trim($this->findCsvMatch($row, 'zip'));
         $this->item['activated'] = ($this->fetchHumanBoolean(trim($this->findCsvMatch($row, 'activated'))) == 1) ? '1' : 0;
         $this->item['employee_num'] = trim($this->findCsvMatch($row, 'employee_num'));
-        $this->item['department_id'] = trim($this->createOrFetchDepartment(trim($this->findCsvMatch($row, 'department'))));
         $this->item['manager_id'] = $this->fetchManager(trim($this->findCsvMatch($row, 'manager_first_name')), trim($this->findCsvMatch($row, 'manager_last_name')));
         $this->item['remote'] = ($this->fetchHumanBoolean(trim($this->findCsvMatch($row, 'remote'))) == 1 ) ? '1' : 0;
         $this->item['vip'] = ($this->fetchHumanBoolean(trim($this->findCsvMatch($row, 'vip'))) ==1 ) ? '1' : 0;
         $this->item['autoassign_licenses'] = ($this->fetchHumanBoolean(trim($this->findCsvMatch($row, 'autoassign_licenses'))) ==1 ) ? '1' : 0;
 
-
-        $user_department = trim($this->findCsvMatch($row, 'department'));
-        if ($this->shouldUpdateField($user_department)) {
-            $this->item['department_id'] = $this->createOrFetchDepartment($user_department);
-        }
 
         if (is_null($this->item['username']) || $this->item['username'] == "") {
             $user_full_name = $this->item['first_name'] . ' ' . $this->item['last_name'];

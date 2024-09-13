@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-{{ trans('general.depreciation_report') }}
+{{ trans('general.unknown_report') }}
 @parent
 @stop
 
@@ -14,7 +14,7 @@
         <a href="{{ route('reports/export') }}" class="btn btn-flat gray pull-right"><i class="fas fa-download icon-white" aria-hidden="true"></i>
         {{ trans('admin/hardware/table.dl_csv') }}</a>
         </div>
-    <h2>{{ trans('general.depreciation_report') }}</h2>
+    <h2>{{ trans('general.unknown_report') }}</h2>
 </div>
 
 <div class="row">

@@ -226,7 +226,6 @@ class Ldap extends Model
         $item['telephone'] = $ldapattributes[$ldap_result_phone][0] ?? '';
         $item['jobtitle'] = $ldapattributes[$ldap_result_jobtitle][0] ?? '';
         $item['country'] = $ldapattributes[$ldap_result_country][0] ?? '';
-        $item['department'] = $ldapattributes[$ldap_result_dept][0] ?? '';
         $item['manager'] = $ldapattributes[$ldap_result_manager][0] ?? '';
         $item['location'] = $ldapattributes[$ldap_result_location][0] ?? '';
 

@@ -5,8 +5,6 @@ use App\Http\Controllers\ActionlogController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DepartmentsController;
-use App\Http\Controllers\DepreciationsController;
 use App\Http\Controllers\GroupsController;
 use App\Http\Controllers\HealthController;
 use App\Http\Controllers\ImportsController;
@@ -109,13 +107,6 @@ Route::group(['middleware' => 'auth'], function () {
      */
     Route::resource('statuslabels', StatuslabelsController::class, [
           'parameters' => ['statuslabel' => 'statuslabel_id'],
-    ]);
-
-    /*
-     * Departments
-     */
-    Route::resource('departments', DepartmentsController::class, [
-        'parameters' => ['department' => 'department_id'],
     ]);
 });
 
@@ -356,7 +347,7 @@ Route::group(['middleware' => ['auth']], function () {
         'reports/unaccepted_assets/{acceptanceId}/delete',
         [ReportsController::class, 'deleteAssetAcceptance']
     )->name('reports/unaccepted_assets_delete');
-    
+
     Route::post(
         'reports/unaccepted_assets/{deleted?}',
         [ReportsController::class, 'postAssetAcceptanceReport']

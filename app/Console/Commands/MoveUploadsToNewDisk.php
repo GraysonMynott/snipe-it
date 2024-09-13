@@ -47,14 +47,10 @@ class MoveUploadsToNewDisk extends Command
         }
         $delete_local = $this->argument('delete_local');
 
-        $public_uploads['accessories'] = glob('public/uploads/accessories'."/*.*");
         $public_uploads['assets'] = glob('public/uploads/assets'."/*.*");
         $public_uploads['avatars'] = glob('public/uploads/avatars'."/*.*");
         $public_uploads['categories'] = glob('public/uploads/categories'."/*.*");
         $public_uploads['companies'] = glob('public/uploads/companies'."/*.*");
-        $public_uploads['components'] = glob('public/uploads/components'."/*.*");
-        $public_uploads['consumables'] = glob('public/uploads/consumables'."/*.*");
-        $public_uploads['departments'] = glob('public/uploads/departments'."/*.*");
         $public_uploads['locations'] = glob('public/uploads/locations'."/*.*");
         $public_uploads['manufacturers'] = glob('public/uploads/manufacturers'."/*.*");
         $public_uploads['assetmodels'] = glob('public/uploads/models'."/*.*");

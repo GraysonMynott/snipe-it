@@ -34,8 +34,6 @@ class ManufacturersTransformer
                 'support_email' => e($manufacturer->support_email),
                 'assets_count' => (int) $manufacturer->assets_count,
                 'licenses_count' => (int) $manufacturer->licenses_count,
-                'consumables_count' => (int) $manufacturer->consumables_count,
-                'accessories_count' => (int) $manufacturer->accessories_count,
                 'created_at' => Helper::getFormattedDateObject($manufacturer->created_at, 'datetime'),
                 'updated_at' => Helper::getFormattedDateObject($manufacturer->updated_at, 'datetime'),
                 'deleted_at' => Helper::getFormattedDateObject($manufacturer->deleted_at, 'datetime'),

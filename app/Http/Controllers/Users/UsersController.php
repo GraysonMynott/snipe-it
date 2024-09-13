@@ -106,7 +106,6 @@ class UsersController extends Controller
         $user->jobtitle = $request->input('jobtitle');
         $user->phone = $request->input('phone');
         $user->location_id = $request->input('location_id', null);
-        $user->department_id = $request->input('department_id', null);
         $user->company_id = Company::getIdForUser($request->input('company_id', null));
         $user->manager_id = $request->input('manager_id', null);
         $user->notes = $request->input('notes');
@@ -265,7 +264,6 @@ class UsersController extends Controller
             $user->company_id = Company::getIdForUser($request->input('company_id', null));
             $user->manager_id = $request->input('manager_id', null);
             $user->notes = $request->input('notes');
-            $user->department_id = $request->input('department_id', null);
             $user->address = $request->input('address', null);
             $user->city = $request->input('city', null);
             $user->state = $request->input('state', null);
@@ -503,7 +501,6 @@ class UsersController extends Controller
 
             $users = User::with(
                 'assets',
-                'department',
                 'licenses',
                 'manager',
                 'groups',
@@ -522,7 +519,6 @@ class UsersController extends Controller
                         trans('admin/users/table.email'),
                         trans('admin/users/table.manager'),
                         trans('admin/users/table.location'),
-                        trans('general.department'),
                         trans('general.assets'),
                         trans('general.licenses'),
                         trans('general.groups'),
@@ -565,7 +561,6 @@ class UsersController extends Controller
                             $user->email,
                             ($user->manager) ? $user->manager->present()->fullName() : '',
                             ($user->userloc) ? $user->userloc->name : '',
-                            ($user->department) ? $user->department->name : '',
                             $user->assets->count(),
                             $user->licenses->count(),
                             $user_groups,

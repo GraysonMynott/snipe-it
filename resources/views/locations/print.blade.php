@@ -75,7 +75,6 @@
             <th style="width: 25%;">{{ trans('general.company') }}</th>
             <th style="width: 25%;">{{ trans('admin/locations/table.user_name') }}</th>
             <th style="width: 10%;">{{ trans('general.employee_number') }}</th>
-	        <th style="width: 20%;">{{ trans('admin/locations/table.department') }}</th>
 		    <th style="width: 20%;">{{ trans('admin/locations/table.location') }}</th>
             </tr>
         </thead>
@@ -86,7 +85,6 @@
         <td>{{ (($user) && ($user->company)) ? $user->company->name : '' }}</td>
         <td>{{ ($user)  ? $user->first_name .' '. $user->last_name : '' }}</td>
         <td>{{ ($user)  ? $user->employee_num : '' }}</td>
-        <td>{{ (($user) && ($user->department)) ? $user->department->name : '' }}</td>
         <td>{{ (($user) && ($user->location)) ? $user->location->name : '' }}</td>
         </tr>
             @php

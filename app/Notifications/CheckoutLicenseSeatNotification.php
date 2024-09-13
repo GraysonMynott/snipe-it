@@ -134,7 +134,7 @@ class CheckoutLicenseSeatNotification extends Notification
             ->fact(htmlspecialchars_decode($item->present()->name), '', 'activityTitle')
             ->fact(trans('mail.License_Checkout_Notification')." by ", $admin->present()->fullName())
             ->fact(trans('mail.assigned_to'), $target->present()->fullName())
-            ->fact(trans('admin/consumables/general.remaining'), $item->availCount()->count())
+            ->fact(trans('admin/licenses/general.remaining'), $item->availCount()->count())
             ->fact(trans('mail.notes'), $note ?: '');
     }
     public function toGoogleChat()
@@ -156,7 +156,7 @@ class CheckoutLicenseSeatNotification extends Notification
                             KeyValue::create(
                                 trans('mail.assigned_to') ?: '',
                                 $target->present()->name ?: '',
-                                trans('admin/consumables/general.remaining').': '.$item->availCount()->count(),
+                                trans('admin/licenses/general.remaining').': '.$item->availCount()->count(),
                             )
                                 ->onClick(route('users.show', $target->id))
                         )

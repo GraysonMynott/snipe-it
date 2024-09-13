@@ -131,35 +131,6 @@ Route::group(['prefix' => 'v1', 'middleware' => ['api', 'throttle:api']], functi
     ); // end companies API routes
 
 
-    /**
-      * Departments API routes
-      */
-      Route::group(['prefix' => 'departments'], function () {
-        
-        Route::get('selectlist',
-            [
-                Api\DepartmentsController::class, 
-                'selectlist'
-            ]
-        )->name('api.departments.selectlist');
-
-      }); 
-
-      Route::resource('departments', 
-        Api\DepartmentsController::class,
-        ['names' => [
-                'index' => 'api.departments.index',
-                'show' => 'api.departments.show',
-                'update' => 'api.departments.update',
-                'store' => 'api.departments.store',
-                'destroy' => 'api.departments.destroy',
-            ],
-        'except' => ['create', 'edit'],
-        'parameters' => ['department' => 'department_id'],
-        ]
-    ); // end departments API routes
-
-
       /**
          * Depreciations API routes
         */

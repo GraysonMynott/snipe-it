@@ -244,33 +244,6 @@ return [
         ],
     ],
 
-    'Departments' => [
-        [
-            'permission' => 'departments.view',
-            'label'      => 'View ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'departments.create',
-            'label'      => 'Create ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'departments.edit',
-            'label'      => 'Edit  ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'departments.delete',
-            'label'      => 'Delete ',
-            'note'       => '',
-            'display'    => true,
-        ],
-    ],
-
     'Status Labels' => [
         [
             'permission' => 'statuslabels.view',

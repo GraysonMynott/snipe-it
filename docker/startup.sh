@@ -22,25 +22,18 @@ fi
 for dir in \
   'data/private_uploads' \
   'data/private_uploads/assets' \
-  'data/private_uploads/accessories' \
   'data/private_uploads/patches' \
-  'data/private_uploads/components' \
-  'data/private_uploads/consumables' \
   'data/private_uploads/eula-pdfs' \
   'data/private_uploads/imports' \
   'data/private_uploads/assetmodels' \
   'data/private_uploads/users' \
   'data/private_uploads/licenses' \
   'data/private_uploads/signatures' \
-  'data/uploads/accessories' \
   'data/uploads/assets' \
   'data/uploads/avatars' \
   'data/uploads/barcodes' \
   'data/uploads/categories' \
   'data/uploads/companies' \
-  'data/uploads/components' \
-  'data/uploads/consumables' \
-  'data/uploads/departments' \
   'data/uploads/locations' \
   'data/uploads/manufacturers' \
   'data/uploads/models' \

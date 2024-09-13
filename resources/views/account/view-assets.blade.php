@@ -308,19 +308,6 @@
                     </div>
                   </div>
 
-
-                  @if ($user->department)
-                    <!-- empty -->
-                    <div class="row">
-                      <div class="col-md-3">
-                        {{ trans('general.department') }}
-                      </div>
-                      <div class="col-md-9">
-                          {{ $user->department->name }}
-                      </div>
-                    </div>
-                  @endif
-
                   @if ($user->created_at)
                     <!-- created at -->
                     <div class="row">

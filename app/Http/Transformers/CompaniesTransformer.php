@@ -33,9 +33,6 @@ class CompaniesTransformer
                 'updated_at' => Helper::getFormattedDateObject($company->updated_at, 'datetime'),
                 'assets_count' => (int) $company->assets_count,
                 'licenses_count' => (int) $company->licenses_count,
-                'accessories_count' => (int) $company->accessories_count,
-                'consumables_count' => (int) $company->consumables_count,
-                'components_count' => (int) $company->components_count,
                 'users_count' => (int) $company->users_count,
             ];
 
