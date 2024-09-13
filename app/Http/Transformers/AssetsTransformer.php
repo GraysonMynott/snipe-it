@@ -67,7 +67,6 @@ class AssetsTransformer
                 'name'=> e($asset->defaultLoc->name),
             ] : null,
             'image' => ($asset->getImageUrl()) ? $asset->getImageUrl() : null,
-            'assigned_to' => $this->transformAssignedTo($asset),
             'warranty_months' =>  ($asset->warranty_months > 0) ? e($asset->warranty_months.' '.trans('admin/hardware/form.months')) : null,
             'warranty_expires' => ($asset->warranty_months > 0) ? Helper::getFormattedDateObject($asset->warranty_expires, 'date') : null,
             'created_at' => Helper::getFormattedDateObject($asset->created_at, 'datetime'),
@@ -137,28 +136,6 @@ class AssetsTransformer
     public function transformAssetsDatatable($assets)
     {
         return (new DatatablesTransformer)->transformDatatables($assets);
-    }
-
-    public function transformAssignedTo($asset)
-    {
-        if ($asset->checkedOutToUser()) {
-            return $asset->assigned ? [
-                    'id' => (int) $asset->assigned->id,
-                    'username' => e($asset->assigned->username),
-                    'name' => e($asset->assigned->getFullNameAttribute()),
-                    'first_name'=> e($asset->assigned->first_name),
-                    'last_name'=> ($asset->assigned->last_name) ? e($asset->assigned->last_name) : null,
-                    'email'=> ($asset->assigned->email) ? e($asset->assigned->email) : null,
-                    'employee_number' =>  ($asset->assigned->employee_num) ? e($asset->assigned->employee_num) : null,
-                    'type' => 'user',
-                ] : null;
-        }
-
-        return $asset->assigned ? [
-            'id' => $asset->assigned->id,
-            'name' => e($asset->assigned->display_name),
-            'type' => $asset->assignedType()
-        ] : null;
     }
 
 

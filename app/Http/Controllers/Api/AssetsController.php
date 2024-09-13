@@ -478,10 +478,6 @@ class AssetsController extends Controller
 
             $asset->use_text = $asset->present()->fullName;
 
-            if (($asset->checkedOutToUser()) && ($asset->assigned)) {
-                $asset->use_text .= ' → '.$asset->assigned->getFullNameAttribute();
-            }
-
 
             if ($asset->assetstatus->getStatuslabelType() == 'pending') {
                 $asset->use_text .= '('.$asset->assetstatus->getStatuslabelType().')';

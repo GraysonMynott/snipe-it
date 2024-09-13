@@ -655,91 +655,44 @@ class ReportsController extends Controller
                         $row[] = ($asset->defaultLoc) ? $asset->defaultLoc->zip : '';
                     }
 
-                    if ($request->filled('assigned_to')) {
-                        $row[] = ($asset->checkedOutToUser() && $asset->assigned) ? $asset->assigned->getFullNameAttribute() : ($asset->assigned ? $asset->assigned->display_name : '');
-                        $row[] = ($asset->checkedOutToUser() && $asset->assigned) ? 'user' : $asset->assignedType();
-                    }
-
                     if ($request->filled('username')) {
-                        // Only works if we're checked out to a user, not anything else.
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->username : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('employee_num')) {
-                        // Only works if we're checked out to a user, not anything else.
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->employee_num : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('manager')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = (($asset->assignedto) && ($asset->assignedto->manager)) ? $asset->assignedto->manager->present()->fullName : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('title')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->jobtitle : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        row[] = '';
                     }
 
                     if ($request->filled('phone')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->phone : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('user_address')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->address : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('user_city')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->city : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('user_state')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->state : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('user_country')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->country : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('user_zip')) {
-                        if ($asset->checkedOutToUser()) {
-                            $row[] = ($asset->assignedto) ? $asset->assignedto->zip : '';
-                        } else {
-                            $row[] = ''; // Empty string if unassigned
-                        }
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('status')) {
@@ -852,9 +805,6 @@ class ReportsController extends Controller
         $assetsForReport = $acceptances
             ->filter(function ($acceptance) {
                 $acceptance_checkoutable_flag = false;
-                if ($acceptance->checkoutable){
-                    $acceptance_checkoutable_flag = $acceptance->checkoutable->checkedOutToUser();
-                }
                 
                 return $acceptance->checkoutable_type == 'App\Models\Asset' && $acceptance_checkoutable_flag;
             })
@@ -884,19 +834,6 @@ class ReportsController extends Controller
         $assetItem = $acceptance->checkoutable;
 
         Log::debug(print_r($assetItem, true));
-
-        if (is_null($acceptance->created_at)){
-            Log::debug('No acceptance created_at');
-            return redirect()->route('reports/unaccepted_assets')->with('error', trans('general.bad_data'));
-        } else {
-            $logItem_res = $assetItem->checkouts()->where('created_at', '=', $acceptance->created_at)->get();
-
-            if ($logItem_res->isEmpty()){
-                Log::debug('Acceptance date mismatch');
-                return redirect()->route('reports/unaccepted_assets')->with('error', trans('general.bad_data'));
-            }
-            $logItem = $logItem_res[0];
-        }
 
         // Only send notification if assigned
         if ($assetItem->assignedTo) {

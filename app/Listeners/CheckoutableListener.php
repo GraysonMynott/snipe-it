@@ -121,25 +121,6 @@ class CheckoutableListener
         } catch (Exception $e) {
             Log::warning("Exception caught during checkin notification: " . $e->getMessage());
         }
-    }      
-
-    /**
-     * Generates a checkout acceptance
-     * @param  Event $event
-     * @return mixed
-     */
-    private function getCheckoutAcceptance($event)
-    {
-        if (! $event->checkoutable->requireAcceptance()) {
-            return null;
-        }
-
-        $acceptance = new CheckoutAcceptance;
-        $acceptance->checkoutable()->associate($event->checkoutable);
-        $acceptance->assignedTo()->associate($event->checkedOutTo);
-        $acceptance->save();
-
-        return $acceptance;      
     }
 
     /**

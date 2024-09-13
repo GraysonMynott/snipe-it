@@ -28,7 +28,6 @@
                     <th class="col-sm-1">{{ trans('general.name') }}</th>
                     @endif
                     <th class="col-sm-1">{{ trans('admin/hardware/table.serial') }}</th>
-                    <th class="col-sm-1">{{ trans('admin/hardware/table.location') }}</th>
                     <th class="col-sm-1">{{ trans('admin/hardware/table.eol') }}</th>
                 </tr>
             </thead>
@@ -41,11 +40,6 @@
                     <td>{{ $asset->name }}</td>
                     @endif
                     <td>{{ $asset->serial }}</td>
-                    <td>
-                        @if (($asset->checkedOutToUser()) && ($asset->assignedTo->assetLoc))
-                            {{ $asset->assignedTo->assetLoc->city }}, {{ $asset->assignedTo->assetLoc->state}}
-                        @endif
-                    </td>
                     <td>
                         @if ($asset->model->eol) {{ $asset->present()->eol_date() }}
                         @endif

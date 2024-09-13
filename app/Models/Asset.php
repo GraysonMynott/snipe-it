@@ -103,6 +103,7 @@ class Asset extends Depreciable
         'company_id',
         'image',
         'location_id',
+        'mac_address',
         'model_id',
         'name',
         'notes',
@@ -127,6 +128,7 @@ class Asset extends Depreciable
       'name',
       'asset_tag',
       'serial',
+      'mac_address',
       'notes',
       'created_at',
       'updated_at',
@@ -199,27 +201,6 @@ class Asset extends Depreciable
     }
 
     /**
-     * Returns the warranty expiration date as Carbon object
-     * @return \Carbon|null
-     */
-    public function getWarrantyExpiresAttribute()
-    {
-        if (isset($this->attributes['warranty_months']) && isset($this->attributes['purchase_date'])) {
-            if (is_string($this->attributes['purchase_date']) || is_string($this->attributes['purchase_date'])) {
-                $purchase_date = \Carbon\Carbon::parse($this->attributes['purchase_date']);
-            } else {
-                $purchase_date = \Carbon\Carbon::instance($this->attributes['purchase_date']);
-            }
-            $purchase_date->setTime(0, 0, 0);
-
-            return $purchase_date->addMonths((int) $this->attributes['warranty_months']);
-        }
-
-        return null;
-    }
-
-
-    /**
      * Establishes the asset -> company relationship
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
@@ -229,24 +210,6 @@ class Asset extends Depreciable
     public function company()
     {
         return $this->belongsTo(\App\Models\Company::class, 'company_id');
-    }
-
-    /**
-     * Sets the detailedNameAttribute
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
-     * @return string
-     */
-    public function getDetailedNameAttribute()
-    {
-        if ($this->assignedto) {
-            $user_name = $this->assignedto->present()->name();
-        } else {
-            $user_name = 'Unassigned';
-        }
-
-        return $this->asset_tag.' - '.$this->name.' ('.$user_name.') '.($this->model) ? $this->model->name : '';
     }
 
     /**
@@ -269,10 +232,10 @@ class Asset extends Depreciable
      * @since [v3.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function depreciation()
+/*     public function depreciation()
     {
         return $this->hasOneThrough(\App\Models\Depreciation::class,\App\Models\AssetModel::class,'id','id','model_id','depreciation_id');
-    }
+    } */
 
 
     /**
@@ -284,12 +247,12 @@ class Asset extends Depreciable
      * @since [v4.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function get_depreciation()
+/*     public function get_depreciation()
     {
         if (($this->model) && ($this->model->depreciation)) {
             return $this->model->depreciation;
         }
-    }
+    } */
 
 
     /**
@@ -308,20 +271,6 @@ class Asset extends Depreciable
                   ->orderBy('created_at', 'desc');
     }
 
-    /**
-     * Determines whether the asset is checked out to a user
-     *
-     * Even though we allow allow for checkout to things beyond users
-     * this method is an easy way of seeing if we are checked out to a user.
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     */
-    public function checkedOutToUser(): bool
-    {
-      return $this->assignedType() === self::USER;
-    }
-
     public function checkedOutToLocation(): bool
     {
       return $this->assignedType() === self::LOCATION;
@@ -330,32 +279,6 @@ class Asset extends Depreciable
     public function checkedOutToAsset(): bool
     {
       return $this->assignedType() === self::ASSET;
-    }
-
-    /**
-     * Get the target this asset is checked out to
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function assignedTo()
-    {
-        return $this->morphTo('assigned', 'assigned_type', 'assigned_to')->withTrashed();
-    }
-
-    /**
-     * Gets assets assigned to this asset
-     *
-     * Sigh.
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function assignedAssets()
-    {
-        return $this->morphMany(self::class, 'assigned', 'assigned_type', 'assigned_to')->withTrashed();
     }
 
 
@@ -414,8 +337,6 @@ class Asset extends Depreciable
         return $this->assigned_type ? strtolower(class_basename($this->assigned_type)) : null;
     }
 
-
-
     /**
      * This is annoying, but because we don't say "assets" in our route names, we have to make an exception here
      * @todo - normalize the route names - API endpoint URLS can stay the same
@@ -434,7 +355,6 @@ class Asset extends Depreciable
         return $route;
 
     }
-
 
     /**
      * Get the asset's location based on default RTD location
@@ -469,7 +389,6 @@ class Asset extends Depreciable
         return false;
     }
 
-
     /**
      * Get the asset's logs
      *
@@ -486,50 +405,6 @@ class Asset extends Depreciable
     }
 
     /**
-     * Get the list of checkouts for this asset
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function checkouts()
-    {
-        return $this->assetlog()->where('action_type', '=', 'checkout')
-            ->orderBy('created_at', 'desc')
-            ->withTrashed();
-    }
-
-    /**
-     * Get the list of checkins for this asset
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function checkins()
-    {
-        return $this->assetlog()
-            ->where('action_type', '=', 'checkin from')
-            ->orderBy('created_at', 'desc')
-            ->withTrashed();
-    }
-
-    /**
-     * Get the asset's user requests
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function userRequests()
-    {
-        return $this->assetlog()
-            ->where('action_type', '=', 'requested')
-            ->orderBy('created_at', 'desc')
-            ->withTrashed();
-    }
-
-    /**
      * Get action logs history for this asset
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
@@ -540,8 +415,6 @@ class Asset extends Depreciable
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id');
     }
-
-
 
     /**
      * Establishes the asset -> status relationship
@@ -566,30 +439,6 @@ class Asset extends Depreciable
     {
         return $this->belongsTo(\App\Models\AssetModel::class, 'model_id')->withTrashed();
     }
-
-    /**
-     * Return the assets with a warranty expiring within x days
-     *
-     * @param $days
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return mixed
-     */
-    public static function getExpiringWarrantee($days = 30)
-    {
-        $days = (is_null($days)) ? 30 : $days;
-
-        return self::where('archived', '=', '0') // this can stay for right now, as `archived` defaults to 0 at the db level, but should probably be replaced with assetstatus->archived?
-            ->whereNotNull('warranty_months')
-            ->whereNotNull('purchase_date')
-            ->whereNull('deleted_at')
-            ->whereRaw('DATE_ADD(`purchase_date`,INTERVAL `warranty_months` MONTH) <= DATE(NOW() + INTERVAL '
-                                 . $days
-                                 . ' DAY) AND DATE_ADD(`purchase_date`, INTERVAL `warranty_months` MONTH) > NOW()')
-            ->orderByRaw('DATE_ADD(`purchase_date`,INTERVAL `warranty_months` MONTH)')
-            ->get();
-    }
-
 
     /**
      * Establishes the asset -> assigned licenses relationship
@@ -627,7 +476,6 @@ class Asset extends Depreciable
         return $this->belongsTo(\App\Models\Location::class, 'location_id');
     }
 
-
     /**
      * Get the next autoincremented asset tag
      *
@@ -650,7 +498,6 @@ class Asset extends Depreciable
             return false;
         }
     }
-
 
     /**
      * Get the next base number for the auto-incrementer.
@@ -683,8 +530,6 @@ class Asset extends Depreciable
 
     }
 
-
-
     /**
      * Add zerofilling based on Settings
      *
@@ -700,37 +545,6 @@ class Asset extends Depreciable
     }
 
     /**
-     * Determine whether to send a checkin/checkout email based on
-     * asset model category
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return bool
-     */
-    public function checkin_email()
-    {
-        if (($this->model) && ($this->model->category)) {
-            return $this->model->category->checkin_email;
-        }
-    }
-
-    /**
-     * Determine whether this asset requires acceptance by the assigned user
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return bool
-     */
-    public function requireAcceptance()
-    {
-        if (($this->model) && ($this->model->category)) {
-            return $this->model->category->require_acceptance;
-        }
-
-    }
-
-
-    /**
      * Determine whether this asset's next patch date is before the last patch date
      *
      * @return bool
@@ -742,31 +556,6 @@ class Asset extends Depreciable
         if (($this->last_patch_date) && ($this->next_patch_date) && ($this->last_patch_date > $this->next_patch_date)) {
             return true;
         }
-        return false;
-    }
-
-
-    /**
-     * Checks for a category-specific EULA, and if that doesn't exist,
-     * checks for a settings level EULA
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return string | false
-     */
-    public function getEula()
-    {
-
-        if (($this->model) && ($this->model->category)) {
-            if ($this->model->category->eula_text) {
-                return Helper::parseEscapedMarkedown($this->model->category->eula_text);
-            } elseif ($this->model->category->use_default_eula == '1') {
-                return Helper::parseEscapedMarkedown(Setting::getSettings()->default_eula_text);
-            } else {
-                return false;
-            }
-        }
-
         return false;
     }
 
@@ -795,22 +584,6 @@ class Asset extends Depreciable
     }
 
     protected function lastPatchDate(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null,
-            set: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null,
-        );
-    }
-
-    protected function lastCheckout(): Attribute
-    {
-        return Attribute::make(
-            get: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null,
-            set: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null,
-        );
-    }
-
-    protected function lastCheckin(): Attribute
     {
         return Attribute::make(
             get: fn ($value) => $value ? Carbon::parse($value)->format('Y-m-d H:i:s') : null,
@@ -1083,61 +856,6 @@ class Asset extends Depreciable
             $query->OverdueForPatch();
         })->orWhere(function ($query) use ($settings) {
             $query->DueForPatch($settings);
-        });
-    }
-
-
-    /**
-     * Query builder scope for Assets that are DUE for checkin, based on the assets.expected_checkin
-     * and settings.patch_warning_days. It checks to see if assets.expected_checkin is now
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since v6.4.0
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-
-    public function scopeDueForCheckin($query, $settings)
-    {
-        $interval = $settings->patch_warning_days ?? 0;
-        $today = Carbon::now();
-        $interval_date = $today->copy()->addDays($interval)->format('Y-m-d');
-
-        return $query->whereNotNull('assets.expected_checkin')
-            ->whereBetween('assets.expected_checkin', [$today->format('Y-m-d'), $interval_date])
-            ->where('assets.archived', '=', 0)
-            ->whereNotNull('assets.assigned_to')
-            ->NotArchived();
-    }
-
-    /**
-     * Query builder scope for Assets that are overdue for checkin OR overdue
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since v6.4.0
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeOverdueForCheckin($query)
-    {
-        return $query->whereNotNull('assets.expected_checkin')
-            ->where('assets.expected_checkin', '<', Carbon::now()->format('Y-m-d'))
-            ->where('assets.archived', '=', 0)
-            ->whereNotNull('assets.assigned_to')
-            ->NotArchived();
-    }
-
-    /**
-     * Query builder scope for Assets that are due for checkin OR overdue
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since v6.4.0
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeDueOrOverdueForCheckin($query, $settings)
-    {
-        return $query->where(function ($query) {
-            $query->OverdueForCheckin();
-        })->orWhere(function ($query) use ($settings) {
-            $query->DueForCheckin($settings);
         });
     }
 

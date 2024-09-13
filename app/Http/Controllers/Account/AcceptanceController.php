@@ -181,7 +181,6 @@ class AcceptanceController extends Controller
                 'item_tag' => $item->asset_tag,
                 'item_model' => $display_model,
                 'item_serial' => $item->serial,
-                'eula' => $item->getEula(),
                 'note' => $request->input('note'),
                 'assigned_to' => $assigned_to,
                 'company_name' => $branding_settings->site_name,

@@ -137,32 +137,6 @@
                             </div>
                         </div>
 
-                        @if ($asset->requireAcceptance() || $asset->getEula() || ($snipeSettings->webhook_endpoint!=''))
-                            <div class="form-group notification-callout">
-                                <div class="col-md-8 col-md-offset-3">
-                                    <div class="callout callout-info">
-
-                                        @if ($asset->requireAcceptance())
-                                            <i class="far fa-envelope" aria-hidden="true"></i>
-                                            {{ trans('admin/categories/general.required_acceptance') }}
-                                            <br>
-                                        @endif
-
-                                        @if ($asset->getEula())
-                                            <i class="far fa-envelope" aria-hidden="true"></i>
-                                            {{ trans('admin/categories/general.required_eula') }}
-                                            <br>
-                                        @endif
-
-                                        @if ($snipeSettings->webhook_endpoint!='')
-                                            <i class="fab fa-slack" aria-hidden="true"></i>
-                                            {{ trans('general.webhook_msg_note') }}
-                                        @endif
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-
                     </div> <!--/.box-body-->
                     @include ('partials.forms.redirect_submit_options',
                                  [

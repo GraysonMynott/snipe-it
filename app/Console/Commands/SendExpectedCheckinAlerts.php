@@ -51,13 +51,6 @@ class SendExpectedCheckinAlerts extends Command
         $this->info($assets->count().' assets must be checked in on or before '.$interval_date.' is deadline');
 
 
-        foreach ($assets as $asset) {
-            if ($asset->assignedTo && (isset($asset->assignedTo->email)) && ($asset->assignedTo->email!='') && $asset->checkedOutToUser()) {
-                $this->info('Sending User ExpectedCheckinNotification to: '.$asset->assignedTo->email);
-                $asset->assignedTo->notify((new ExpectedCheckinNotification($asset)));
-            }
-        }
-
         if (($assets) && ($assets->count() > 0) && ($settings->alert_email != '')) {
             // Send a rollup to the admin, if settings dictate
             $recipients = collect(explode(',', $settings->alert_email))->map(function ($item) {
