@@ -244,11 +244,6 @@ class Asset extends SnipeModel
       return $this->assignedType() === self::LOCATION;
     }
 
-    public function checkedOutToAsset(): bool
-    {
-      return $this->assignedType() === self::ASSET;
-    }
-
 
     /**
      * Get the asset's location based on the assigned user
@@ -261,35 +256,33 @@ class Asset extends SnipeModel
      */
     public function assetLoc($iterations = 1, $first_asset = null)
     {
-        if (! empty($this->assignedType())) {
-            if ($this->assignedType() == self::ASSET) {
-                if (! $first_asset) {
-                    $first_asset = $this;
-                }
-                if ($iterations > 10) {
-                    throw new \Exception('Asset assignment Loop for Asset ID: '.$first_asset->id);
-                }
-                $assigned_to = self::find($this->assigned_to); //have to do this this way because otherwise it errors
-                if ($assigned_to) {
-                    return $assigned_to->assetLoc($iterations + 1, $first_asset);
-                } // Recurse until we have a final location
-            }
-            if ($this->assignedType() == self::LOCATION) {
-                if ($this->assignedTo) {
-                    return $this->assignedTo;
-                }
+        // if (! empty($this->assignedType())) {
+        //     if ($this->assignedType() == self::ASSET) {
+        //         if (! $first_asset) {
+        //             $first_asset = $this;
+        //         }
+        //         if ($iterations > 10) {
+        //             throw new \Exception('Asset assignment Loop for Asset ID: '.$first_asset->id);
+        //         }
+        //         $assigned_to = self::find($this->assigned_to); //have to do this this way because otherwise it errors
+        //         if ($assigned_to) {
+        //             return $assigned_to->assetLoc($iterations + 1, $first_asset);
+        //         } // Recurse until we have a final location
+        //     }
+        //     if ($this->assignedType() == self::LOCATION) {
+        //         if ($this->assignedTo) {
+        //             return $this->assignedTo;
+        //         }
+        //     }
+        //     if ($this->assignedType() == self::USER) {
+        //         if (($this->assignedTo) && $this->assignedTo->userLoc) {
+        //             return $this->assignedTo->userLoc;
+        //         }
+        //         //this makes no sense
+        //         return $this->defaultLoc;
 
-            }
-            if ($this->assignedType() == self::USER) {
-                if (($this->assignedTo) && $this->assignedTo->userLoc) {
-                    return $this->assignedTo->userLoc;
-                }
-                //this makes no sense
-                return $this->defaultLoc;
-
-            }
-
-        }
+        //     }
+        // }
         return $this->defaultLoc;
     }
 
