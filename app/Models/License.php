@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Watson\Validating\ValidatingTrait;
 
-class License extends Depreciable
+class License extends SnipeModel
 {
     use HasFactory;
 
@@ -101,7 +101,6 @@ class License extends Depreciable
         'manufacturer' => ['name'],
         'company'      => ['name'],
         'category'     => ['name'],
-        'depreciation' => ['name'],
     ];
     protected $appends = ['free_seat_count'];
 

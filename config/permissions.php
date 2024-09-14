@@ -326,33 +326,6 @@ return [
         ],
     ],
 
-    'Depreciations' => [
-        [
-            'permission' => 'depreciations.view',
-            'label'      => 'View ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'depreciations.create',
-            'label'      => 'Create ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'depreciations.edit',
-            'label'      => 'Edit  ',
-            'note'       => '',
-            'display'    => true,
-        ],
-        [
-            'permission' => 'depreciations.delete',
-            'label'      => 'Delete ',
-            'note'       => '',
-            'display'    => true,
-        ],
-    ],
-
     'Locations' => [
         [
             'permission' => 'locations.view',

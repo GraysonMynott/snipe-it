@@ -293,8 +293,13 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth']], function () {
 
 Route::group(['middleware' => ['auth']], function () {
     Route::get('reports/patch', 
-        [ReportsController::class, 'patch']
+        [ReportsController::class, 'getPatchReport']
     )->name('reports.patch');
+    
+    Route::get(
+        'reports/export/assets',
+        [ReportsController::class, 'exportAssetReport']
+    )->name('reports/export/assets');
     
     Route::get(
         'reports/licenses',

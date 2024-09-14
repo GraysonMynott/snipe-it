@@ -68,7 +68,7 @@ class AssetsController extends Controller
          * It was either this mess, or repeating ALL of the searching and sorting and filtering code, 
          * which would have been far worse of a mess. *sad face*  - snipe (Sept 1, 2021)
          */
-        if (Route::currentRouteName()=='api.depreciation-report.index') {
+        if (Route::currentRouteName()=='api.asset-report.index') {
             $filter_non_deprecable_assets = true;
             $transformer = 'App\Http\Transformers\DepreciationReportTransformer';
             $this->authorize('reports.view');
@@ -109,13 +109,6 @@ class AssetsController extends Controller
         $assets = Asset::select('assets.*')
             ->with('location', 'assetstatus', 'company', 'defaultLoc',
                 'model.category', 'model.manufacturer', 'model.fieldset'); //it might be tempting to add 'assetlog' here, but don't. It blows up update-heavy users.
-
-
-//        if ($filter_non_deprecable_assets) {
-//            $non_deprecable_models = AssetModel::select('id')->whereNotNull('depreciation_id')->get();
-//            $assets->InModelList($non_deprecable_models->toArray());
-//        }
-
 
 
         // These are used by the API to query against specific ID numbers.

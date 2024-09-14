@@ -39,31 +39,18 @@ class ReportsController extends Controller
     }
 
     /**
-    * Show depreciation report for assets.
-    *
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @since [v1.0]
-    */
-    public function getDeprecationReport() : View
-    {
-        $this->authorize('reports.view');
-        $depreciations = Depreciation::get();
-        return view('reports/depreciation')->with('depreciations',$depreciations);
-    }
-
-    /**
-    * Exports the depreciations to CSV
-    *
-    * @deprecated Server-side exports have been replaced by datatables export since v2.
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @since [v1.0]
-    */
-    public function exportDeprecationReport() : Response
+     * Exports the assets to CSV
+     *
+     * @deprecated Server-side exports have been replaced by datatables export since v2.
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v1.0]
+     */
+    public function exportAssetReport() : Response
     {
         $this->authorize('reports.view');
         // Grab all the assets
         $assets = Asset::with('model', 'assignedTo', 'assetstatus', 'defaultLoc', 'assetlog')
-                       ->orderBy('created_at', 'DESC')->get();
+            ->orderBy('created_at', 'DESC')->get();
 
         $csv = \League\Csv\Writer::createFromFileObject(new \SplTempFileObject());
         $csv->setOutputBOM(Reader::BOM_UTF16_BE);
@@ -103,10 +90,9 @@ class ReportsController extends Controller
             $csv->insertOne($row);
         }
 
-        $csv->output('depreciation-report-'.date('Y-m-d').'.csv');
+        $csv->output('asset-report-'.date('Y-m-d').'.csv');
         die;
     }
-
 
     /**
      * Displays patch report.
@@ -114,19 +100,18 @@ class ReportsController extends Controller
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v4.0]
      */
-    public function patch() : View
+    public function getPatchReport() : View
     {
         $this->authorize('reports.view');
         return view('reports/patch');
     }
 
-
     /**
-    * Displays activity report.
-    *
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @since [v1.0]
-    */
+     * Displays activity report.
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v1.0]
+     */
     public function getActivityReport() : View
     {
         $this->authorize('reports.view');
@@ -234,7 +219,6 @@ class ReportsController extends Controller
         return $response;
     }
 
-
     /**
      * Displays license report
      *
@@ -244,20 +228,20 @@ class ReportsController extends Controller
     public function getLicenseReport() : View
     {
         $this->authorize('reports.view');
-        $licenses = License::with('depreciation')->orderBy('created_at', 'DESC')
-                           ->with('company')
-                           ->get();
+        $licenses = License::orderBy('created_at', 'DESC')
+            ->with('company')
+            ->get();
 
         return view('reports/licenses', compact('licenses'));
     }
 
     /**
-    * Exports the licenses to CSV
-    *
-    * @deprecated Server-side exports have been replaced by datatables export since v2.
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @since [v1.0]
-    */
+     * Exports the licenses to CSV
+     *
+     * @deprecated Server-side exports have been replaced by datatables export since v2.
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v1.0]
+     */
     public function exportLicenseReport() : Response
     {
         $this->authorize('reports.view');
@@ -297,12 +281,12 @@ class ReportsController extends Controller
     }
 
     /**
-    * Returns a form that allows the user to generate a custom CSV report.
-    *
-    * @author [A. Gianotto] [<snipe@snipe.net>]
-    * @see ReportsController::postCustomReport() method that generates the CSV
-    * @since [v1.0]
-    */
+     * Returns a form that allows the user to generate a custom CSV report.
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @see ReportsController::postCustomReport() method that generates the CSV
+     * @since [v1.0]
+     */
     public function getCustomReport() : View
     {
         $this->authorize('reports.view');
@@ -778,238 +762,5 @@ class ReportsController extends Controller
         ]);
 
         return $response;
-    }
-
-    /**
-     * getAssetAcceptanceReport
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    public function getAssetAcceptanceReport($deleted = false) : View
-    {
-        $this->authorize('reports.view');
-        $showDeleted = $deleted == 'deleted';
-
-        /**
-         * Get all assets with pending checkout acceptances
-         */
-        if($showDeleted) {
-            $acceptances = CheckoutAcceptance::pending()->where('checkoutable_type', 'App\Models\Asset')->withTrashed()->with(['assignedTo' , 'checkoutable.assignedTo', 'checkoutable.model'])->get();
-        } else {
-            $acceptances = CheckoutAcceptance::pending()->where('checkoutable_type', 'App\Models\Asset')->with(['assignedTo' => function ($query) {
-                $query->withTrashed();
-            }, 'checkoutable.assignedTo', 'checkoutable.model'])->get();
-        }
-
-        $assetsForReport = $acceptances
-            ->filter(function ($acceptance) {
-                $acceptance_checkoutable_flag = false;
-                
-                return $acceptance->checkoutable_type == 'App\Models\Asset' && $acceptance_checkoutable_flag;
-            })
-            ->map(function($acceptance) {
-                return ['assetItem' => $acceptance->checkoutable, 'acceptance' => $acceptance];
-            });
-
-        return view('reports/unaccepted_assets', compact('assetsForReport','showDeleted' ));
-    }
-
-    /**
-     * sentAssetAcceptanceReminder
-     *
-     * @param integer|null $acceptanceId
-     * @version v1.0
-     */
-    public function sentAssetAcceptanceReminder(Request $request) : RedirectResponse
-    {
-        $this->authorize('reports.view');
-
-        if (!$acceptance = CheckoutAcceptance::pending()->find($request->input('acceptance_id'))) {
-            Log::debug('No pending acceptances');
-            // Redirect to the unaccepted assets report page with error
-            return redirect()->route('reports/unaccepted_assets')->with('error', trans('general.bad_data'));
-        }
-
-        $assetItem = $acceptance->checkoutable;
-
-        Log::debug(print_r($assetItem, true));
-
-        // Only send notification if assigned
-        if ($assetItem->assignedTo) {
-
-            if (!$assetItem->assignedTo->locale) {
-                Notification::locale(Setting::getSettings()->locale)->send(
-                    $assetItem->assignedTo,
-                    new CheckoutAssetNotification($assetItem, $assetItem->assignedTo, $logItem->user, $acceptance, $logItem->note)
-                );
-            } else {
-                Notification::send(
-                    $assetItem->assignedTo,
-                    new CheckoutAssetNotification($assetItem, $assetItem->assignedTo, $logItem->user, $acceptance, $logItem->note)
-                );
-            }
-        }
-
-        if ($assetItem->assignedTo->email == ''){
-            return redirect()->route('reports/unaccepted_assets')->with('error', trans('general.no_email'));
-        }
-
-        return redirect()->route('reports/unaccepted_assets')->with('success', trans('admin/reports/general.reminder_sent'));
-    }
-
-    /**
-     * sentAssetAcceptanceReminder
-     *
-     * @param integer|null $acceptanceId
-     * @version v1.0
-     */
-    public function deleteAssetAcceptance($acceptanceId = null) : RedirectResponse
-    {
-        $this->authorize('reports.view');
-
-        if (!$acceptance = CheckoutAcceptance::pending()->find($acceptanceId)) {
-            // Redirect to the unaccepted assets report page with error
-            return redirect()->route('reports/unaccepted_assets')->with('error', trans('general.bad_data'));
-        }
-
-        if($acceptance->delete()) {
-            return redirect()->route('reports/unaccepted_assets')->with('success', trans('admin/reports/general.acceptance_deleted'));
-        } else {
-            return redirect()->route('reports/unaccepted_assets')->with('error', trans('general.deletion_failed'));
-        }
-    }
-
-    /**
-     * Exports the AssetAcceptance report to CSV
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    public function postAssetAcceptanceReport($deleted = false) : Response
-    {
-        $this->authorize('reports.view');
-        $showDeleted = $deleted == 'deleted';
-
-        /**
-         * Get all assets with pending checkout acceptances
-         */
-        if($showDeleted) {
-            $acceptances = CheckoutAcceptance::pending()->where('checkoutable_type', 'App\Models\Asset')->withTrashed()->with(['assignedTo', 'checkoutable.assignedTo', 'checkoutable.model'])->get();
-        } else {
-            $acceptances = CheckoutAcceptance::pending()->where('checkoutable_type', 'App\Models\Asset')->with(['assignedTo', 'checkoutable.assignedTo', 'checkoutable.model'])->get();
-        }
-
-        $assetsForReport = $acceptances
-            ->filter(function($acceptance) {
-                return $acceptance->checkoutable_type == 'App\Models\Asset';
-            })
-            ->map(function($acceptance) {
-                return ['assetItem' => $acceptance->checkoutable, 'acceptance' => $acceptance];
-            });
-
-        $rows = [];
-
-        $header = [
-            trans('general.category'),
-            trans('admin/hardware/form.model'),
-            trans('admin/hardware/form.name'),
-            trans('admin/hardware/table.asset_tag'),
-        ];
-
-        $header = array_map('trim', $header);
-        $rows[] = implode(',', $header);
-
-        foreach ($assetsForReport as $item) {
-
-            if ($item['assetItem'] != null){
-            
-                $row    = [ ];
-                $row[]  = str_replace(',', '', e($item['assetItem']->model->category->name));
-                $row[]  = str_replace(',', '', e($item['assetItem']->model->name));
-                $row[]  = str_replace(',', '', e($item['assetItem']->name));
-                $row[]  = str_replace(',', '', e($item['assetItem']->asset_tag));
-                $rows[] = implode(',', $row);
-            }
-        }
-
-        // spit out a csv
-        $csv      = implode("\n", $rows);
-        $response = response()->make($csv, 200);
-        $response->header('Content-Type', 'text/csv');
-        $response->header('Content-disposition', 'attachment;filename=report.csv');
-
-        return $response;
-    }
-
-    /**
-     * getCheckedOutAssetsRequiringAcceptance
-     *
-     * @param $modelsInCategoriesThatRequireAcceptance
-     *
-     * @return array
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    protected function getCheckedOutAssetsRequiringAcceptance($modelsInCategoriesThatRequireAcceptance) : View
-    {
-        $this->authorize('reports.view');
-        $assets = Asset::deployed()
-                        ->inModelList($modelsInCategoriesThatRequireAcceptance)
-                        ->select('id')
-                        ->get()
-                        ->toArray();
-
-        return array_pluck($assets, 'id');
-    }
-
-    /**
-     * getModelsInCategoriesThatRequireAcceptance
-     *
-     * @param $assetCategoriesRequiringAcceptance
-     * @return array
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    protected function getModelsInCategoriesThatRequireAcceptance($assetCategoriesRequiringAcceptance) : array
-    {
-        $this->authorize('reports.view');
-
-        return array_pluck(AssetModel::inCategory($assetCategoriesRequiringAcceptance)
-                                 ->select('id')
-                                 ->get()
-                                 ->toArray(), 'id');
-    }
-
-    /**
-     * getCategoriesThatRequireAcceptance
-     *
-     * @return array
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    protected function getCategoriesThatRequireAcceptance() : array
-    {
-        $this->authorize('reports.view');
-
-        return array_pluck(Category::requiresAcceptance()
-                                    ->select('id')
-                                    ->get()
-                                    ->toArray(), 'id');
-    }
-
-    /**
-     * getAssetsCheckedOutRequiringAcceptance
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     * @version v1.0
-     */
-    protected function getAssetsCheckedOutRequiringAcceptance() : array
-    {
-        $this->authorize('reports.view');
-
-        return $this->getCheckedOutAssetsRequiringAcceptance(
-            $this->getModelsInCategoriesThatRequireAcceptance($this->getCategoriesThatRequireAcceptance())
-        );
     }
 }

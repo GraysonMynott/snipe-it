@@ -488,7 +488,6 @@
         'licenses',
         'categories',
         'companies',
-        'depreciations',
         'fieldsets',
         'groups'
     ];

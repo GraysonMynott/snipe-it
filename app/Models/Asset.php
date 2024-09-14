@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @version    v1.0
  */
-class Asset extends Depreciable
+class Asset extends SnipeModel
 {
 
     protected $presenter = AssetPresenter::class;
@@ -79,6 +79,7 @@ class Asset extends Depreciable
         'name'             => 'nullable|max:255',
         'company_id'       => 'nullable|integer|exists:companies,id',
         'last_patch_date'  => 'nullable|date_format:Y-m-d H:i:s',
+        'mac_address'      => 'nullable|regex:^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
         // 'next_patch_date'  => 'nullable|date|after:last_patch_date',
         'next_patch_date'  => 'nullable|date',
         'location_id'      => 'nullable|exists:locations,id',
@@ -223,36 +224,6 @@ class Asset extends Depreciable
     {
         return $this->rules;
     }
-
-
-    /**
-     * Establishes the asset -> depreciation relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v3.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-/*     public function depreciation()
-    {
-        return $this->hasOneThrough(\App\Models\Depreciation::class,\App\Models\AssetModel::class,'id','id','model_id','depreciation_id');
-    } */
-
-
-    /**
-     * Get depreciation attribute from associated asset model
-     *
-     * @todo Is this still needed?
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-/*     public function get_depreciation()
-    {
-        if (($this->model) && ($this->model->depreciation)) {
-            return $this->model->depreciation;
-        }
-    } */
 
 
     /**
@@ -1381,21 +1352,6 @@ class Asset extends Depreciable
                 $query->where('locations.id', '=', $search);
             });
         });
-
-    }
-
-
-    /**
-     * Query builder scope to search on depreciation name
-     * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-     * @param  text                              $search      Search term
-     *
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeByDepreciationId($query, $search)
-    {
-        return $query->join('models', 'assets.model_id', '=', 'models.id')
-            ->join('depreciations', 'models.depreciation_id', '=', 'depreciations.id')->where('models.depreciation_id', '=', $search);
 
     }
 

@@ -123,7 +123,6 @@ return new class extends Migration
             $table->char('version_footer', 5)->nullable()->default('on');
             $table->boolean('unique_serial')->default(false);
             $table->boolean('logo_print_assets')->default(false);
-            $table->char('depreciation_method', 10)->nullable()->default('default');
             $table->char('favicon')->nullable();
             $table->string('default_avatar')->nullable()->default('default.png');
             $table->char('email_logo')->nullable();
