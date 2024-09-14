@@ -33,10 +33,6 @@ return new class extends Migration
             $table->boolean('archived')->nullable()->default(false);
             $table->integer('rtd_location_id')->nullable()->index();
             $table->string('_snipeit_mac_address_1')->nullable();
-            $table->string('accepted')->nullable();
-            $table->dateTime('last_checkout')->nullable();
-            $table->dateTime('last_checkin')->nullable();
-            $table->date('expected_checkin')->nullable();
             $table->unsignedInteger('company_id')->nullable()->index();
             $table->string('assigned_type')->nullable();
             $table->dateTime('last_patch_date')->nullable();

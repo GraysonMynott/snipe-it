@@ -14,9 +14,7 @@ use Illuminate\Support\Str;
 
 /**
  * Model for Categories. Categories are a higher-level group
- * than Asset Models, and handle things like whether or not
- * to require acceptance from the user, whether or not to
- * send a EULA to the user, etc.
+ * than Asset Models, etc.
  *
  * @version    v1.0
  */
@@ -63,9 +61,7 @@ class Category extends SnipeModel
      */
     protected $fillable = [
         'category_type',
-        'checkin_email',
         'name',
-        'require_acceptance',
         'user_id',
     ];
 
@@ -220,24 +216,5 @@ class Category extends SnipeModel
     public function setCheckinEmailAttribute($value)
     {
         $this->attributes['checkin_email'] = (int) filter_var($value, FILTER_VALIDATE_BOOLEAN);
-    }
-
-    /**
-     * -----------------------------------------------
-     * BEGIN QUERY SCOPES
-     * -----------------------------------------------
-     **/
-
-    /**
-     * Query builder scope for whether or not the category requires acceptance
-     *
-     * @author  Vincent Sposato <vincent.sposato@gmail.com>
-     *
-     * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-     * @return \Illuminate\Database\Query\Builder          Modified query builder
-     */
-    public function scopeRequiresAcceptance($query)
-    {
-        return $query->where('require_acceptance', '=', true);
     }
 }

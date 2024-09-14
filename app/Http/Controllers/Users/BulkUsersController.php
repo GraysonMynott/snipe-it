@@ -39,7 +39,7 @@ class BulkUsersController extends Controller
             // Get the list of affected users
             $user_raw_array = request('ids');
             $users = User::whereIn('id', $user_raw_array)
-                ->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads', 'acceptances')->get();
+                ->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads')->get();
 
             // bulk edit, display the bulk edit form
             if ($request->input('bulk_actions') == 'edit') {
@@ -302,7 +302,7 @@ class BulkUsersController extends Controller
 
         // Get the users
         $merge_into_user = User::find($request->input('merge_into_id'));
-        $users_to_merge = User::whereIn('id', $user_ids_to_merge)->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads', 'acceptances')->get();
+        $users_to_merge = User::whereIn('id', $user_ids_to_merge)->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads')->get();
         $admin = User::find(auth()->id());
 
         // Walk users
@@ -327,11 +327,6 @@ class BulkUsersController extends Controller
             foreach ($user_to_merge->uploads as $upload) {
                 $upload->item_id = $merge_into_user->id;
                 $upload->save();
-            }
-
-            foreach ($user_to_merge->acceptances as $acceptance) {
-                $acceptance->item_id = $merge_into_user->id;
-                $acceptance->save();
             }
 
             User::where('manager_id', '=', $user_to_merge->id)->update(['manager_id' => $merge_into_user->id]);

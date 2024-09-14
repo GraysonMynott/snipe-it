@@ -65,10 +65,6 @@ class CategoriesController extends Controller
         $category = new Category();
         $category->name = $request->input('name');
         $category->category_type = $request->input('category_type');
-        $category->eula_text = $request->input('eula_text');
-        $category->use_default_eula = $request->input('use_default_eula', '0');
-        $category->require_acceptance = $request->input('require_acceptance', '0');
-        $category->checkin_email = $request->input('checkin_email', '0');
         $category->user_id = Auth::id();
 
         $category = $request->handleImages($category);
@@ -132,7 +128,6 @@ class CategoriesController extends Controller
 
         $category->eula_text = $request->input('eula_text');
         $category->use_default_eula = $request->input('use_default_eula', '0');
-        $category->require_acceptance = $request->input('require_acceptance', '0');
         $category->checkin_email = $request->input('checkin_email', '0');
 
         $category = $request->handleImages($category);

@@ -317,59 +317,6 @@ class License extends SnipeModel
     }
 
     /**
-     * Determine whether the user should be emailed on checkin/checkout
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v2.0]
-     * @return bool
-     */
-    public function checkin_email()
-    {
-        if ($this->category) {
-            return $this->category->checkin_email;
-        }
-        return false;
-    }
-
-    /**
-     * Determine whether the user should be required to accept the license
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v4.0]
-     * @return bool
-     */
-    public function requireAcceptance()
-    {
-        if ($this->category) {
-            return $this->category->require_acceptance;
-        }
-
-        return false;
-    }
-
-    /**
-     * Checks for a category-specific EULA, and if that doesn't exist,
-     * checks for a settings level EULA
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v4.0]
-     * @return string | false
-     */
-    public function getEula()
-    {
-        if ($this->category){
-            if ($this->category->eula_text) {
-                return Helper::parseEscapedMarkedown($this->category->eula_text);
-            } elseif ($this->category->use_default_eula == '1') {
-                return Helper::parseEscapedMarkedown(Setting::getSettings()->default_eula_text);
-            } 
-        }
-
-        return false;
-        
-    }
-
-    /**
      * Establishes the license -> assigned user relationship
      *
      * @author A. Gianotto <snipe@snipe.net>

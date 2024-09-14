@@ -437,33 +437,6 @@ class User extends SnipeModel implements AuthenticatableContract, AuthorizableCo
     }
 
     /**
-     * Establishes the user -> acceptances relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v7.0.7]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function acceptances()
-    {
-        return $this->hasMany(\App\Models\Actionlog::class, 'target_id')
-            ->where('target_type', self::class)
-            ->where('action_type', '=', 'accepted')
-            ->orderBy('created_at', 'desc');
-    }
-
-    /**
-     * Establishes the user -> requested assets relationship
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function checkoutRequests()
-    {
-        return $this->belongsToMany(Asset::class, 'checkout_requests', 'user_id', 'requestable_id')->whereNull('canceled_at');
-    }
-
-    /**
      * Set a common string when the user has been imported/synced from:
      *
      * - LDAP without password syncing

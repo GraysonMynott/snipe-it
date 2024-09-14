@@ -92,7 +92,6 @@ return new class extends Migration
             $table->integer('zerofill_count')->default(5);
             $table->boolean('ldap_pw_sync')->default(true);
             $table->tinyInteger('two_factor_enabled')->nullable();
-            $table->boolean('require_accept_signature')->default(false);
             $table->string('date_display_format')->default('Y-m-d');
             $table->string('time_display_format')->default('h:i A');
             $table->bigInteger('next_auto_tag_base')->default(1);

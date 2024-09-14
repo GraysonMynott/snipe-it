@@ -262,33 +262,20 @@ Route::group(['prefix' => 'account', 'middleware' => ['auth']], function () {
     )->name('account/request-item');
 
     // Account Dashboard
-    Route::get('/', [ViewAssetsController::class, 'getIndex'])->name('account');
-
-    Route::get('accept', [Account\AcceptanceController::class, 'index'])
-        ->name('account.accept');
-
-    Route::get('accept/{id}', [Account\AcceptanceController::class, 'create'])
-        ->name('account.accept.item');
-
-    Route::post('accept/{id}', [Account\AcceptanceController::class, 'store'])
-        ->name('account.store-acceptance');
+    Route::get(
+        '/', 
+        [ViewAssetsController::class, 'getIndex']
+    )->name('account');
 
     Route::get(
-        'print',
-        [
-            ProfileController::class,
-            'printInventory'
-        ]
+        'print', 
+        [ProfileController::class, 'printInventory']
     )->name('profile.print');
 
     Route::post(
         'email',
-        [
-            ProfileController::class,
-            'emailAssetList'
-        ]
+        [ProfileController::class, 'emailAssetList']
     )->name('profile.email_assets');
-
 });
 
 Route::group(['middleware' => ['auth']], function () {
@@ -330,26 +317,6 @@ Route::group(['middleware' => ['auth']], function () {
         'reports/activity', 
         [ReportsController::class, 'postActivityReport']
     );
-
-    Route::get(
-        'reports/unaccepted_assets/{deleted?}',
-        [ReportsController::class, 'getAssetAcceptanceReport']
-    )->name('reports/unaccepted_assets');
-
-    Route::post(
-        'reports/unaccepted_assets/sent_reminder',
-        [ReportsController::class, 'sentAssetAcceptanceReminder']
-    )->name('reports/unaccepted_assets_sent_reminder');
-
-    Route::delete(
-        'reports/unaccepted_assets/{acceptanceId}/delete',
-        [ReportsController::class, 'deleteAssetAcceptance']
-    )->name('reports/unaccepted_assets_delete');
-
-    Route::post(
-        'reports/unaccepted_assets/{deleted?}',
-        [ReportsController::class, 'postAssetAcceptanceReport']
-    )->name('reports/export/unaccepted_assets');
 });
 
 Route::get(

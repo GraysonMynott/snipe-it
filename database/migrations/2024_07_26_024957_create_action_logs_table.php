@@ -26,14 +26,10 @@ return new class extends Migration
             $table->text('filename')->nullable();
             $table->string('item_type');
             $table->integer('item_id');
-            $table->date('expected_checkin')->nullable();
-            $table->integer('accepted_id')->nullable();
             $table->integer('thread_id')->nullable()->index();
             $table->integer('company_id')->nullable()->index();
-            $table->string('accept_signature', 100)->nullable();
             $table->text('log_meta')->nullable();
             $table->dateTime('action_date')->nullable();
-            $table->text('stored_eula')->nullable();
             $table->string('action_source')->nullable();
             $table->string('remote_ip', 45)->nullable()->index();
             $table->string('user_agent')->nullable();

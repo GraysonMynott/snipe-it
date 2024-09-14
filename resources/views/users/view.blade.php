@@ -848,9 +848,6 @@
                   <th data-field="action_type">{{ trans('general.action') }}</th>
                   <th data-field="target" data-formatter="polymorphicItemFormatter">{{ trans('general.target') }}</th>
                   <th data-field="note">{{ trans('general.notes') }}</th>
-                  @if  ($snipeSettings->require_accept_signature=='1')
-                      <th data-field="signature_file" data-visible="false"  data-formatter="imageFormatter">{{ trans('general.signature') }}</th>
-                  @endif
                   <th data-field="item.serial" data-visible="false">{{ trans('admin/hardware/table.serial') }}</th>
                   <th data-field="admin" data-formatter="usersLinkObjFormatter">{{ trans('general.admin') }}</th>
                   <th data-field="remote_ip" data-visible="false" data-sortable="true">{{ trans('admin/settings/general.login_ip') }}</th>

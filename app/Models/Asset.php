@@ -7,7 +7,6 @@ use App\Events\CheckoutableCheckedOut;
 use App\Exceptions\CheckoutNotAllowed;
 use App\Helpers\Helper;
 use App\Http\Traits\UniqueUndeletedTrait;
-use App\Models\Traits\Acceptable;
 use App\Models\Traits\Searchable;
 use App\Presenters\Presentable;
 use App\Presenters\AssetPresenter;
@@ -38,8 +37,6 @@ class Asset extends SnipeModel
     public const LOCATION = 'location';
     public const ASSET = 'asset';
     public const USER = 'user';
-
-    use Acceptable;
 
     /**
     * The database table used by the model.
@@ -842,7 +839,6 @@ class Asset extends SnipeModel
      *
      * @return \Illuminate\Database\Query\Builder          Modified query builder
      */
-
     public function scopeAssetsForShow($query)
     {
 
@@ -856,13 +852,13 @@ class Asset extends SnipeModel
 
     }
 
-  /**
-   * Query builder scope for Archived assets
-   *
-   * @param  \Illuminate\Database\Query\Builder $query Query builder instance
-   *
-   * @return \Illuminate\Database\Query\Builder          Modified query builder
-   */
+    /**
+     * Query builder scope for Archived assets
+     *
+     * @param  \Illuminate\Database\Query\Builder $query Query builder instance
+     *
+     * @return \Illuminate\Database\Query\Builder          Modified query builder
+     */
 
     public function scopeArchived($query)
     {
@@ -873,92 +869,32 @@ class Asset extends SnipeModel
         });
     }
 
-  /**
-   * Query builder scope for Deployed assets
-   *
-   * @param  \Illuminate\Database\Query\Builder $query Query builder instance
-   *
-   * @return \Illuminate\Database\Query\Builder          Modified query builder
-   */
-
+    /**
+     * Query builder scope for Deployed assets
+     *
+     * @param  \Illuminate\Database\Query\Builder $query Query builder instance
+     *
+     * @return \Illuminate\Database\Query\Builder          Modified query builder
+     */
     public function scopeDeployed($query)
     {
         return $query->where('assigned_to', '>', '0');
     }
 
-  /**
-   * Query builder scope for Requestable assets
-   *
-   * @param  \Illuminate\Database\Query\Builder $query Query builder instance
-   *
-   * @return \Illuminate\Database\Query\Builder          Modified query builder
-   */
-
-    public function scopeRequestableAssets($query)
-    {
-        $table = $query->getModel()->getTable();
-
-        return Company::scopeCompanyables($query->where($table.'.requestable', '=', 1))
-        ->whereHas('assetstatus', function ($query) {
-            $query->where(function ($query) {
-                $query->where('deployable', '=', 1)
-                      ->where('archived', '=', 0); // you definitely can't request something that's archived
-            })->orWhere('pending', '=', 1); // we've decided that even though an asset may be 'pending', you can still request it
-        });
-    }
-
-
     /**
-   * scopeInModelList
-   * Get all assets in the provided listing of model ids
-   *
-   * @param       $query
-   * @param array $modelIdListing
-   *
-   * @return mixed
-   * @author  Vincent Sposato <vincent.sposato@gmail.com>
-   * @version v1.0
-   */
+     * scopeInModelList
+     * Get all assets in the provided listing of model ids
+     *
+     * @param       $query
+     * @param array $modelIdListing
+     *
+     * @return mixed
+     * @author  Vincent Sposato <vincent.sposato@gmail.com>
+     * @version v1.0
+     */
     public function scopeInModelList($query, array $modelIdListing)
     {
         return $query->whereIn('assets.model_id', $modelIdListing);
-    }
-
-  /**
-  * Query builder scope to get not-yet-accepted assets
-  *
-  * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-  *
-  * @return \Illuminate\Database\Query\Builder          Modified query builder
-  */
-    public function scopeNotYetAccepted($query)
-    {
-        return $query->where('accepted', '=', 'pending');
-    }
-
-  /**
-  * Query builder scope to get rejected assets
-  *
-  * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-  *
-  * @return \Illuminate\Database\Query\Builder          Modified query builder
-  */
-    public function scopeRejected($query)
-    {
-        return $query->where('accepted', '=', 'rejected');
-    }
-
-
-  /**
-  * Query builder scope to get accepted assets
-  *
-  * @param  \Illuminate\Database\Query\Builder  $query  Query builder instance
-  *
-  * @return \Illuminate\Database\Query\Builder          Modified query builder
-  */
-    public function scopeAccepted($query)
-    {
-        return $query->where('accepted', '=', 'accepted');
     }
 
     /**

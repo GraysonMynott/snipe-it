@@ -114,15 +114,6 @@ class ActionlogPresenter extends Presenter
         // On an upload, the target is the item we are uploading to, stored as the "item" in the log.
         if ($this->action_type == 'uploaded') {
             $target = $this->model->item;
-        } elseif (($this->action_type == 'accepted') || ($this->action_type == 'declined')) {
-            // If we are logging an accept/reject, the target is not stored directly,
-            // so we access it through who the item is assigned to.
-            // FIXME: On a reject it's not assigned to anyone.
-            $target = $this->model->item->assignedTo;
-        } elseif ($this->action_type == 'requested') {
-            if ($this->model->user) {
-                $target = $this->model->user;
-            }
         } elseif ($this->model->target) {
             // Otherwise, we'll just take the target of the log.
             $target = $this->model->target;

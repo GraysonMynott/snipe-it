@@ -134,17 +134,13 @@ class ActionlogsTransformer
 
         $file_url = '';
         if($actionlog->filename!='') {
-            if ($actionlog->action_type == 'accepted') {
-                $file_url = route('log.storedeula.download', ['filename' => $actionlog->filename]);
-            } else {
-                if ($actionlog->item) {
-                    if ($actionlog->itemType() == 'asset') {
-                        $file_url = route('show/assetfile', ['assetId' => $actionlog->item->id, 'fileId' => $actionlog->id]);
-                    } elseif ($actionlog->itemType() == 'license') {
-                        $file_url = route('show.licensefile', ['licenseId' => $actionlog->item->id, 'fileId' => $actionlog->id]);
-                    } elseif ($actionlog->itemType() == 'user') {
-                        $file_url = route('show/userfile', ['userId' => $actionlog->item->id, 'fileId' => $actionlog->id]);
-                    }
+            if ($actionlog->item) {
+                if ($actionlog->itemType() == 'asset') {
+                    $file_url = route('show/assetfile', ['assetId' => $actionlog->item->id, 'fileId' => $actionlog->id]);
+                } elseif ($actionlog->itemType() == 'license') {
+                    $file_url = route('show.licensefile', ['licenseId' => $actionlog->item->id, 'fileId' => $actionlog->id]);
+                } elseif ($actionlog->itemType() == 'user') {
+                    $file_url = route('show/userfile', ['userId' => $actionlog->item->id, 'fileId' => $actionlog->id]);
                 }
             }
         }
@@ -188,7 +184,6 @@ class ActionlogsTransformer
             ] : null,
 
             'note'          => ($actionlog->note) ? Helper::parseEscapedMarkedownInline($actionlog->note): null,
-            'signature_file'   => ($actionlog->accept_signature) ? route('log.signature.view', ['filename' => $actionlog->accept_signature ]) : null,
             'log_meta'          => ((isset($clean_meta)) && (is_array($clean_meta))) ? $clean_meta: null,
             'remote_ip'          => ($actionlog->remote_ip) ??  null,
             'user_agent'          => ($actionlog->user_agent) ??  null,

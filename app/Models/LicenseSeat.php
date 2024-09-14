@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Acceptable;
 use App\Notifications\CheckinLicenseNotification;
 use App\Notifications\CheckoutLicenseNotification;
 use App\Presenters\Presentable;
@@ -31,34 +30,12 @@ class LicenseSeat extends SnipeModel implements ICompanyableChild
         'asset_id',
     ];
 
-    use Acceptable;
-
     /**
      * The associated objects which belong to a company
      */
     public function getCompanyableParents()
     {
         return ['asset', 'license'];
-    }
-
-    /**
-     * Determine whether the user should be required to accept the license
-     *
-     * @author A. Gianotto <snipe@snipe.net>
-     * @since [v4.0]
-     * @return bool
-     */
-    public function requireAcceptance()
-    {
-        if ($this->license && $this->license->category) {
-            return $this->license->category->require_acceptance;
-        }
-        return false;
-    }
-
-    public function getEula()
-    {
-        return $this->license->getEula();
     }
 
     /**

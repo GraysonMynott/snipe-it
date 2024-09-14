@@ -18,11 +18,7 @@ return new class extends Migration
 
             $table->string('name');
             $table->integer('user_id')->nullable();
-            $table->longText('eula_text')->nullable();
-            $table->boolean('use_default_eula')->default(false);
-            $table->boolean('require_acceptance')->default(false);
             $table->string('category_type')->nullable()->default('asset');
-            $table->boolean('checkin_email')->default(false);
             $table->string('image')->nullable();
         });
     }

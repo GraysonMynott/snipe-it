@@ -52,7 +52,7 @@ class MergeUsersByUsername extends Command
 
             $bad_users = User::where('username', '=', trim($parts[0]))
                 ->whereNull('deleted_at')
-                ->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads', 'acceptances')
+                ->with('assets', 'manager', 'userlog', 'licenses', 'managedLocations','uploads')
                 ->get();
 
 
@@ -98,12 +98,6 @@ class MergeUsersByUsername extends Command
                     $this->info('Updating upload log record '.$upload->id.' to user '.$user->id);
                     $upload->item_id = $user->id;
                     $upload->save();
-                }
-
-                foreach ($bad_user->acceptances as $acceptance) {
-                    $this->info('Updating acceptance log record '.$acceptance->id.' to user '.$user->id);
-                    $acceptance->item_id = $user->id;
-                    $acceptance->save();
                 }
 
                 // Mark the user as deleted

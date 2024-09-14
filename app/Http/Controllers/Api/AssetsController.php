@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Events\CheckoutableCheckedIn;
 use App\Http\Requests\StoreAssetRequest;
 use App\Http\Traits\MigratesLegacyAssetLocations;
-use App\Models\CheckoutAcceptance;
 use App\Models\LicenseSeat;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;

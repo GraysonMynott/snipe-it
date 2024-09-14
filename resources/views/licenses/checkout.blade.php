@@ -73,29 +73,10 @@
                 </div>
 
 
-                @if ($license->requireAcceptance() || $license->getEula() || ($snipeSettings->webhook_endpoint!=''))
+                @if ($snipeSettings->webhook_endpoint!='')
                     <div class="form-group notification-callout">
                         <div class="col-md-8 col-md-offset-3">
                             <div class="callout callout-info">
-
-                                @if ($license->requireAcceptance())
-                                    <i class="far fa-envelope"></i>
-                                    {{ trans('admin/categories/general.required_acceptance') }}
-                                    <br>
-                                @endif
-
-                                @if ($license->getEula())
-                                    <i class="far fa-envelope"></i>
-                                    {{ trans('admin/categories/general.required_eula') }}
-                                    <br>
-                                @endif
-
-                                @if (($license->category) && ($license->category->checkin_email))
-                                    <i class="far fa-envelope"></i>
-                                    {{ trans('admin/categories/general.checkin_email_notification') }}
-                                    <br>
-                                @endif
-
                                 @if ($snipeSettings->webhook_endpoint!='')
                                     <i class="fab fa-slack"></i>
                                     {{ trans('general.webhook_msg_note') }}

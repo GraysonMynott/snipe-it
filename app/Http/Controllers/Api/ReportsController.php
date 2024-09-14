@@ -69,7 +69,6 @@ class ReportsController extends Controller
             'created_at',
             'target_id',
             'user_id',
-            'accept_signature',
             'action_type',
             'note',
             'remote_ip',

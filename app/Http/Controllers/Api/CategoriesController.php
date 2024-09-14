@@ -29,10 +29,6 @@ class CategoriesController extends Controller
             'name',
             'category_type',
             'category_type',
-            'use_default_eula',
-            'eula_text',
-            'require_acceptance',
-            'checkin_email',
             'assets_count',
             'licenses_count',
             'image',
@@ -42,11 +38,8 @@ class CategoriesController extends Controller
             'id',
             'created_at',
             'updated_at',
-            'name', 'category_type',
-            'use_default_eula',
-            'eula_text',
-            'require_acceptance',
-            'checkin_email',
+            'name', 
+            'category_type',
             'image'
             ])->withCount('licenses as licenses_count');
 
@@ -74,18 +67,6 @@ class CategoriesController extends Controller
 
         if ($request->filled('category_type')) {
             $categories->where('category_type', '=', $request->input('category_type'));
-        }
-
-        if ($request->filled('use_default_eula')) {
-            $categories->where('use_default_eula', '=', $request->input('use_default_eula'));
-        }
-
-        if ($request->filled('require_acceptance')) {
-            $categories->where('require_acceptance', '=', $request->input('require_acceptance'));
-        }
-
-        if ($request->filled('checkin_email')) {
-            $categories->where('checkin_email', '=', $request->input('checkin_email'));
         }
 
         // Make sure the offset and limit are actually integers and do not exceed system limits

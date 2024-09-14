@@ -57,22 +57,6 @@
 
                     <!-- /.form-group -->
 
-                    <!-- Require signature for acceptance -->
-                    <div class="form-group {{ $errors->has('require_accept_signature') ? 'error' : '' }}">
-                        <div class="col-md-3">
-                           <strong> {{ trans('admin/settings/general.require_accept_signature') }}</strong>
-                        </div>
-                        <div class="col-md-9">
-                            <label class="form-control">
-                                {{ Form::checkbox('require_accept_signature', '1', old('require_accept_signature', $setting->require_accept_signature)) }}
-                                {{ trans('general.yes') }}
-                            </label>
-                            {!! $errors->first('require_accept_signature', '<span class="alert-msg" aria-hidden="true">:message</span>') !!}
-                            <p class="help-block">{{ trans('admin/settings/general.require_accept_signature_help_text') }}</p>
-                        </div>
-                    </div>
-                    <!-- /.form-group -->
-
 
                     <!-- Email domain -->
                     <div class="form-group {{ $errors->has('email_domain') ? 'error' : '' }}">

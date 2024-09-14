@@ -30,13 +30,12 @@ class CheckoutLicenseSeatNotification extends Notification
      *
      * @param $params
      */
-    public function __construct(LicenseSeat $licenseSeat, $checkedOutTo, User $checkedOutBy, $acceptance, $note)
+    public function __construct(LicenseSeat $licenseSeat, $checkedOutTo, User $checkedOutBy, $note)
     {
         $this->item = $licenseSeat->license;
         $this->admin = $checkedOutBy;
         $this->note = $note;
         $this->target = $checkedOutTo;
-        $this->acceptance = $acceptance;
 
         $this->settings = Setting::getSettings();
     }
@@ -61,34 +60,6 @@ class CheckoutLicenseSeatNotification extends Notification
 
         if (Setting::getSettings()->webhook_selected == 'slack' || Setting::getSettings()->webhook_selected == 'general' ) {
             $notifyBy[] = 'slack';
-        }
-
-        /**
-         * Only send notifications to users that have email addresses
-         */
-        if ($this->target instanceof User && $this->target->email != '') {
-
-            /**
-             * Send an email if the asset requires acceptance,
-             * so the user can accept or decline the asset
-             */
-            if ($this->item->requireAcceptance()) {
-                $notifyBy[1] = 'mail';
-            }
-
-            /**
-             * Send an email if the item has a EULA, since the user should always receive it
-             */
-            if ($this->item->getEula()) {
-                $notifyBy[1] = 'mail';
-            }
-
-            /**
-             * Send an email if an email should be sent at checkin/checkout
-             */
-            if ($this->item->checkin_email()) {
-                $notifyBy[1] = 'mail';
-            }
         }
 
         return $notifyBy;
@@ -172,21 +143,7 @@ class CheckoutLicenseSeatNotification extends Notification
      */
     public function toMail()
     {
-        $eula = method_exists($this->item, 'getEula') ? $this->item->getEula() : '';
-        $req_accept = method_exists($this->item, 'requireAcceptance') ? $this->item->requireAcceptance() : 0;
 
-        $accept_url = is_null($this->acceptance) ? null : route('account.accept.item', $this->acceptance);
-
-        return (new MailMessage)->markdown('notifications.markdown.checkout-license',
-            [
-                'item'          => $this->item,
-                'admin'         => $this->admin,
-                'note'          => $this->note,
-                'target'        => $this->target,
-                'eula'          => $eula,
-                'req_accept'    => $req_accept,
-                'accept_url'    => $accept_url,
-            ])
-            ->subject(trans('mail.Confirm_license_delivery'));
+        return false;
     }
 }

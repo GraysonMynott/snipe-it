@@ -29,33 +29,4 @@
             @endif
         </div>
     </div>
-
-    <!-- Require Acceptance -->
-    <div class="form-group">
-        <div class="col-md-9 col-md-offset-3">
-            <label class="form-control">
-                {{ Form::checkbox('require_acceptance', '1', $requireAcceptance, ['wire:model.live' => 'requireAcceptance', 'aria-label'=>'require_acceptance']) }}
-                {{ trans('admin/categories/general.require_acceptance') }}
-            </label>
-        </div>
-    </div>
-
-    <!-- Email on Checkin -->
-    <div class="form-group">
-        <div class="col-md-9 col-md-offset-3">
-            <label class="form-control">
-                {{ Form::checkbox('checkin_email', '1', $sendCheckInEmail, ['wire:model.live' => 'sendCheckInEmail', 'aria-label'=>'checkin_email', 'disabled' => $this->sendCheckInEmailDisabled]) }}
-                {{ trans('admin/categories/general.checkin_email') }}
-            </label>
-            @if ($this->shouldDisplayEmailMessage)
-                <div class="callout callout-info">
-                    <i class="far fa-envelope"></i>
-                    <span>{{ $this->emailMessage }}</span>
-                </div>
-            @endif
-            @if ($this->sendCheckInEmailDisabled)
-                <input type="hidden" name="checkin_email" wire:model.live="sendCheckInEmail" />
-            @endif
-        </div>
-    </div>
 </div>
