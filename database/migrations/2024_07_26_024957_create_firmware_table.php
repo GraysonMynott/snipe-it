@@ -18,7 +18,7 @@ return new class extends Migration
 
 	    $table->string('name');					// Name
 	    $table->string('major_release');				// Major release
-	    $table->string('minor_release');->nullable();		// Minor release
+	    $table->string('minor_release')->nullable();		// Minor release
             $table->boolean('recommended')->nullable();			// Is firmware recommended?
             $table->integer('user_id')->nullable();			// User ID of creator??
             $table->integer('eol')->nullable();				// End of life date

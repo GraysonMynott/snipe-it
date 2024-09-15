@@ -652,7 +652,7 @@ class ReportsController extends Controller
                     }
 
                     if ($request->filled('title')) {
-                        row[] = '';
+                        $row[] = ''; // Empty string if unassigned
                     }
 
                     if ($request->filled('phone')) {
