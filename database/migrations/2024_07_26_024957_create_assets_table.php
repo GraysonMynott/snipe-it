@@ -17,27 +17,34 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
             
-            $table->string('name')->nullable();
-            $table->string('asset_tag')->nullable();
-            $table->integer('model_id')->nullable();
-            $table->string('serial')->nullable()->index();
-            $table->date('purchase_date')->nullable();
+            $table->string('name')->nullable();					// Name of asset
+            $table->string('asset_tag')->nullable();				// Asset tag? Remove?
+	    $table->string('serial')->nullable()->index();			// Asset serial
+            $table->text('notes')->nullable();
+            $table->text('image')->nullable();
+            $table->boolean('physical')->default(true);
+            $table->boolean('archived')->nullable()->default(false);
+            $table->string('assigned_type')->nullable();
+            $table->dateTime('last_patch_date')->nullable();			// TODO: Change to "date"
+            $table->date('next_patch_date')->nullable();
+
+	    // Links
+            $table->unsignedInteger('company_id')->nullable()->index();
+            $table->integer('model_id')->nullable();				// ID of model
+	    $table->integer('location_id')->nullable();				// ID of location
+	    $table->string('firmware_id')->nullable()->index();			// ID of firmware
+            $table->integer('user_id')->nullable();				// ID of user
+            $table->integer('status_id')->nullable();				// ID of status
+            $table->integer('rtd_location_id')->nullable()->index();		// ID of RTD location?
+
+
+	    // To delete
+	    $table->date('purchase_date')->nullable();
             $table->date('asset_eol_date')->nullable();
             $table->boolean('eol_explicit')->default(false);
             $table->integer('assigned_to')->nullable();
-            $table->text('notes')->nullable();
-            $table->text('image')->nullable();
-            $table->integer('user_id')->nullable();
-            $table->boolean('physical')->default(true);
-            $table->integer('status_id')->nullable();
-            $table->boolean('archived')->nullable()->default(false);
-            $table->integer('rtd_location_id')->nullable()->index();
-            $table->string('_snipeit_mac_address_1')->nullable();
-            $table->unsignedInteger('company_id')->nullable()->index();
-            $table->string('assigned_type')->nullable();
-            $table->dateTime('last_patch_date')->nullable();
-            $table->date('next_patch_date')->nullable();
-            $table->integer('location_id')->nullable();
+
+	    // Indexes
             $table->index(['assigned_type', 'assigned_to']);
             $table->index(['deleted_at', 'asset_tag']);
             $table->index(['deleted_at', 'assigned_type', 'assigned_to']);
@@ -45,7 +52,7 @@ return new class extends Migration
             $table->index(['deleted_at', 'model_id']);
             $table->index(['deleted_at', 'name']);
             $table->index(['deleted_at', 'rtd_location_id']);
-            $table->index(['deleted_at', 'status_id']);
+	    $table->index(['deleted_at', 'status_id']);
         });
     }
 

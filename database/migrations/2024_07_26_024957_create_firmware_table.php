@@ -11,13 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('models', function (Blueprint $table) {
+        Schema::create('firmware', function (Blueprint $table) {
             $table->increments('id');
             $table->timestamps();
             $table->softDeletes();
 
-            $table->string('name');					// Name
-            $table->string('model_number')->nullable();			// Model number/SKU
+	    $table->string('name');					// Name
+	    $table->string('major_release');				// Major release
+	    $table->string('minor_release');->nullable();		// Minor release
+            $table->boolean('recommended')->nullable();			// Is firmware recommended?
             $table->integer('user_id')->nullable();			// User ID of creator??
             $table->integer('eol')->nullable();				// End of life date
             $table->integer('eos')->nullable();				// End of support date
@@ -27,10 +29,6 @@ return new class extends Migration
 	    // Links
             $table->integer('manufacturer_id')->nullable();		// Manufacturer ID
             $table->integer('category_id')->nullable();			// Category ID
-	    
-	    $table->tinyInteger('requestable')->default(0);                 // To be removed
-            $table->integer('min_amt')->nullable();                         // To be removed
-            $table->integer('fieldset_id')->nullable();                     // To be removed?
         });
     }
 
