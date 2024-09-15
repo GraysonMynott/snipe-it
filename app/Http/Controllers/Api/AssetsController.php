@@ -147,19 +147,6 @@ class AssetsController extends Controller
                 }
                 break;
 
-            case 'checkins':
-                switch ($upcoming_status) {
-                    case 'due':
-                        $assets->DueForCheckin($settings);
-                        break;
-                    case 'overdue':
-                        $assets->OverdueForCheckin();
-                        break;
-                    case 'due-or-overdue':
-                        $assets->DueOrOverdueForCheckin($settings);
-                        break;
-                }
-                break;
             }
 
         /**

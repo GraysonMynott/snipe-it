@@ -76,7 +76,7 @@ class Asset extends SnipeModel
         'name'             => 'nullable|max:255',
         'company_id'       => 'nullable|integer|exists:companies,id',
         'last_patch_date'  => 'nullable|date_format:Y-m-d H:i:s',
-        'mac_address'      => 'nullable|regex:^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$'
+        'mac_address'      => 'nullable|regex:/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/',
         // 'next_patch_date'  => 'nullable|date|after:last_patch_date',
         'next_patch_date'  => 'nullable|date',
         'location_id'      => 'nullable|exists:locations,id',
@@ -264,23 +264,9 @@ class Asset extends SnipeModel
         //         if ($iterations > 10) {
         //             throw new \Exception('Asset assignment Loop for Asset ID: '.$first_asset->id);
         //         }
-        //         $assigned_to = self::find($this->assigned_to); //have to do this this way because otherwise it errors
-        //         if ($assigned_to) {
-        //             return $assigned_to->assetLoc($iterations + 1, $first_asset);
-        //         } // Recurse until we have a final location
-        //     }
-        //     if ($this->assignedType() == self::LOCATION) {
-        //         if ($this->assignedTo) {
-        //             return $this->assignedTo;
-        //         }
         //     }
         //     if ($this->assignedType() == self::USER) {
-        //         if (($this->assignedTo) && $this->assignedTo->userLoc) {
-        //             return $this->assignedTo->userLoc;
-        //         }
-        //         //this makes no sense
         //         return $this->defaultLoc;
-
         //     }
         // }
         return $this->defaultLoc;

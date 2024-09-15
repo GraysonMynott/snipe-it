@@ -67,8 +67,6 @@ class AssetsTransformer
                 'name'=> e($asset->defaultLoc->name),
             ] : null,
             'image' => ($asset->getImageUrl()) ? $asset->getImageUrl() : null,
-            'warranty_months' =>  ($asset->warranty_months > 0) ? e($asset->warranty_months.' '.trans('admin/hardware/form.months')) : null,
-            'warranty_expires' => ($asset->warranty_months > 0) ? Helper::getFormattedDateObject($asset->warranty_expires, 'date') : null,
             'created_at' => Helper::getFormattedDateObject($asset->created_at, 'datetime'),
             'updated_at' => Helper::getFormattedDateObject($asset->updated_at, 'datetime'),
             'last_patch_date' => Helper::getFormattedDateObject($asset->last_patch_date, 'datetime'),

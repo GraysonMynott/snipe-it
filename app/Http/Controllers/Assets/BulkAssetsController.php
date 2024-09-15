@@ -60,7 +60,8 @@ class BulkAssetsController extends Controller
             'id',
             'name',
             'asset_tag',
-            'serial',
+	    'serial',
+	    'mac_address',
             'model_number',
             'notes',
             'image',
@@ -81,7 +82,7 @@ class BulkAssetsController extends Controller
         // This handles all of the pivot sorting below (versus the assets.* fields in the allowed_columns array)
         $column_sort = in_array($sort_override, $allowed_columns) ? $sort_override : 'assets.id';
 
-        $assets = Asset::with('assignedTo', 'location', 'model')->whereIn('assets.id', $asset_ids);
+        $assets = Asset::with('location', 'model')->whereIn('assets.id', $asset_ids);
 
         $assets = $assets->get();
 

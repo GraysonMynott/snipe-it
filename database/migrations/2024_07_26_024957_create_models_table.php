@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('category_id')->nullable();
             $table->integer('user_id')->nullable();
             $table->integer('eol')->nullable();
+            $table->integer('eos')->nullable();
             $table->string('image')->nullable();
             $table->text('notes')->nullable();
             $table->tinyInteger('requestable')->default(0);                 // To be removed

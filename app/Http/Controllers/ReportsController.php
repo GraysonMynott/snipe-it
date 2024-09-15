@@ -683,11 +683,6 @@ class ReportsController extends Controller
                         $row[] = ($asset->assetstatus) ? $asset->assetstatus->name.' ('.$asset->present()->statusMeta.')' : '';
                     }
 
-                    if ($request->filled('warranty')) {
-                        $row[] = ($asset->warranty_months) ? $asset->warranty_months : '';
-                        $row[] = $asset->present()->warranty_expires();
-                    }
-
                     if ($request->filled('checkout_date')) {
                         $row[] = ($asset->last_checkout) ? $asset->last_checkout : '';
                     }

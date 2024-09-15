@@ -120,15 +120,6 @@
                                                 <strong>{{ trans('general.status') }}</strong>
                                             </div>
                                             <div class="col-md-6">
-                                                @if (($asset->assignedTo) && ($asset->deleted_at==''))
-                                                    <i class="fas fa-circle text-blue"></i>
-                                                    {{ $asset->assetstatus->name }}
-                                                    <label class="label label-default">{{ trans('general.deployed') }}</label>
-
-                                                    <i class="fas fa-long-arrow-alt-right" aria-hidden="true"></i>
-                                                    {!!  $asset->assignedTo->present()->glyph()  !!}
-                                                    {!!  $asset->assignedTo->present()->nameUrl() !!}
-                                                @else
                                                     @if (($asset->assetstatus) && ($asset->assetstatus->deployable=='1'))
                                                         <i class="fas fa-circle text-green"></i>
                                                     @elseif (($asset->assetstatus) && ($asset->assetstatus->pending=='1'))
@@ -139,7 +130,6 @@
                                                     <a href="{{ route('statuslabels.show', $asset->assetstatus->id) }}">
                                                         {{ $asset->assetstatus->name }}</a>
                                                     <label class="label label-default">{{ $asset->present()->statusMeta }}</label>
-                                                @endif
                                             </div>
                                         </div>
                                     @endif
@@ -181,7 +171,7 @@
                                         </div>
                                     @endif
 
-                                    {{-- @if ((isset($patch_log)) && ($patch_log->created_at)) --}}
+                                    @if ((isset($patch_log)) && ($patch_log->created_at)) 
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
@@ -197,7 +187,7 @@
 
                                             </div>
                                         </div>
-                                    {{-- @endif --}}
+                                    @endif
 
                                     {{-- @if ($asset->next_patch_date) --}}
                                     <div class="row">
@@ -585,71 +575,6 @@
                                         {{ trans('general.no_results') }}
                                     </div>
                                 @endif
-                            </div><!-- /col -->
-                        </div> <!-- row -->
-                    </div> <!-- /.tab-pane software -->
-
-                    <div class="tab-pane fade" id="assets">
-                        <div class="row">
-                            <div class="col-md-12">
-
-                                @if ($asset->assignedAssets->count() > 0)
-
-
-                                    {{ Form::open([
-                                              'method' => 'POST',
-                                              'route' => ['hardware/bulkedit'],
-                                              'class' => 'form-inline',
-                                               'id' => 'bulkForm']) }}
-                                    <div id="toolbar">
-                                        <label for="bulk_actions"><span class="sr-only">{{ trans('general.bulk_actions')}}</span></label>
-                                        <select name="bulk_actions" class="form-control select2" style="width: 150px;" aria-label="bulk_actions">
-                                            <option value="edit">{{ trans('button.edit') }}</option>
-                                            <option value="delete">{{ trans('button.delete')}}</option>
-                                            <option value="labels">{{ trans_choice('button.generate_labels', 2) }}</option>
-                                        </select>
-                                        <button class="btn btn-primary" id="{{ (isset($id_button)) ? $id_button : 'bulkAssetEditButton' }}" disabled>{{ trans('button.go') }}</button>
-                                    </div>
-
-                                    <!-- checked out assets table -->
-                                    <div class="table-responsive">
-
-                                        <table
-                                                data-columns="{{ \App\Presenters\AssetPresenter::dataTableLayout() }}"
-                                                data-cookie-id-table="assetsTable"
-                                                data-pagination="true"
-                                                data-id-table="assetsTable"
-                                                data-search="true"
-                                                data-side-pagination="server"
-                                                data-show-columns="true"
-                                                data-show-fullscreen="true"
-                                                data-show-export="true"
-                                                data-show-refresh="true"
-                                                data-sort-order="asc"
-                                                data-bulk-button-id="#bulkAssetEditButton"
-                                                id="assetsListingTable"
-                                                class="table table-striped snipe-table"
-                                                data-url="{{route('api.assets.index',['assigned_to' => $asset->id, 'assigned_type' => 'App\Models\Asset']) }}"
-                                                data-export-options='{
-                              "fileName": "export-assets-{{ str_slug($asset->name) }}-assets-{{ date('Y-m-d') }}",
-                              "ignoreColumn": ["actions","image","change","checkbox","icon"]
-                              }'>
-
-                                        </table>
-
-
-                                        {{ Form::close() }}
-                                    </div>
-
-                                @else
-
-                                    <div class="alert alert-info alert-block">
-                                        <i class="fas fa-info-circle"></i>
-                                        {{ trans('general.no_results') }}
-                                    </div>
-                                @endif
-
-
                             </div><!-- /col -->
                         </div> <!-- row -->
                     </div> <!-- /.tab-pane software -->
