@@ -19,8 +19,6 @@
     {{ trans('general.undeployable') }}
   @elseif (Request::get('status')=='Deployable')
     {{ trans('general.deployed') }}
-  @elseif (Request::get('status')=='Requestable')
-    {{ trans('admin/assets/general.requestable') }}
   @elseif (Request::get('status')=='Archived')
     {{ trans('general.archived') }}
   @elseif (Request::get('status')=='Deleted')

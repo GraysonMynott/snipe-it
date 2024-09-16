@@ -34,7 +34,7 @@ class AssetPresenter extends Presenter
                 'sortable' => true,
                 'switchable' => true,
                 'title' => trans('general.company'),
-                'visible' => false,
+                'visible' => true,
                 'formatter' => 'assetCompanyObjFilterFormatter',
             ], [
                 'field' => 'name',
@@ -52,14 +52,14 @@ class AssetPresenter extends Presenter
                 'visible' => true,
                 'formatter' => 'imageFormatter',
             ], [
-                'field' => 'asset_tag',
-                'searchable' => true,
-                'sortable' => true,
-                'switchable' => false,
-                'title' => trans('admin/assets/table.asset_tag'),
-                'visible' => true,
-                'formatter' => 'hardwareLinkFormatter',
-            ], [
+            //     'field' => 'asset_tag',
+            //     'searchable' => true,
+            //     'sortable' => true,
+            //     'switchable' => false,
+            //     'title' => trans('admin/assets/table.asset_tag'),
+            //     'visible' => true,
+            //     'formatter' => 'hardwareLinkFormatter',
+            // ], [
                 'field' => 'serial',
                 'searchable' => true,
                 'sortable' => true,
@@ -67,6 +67,20 @@ class AssetPresenter extends Presenter
                 'visible' => true,
                 'formatter' => 'hardwareLinkFormatter',
             ],  [
+                'field' => 'mac_address',
+                'searchable' => true,
+                'sortable' => true,
+                'title' => trans('admin/assets/form.mac_address'),
+                'visible' => true,
+                'formatter' => 'hardwareLinkFormatter',
+            ],  [
+                'field' => 'manufacturer',
+                'searchable' => true,
+                'sortable' => true,
+                'title' => trans('general.manufacturer'),
+                'visible' => true,
+                'formatter' => 'manufacturersLinkObjFormatter',
+            ], [
                 'field' => 'model',
                 'searchable' => true,
                 'sortable' => true,
@@ -108,31 +122,17 @@ class AssetPresenter extends Presenter
                 'visible' => false,
                 'formatter' => 'deployedLocationFormatter',
             ], [
-                'field' => 'manufacturer',
-                'searchable' => true,
-                'sortable' => true,
-                'title' => trans('general.manufacturer'),
-                'visible' => false,
-                'formatter' => 'manufacturersLinkObjFormatter',
-            ], [
-                'field' => 'age',
-                'searchable' => false,
-                'sortable' => false,
-                'visible' => false,
-                'title' => trans('general.age'),
-            ], [
                 'field' => 'eol',
                 'searchable' => false,
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('admin/assets/form.eol_rate'),
             ], [
-                'field' => 'asset_eol_date',
-                'searchable' => true,
+                'field' => 'eos',
+                'searchable' => false,
                 'sortable' => true,
                 'visible' => false,
-                'title' => trans('admin/assets/form.eol_date'),
-                'formatter' => 'dateDisplayFormatter',
+                'title' => trans('admin/assets/form.eol_rate'),
             ], [
                 'field' => 'notes',
                 'searchable' => true,
@@ -308,33 +308,47 @@ class AssetPresenter extends Presenter
     }
 
     /**
-     * Returns the date this item hits EOL.
+     * Returns the date this item hits EoL.
      * @return false|string
      */
     public function eol_date()
     {
-        if (($this->purchase_date) && ($this->model->model) && ($this->model->model->eol)) {
-            return CarbonImmutable::parse($this->purchase_date)->addMonths($this->model->model->eol)->format('Y-m-d');
+        if (($this->model->model) && ($this->model->model->eol)) {
+            return $this->model->model->eol->format('Y-m-d');
         }
     }
 
     /**
-     * How many months until this asset hits EOL.
-     * @return null
+     * Returns the date this item hits EoS.
+     * @return false|string
      */
-    public function months_until_eol()
+    public function eos_date()
     {
-        $today = date('Y-m-d');
-        $d1 = new DateTime($today);
-        $d2 = new DateTime($this->eol_date());
-
-        if ($this->eol_date() > $today) {
-            $interval = $d2->diff($d1);
-        } else {
-            $interval = null;
+        if (($this->model->model) && ($this->model->model->eos)) {
+            return $this->model->model->eos->format('Y-m-d');
         }
+    }
 
-        return $interval;
+    /**
+     * Returns the major firmware version.
+     * @return false|string
+     */
+    public function firmware_major()
+    {
+        if (($this->firmware->major_release) && ($this->firmware->major_release)) {
+            return $this->firmware->major_release;
+        }
+    }
+
+    /**
+     * Returns the minor firmware version.
+     * @return false|string
+     */
+    public function firmware_minor()
+    {
+        if (($this->firmware->minor_release) && ($this->firmware->minor_release)) {
+            return $this->firmware->minor_release;
+        }
     }
 
     /**
@@ -405,36 +419,6 @@ class AssetPresenter extends Presenter
         // This status doesn't seem valid - either data has been manually edited or
         // the status label was deleted.
         return 'Invalid status';
-    }
-
-    /**
-     * Date the warranty expires.
-     * @return false|string
-     */
-    public function warranty_expires()
-    {
-        if (($this->purchase_date) && ($this->warranty_months)) {
-            $date = date_create($this->purchase_date);
-            date_add($date, date_interval_create_from_date_string($this->warranty_months.' months'));
-
-            return date_format($date, 'Y-m-d');
-        }
-
-        return false;
-    }
-
-    /**
-     * Used to take user created warranty URL and dynamically fill in the needed values per asset
-     * @return string
-     */
-    public function dynamicWarrantyUrl()
-    {
-        $warranty_lookup_url = $this->model->model->manufacturer->warranty_lookup_url;
-        $url = (str_replace('{LOCALE}',\App\Models\Setting::getSettings()->locale, $warranty_lookup_url));
-        $url = (str_replace('{SERIAL}', urlencode($this->model->serial), $url));
-        $url = (str_replace('{MODEL_NAME}', urlencode($this->model->model->name), $url));
-        $url = (str_replace('{MODEL_NUMBER}', urlencode($this->model->model->model_number), $url));
-        return $url;
     }
 
     /**

@@ -40,7 +40,7 @@
               <tr>
                 <td><input type="checkbox" name="ids[]" value="{{ $asset->id }}" checked="checked"></td>
                 <td>{{ $asset->id }}</td>
-                <td>{{ $asset->present()->name() }}</td>
+                <td>{{ $asset->present()->fullName() }}</td>
                 <td>
                   @if ($asset->location)
                   {{ $asset->location->name }}
