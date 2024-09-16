@@ -314,12 +314,12 @@
                         <select style="grid-area: source-field" x-model="option.datasource">
                             <optgroup label="Asset">
                                 <option value="" disabled>{{ trans('general.select_datasource') }}</option>
-                                <option value="asset_tag">{{trans('admin/hardware/table.asset_tag')}}</option>
-                                <option value="name">{{trans('admin/hardware/form.name')}}</option>
-                                <option value="serial">{{trans('admin/hardware/table.serial')}}</option>
-                                <option value="asset_eol_date">{{trans('admin/hardware/form.eol_date')}}</option>
-                                <option value="purchase_date">{{trans('admin/hardware/table.purchase_date')}}</option>
-                                <option value="assignedTo">{{trans('admin/hardware/table.assigned_to')}}</option>
+                                <option value="asset_tag">{{trans('admin/assets/table.asset_tag')}}</option>
+                                <option value="name">{{trans('admin/assets/form.name')}}</option>
+                                <option value="serial">{{trans('admin/assets/table.serial')}}</option>
+                                <option value="asset_eol_date">{{trans('admin/assets/form.eol_date')}}</option>
+                                <option value="purchase_date">{{trans('admin/assets/table.purchase_date')}}</option>
+                                <option value="assignedTo">{{trans('admin/assets/table.assigned_to')}}</option>
                                 <option value="last_patch_date">{{trans('general.last_patch')}}</option>
                                 <option value="next_patch_date">{{trans('general.next_patch_date')}}</option>
                             </optgroup>
@@ -328,7 +328,7 @@
                                 <option value="model.model_number">{{trans('admin/models/table.modelnumber')}}</option>
                             </optgroup>
                             <optgroup label="Manufacturer">
-                                <option value="model.manufacturer.name">{{trans('admin/hardware/form.manufacturer')}}</option>
+                                <option value="model.manufacturer.name">{{trans('admin/assets/form.manufacturer')}}</option>
                                 <option value="model.manufacturer.support_email">{{trans('admin/manufacturers/table.support_email')}}</option>
                                 <option value="model.manufacturer.support_phone">{{trans('admin/manufacturers/table.support_phone')}}</option>
                                 <option value="model.manufacturer.support_url">{{trans('general.url')}}</option>
@@ -340,8 +340,8 @@
                                 <option value="assetstatus.name">{{trans('admin/statuslabels/table.name')}}</option>
                             </optgroup>
                             <optgroup label="Default Location">
-                                <option value="defaultLoc.name">{{trans('admin/hardware/form.default_location')}}</option>
-                                <option value="defaultLoc.phone">{{trans('admin/hardware/form.default_location_phone')}}</option>
+                                <option value="defaultLoc.name">{{trans('admin/assets/form.default_location')}}</option>
+                                <option value="defaultLoc.phone">{{trans('admin/assets/form.default_location_phone')}}</option>
                             </optgroup>
                             <optgroup label="Location">
                                 <option value="location.name">{{trans('admin/locations/table.name')}}</option>

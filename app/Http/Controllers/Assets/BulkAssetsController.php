@@ -47,7 +47,7 @@ class BulkAssetsController extends Controller
          * No asset IDs were passed
          */
         if (! $request->filled('ids')) {
-            return redirect()->back()->with('error', trans('admin/hardware/message.update.no_assets_selected'));
+            return redirect()->back()->with('error', trans('admin/assets/message.update.no_assets_selected'));
         }
 
         $asset_ids = $request->input('ids');
@@ -88,7 +88,7 @@ class BulkAssetsController extends Controller
 
         if ($assets->isEmpty()) {
             Log::debug('No assets were found for the provided IDs', ['ids' => $asset_ids]);
-            return redirect()->back()->with('error', trans('admin/hardware/message.update.assets_do_not_exist_or_are_invalid'));
+            return redirect()->back()->with('error', trans('admin/assets/message.update.assets_do_not_exist_or_are_invalid'));
         }
 
         $models = $assets->unique('model_id');
@@ -196,7 +196,7 @@ class BulkAssetsController extends Controller
 
      
         if (! $request->filled('ids') || count($request->input('ids')) == 0) {
-            return redirect($bulk_back_url)->with('error', trans('admin/hardware/message.update.no_assets_selected'));
+            return redirect($bulk_back_url)->with('error', trans('admin/assets/message.update.no_assets_selected'));
         }
 
 
@@ -408,10 +408,10 @@ class BulkAssetsController extends Controller
                 return redirect($bulk_back_url)->with('bulk_asset_errors', $error_array);
             }
 
-            return redirect($bulk_back_url)->with('success', trans('admin/hardware/message.update.success'));
+            return redirect($bulk_back_url)->with('success', trans('admin/assets/message.update.success'));
         }
         // no values given, nothing to update
-        return redirect($bulk_back_url)->with('warning', trans('admin/hardware/message.update.nothing_updated'));
+        return redirect($bulk_back_url)->with('warning', trans('admin/assets/message.update.nothing_updated'));
     }
 
     /**
@@ -461,11 +461,11 @@ class BulkAssetsController extends Controller
                     ->update($update_array);
             } // endforeach
 
-            return redirect($bulk_back_url)->with('success', trans('admin/hardware/message.delete.success'));
+            return redirect($bulk_back_url)->with('success', trans('admin/assets/message.delete.success'));
             // no values given, nothing to update
         }
 
-        return redirect($bulk_back_url)->with('error', trans('admin/hardware/message.delete.nothing_updated'));
+        return redirect($bulk_back_url)->with('error', trans('admin/assets/message.delete.nothing_updated'));
     }
     
     public function restore(Request $request) : RedirectResponse
@@ -474,13 +474,13 @@ class BulkAssetsController extends Controller
         $assetIds = $request->get('ids');
 
         if (empty($assetIds)) {
-            return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.restore.nothing_updated'));
+            return redirect()->route('hardware.index')->with('error', trans('admin/assets/message.restore.nothing_updated'));
         } else {
             foreach ($assetIds as $key => $assetId) {
                 $asset = Asset::withTrashed()->find($assetId);
                 $asset->restore();
             } 
-            return redirect()->route('hardware.index')->with('success', trans('admin/hardware/message.restore.success'));
+            return redirect()->route('hardware.index')->with('success', trans('admin/assets/message.restore.success'));
         }
     }
 }

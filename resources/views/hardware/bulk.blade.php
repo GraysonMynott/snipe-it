@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-{{ trans('admin/hardware/form.update') }}
+{{ trans('admin/assets/form.update') }}
 @parent
 @stop
 
@@ -17,7 +17,7 @@
 <div class="row">
   <div class="col-md-8 col-md-offset-2">
 
-    <p>{{ trans('admin/hardware/form.bulk_update_help') }}</p>
+    <p>{{ trans('admin/assets/form.bulk_update_help') }}</p>
 
 
 
@@ -37,7 +37,7 @@
 
           <!-- Purchase Date -->
           <div class="form-group {{ $errors->has('purchase_date') ? ' has-error' : '' }}">
-            <label for="purchase_date" class="col-md-3 control-label">{{ trans('admin/hardware/form.date') }}</label>
+            <label for="purchase_date" class="col-md-3 control-label">{{ trans('admin/assets/form.date') }}</label>
             <div class="col-md-4">
               <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
                 <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="purchase_date" id="purchase_date" value="{{ old('purchase_date') }}">
@@ -55,7 +55,7 @@
           </div>
           <!-- Expected Checkin Date -->
           <div class="form-group {{ $errors->has('expected_checkin') ? ' has-error' : '' }}">
-             <label for="expected_checkin" class="col-md-3 control-label">{{ trans('admin/hardware/form.expected_checkin') }}</label>
+             <label for="expected_checkin" class="col-md-3 control-label">{{ trans('admin/assets/form.expected_checkin') }}</label>
              <div class="col-md-4">
                   <div class="input-group date" data-provide="datepicker" data-date-format="yyyy-mm-dd"  data-autoclose="true">
                       <input type="text" class="form-control" placeholder="{{ trans('general.select_date') }}" name="expected_checkin" id="expected_checkin" value="{{ old('expected_checkin') }}">
@@ -76,7 +76,7 @@
           <!-- Status -->
           <div class="form-group {{ $errors->has('status_id') ? ' has-error' : '' }}">
             <label for="status_id" class="col-md-3 control-label">
-              {{ trans('admin/hardware/form.status') }}
+              {{ trans('admin/assets/form.status') }}
             </label>
             <div class="col-md-7">
               {{ Form::select('status_id', $statuslabel_list , old('status_id'), array('class'=>'select2', 'style'=>'width:100%', 'aria-label'=>'status_id')) }}
@@ -85,25 +85,25 @@
             </div>
           </div>
 
-        @include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/hardware/form.model'), 'fieldname' => 'model_id'])
+        @include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/assets/form.model'), 'fieldname' => 'model_id'])
 
           <!-- Default Location -->
-        @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.default_location'), 'fieldname' => 'rtd_location_id'])
+        @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/assets/form.default_location'), 'fieldname' => 'rtd_location_id'])
 
         <!-- Update actual location  -->
           <div class="form-group">
             <div class="col-md-9 col-md-offset-3">
                 <label class="form-control">
                   {{ Form::radio('update_real_loc', '1', old('update_real_loc'), ['checked'=> 'checked', 'aria-label'=>'update_real_loc']) }}
-                  {{ trans('admin/hardware/form.asset_location_update_default_current') }}
+                  {{ trans('admin/assets/form.asset_location_update_default_current') }}
                 </label>
               <label class="form-control">
                 {{ Form::radio('update_real_loc', '0', old('update_real_loc'), ['aria-label'=>'update_default_loc']) }}
-                {{ trans('admin/hardware/form.asset_location_update_default') }}
+                {{ trans('admin/assets/form.asset_location_update_default') }}
               </label>
                 <label class="form-control">
                   {{ Form::radio('update_real_loc', '2', old('update_real_loc'), ['aria-label'=>'update_default_loc']) }}
-                  {{ trans('admin/hardware/form.asset_location_update_actual') }}
+                  {{ trans('admin/assets/form.asset_location_update_actual') }}
                 </label>
 
             </div>

@@ -84,7 +84,7 @@ class LicenseFilesController extends Controller
                 $log->delete();
 
                 return redirect()->back()
-                    ->with('success', trans('admin/hardware/message.deletefile.success'));
+                    ->with('success', trans('admin/assets/message.deletefile.success'));
             }
 
             return redirect()->route('licenses.index')->with('error', trans('general.log_does_not_exist'));

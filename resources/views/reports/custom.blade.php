@@ -53,7 +53,7 @@
 
               <label class="form-control">
                 {{ Form::checkbox('asset_name', '1', '1') }}
-                {{ trans('admin/hardware/form.name') }}
+                {{ trans('admin/assets/form.name') }}
               </label>
 
               <label class="form-control">
@@ -73,7 +73,7 @@
 
               <label class="form-control">
                 {{ Form::checkbox('serial', '1', '1') }}
-                {{ trans('admin/hardware/table.serial') }}
+                {{ trans('admin/assets/table.serial') }}
               </label>
 
               <label class="form-control">
@@ -83,12 +83,12 @@
 
               <label class="form-control">
                 {{ Form::checkbox('eol', '1', '1') }}
-                {{ trans('admin/hardware/table.eol') }}
+                {{ trans('admin/assets/table.eol') }}
               </label>
 
               <label class="form-control">
                 {{ Form::checkbox('order', '1', '1') }}
-                {{ trans('admin/hardware/form.order') }}
+                {{ trans('admin/assets/form.order') }}
               </label>
 
               <label class="form-control">
@@ -103,7 +103,7 @@
 
               <label class="form-control">
                 {{ Form::checkbox('rtd_location', '1', '1') }}
-                {{ trans('admin/hardware/form.default_location') }}
+                {{ trans('admin/assets/form.default_location') }}
               </label>
 
               <label class="form-control">
@@ -118,22 +118,22 @@
 
               <label class="form-control">
                 {{ Form::checkbox('warranty', '1', '1') }}
-                {{ trans('admin/hardware/form.warranty') }}
+                {{ trans('admin/assets/form.warranty') }}
               </label>
 
               <label class="form-control">
                 {{ Form::checkbox('checkout_date', '1', '1') }}
-                {{ trans('admin/hardware/table.checkout_date') }}
+                {{ trans('admin/assets/table.checkout_date') }}
               </label>
 
               <label class="form-control">
                 {{ Form::checkbox('checkin_date', '1', '1') }}
-                {{ trans('admin/hardware/table.last_checkin_date') }}
+                {{ trans('admin/assets/table.last_checkin_date') }}
               </label>
 
               <label class="form-control">
                 {{ Form::checkbox('expected_checkin', '1', '1') }}
-                {{ trans('admin/hardware/form.expected_checkin') }}
+                {{ trans('admin/assets/form.expected_checkin') }}
               </label>
 
               <label class="form-control">
@@ -260,11 +260,11 @@
 
             @include ('partials.forms.edit.company-select', ['translated_name' => trans('general.company'),'multiple' => 'true', 'fieldname' => 'by_company_id[]', 'hide_new' => 'true'])
             @include ('partials.forms.edit.location-select', ['translated_name' => trans('general.location'), 'multiple' => 'true', 'fieldname' => 'by_location_id[]', 'hide_new' => 'true'])
-            @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.default_location'), 'multiple' => 'true', 'fieldname' => 'by_rtd_location_id[]', 'hide_new' => 'true'])
+            @include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/assets/form.default_location'), 'multiple' => 'true', 'fieldname' => 'by_rtd_location_id[]', 'hide_new' => 'true'])
             @include ('partials.forms.edit.model-select', ['translated_name' => trans('general.asset_model'), 'fieldname' => 'by_model_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
             @include ('partials.forms.edit.manufacturer-select', ['translated_name' => trans('general.manufacturer'), 'fieldname' => 'by_manufacturer_id', 'hide_new' => 'true'])
             @include ('partials.forms.edit.category-select', ['translated_name' => trans('general.category'), 'fieldname' => 'by_category_id', 'hide_new' => 'true', 'category_type' => 'asset'])
-            @include ('partials.forms.edit.status-select', ['translated_name' => trans('admin/hardware/form.status'), 'fieldname' => 'by_status_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
+            @include ('partials.forms.edit.status-select', ['translated_name' => trans('admin/assets/form.status'), 'fieldname' => 'by_status_id[]', 'multiple' => 'true', 'hide_new' => 'true'])
 
             <!-- Purchase Date -->
             <div class="form-group purchase-range{{ ($errors->has('purchase_start') || $errors->has('purchase_end')) ? ' has-error' : '' }}">
@@ -321,7 +321,7 @@
 
           <!-- Last Checkin Date -->
           <div class="form-group checkin-range{{ ($errors->has('checkin_date_start') || $errors->has('checkin_date_end')) ? ' has-error' : '' }}">
-              <label for="checkin_date" class="col-md-3 control-label">{{ trans('admin/hardware/table.last_checkin_date') }}</label>
+              <label for="checkin_date" class="col-md-3 control-label">{{ trans('admin/assets/table.last_checkin_date') }}</label>
               <div class="input-daterange input-group col-md-7" id="datepicker">
                   <input type="text" class="form-control" name="checkin_date_start" aria-label="checkin_date_start" value="{{ old('checkin_date_start') }}">
                   <span class="input-group-addon">{{ strtolower(trans('general.to')) }}</span>
@@ -338,7 +338,7 @@
 
             <!-- Expected Checkin Date -->
             <div class="form-group expected_checkin-range{{ ($errors->has('expected_checkin_start') || $errors->has('expected_checkin_end')) ? ' has-error' : '' }}">
-              <label for="expected_checkin_start" class="col-md-3 control-label">{{ trans('admin/hardware/form.expected_checkin') }}</label>
+              <label for="expected_checkin_start" class="col-md-3 control-label">{{ trans('admin/assets/form.expected_checkin') }}</label>
               <div class="input-daterange input-group col-md-7" id="datepicker">
                 <input type="text" class="form-control" name="expected_checkin_start" aria-label="expected_checkin_start" value="{{ old('expected_checkin_start') }}">
                 <span class="input-group-addon">to</span>

@@ -390,19 +390,19 @@
                                 <div class="col-md-9">
                                         <label class="form-control">
                                             {{ Form::checkbox('labels_display_name', '1', old('labels_display_name',   $setting->labels_display_name),['class' => 'minimal', 'aria-label'=>'labels_display_name']) }}
-                                            {{ trans('admin/hardware/form.name') }}
+                                            {{ trans('admin/assets/form.name') }}
                                         </label>
                                         <label class="form-control">
                                             {{ Form::checkbox('labels_display_serial', '1', old('labels_display_serial',   $setting->labels_display_serial),['class' => 'minimal', 'aria-label'=>'labels_display_serial']) }}
-                                            {{ trans('admin/hardware/form.serial') }}
+                                            {{ trans('admin/assets/form.serial') }}
                                         </label>
                                         <label class="form-control">
                                             {{ Form::checkbox('labels_display_tag', '1', old('labels_display_tag',   $setting->labels_display_tag),['class' => 'minimal', 'aria-label'=>'labels_display_tag']) }}
-                                            {{ trans('admin/hardware/form.tag') }}
+                                            {{ trans('admin/assets/form.tag') }}
                                         </label>
                                         <label class="form-control">
                                             {{ Form::checkbox('labels_display_model', '1', old('labels_display_model',   $setting->labels_display_model),['class' => 'minimal', 'aria-label'=>'labels_display_model']) }}
-                                            {{ trans('admin/hardware/form.model') }}
+                                            {{ trans('admin/assets/form.model') }}
                                         </label>
                                         <label class="form-control">
                                             {{ Form::checkbox('labels_display_company_name', '1', old('labels_display_company_name',   $setting->labels_display_company_name),['class' => 'minimal', 'aria-label'=>'labels_display_company_name']) }}

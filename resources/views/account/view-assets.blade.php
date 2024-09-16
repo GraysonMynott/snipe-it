@@ -351,11 +351,11 @@
                       <th class="col-md-1">#</th>
                       <th class="col-md-1">{{ trans('general.image') }}</th>
                       <th class="col-md-2" data-switchable="true" data-visible="true">{{ trans('general.category') }}</th>
-                      <th class="col-md-2" data-switchable="true" data-visible="true">{{ trans('admin/hardware/table.asset_tag') }}</th>
+                      <th class="col-md-2" data-switchable="true" data-visible="true">{{ trans('admin/assets/table.asset_tag') }}</th>
                       <th class="col-md-2" data-switchable="true" data-visible="true">{{ trans('general.name') }}</th>
-                      <th class="col-md-2" data-switchable="true" data-visible="true">{{ trans('admin/hardware/table.asset_model') }}</th>
-                      <th class="col-md-3" data-switchable="true" data-visible="true">{{ trans('admin/hardware/table.serial') }}</th>
-                      <th class="col-md-2" data-switchable="true" data-visible="false">{{ trans('admin/hardware/form.default_location') }}</th>
+                      <th class="col-md-2" data-switchable="true" data-visible="true">{{ trans('admin/assets/table.asset_model') }}</th>
+                      <th class="col-md-3" data-switchable="true" data-visible="true">{{ trans('admin/assets/table.serial') }}</th>
+                      <th class="col-md-2" data-switchable="true" data-visible="false">{{ trans('admin/assets/form.default_location') }}</th>
                       @foreach ($field_array as $db_column => $field_name)
                         <th class="col-md-1" data-switchable="true" data-visible="true">{{ $field_name }}</th>
                       @endforeach

@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-{{ trans('admin/hardware/form.bulk_restore') }}
+{{ trans('admin/assets/form.bulk_restore') }}
 @parent
 @stop
 
@@ -16,12 +16,12 @@
 <div class="row">
   <!-- left column -->
   <div class="col-md-12">
-    <p>{{ trans('admin/hardware/form.bulk_restore_help') }}</p>
+    <p>{{ trans('admin/assets/form.bulk_restore_help') }}</p>
     <form class="form-horizontal" method="post" action="{{ route('hardware/bulkrestore') }}" autocomplete="off" role="form">
       {{csrf_field()}}
       <div class="box box-default">
         <div class="box-header with-border">
-          <h2 class="box-title" style="color: red">{{ trans('admin/hardware/form.bulk_restore_warn', ['asset_count' => count($assets)]) }}</h2>
+          <h2 class="box-title" style="color: red">{{ trans('admin/assets/form.bulk_restore_warn', ['asset_count' => count($assets)]) }}</h2>
         </div>
 
         <div class="box-body">
@@ -29,9 +29,9 @@
             <thead>
               <tr>
                 <td></td>
-                <td>{{ trans('admin/hardware/table.id') }}</td>
-                <td>{{ trans('admin/hardware/form.name') }}</td>
-                <td>{{ trans('admin/hardware/table.location')}}</td>
+                <td>{{ trans('admin/assets/table.id') }}</td>
+                <td>{{ trans('admin/assets/form.name') }}</td>
+                <td>{{ trans('admin/assets/table.location')}}</td>
               </tr>
             </thead>
             <tbody>

@@ -85,7 +85,7 @@
                 @if ($license->manufacturer)
                   <div class="row">
                     <div class="col-md-3">
-                      <strong>{{ trans('admin/hardware/form.manufacturer') }}</strong>
+                      <strong>{{ trans('admin/assets/form.manufacturer') }}</strong>
                     </div>
                     <div class="col-md-9">
                       @can('view', \App\Models\Manufacturer::class)

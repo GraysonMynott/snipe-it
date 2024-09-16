@@ -36,8 +36,8 @@
                             <th data-field="name">{{ trans('general.item_name') }}</th>
                             <th data-field="type">{{ trans('general.type') }}</th>
                             <th data-field="qty">{{ trans('general.qty') }}</th>
-                            <th data-field="location">{{ trans('admin/hardware/table.location') }}</th>
-                            <th data-field="expected_checkin" data-formatter="dateDisplayFormatter"> {{ trans('admin/hardware/form.expected_checkin') }}</th>
+                            <th data-field="location">{{ trans('admin/assets/table.location') }}</th>
+                            <th data-field="expected_checkin" data-formatter="dateDisplayFormatter"> {{ trans('admin/assets/form.expected_checkin') }}</th>
                             <th data-field="request_date" data-formatter="dateDisplayFormatter"> {{ trans('general.requested_date') }}</th>
 
                             @foreach(\App\Models\CustomField::get() as $field)

@@ -1,8 +1,8 @@
 {{-- Hardware/Asset Create/Edit Page --}}
 
 @extends('layouts/edit-form', [
-    'createText' => trans('admin/hardware/form.create'),
-    'updateText' => trans('admin/hardware/form.update'),
+    'createText' => trans('admin/assets/form.create'),
+    'updateText' => trans('admin/assets/form.update'),
     'topSubmit' => true,
     'helpText' => trans('help.assets'),
     'helpPosition' => 'right',
@@ -14,14 +14,14 @@
 @section('inputFields')
     
 <!-- Asset Name -->
-@include ('partials.forms.edit.name', ['translated_name' => trans('admin/hardware/form.name')])
+@include ('partials.forms.edit.name', ['translated_name' => trans('admin/assets/form.name')])
 
 <!-- Company Select -->
 @include ('partials.forms.edit.company-select', ['translated_name' => trans('general.company'), 'fieldname' => 'company_id'])
 
 <!-- Asset Tag -->
 <div class="form-group {{ $errors->has('asset_tag') ? ' has-error' : '' }}">
-    <label for="asset_tag" class="col-md-3 control-label">{{ trans('admin/hardware/form.tag') }}</label>
+    <label for="asset_tag" class="col-md-3 control-label">{{ trans('admin/assets/form.tag') }}</label>
 
     @if  ($item->id)
         <!-- we are editing an existing asset,  there will be only one asset tag -->
@@ -47,13 +47,13 @@
 </div>
 
 <!-- Asset Serial -->
-@include ('partials.forms.edit.serial', ['fieldname'=> 'serials[1]', 'old_val_name' => 'serials.1', 'translated_serial' => trans('admin/hardware/form.serial')])
+@include ('partials.forms.edit.serial', ['fieldname'=> 'serials[1]', 'old_val_name' => 'serials.1', 'translated_serial' => trans('admin/assets/form.serial')])
 
 <!-- Asset MAC Address -->
-@include ('partials.forms.edit.mac-address', ['fieldname'=> 'mac_address', 'old_val_name' => 'mac_address.1', 'translated_mac_address' => trans('admin/hardware/form.mac_address')])
+@include ('partials.forms.edit.mac-address', ['fieldname'=> 'mac_address', 'old_val_name' => 'mac_address.1', 'translated_mac_address' => trans('admin/assets/form.mac_address')])
 
 <!-- Asset Model -->
-@include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/hardware/form.model'), 'fieldname' => 'model_id', 'field_req' => true])
+@include ('partials.forms.edit.model-select', ['translated_name' => trans('admin/assets/form.model'), 'fieldname' => 'model_id', 'field_req' => true])
 
 <!-- Asset Status -->
 @include ('partials.forms.edit.status', [ 'required' => 'true'])
@@ -62,7 +62,7 @@
 @include ('partials.forms.edit.notes')
 
 <!-- Asset Location -->
-@include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/hardware/form.default_location'), 'fieldname' => 'rtd_location_id', 'help_text' => trans('general.rtd_location_help')])
+@include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/assets/form.default_location'), 'fieldname' => 'rtd_location_id', 'help_text' => trans('general.rtd_location_help')])
 
 @stop
 
@@ -143,7 +143,7 @@
                         $("#selected_status_status").removeClass('text-danger');
                         $("#selected_status_status").removeClass('text-warning');
                         $("#selected_status_status").addClass('text-success');
-                        $("#selected_status_status").html('<i class="fas fa-check"></i> {{ trans('admin/hardware/form.asset_deployable')}}');
+                        $("#selected_status_status").html('<i class="fas fa-check"></i> {{ trans('admin/assets/form.asset_deployable')}}');
 
 
                     } else {
@@ -151,7 +151,7 @@
                         $("#selected_status_status").removeClass('text-danger');
                         $("#selected_status_status").removeClass('text-success');
                         $("#selected_status_status").addClass('text-warning');
-                        $("#selected_status_status").html('<i class="fas fa-exclamation-triangle"></i> {{ trans('admin/hardware/form.asset_not_deployable')}} ');
+                        $("#selected_status_status").html('<i class="fas fa-exclamation-triangle"></i> {{ trans('admin/assets/form.asset_not_deployable')}} ');
                     }
                 }
             });
@@ -205,7 +205,7 @@
                 x++; //text box increment
 
                 box_html += '<span class="fields_wrapper">';
-                box_html += '<div class="form-group"><label for="asset_tag" class="col-md-3 control-label">{{ trans('admin/hardware/form.tag') }} ' + x + '</label>';
+                box_html += '<div class="form-group"><label for="asset_tag" class="col-md-3 control-label">{{ trans('admin/assets/form.tag') }} ' + x + '</label>';
                 box_html += '<div class="col-md-7 col-sm-12 required">';
                 box_html += '<input type="text"  class="form-control" name="asset_tags[' + x + ']" value="{{ (($snipeSettings->auto_increment_prefix!='') && ($snipeSettings->auto_increment_assets=='1')) ? $snipeSettings->auto_increment_prefix : '' }}'+ auto_tag +'" required>';
                 box_html += '</div>';
@@ -214,7 +214,7 @@
                 box_html += '</div>';
                 box_html += '</div>';
                 box_html += '</div>';
-                box_html += '<div class="form-group"><label for="serial" class="col-md-3 control-label">{{ trans('admin/hardware/form.serial') }} ' + x + '</label>';
+                box_html += '<div class="form-group"><label for="serial" class="col-md-3 control-label">{{ trans('admin/assets/form.serial') }} ' + x + '</label>';
                 box_html += '<div class="col-md-7 col-sm-12">';
                 box_html += '<input type="text"  class="form-control" name="serials[' + x + ']">';
                 box_html += '</div>';

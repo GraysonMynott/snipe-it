@@ -116,7 +116,7 @@
               case 'deployable':
                   text_color = 'green';
                   icon_style = 'fa-circle';
-                  trans  = '{{ strtolower(trans('admin/hardware/general.deployable')) }}';
+                  trans  = '{{ strtolower(trans('admin/assets/general.deployable')) }}';
 
                   break;
               case 'pending':

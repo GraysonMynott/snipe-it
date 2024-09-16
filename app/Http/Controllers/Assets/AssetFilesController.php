@@ -29,7 +29,7 @@ class AssetFilesController extends Controller
     public function store(UploadFileRequest $request, $assetId = null) : RedirectResponse
     {
         if (! $asset = Asset::find($assetId)) {
-            return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.does_not_exist'));
+            return redirect()->route('hardware.index')->with('error', trans('admin/assets/message.does_not_exist'));
         }
 
         $this->authorize('update', $asset);
@@ -45,10 +45,10 @@ class AssetFilesController extends Controller
                 $asset->logUpload($file_name, $request->get('notes'));
             }
 
-            return redirect()->back()->with('success', trans('admin/hardware/message.upload.success'));
+            return redirect()->back()->with('success', trans('admin/assets/message.upload.success'));
         }
 
-        return redirect()->back()->with('error', trans('admin/hardware/message.upload.nofiles'));
+        return redirect()->back()->with('error', trans('admin/assets/message.upload.nofiles'));
     }
 
     /**
@@ -94,7 +94,7 @@ class AssetFilesController extends Controller
             return StorageHelper::downloader($file);
         }
         // Prepare the error message
-        $error = trans('admin/hardware/message.does_not_exist', ['id' => $fileId]);
+        $error = trans('admin/assets/message.does_not_exist', ['id' => $fileId]);
 
         // Redirect to the hardware management page
         return redirect()->route('hardware.index')->with('error', $error);
@@ -124,13 +124,13 @@ class AssetFilesController extends Controller
                 }
                 $log->delete();
 
-                return redirect()->back()->with('success', trans('admin/hardware/message.deletefile.success'));
+                return redirect()->back()->with('success', trans('admin/assets/message.deletefile.success'));
             }
 
             return redirect()->back()
-                ->with('success', trans('admin/hardware/message.deletefile.success'));
+                ->with('success', trans('admin/assets/message.deletefile.success'));
         }
 
-        return redirect()->route('hardware.index')->with('error', trans('admin/hardware/message.does_not_exist'));
+        return redirect()->route('hardware.index')->with('error', trans('admin/assets/message.does_not_exist'));
     }
 }

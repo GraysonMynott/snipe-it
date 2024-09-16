@@ -108,14 +108,14 @@
             <thead>
                 <th data-field="asset_id" data-sortable="false" data-visible="true" data-switchable="false">#</th>
                 <th data-field="asset_image" data-sortable="true" data-visible="false" data-switchable="true">{{ trans('general.image') }}</th>
-                <th data-field="asset_tag" data-sortable="true" data-visible="true" data-switchable="false">{{ trans('admin/hardware/table.asset_tag') }}</th>
+                <th data-field="asset_tag" data-sortable="true" data-visible="true" data-switchable="false">{{ trans('admin/assets/table.asset_tag') }}</th>
                 <th data-field="asset_name" data-sortable="true" data-visible="true">{{ trans('general.name') }}</th>
                 <th data-field="asset_category" data-sortable="true" data-visible="true">{{ trans('general.category') }}</th>
-                <th data-field="asset_model" data-sortable="true" data-visible="true">{{ trans('admin/hardware/form.model') }}</th>
-                <th data-field="rtd_location" data-sortable="true" data-visible="true">{{ trans('admin/hardware/form.default_location') }}</th>
+                <th data-field="asset_model" data-sortable="true" data-visible="true">{{ trans('admin/assets/form.model') }}</th>
+                <th data-field="rtd_location" data-sortable="true" data-visible="true">{{ trans('admin/assets/form.default_location') }}</th>
                 <th data-field="asset_location" data-sortable="true" data-visible="false">{{ trans('general.location') }}</th>
-                <th data-field="asset_serial" data-sortable="true" data-visible="true">{{ trans('admin/hardware/form.serial') }}</th>
-                <th data-field="asset_checkout_date" data-sortable="true" data-visible="true">{{ trans('admin/hardware/table.checkout_date') }}</th>
+                <th data-field="asset_serial" data-sortable="true" data-visible="true">{{ trans('admin/assets/form.serial') }}</th>
+                <th data-field="asset_checkout_date" data-sortable="true" data-visible="true">{{ trans('admin/assets/table.checkout_date') }}</th>
             </thead>
             <tbody>
             @foreach ($assets as $asset)
@@ -195,7 +195,7 @@
                 <th style="width: 20px;" data-sortable="false" data-switchable="false">#</th>
                 <th style="width: 40%;" data-sortable="true" data-switchable="false">{{ trans('general.name') }}</th>
                 <th style="width: 50%;" data-sortable="true">{{ trans('admin/licenses/form.license_key') }}</th>
-                <th style="width: 10%;" data-sortable="true">{{ trans('admin/hardware/table.checkout_date') }}</th>
+                <th style="width: 10%;" data-sortable="true">{{ trans('admin/assets/table.checkout_date') }}</th>
             </tr>
             </thead>
             @php

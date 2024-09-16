@@ -69,7 +69,7 @@ class LocationPresenter extends Presenter
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
-                'title' =>  trans('admin/hardware/form.default_location'),
+                'title' =>  trans('admin/assets/form.default_location'),
                 'visible' => false,
             ],
 

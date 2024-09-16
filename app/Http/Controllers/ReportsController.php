@@ -59,10 +59,10 @@ class ReportsController extends Controller
 
         // Create the header row
         $header = [
-            trans('admin/hardware/table.asset_tag'),
-            trans('admin/hardware/table.title'),
-            trans('admin/hardware/table.serial'),
-            trans('admin/hardware/table.location'),
+            trans('admin/assets/table.asset_tag'),
+            trans('admin/assets/table.title'),
+            trans('admin/assets/table.serial'),
+            trans('admin/assets/table.location'),
         ];
 
         //we insert the CSV header
@@ -333,15 +333,15 @@ class ReportsController extends Controller
             }
 
             if ($request->filled('asset_name')) {
-                $header[] = trans('admin/hardware/form.name');
+                $header[] = trans('admin/assets/form.name');
             }
 
             if ($request->filled('asset_tag')) {
-                $header[] = trans('admin/hardware/table.asset_tag');
+                $header[] = trans('admin/assets/table.asset_tag');
             }
 
             if ($request->filled('model')) {
-                $header[] = trans('admin/hardware/form.model');
+                $header[] = trans('admin/assets/form.model');
                 $header[] = trans('general.model_no');
             }
 
@@ -350,23 +350,23 @@ class ReportsController extends Controller
             }
 
             if ($request->filled('manufacturer')) {
-                $header[] = trans('admin/hardware/form.manufacturer');
+                $header[] = trans('admin/assets/form.manufacturer');
             }
 
             if ($request->filled('serial')) {
-                $header[] = trans('admin/hardware/table.serial');
+                $header[] = trans('admin/assets/table.serial');
             }
 
             if ($request->filled('eol')) {
-                $header[] = trans('admin/hardware/table.eol');
+                $header[] = trans('admin/assets/table.eol');
             }
 
             if ($request->filled('order')) {
-                $header[] = trans('admin/hardware/form.order');
+                $header[] = trans('admin/assets/form.order');
             }
 
             if ($request->filled('location')) {
-                $header[] = trans('admin/hardware/table.location');
+                $header[] = trans('admin/assets/table.location');
             }
             if ($request->filled('location_address')) {
                 $header[] = trans('general.address');
@@ -378,7 +378,7 @@ class ReportsController extends Controller
             }
 
             if ($request->filled('rtd_location')) {
-                $header[] = trans('admin/hardware/form.default_location');
+                $header[] = trans('admin/assets/form.default_location');
             }
             
             if ($request->filled('rtd_location_address')) {

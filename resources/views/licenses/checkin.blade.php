@@ -28,7 +28,7 @@
 
             <!-- license name -->
             <div class="form-group">
-                <label class="col-sm-2 control-label">{{ trans('admin/hardware/form.name') }}</label>
+                <label class="col-sm-2 control-label">{{ trans('admin/assets/form.name') }}</label>
                 <div class="col-md-6">
                     <p class="form-control-static">{{ $licenseSeat->license->name }}</p>
                 </div>
@@ -50,7 +50,7 @@
 
             <!-- Note -->
             <div class="form-group {{ $errors->has('notes') ? 'error' : '' }}">
-                <label for="note" class="col-md-2 control-label">{{ trans('admin/hardware/form.notes') }}</label>
+                <label for="note" class="col-md-2 control-label">{{ trans('admin/assets/form.notes') }}</label>
                 <div class="col-md-7">
                     <textarea class="col-md-6 form-control" id="notes" name="notes"></textarea>
                     {!! $errors->first('notes', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}

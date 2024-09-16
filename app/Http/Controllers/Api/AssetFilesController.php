@@ -38,7 +38,7 @@ class AssetFilesController extends Controller
     {
         // Start by checking if the asset being acted upon exists
         if (! $asset = Asset::find($assetId)) {
-            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 404);
+            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 404);
         }
 
         // Make sure we are allowed to update this asset
@@ -58,11 +58,11 @@ class AssetFilesController extends Controller
             }
 
             // All done - report success
-            return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/hardware/message.upload.success')));
+            return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/assets/message.upload.success')));
         }
 
         // We only reach here if no files were included in the POST, so tell the user this
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.upload.nofiles')), 500);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.upload.nofiles')), 500);
     }
 
     /**
@@ -76,7 +76,7 @@ class AssetFilesController extends Controller
     {
         // Start by checking if the asset being acted upon exists
         if (! $asset = Asset::find($assetId)) {
-            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 404);
+            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 404);
         }
 	
 	// the asset is valid
@@ -90,15 +90,15 @@ class AssetFilesController extends Controller
                     array_push($files, $upload);
 		}
                 // Give the list of files back to the user
-                return response()->json(Helper::formatStandardApiResponse('success', $files, trans('admin/hardware/message.upload.success')));
+                return response()->json(Helper::formatStandardApiResponse('success', $files, trans('admin/assets/message.upload.success')));
             }
 
 	    // There are no files.
-            return response()->json(Helper::formatStandardApiResponse('success', array(), trans('admin/hardware/message.upload.success')));
+            return response()->json(Helper::formatStandardApiResponse('success', array(), trans('admin/assets/message.upload.success')));
         }
 
         // Send back an error message
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.download.error')), 500);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.download.error')), 500);
     }
 
     /**
@@ -115,7 +115,7 @@ class AssetFilesController extends Controller
     {
         // Start by checking if the asset being acted upon exists
         if (! $asset = Asset::find($assetId)) {
-            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 404);
+            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 404);
         }
 
         // the asset is valid
@@ -124,7 +124,7 @@ class AssetFilesController extends Controller
 
             // Check that the file being requested exists for the asset
             if (! $log = Actionlog::whereNotNull('filename')->where('item_id', $asset->id)->find($fileId)) {
-                return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.download.no_match', ['id' => $fileId])), 404);
+                return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.download.no_match', ['id' => $fileId])), 404);
             }
 
 	    // Form the full filename with path
@@ -137,7 +137,7 @@ class AssetFilesController extends Controller
 
             // Check the file actually exists on the filesystem
             if (! Storage::exists($file)) {
-                return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.download.does_not_exist', ['id' => $fileId])), 404);
+                return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.download.does_not_exist', ['id' => $fileId])), 404);
             }
 
             if (request('inline') == 'true') {
@@ -153,7 +153,7 @@ class AssetFilesController extends Controller
         }
 
         // Send back an error message
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.download.error', ['id' => $fileId])), 500);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.download.error', ['id' => $fileId])), 500);
     }
 
     /**
@@ -168,7 +168,7 @@ class AssetFilesController extends Controller
     {
         // Start by checking if the asset being acted upon exists
         if (! $asset = Asset::find($assetId)) {
-            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 404);
+            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 404);
         }
 
         $rel_path = 'private_uploads/assets';
@@ -188,13 +188,13 @@ class AssetFilesController extends Controller
                 $log->delete();
 
                 // All deleting done - notify the user of success
-                return response()->json(Helper::formatStandardApiResponse('success', null, trans('admin/hardware/message.deletefile.success')), 200);
+                return response()->json(Helper::formatStandardApiResponse('success', null, trans('admin/assets/message.deletefile.success')), 200);
             }
 
             // The file doesn't seem to really exist, so report an error
-            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.deletefile.error')), 500);
+            return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.deletefile.error')), 500);
         }
 
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.deletefile.error')), 500);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.deletefile.error')), 500);
     }
 }

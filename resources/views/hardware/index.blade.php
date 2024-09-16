@@ -20,7 +20,7 @@
   @elseif (Request::get('status')=='Deployable')
     {{ trans('general.deployed') }}
   @elseif (Request::get('status')=='Requestable')
-    {{ trans('admin/hardware/general.requestable') }}
+    {{ trans('admin/assets/general.requestable') }}
   @elseif (Request::get('status')=='Archived')
     {{ trans('general.archived') }}
   @elseif (Request::get('status')=='Deleted')
@@ -40,7 +40,7 @@
 
 @section('header_right')
   <a href="{{ route('reports/custom') }}" style="margin-right: 5px;" class="btn btn-default">
-    {{ trans('admin/hardware/general.custom_export') }}</a>
+    {{ trans('admin/assets/general.custom_export') }}</a>
   @can('create', \App\Models\Asset::class)
   <a href="{{ route('hardware.create') }}" accesskey="n" class="btn btn-primary pull-right"></i> {{ trans('general.create') }}</a>
   @endcan

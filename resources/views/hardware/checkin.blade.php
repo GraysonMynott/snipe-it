@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-  {{ trans('admin/hardware/general.checkin') }}
+  {{ trans('admin/assets/general.checkin') }}
   @parent
 @stop
 
@@ -22,7 +22,7 @@
       <div class="box box-default"><!-- .box-default -->
         <div class="box-header with-border"><!-- .box-header -->
             <h2 class="box-title">
-              {{ trans('admin/hardware/form.tag') }}
+              {{ trans('admin/assets/form.tag') }}
               {{ $asset->asset_tag }}
             </h2>
         </div><!-- /.box-header -->
@@ -40,7 +40,7 @@
                   <!-- AssetModel name -->
                     <div class="form-group">
                         <label for="model" class="col-sm-3 control-label">
-                            {{ trans('admin/hardware/form.model') }}
+                            {{ trans('admin/assets/form.model') }}
                         </label>
                         <div class="col-md-8">
 
@@ -50,11 +50,11 @@
                           @else
                             <span class="text-danger text-bold">
                               <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                              {{ trans('admin/hardware/general.model_invalid')}}
+                              {{ trans('admin/assets/general.model_invalid')}}
                             </span>
-                            {{ trans('admin/hardware/general.model_invalid_fix')}}
+                            {{ trans('admin/assets/general.model_invalid_fix')}}
                             <a href="{{ route('hardware.edit', $asset->id) }}">
-                              <strong>{{ trans('admin/hardware/general.edit') }}</strong>
+                              <strong>{{ trans('admin/assets/general.edit') }}</strong>
                             </a>
                           @endif
                         </p>
@@ -76,7 +76,7 @@
                     <!-- Status -->
                     <div class="form-group {{ $errors->has('status_id') ? 'error' : '' }}">
                         <label for="status_id" class="col-sm-3 control-label">
-                            {{ trans('admin/hardware/form.status') }}
+                            {{ trans('admin/assets/form.status') }}
                         </label>
                       <div class="col-md-8 required">
                         {{ Form::select('status_id', $statusLabel_list, '', array('class'=>'select2', 'style'=>'width:100%','id' =>'modal-statuslabel_types', 'aria-label'=>'status_id')) }}
@@ -89,7 +89,7 @@
                   <!-- Checkout/Checkin Date -->
                     <div class="form-group{{ $errors->has('checkin_at') ? ' has-error' : '' }}">
                         <label for="checkin_at" class="col-sm-3 control-label">
-                            {{ trans('admin/hardware/form.checkin_date') }}
+                            {{ trans('admin/assets/form.checkin_date') }}
                         </label>
 
                       <div class="col-md-8">

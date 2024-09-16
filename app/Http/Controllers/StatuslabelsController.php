@@ -102,7 +102,7 @@ class StatuslabelsController extends Controller
 
         $use_statuslabel_type = $item->getStatuslabelType();
 
-        $statuslabel_types = ['' => trans('admin/hardware/form.select_statustype')] + ['undeployable' => trans('admin/hardware/general.undeployable')] + ['pending' => trans('admin/hardware/general.pending')] + ['archived' => trans('admin/hardware/general.archived')] + ['deployable' => trans('admin/hardware/general.deployable')];
+        $statuslabel_types = ['' => trans('admin/assets/form.select_statustype')] + ['undeployable' => trans('admin/assets/general.undeployable')] + ['pending' => trans('admin/assets/general.pending')] + ['archived' => trans('admin/assets/general.archived')] + ['deployable' => trans('admin/assets/general.deployable')];
 
         return view('statuslabels/edit', compact('item', 'statuslabel_types'))->with('use_statuslabel_type', $use_statuslabel_type);
     }

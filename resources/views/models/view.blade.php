@@ -17,7 +17,7 @@
                 @if ($model->deleted_at=='')
                     <li><a href="{{ route('models.edit', $model->id) }}">{{ trans('admin/models/table.edit') }}</a></li>
                     <li><a href="{{ route('models.clone.create', $model->id) }}">{{ trans('admin/models/table.clone') }}</a></li>
-                    <li><a href="{{ route('hardware.create', ['model_id' => $model->id]) }}">{{ trans('admin/hardware/form.create') }}</a></li>
+                    <li><a href="{{ route('hardware.create', ['model_id' => $model->id]) }}">{{ trans('admin/assets/form.create') }}</a></li>
                 @else
                     <li><a href="{{ route('models.restore.store', $model->id) }}">{{ trans('admin/models/general.restore') }}</a></li>
                 @endif

@@ -22,8 +22,8 @@
                     <div class="box box-default">
                         <div class="alert alert-danger">
                             <i class="fas fa-exclamation-triangle faa-pulse animated"></i>
-                            <strong>{{ count($status['error']) }} {{ trans('admin/hardware/general.error_messages') }}</strong> </strong>
-                            {{ trans('admin/hardware/general.alert_details') }}
+                            <strong>{{ count($status['error']) }} {{ trans('admin/assets/general.error_messages') }}</strong> </strong>
+                            {{ trans('admin/assets/general.alert_details') }}
                         </div>
                     </div>
                 </div>
@@ -35,8 +35,8 @@
                 <div class="box box-default">
                     <div class="alert alert-success">
                         <i class="fas fa-check faa-pulse animated"></i>
-                        <strong>{{ count($status['success']) }} {{ trans('admin/hardware/general.success_messages') }} </strong>
-                        {{ trans('admin/hardware/general.alert_details') }}
+                        <strong>{{ count($status['success']) }} {{ trans('admin/assets/general.success_messages') }} </strong>
+                        {{ trans('admin/assets/general.alert_details') }}
                     </div>
                 </div>
             </div>
@@ -55,13 +55,13 @@
                         <div class="col-md-12">
                             @if (Session::get('message'))
                                 <p class="alert-danger">
-                                    {{ trans('admin/hardware/general.csv_error') }}<br />
+                                    {{ trans('admin/assets/general.csv_error') }}<br />
                                     {{ Session::get('message') }}
                                 </p>
                             @endif
                         </div>
                         <div class="col-md-12" style="padding: 10px;">
-                            {!! trans('admin/hardware/general.import_text') !!}
+                            {!! trans('admin/assets/general.import_text') !!}
                         </div>
 
                         <div class="col-md-12" style="padding: 10px;">
@@ -90,7 +90,7 @@
                                         {{ Form::checkbox('match_firstnamelastname', '1', old('match_firstnamelastname')) }}
                                         <!-- enclosing span needed for the checkbox CSS to work properly, since there's HTML in the label text -->
                                         <span>
-                                            {!!  trans('admin/hardware/general.csv_import_match_f-l') !!}
+                                            {!!  trans('admin/assets/general.csv_import_match_f-l') !!}
                                         </span>
                                     </label>
                                 </div>
@@ -103,7 +103,7 @@
                                         {{ Form::checkbox('match_flastname', '1', old('match_flastname')) }}
                                         <!-- enclosing span needed for the checkbox CSS to work properly, since there's HTML in the label text -->
                                         <span>
-                                        {!!  trans('admin/hardware/general.csv_import_match_initial_last') !!}
+                                        {!!  trans('admin/assets/general.csv_import_match_initial_last') !!}
                                         </span>
                                     </label>
                                 </div>
@@ -116,7 +116,7 @@
                                     {{ Form::checkbox('match_firstname', '1', old('match_firstname')) }}
                                         <!-- enclosing span needed for the checkbox CSS to work properly, since there's HTML in the label text -->
                                         <span>
-                                            {!! trans('admin/hardware/general.csv_import_match_first') !!}
+                                            {!! trans('admin/assets/general.csv_import_match_first') !!}
                                         </span>
                                     </label>
                                 </div>
@@ -129,7 +129,7 @@
                                         {{ Form::checkbox('match_email', '1', old('match_email')) }}
                                         <!-- enclosing span needed for the checkbox CSS to work properly, since there's HTML in the label text -->
                                         <span>
-                                        {!!  trans('admin/hardware/general.csv_import_match_email') !!}
+                                        {!!  trans('admin/assets/general.csv_import_match_email') !!}
                                         </span>
                                     </label>
                                 </div>
@@ -142,7 +142,7 @@
                                         {{ Form::checkbox('match_username', '1', old('match_username')) }}
                                         <!-- enclosing span needed for the checkbox CSS to work properly, since there's HTML in the label text -->
                                         <span>
-                                            {!!  trans('admin/hardware/general.csv_import_match_username') !!}
+                                            {!!  trans('admin/assets/general.csv_import_match_username') !!}
                                         </span>
                                     </label>
                                 </div>
@@ -175,7 +175,7 @@
     <div class="col-md-12">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h2 class="box-title"> {{ count($status['error']) }} {{ trans('admin/hardware/general.error_messages') }} </h2>
+                <h2 class="box-title"> {{ count($status['error']) }} {{ trans('admin/assets/general.error_messages') }} </h2>
             </div>
             <div class="box-body">
                 <div style="height : 400px; overflow : auto;">
@@ -202,7 +202,7 @@
     <div class="col-md-12">
         <div class="box box-default">
             <div class="box-header with-border">
-                <h2 class="box-title"> {{ count($status['success']) }} {{ trans('admin/hardware/general.success_messages') }} </h2>
+                <h2 class="box-title"> {{ count($status['success']) }} {{ trans('admin/assets/general.success_messages') }} </h2>
             </div>
             <div class="box-body">
                 <div style="height : 400px; overflow : auto;">

@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-{{ trans('admin/hardware/form.bulk_delete') }}
+{{ trans('admin/assets/form.bulk_delete') }}
 @parent
 @stop
 
@@ -16,12 +16,12 @@
 <div class="row">
   <!-- left column -->
   <div class="col-md-12">
-    <p>{{ trans('admin/hardware/form.bulk_delete_help') }}</p>
+    <p>{{ trans('admin/assets/form.bulk_delete_help') }}</p>
     <form class="form-horizontal" method="post" action="{{ route('hardware/bulkdelete') }}" autocomplete="off" role="form">
       {{csrf_field()}}
       <div class="box box-default">
         <div class="box-header with-border">
-          <h2 class="box-title" style="color: red">{{ trans('admin/hardware/form.bulk_delete_warn', ['asset_count' => count($assets)]) }}</h2>
+          <h2 class="box-title" style="color: red">{{ trans('admin/assets/form.bulk_delete_warn', ['asset_count' => count($assets)]) }}</h2>
         </div>
 
         <div class="box-body">
@@ -29,10 +29,10 @@
             <thead>
               <tr>
                 <td></td>
-                <td>{{ trans('admin/hardware/table.id') }}</td>
-                <td>{{ trans('admin/hardware/table.name') }}</td>
-                <td>{{ trans('admin/hardware/table.location')}}</td>
-                <td>{{ trans('admin/hardware/table.assigned_to') }}</td>
+                <td>{{ trans('admin/assets/table.id') }}</td>
+                <td>{{ trans('admin/assets/table.name') }}</td>
+                <td>{{ trans('admin/assets/table.location')}}</td>
+                <td>{{ trans('admin/assets/table.assigned_to') }}</td>
               </tr>
             </thead>
             <tbody>

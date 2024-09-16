@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    {{ trans('admin/hardware/general.view') }} {{ $asset->asset_tag }}
+    {{ trans('admin/assets/general.view') }} {{ $asset->asset_tag }}
     @parent
 @stop
 
@@ -24,7 +24,7 @@
                 <div class="callout callout-warning">
                     <p><strong>{{ trans('general.warning',
                         [
-                            'warning' => trans('admin/hardware/message.warning_patch_date_mismatch',
+                            'warning' => trans('admin/assets/message.warning_patch_date_mismatch',
                                     [
                                         'last_patch_date' => Helper::getFormattedDateObject($asset->last_patch_date, 'date', false),
                                         'next_patch_date' => Helper::getFormattedDateObject($asset->next_patch_date, 'date', false)
@@ -148,7 +148,7 @@
                                     @if ($asset->name)
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <strong>{{ trans('admin/hardware/form.name') }}</strong>
+                                                <strong>{{ trans('admin/assets/form.name') }}</strong>
                                             </div>
                                             <div class="col-md-6">
                                                 {{ $asset->name }}
@@ -159,7 +159,7 @@
                                     @if ($asset->serial)
                                         <div class="row">
                                             <div class="col-md-2">
-                                                <strong>{{ trans('admin/hardware/form.serial') }}</strong>
+                                                <strong>{{ trans('admin/assets/form.serial') }}</strong>
                                             </div>
                                             <div class="col-md-6">
                                                 <span class="js-copy">{{ $asset->serial  }}</span>
@@ -207,7 +207,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('admin/hardware/form.manufacturer') }}
+                                                    {{ trans('admin/assets/form.manufacturer') }}
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
@@ -255,7 +255,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('admin/hardware/form.model') }}
+                                                    {{ trans('admin/assets/form.model') }}
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
@@ -348,7 +348,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('admin/hardware/form.date') }}
+                                                    {{ trans('admin/assets/form.date') }}
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
@@ -364,7 +364,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('admin/hardware/form.eol_date') }}
+                                                    {{ trans('admin/assets/form.eol_date') }}
                                                     @if ($asset->purchase_date)
 							                            {!! $asset->asset_eol_date < date("Y-m-d") ? '<i class="fas fa-exclamation-triangle text-orange" aria-hidden="true"></i>' : '' !!}
                                                     @endif
@@ -394,7 +394,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <strong>
-                                                {{ trans('admin/hardware/form.notes') }}
+                                                {{ trans('admin/assets/form.notes') }}
                                             </strong>
                                         </div>
                                         <div class="col-md-6">
@@ -425,7 +425,7 @@
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
-                                                    {{ trans('admin/hardware/form.default_location') }}
+                                                    {{ trans('admin/assets/form.default_location') }}
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
@@ -487,7 +487,7 @@
                                         @if ($asset->deleted_at=='')
                                         <div class="col-md-12" style="padding-top: 5px;">
                                             <a href="{{ route('hardware.edit', $asset->id) }}" class="btn btn-sm btn-primary btn-block hidden-print">
-                                                {{ trans('admin/hardware/general.edit') }}
+                                                {{ trans('admin/assets/general.edit') }}
                                             </a>
                                         </div>
                                         @endif
@@ -496,14 +496,14 @@
                                     @can('create', $asset)
                                         <div class="col-md-12" style="padding-top: 5px;">
                                             <a href="{{ route('clone/hardware', $asset->id) }}" class="btn btn-sm btn-primary btn-block hidden-print">
-                                                {{ trans('admin/hardware/general.clone') }}
+                                                {{ trans('admin/assets/general.clone') }}
                                             </a>
                                         </div>
                                     @endcan
 
                                     @can('patch', \App\Models\Asset::class)
                                         <div class="col-md-12" style="padding-top: 5px;">
-                                            <span class="tooltip-wrapper"{!! (!$asset->model ? ' data-tooltip="true" title="'.trans('admin/hardware/general.model_invalid_fix').'"' : '') !!}>
+                                            <span class="tooltip-wrapper"{!! (!$asset->model ? ' data-tooltip="true" title="'.trans('admin/assets/general.model_invalid_fix').'"' : '') !!}>
                                                 <a href="{{ route('asset.patch.create', $asset->id)  }}" class="btn btn-sm btn-primary btn-block hidden-print{{ (!$asset->model ? ' disabled' : '') }}">
                                                  {{ trans('general.patch') }}
                                             </a>
@@ -606,7 +606,7 @@
                       data-cookie="true">
                 <thead>
                 <tr>
-                    <th data-visible="true" data-field="icon" style="width: 40px;" class="hidden-xs" data-formatter="iconFormatter">{{ trans('admin/hardware/table.icon') }}</th>
+                    <th data-visible="true" data-field="icon" style="width: 40px;" class="hidden-xs" data-formatter="iconFormatter">{{ trans('admin/assets/table.icon') }}</th>
                     <th data-visible="true" data-field="action_date" data-sortable="true" data-formatter="dateDisplayFormatter">{{ trans('general.date') }}</th>
                     <th data-visible="true" data-field="admin" data-formatter="usersLinkObjFormatter">{{ trans('general.admin') }}</th>
                     <th data-visible="true" data-field="action_type">{{ trans('general.action') }}</th>
@@ -616,7 +616,7 @@
                     <th data-field="note">{{ trans('general.notes') }}</th>
                     <th data-field="signature_file" data-visible="false"  data-formatter="imageFormatter">{{ trans('general.signature') }}</th>
                     <th data-visible="false" data-field="file" data-visible="false"  data-formatter="fileUploadFormatter">{{ trans('general.download') }}</th>
-                    <th data-field="log_meta" data-visible="true" data-formatter="changeLogFormatter">{{ trans('admin/hardware/table.changed')}}</th>
+                    <th data-field="log_meta" data-visible="true" data-formatter="changeLogFormatter">{{ trans('admin/assets/table.changed')}}</th>
                     <th data-field="remote_ip" data-visible="false" data-sortable="true">{{ trans('admin/settings/general.login_ip') }}</th>
                     <th data-field="user_agent" data-visible="false" data-sortable="true">{{ trans('admin/settings/general.login_user_agent') }}</th>
                     <th data-field="action_source" data-visible="false" data-sortable="true">{{ trans('general.action_source') }}</th>

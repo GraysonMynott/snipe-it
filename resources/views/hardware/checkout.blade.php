@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-    {{ trans('admin/hardware/general.checkout') }}
+    {{ trans('admin/assets/general.checkout') }}
     @parent
 @stop
 
@@ -22,7 +22,7 @@
             <div class="box box-default">
                 <form class="form-horizontal" method="post" action="" autocomplete="off">
                     <div class="box-header with-border">
-                        <h2 class="box-title"> {{ trans('admin/hardware/form.tag') }} {{ $asset->asset_tag }}</h2>
+                        <h2 class="box-title"> {{ trans('admin/assets/form.tag') }} {{ $asset->asset_tag }}</h2>
                     </div>
                     <div class="box-body">
                     {{csrf_field()}}
@@ -51,12 +51,12 @@
                                     @else
                                         <span class="text-danger text-bold">
                                               <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                                              {{ trans('admin/hardware/general.model_invalid')}}
+                                              {{ trans('admin/assets/general.model_invalid')}}
                                         </span>
 
-                                        {{ trans('admin/hardware/general.model_invalid_fix')}}
+                                        {{ trans('admin/assets/general.model_invalid_fix')}}
                                         <a href="{{ route('hardware.edit', $asset->id) }}">
-                                            <strong>{{ trans('admin/hardware/general.edit') }}</strong>
+                                            <strong>{{ trans('admin/assets/general.edit') }}</strong>
                                         </a>
                                     @endif
                                 </p>
@@ -66,7 +66,7 @@
                         <!-- Asset Name -->
                         <div class="form-group {{ $errors->has('name') ? 'error' : '' }}">
                             <label for="name" class="col-md-3 control-label">
-                                {{ trans('admin/hardware/form.name') }}
+                                {{ trans('admin/assets/form.name') }}
                             </label>
 
                             <div class="col-md-8">
@@ -78,7 +78,7 @@
                         <!-- Status -->
                         <div class="form-group {{ $errors->has('status_id') ? 'error' : '' }}">
                             <label for="status_id" class="col-md-3 control-label">
-                                {{ trans('admin/hardware/form.status') }}
+                                {{ trans('admin/assets/form.status') }}
                             </label>
                             <div class="col-md-7 required">
                                 {{ Form::select('status_id', $statusLabel_list, $asset->status_id, array('class'=>'select2', 'style'=>'width:100%','', 'aria-label'=>'status_id')) }}
@@ -100,7 +100,7 @@
                     <!-- Checkout/Checkin Date -->
                         <div class="form-group {{ $errors->has('checkout_at') ? 'error' : '' }}">
                             <label for="checkout_at" class="col-md-3 control-label">
-                                {{ trans('admin/hardware/form.checkout_date') }}
+                                {{ trans('admin/assets/form.checkout_date') }}
                             </label>
                             <div class="col-md-8">
                                 <div class="input-group date col-md-7" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-end-date="0d" data-date-clear-btn="true">
@@ -114,7 +114,7 @@
                         <!-- Expected Checkin Date -->
                         <div class="form-group {{ $errors->has('expected_checkin') ? 'error' : '' }}">
                             <label for="expected_checkin" class="col-md-3 control-label">
-                                {{ trans('admin/hardware/form.expected_checkin') }}
+                                {{ trans('admin/assets/form.expected_checkin') }}
                             </label>
 
                             <div class="col-md-8">

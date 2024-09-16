@@ -288,7 +288,7 @@
 
                           <a id="optional_user_info" class="text-primary">
                               <i class="fa fa-caret-right fa-2x" id="optional_user_info_icon"></i>
-                              <strong>{{ trans('admin/hardware/form.optional_infos') }}</strong>
+                              <strong>{{ trans('admin/assets/form.optional_infos') }}</strong>
                           </a>
 
                       </div>

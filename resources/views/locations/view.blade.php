@@ -50,7 +50,7 @@
                         <i class="fas fa-barcode fa-2x" aria-hidden="true"></i>
                     </span>
                       <span class="hidden-xs hidden-sm">
-                          {{ trans('admin/hardware/form.default_location') }}
+                          {{ trans('admin/assets/form.default_location') }}
                           {!! ($location->rtd_assets()->AssetsForShow()->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($location->rtd_assets()->AssetsForShow()->count()).'</badge>' : '' !!}
                     </span>
                   </a>
@@ -180,7 +180,7 @@
               </div><!-- /.tab-pane -->
 
               <div class="tab-pane" id="rtd_assets">
-                  <h2 class="box-title">{{ trans('admin/hardware/form.default_location') }}</h2>
+                  <h2 class="box-title">{{ trans('admin/assets/form.default_location') }}</h2>
 
                   <div class="table table-responsive">
                       @include('partials.asset-bulk-actions', ['id_divname' => 'RTDassetsBulkEditToolbar', 'id_formname' => 'RTDassets', 'id_button' => 'RTDbulkAssetEditButton'])
@@ -239,7 +239,7 @@
                     data-cookie="true">
                                 <thead>
                                     <tr>
-                                        <th data-visible="true" data-field="icon" style="width: 40px;" class="hidden-xs" data-formatter="iconFormatter">{{ trans('admin/hardware/table.icon') }}</th>
+                                        <th data-visible="true" data-field="icon" style="width: 40px;" class="hidden-xs" data-formatter="iconFormatter">{{ trans('admin/assets/table.icon') }}</th>
                                         <th class="col-sm-2" data-visible="true" data-field="action_date" data-formatter="dateDisplayFormatter">{{ trans('general.date') }}</th>
                                         <th class="col-sm-1" data-visible="true" data-field="admin" data-formatter="usersLinkObjFormatter">{{ trans('general.admin') }}</th>
                                         <th class="col-sm-1" data-visible="true" data-field="action_type">{{ trans('general.action') }}</th>
@@ -248,7 +248,7 @@
                                         <th class="col-sm-2" data-field="note">{{ trans('general.notes') }}</th>
                                         <th class="col-md-3" data-field="signature_file" data-visible="false"  data-formatter="imageFormatter">{{ trans('general.signature') }}</th>
                                         <th class="col-md-3" data-visible="false" data-field="file" data-visible="false"  data-formatter="fileUploadFormatter">{{ trans('general.download') }}</th>
-                                        <th class="col-sm-2" data-field="log_meta" data-visible="true" data-formatter="changeLogFormatter">{{ trans('admin/hardware/table.changed')}}</th>
+                                        <th class="col-sm-2" data-field="log_meta" data-visible="true" data-formatter="changeLogFormatter">{{ trans('admin/assets/table.changed')}}</th>
                                     </tr>
                                 </thead>
                             </table>

@@ -89,7 +89,7 @@
             <p class="help-block">{{ $field->help_text }}</p>
         @endif
 
-        <p>{{ trans('admin/hardware/form.bulk_update_model_prefix') }}: 
+        <p>{{ trans('admin/assets/form.bulk_update_model_prefix') }}: 
                     {{$field->assetModels()->pluck('name')->intersect($modelNames)->implode(', ')}} 
             </p>     
 

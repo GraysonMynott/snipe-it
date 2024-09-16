@@ -74,13 +74,13 @@
                                             <tr>
                                                 <th class="col-md-1" data-field="image" data-formatter="imageFormatter" data-sortable="true">{{ trans('general.image') }}</th>
                                                 <th class="col-md-2" data-field="asset_tag" data-sortable="true" >{{ trans('general.asset_tag') }}</th>                                                
-                                                <th class="col-md-2" data-field="model" data-sortable="true">{{ trans('admin/hardware/table.asset_model') }}</th>
+                                                <th class="col-md-2" data-field="model" data-sortable="true">{{ trans('admin/assets/table.asset_model') }}</th>
                                                 <th class="col-md-2" data-field="model_number" data-sortable="true">{{ trans('admin/models/table.modelnumber') }}</th>
-                                                <th class="col-md-2" data-field="name" data-sortable="true">{{ trans('admin/hardware/form.name') }}</th>
-                                                <th class="col-md-3" data-field="serial" data-sortable="true">{{ trans('admin/hardware/table.serial') }}</th>
-                                                <th class="col-md-2" data-field="location" data-sortable="true">{{ trans('admin/hardware/table.location') }}</th>
-                                                <th class="col-md-2" data-field="status" data-sortable="true">{{ trans('admin/hardware/table.status') }}</th>
-                                                <th class="col-md-2" data-field="expected_checkin" data-formatter="dateDisplayFormatter" data-sortable="true">{{ trans('admin/hardware/form.expected_checkin') }}</th>
+                                                <th class="col-md-2" data-field="name" data-sortable="true">{{ trans('admin/assets/form.name') }}</th>
+                                                <th class="col-md-3" data-field="serial" data-sortable="true">{{ trans('admin/assets/table.serial') }}</th>
+                                                <th class="col-md-2" data-field="location" data-sortable="true">{{ trans('admin/assets/table.location') }}</th>
+                                                <th class="col-md-2" data-field="status" data-sortable="true">{{ trans('admin/assets/table.status') }}</th>
+                                                <th class="col-md-2" data-field="expected_checkin" data-formatter="dateDisplayFormatter" data-sortable="true">{{ trans('admin/assets/form.expected_checkin') }}</th>
 
                                                 @foreach(\App\Models\CustomField::get() as $field)
                                                     @if (($field->field_encrypted=='0') && ($field->show_in_requestable_list=='1'))
@@ -112,7 +112,7 @@
                                 <thead>
                                     <tr role="row">
                                         <th class="col-md-1" data-sortable="true">{{ trans('general.image') }}</th>
-                                        <th class="col-md-6" data-sortable="true">{{ trans('admin/hardware/table.asset_model') }}</th>
+                                        <th class="col-md-6" data-sortable="true">{{ trans('admin/assets/table.asset_model') }}</th>
                                         <th class="col-md-3" data-sortable="true">{{ trans('admin/licenses/general.remaining') }}</th>
 
                                         <th class="col-md-2 actions" data-sortable="false">{{ trans('table.actions') }}</th>

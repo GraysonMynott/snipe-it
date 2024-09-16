@@ -81,7 +81,7 @@ class AssetModelPresenter extends Presenter
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
-                'title' => trans('admin/hardware/form.eol_rate'),
+                'title' => trans('admin/assets/form.eol_rate'),
                 'visible' => true,
             ],
 /*             [

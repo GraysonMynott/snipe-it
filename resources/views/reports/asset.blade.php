@@ -8,7 +8,7 @@
 
 @section('header_right')
 <a href="{{ route('reports/export/assets') }}" class="btn btn-default"><i class="fas fa-download icon-white" aria-hidden="true"></i>
-{{ trans('admin/hardware/table.dl_csv') }}</a>
+{{ trans('admin/assets/table.dl_csv') }}</a>
 @stop
 
 {{-- Page content --}}
@@ -35,13 +35,13 @@
                                 @endif
                                 <th data-sortable="true" data-field="id" data-visible="false">{{ trans('general.id') }}</th>
                                 <th data-field="company" data-searchable="true" data-sortable="true" data-switchable="true" data-visible="false">{{ trans('general.company') }}</th>
-                                <th data-sortable="true" data-field="name" data-visible="false">{{ trans('admin/hardware/form.name') }}</th>
-                                <th data-sortable="true" data-field="asset_tag">{{ trans('admin/hardware/table.asset_tag') }}</th>
-                                <th data-sortable="true" data-field="serial">{{ trans('admin/hardware/table.serial') }}</th>
-                                <th data-sortable="true" data-field="model">{{ trans('admin/hardware/form.model') }}</th>
+                                <th data-sortable="true" data-field="name" data-visible="false">{{ trans('admin/assets/form.name') }}</th>
+                                <th data-sortable="true" data-field="asset_tag">{{ trans('admin/assets/table.asset_tag') }}</th>
+                                <th data-sortable="true" data-field="serial">{{ trans('admin/assets/table.serial') }}</th>
+                                <th data-sortable="true" data-field="model">{{ trans('admin/assets/form.model') }}</th>
                                 <th data-sortable="true" data-field="model_number" data-visible="false">{{ trans('admin/models/table.modelnumber') }}</th>
-                                <th data-sortable="true" data-field="status_label">{{ trans('admin/hardware/table.status') }}</th>
-                                <th data-sortable="true" data-field="location" data-searchable="true">{{ trans('admin/hardware/table.location') }}</th>
+                                <th data-sortable="true" data-field="status_label">{{ trans('admin/assets/table.status') }}</th>
+                                <th data-sortable="true" data-field="location" data-searchable="true">{{ trans('admin/assets/table.location') }}</th>
                                 <th data-sortable="true" data-field="category" data-searchable="true">{{ trans('general.category') }}</th>
                                 <th data-sortable="true" data-field="manufacturer" data-searchable="true" data-visible="false">{{ trans('general.manufacturer') }}</th>
                                 <th data-sortable="false" data-field="eol" data-searchable="true">{{ trans('general.eol') }}</th>

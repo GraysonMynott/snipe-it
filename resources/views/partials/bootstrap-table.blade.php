@@ -223,7 +223,7 @@
                 var text_help;
                 var status_meta = {
                   'deployed': '{{ strtolower(trans('general.deployed')) }}',
-                  'deployable': '{{ strtolower(trans('admin/hardware/general.deployable')) }}',
+                  'deployable': '{{ strtolower(trans('admin/assets/general.deployable')) }}',
                   'archived': '{{ strtolower(trans('general.archived')) }}',
                   'pending': '{{ strtolower(trans('general.pending')) }}'
                 }
@@ -438,7 +438,7 @@
                 // We use slightly different language for assets versus other things, since they are the only
                 // item that has a status label
                 if (destination =='hardware') {
-                    return '<span  data-tooltip="true" title="{{ trans('admin/hardware/general.undeployable_tooltip') }}"><a class="btn btn-sm bg-maroon disabled">{{ trans('general.checkout') }}</a></span>';
+                    return '<span  data-tooltip="true" title="{{ trans('admin/assets/general.undeployable_tooltip') }}"><a class="btn btn-sm bg-maroon disabled">{{ trans('general.checkout') }}</a></span>';
                 } else {
                     return '<span  data-tooltip="true" title="{{ trans('general.undeployable_tooltip') }}"><a class="btn btn-sm bg-maroon disabled">{{ trans('general.checkout') }}</a></span>';
                 }
@@ -628,7 +628,7 @@
     function assetTagLinkFormatter(value, row) {
         if ((row.asset) && (row.asset.id)) {
             if (row.asset.deleted_at!='') {
-                return '<span style="white-space: nowrap;"><i class="fas fa-times text-danger"></i><span class="sr-only">{{ trans('admin/hardware/general.deleted') }}</span> <del><a href="{{ config('app.url') }}/hardware/' + row.asset.id + '" data-tooltip="true" title="{{ trans('admin/hardware/general.deleted') }}">' + row.asset.asset_tag + '</a></del></span>';
+                return '<span style="white-space: nowrap;"><i class="fas fa-times text-danger"></i><span class="sr-only">{{ trans('admin/assets/general.deleted') }}</span> <del><a href="{{ config('app.url') }}/hardware/' + row.asset.id + '" data-tooltip="true" title="{{ trans('admin/assets/general.deleted') }}">' + row.asset.asset_tag + '</a></del></span>';
             }
             return '<a href="{{ config('app.url') }}/hardware/' + row.asset.id + '">' + row.asset.asset_tag + '</a>';
         }
@@ -646,7 +646,7 @@
 
         if ((row.asset) && (row.asset.serial)) {
             if (row.asset.deleted_at!='') {
-                return '<span style="white-space: nowrap;"><i class="fas fa-times text-danger"></i><span class="sr-only">deleted</span> <del><a href="{{ config('app.url') }}/hardware/' + row.asset.id + '" data-tooltip="true" title="{{ trans('admin/hardware/general.deleted') }}">' + row.asset.serial + '</a></del></span>';
+                return '<span style="white-space: nowrap;"><i class="fas fa-times text-danger"></i><span class="sr-only">deleted</span> <del><a href="{{ config('app.url') }}/hardware/' + row.asset.id + '" data-tooltip="true" title="{{ trans('admin/assets/general.deleted') }}">' + row.asset.serial + '</a></del></span>';
             }
             return '<a href="{{ config('app.url') }}/hardware/' + row.asset.id + '">' + row.asset.serial + '</a>';
         }

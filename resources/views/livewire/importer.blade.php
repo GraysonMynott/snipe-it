@@ -334,7 +334,7 @@
                     return;
                 }
                 $wire.$set('statusType', 'pending');
-                $wire.$set('statusText', '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> {{ trans('admin/hardware/form.processing_spinner') }}');
+                $wire.$set('statusText', '<i class="fa fa-spinner fa-spin" aria-hidden="true"></i> {{ trans('admin/assets/form.processing_spinner') }}');
                 $wire.generate_field_map().then(function (mappings_raw) {
                     var mappings = JSON.parse(mappings_raw)
                     // console.warn("Here is the mappings:")

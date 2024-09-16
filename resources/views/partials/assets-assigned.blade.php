@@ -28,9 +28,9 @@
                         table_html += '<table class="table table-striped">';
                         table_html += '<thead><tr>';
                         table_html += '<th></th>';
-                        table_html += '<th>{{ trans('admin/hardware/form.name') }}</th>';
-                        table_html += '<th>{{ trans('admin/hardware/form.tag') }}</th>';
-                        table_html += '<th>{{ trans('admin/hardware/form.serial') }}</th>';
+                        table_html += '<th>{{ trans('admin/assets/form.name') }}</th>';
+                        table_html += '<th>{{ trans('admin/assets/form.tag') }}</th>';
+                        table_html += '<th>{{ trans('admin/assets/form.serial') }}</th>';
                         table_html += '</tr></thead><tbody>';
 
                         $('#current_assets_content').append('');

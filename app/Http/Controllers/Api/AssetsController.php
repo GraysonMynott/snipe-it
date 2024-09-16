@@ -346,7 +346,7 @@ class AssetsController extends Controller
         }
 
         // If there are 0 results, return the "no such asset" response
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 200);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 200);
 
     }
 
@@ -373,7 +373,7 @@ class AssetsController extends Controller
         }
 
         // If there are 0 results, return the "no such asset" response
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 200);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 200);
 
     }
 
@@ -394,7 +394,7 @@ class AssetsController extends Controller
 
             return (new AssetsTransformer)->transformAsset($asset, $request->input('components') );
         }
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 200);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 200);
 
     }
 
@@ -531,9 +531,9 @@ class AssetsController extends Controller
                 $asset->image = $asset->getImageUrl();
             }
 
-            return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/hardware/message.create.success')));
+            return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/assets/message.create.success')));
 
-//            return response()->json(Helper::formatStandardApiResponse('success', (new AssetsTransformer)->transformAsset($asset), trans('admin/hardware/message.create.success')));
+//            return response()->json(Helper::formatStandardApiResponse('success', (new AssetsTransformer)->transformAsset($asset), trans('admin/assets/message.create.success')));
         }
 
         return response()->json(Helper::formatStandardApiResponse('error', null, $asset->getErrors()), 200);
@@ -607,16 +607,16 @@ class AssetsController extends Controller
                 }
 
                 if ($problems_updating_encrypted_custom_fields) {
-                    return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/hardware/message.update.encrypted_warning')));
+                    return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/assets/message.update.encrypted_warning')));
                 } else {
-                    return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/hardware/message.update.success')));
+                    return response()->json(Helper::formatStandardApiResponse('success', $asset, trans('admin/assets/message.update.success')));
                 }
             }
 
             return response()->json(Helper::formatStandardApiResponse('error', null, $asset->getErrors()), 200);
         }
 
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 200);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 200);
     }
 
 
@@ -636,10 +636,10 @@ class AssetsController extends Controller
 
             $asset->delete();
 
-            return response()->json(Helper::formatStandardApiResponse('success', null, trans('admin/hardware/message.delete.success')));
+            return response()->json(Helper::formatStandardApiResponse('success', null, trans('admin/assets/message.delete.success')));
         }
 
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 200);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 200);
     }
 
     
@@ -662,14 +662,14 @@ class AssetsController extends Controller
             }
 
             if ($asset->restore()) {
-                return response()->json(Helper::formatStandardApiResponse('success', trans('admin/hardware/message.restore.success')), 200);
+                return response()->json(Helper::formatStandardApiResponse('success', trans('admin/assets/message.restore.success')), 200);
             }
 
             // Check validation to make sure we're not restoring an asset with the same asset tag (or unique attribute) as an existing asset
             return response()->json(Helper::formatStandardApiResponse('error', trans('general.could_not_restore', ['item_type' => trans('general.asset'), 'error' => $asset->getErrors()->first()])), 200);
         }
 
-        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/hardware/message.does_not_exist')), 200);
+        return response()->json(Helper::formatStandardApiResponse('error', null, trans('admin/assets/message.does_not_exist')), 200);
 
     }
 
@@ -693,8 +693,8 @@ class AssetsController extends Controller
         if (!$request->filled('asset_tag')) {
             return response()->json(Helper::formatStandardApiResponse('error', [
                 'asset_tag'=> '',
-                'error'=> trans('admin/hardware/message.no_tag'),
-            ], trans('admin/hardware/message.no_tag')), 200);
+                'error'=> trans('admin/assets/message.no_tag'),
+            ], trans('admin/assets/message.no_tag')), 200);
         }
 
 
@@ -744,14 +744,14 @@ class AssetsController extends Controller
                     'asset_tag'=> e($asset->asset_tag),
                     'note'=> e($request->input('note')),
                     'next_patch_date' => Helper::getFormattedDateObject($asset->next_patch_date),
-                ], trans('admin/hardware/message.patch.success')));
+                ], trans('admin/assets/message.patch.success')));
             }
 
             // Asset failed validation or was not able to be saved
             return response()->json(Helper::formatStandardApiResponse('error', [
                 'asset_tag'=> e($asset->asset_tag),
                 'error'=> $asset->getErrors()->first(),
-            ], trans('admin/hardware/message.patch.error', ['error' => $asset->getErrors()->first()])), 200);
+            ], trans('admin/assets/message.patch.error', ['error' => $asset->getErrors()->first()])), 200);
 
         }
 
@@ -759,8 +759,8 @@ class AssetsController extends Controller
         // No matching asset for the asset tag that was passed.
         return response()->json(Helper::formatStandardApiResponse('error', [
             'asset_tag'=> e($request->input('asset_tag')),
-            'error'=> trans('admin/hardware/message.patch.error'),
-        ], trans('admin/hardware/message.patch.error', ['error' => trans('admin/hardware/message.does_not_exist')])), 200);
+            'error'=> trans('admin/assets/message.patch.error'),
+        ], trans('admin/assets/message.patch.error', ['error' => trans('admin/assets/message.does_not_exist')])), 200);
 
 
     }

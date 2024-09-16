@@ -24,7 +24,7 @@
         <div class="col-md-6">
             <div class="box box-default">
                 <div class="box-header with-border">
-                    <h2 class="box-title"> {{ trans('admin/hardware/general.bulk_checkin') }} </h2>
+                    <h2 class="box-title"> {{ trans('admin/assets/general.bulk_checkin') }} </h2>
                 </div>
                 <div class="box-body">
                     {{csrf_field()}}
@@ -46,7 +46,7 @@
 
                     <!-- Note -->
                         <div class="form-group {{ $errors->has('note') ? 'error' : '' }}">
-                            {{ Form::label('note', trans('admin/hardware/form.notes'), array('class' => 'col-md-3 control-label')) }}
+                            {{ Form::label('note', trans('admin/assets/form.notes'), array('class' => 'col-md-3 control-label')) }}
                             <div class="col-md-8">
                                 <textarea class="col-md-6 form-control" id="note" name="note">{{ old('note') }}</textarea>
                                 {!! $errors->first('note', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}

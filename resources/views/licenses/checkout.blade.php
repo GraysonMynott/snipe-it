@@ -28,7 +28,7 @@
 
                     <!-- Asset name -->
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">{{ trans('admin/hardware/form.name') }}</label>
+                        <label class="col-sm-3 control-label">{{ trans('admin/assets/form.name') }}</label>
                         <div class="col-md-9">
                             <p class="form-control-static">{{ $license->name }}</p>
                         </div>
@@ -64,7 +64,7 @@
 
                     <!-- Note -->
                     <div class="form-group {{ $errors->has('notes') ? 'error' : '' }}">
-                        <label for="note" class="col-md-3 control-label">{{ trans('admin/hardware/form.notes') }}</label>
+                        <label for="note" class="col-md-3 control-label">{{ trans('admin/assets/form.notes') }}</label>
                         <div class="col-md-8">
                             <textarea class="col-md-6 form-control" id="notes" name="notes" style="width: 100%">{{ old('note') }}</textarea>
                             {!! $errors->first('note', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}

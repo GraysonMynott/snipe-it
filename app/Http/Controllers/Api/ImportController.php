@@ -73,7 +73,7 @@ class ImportController extends Controller
                         Helper::formatStandardApiResponse(
                             'error',
                             null,
-                            trans('admin/hardware/message.import.header_row_has_malformed_characters')
+                            trans('admin/assets/message.import.header_row_has_malformed_characters')
                         ),
                         422
                     );
@@ -106,7 +106,7 @@ class ImportController extends Controller
                         Helper::formatStandardApiResponse(
                             'error',
                             null,
-                            trans('admin/hardware/message.import.content_row_has_malformed_characters')
+                            trans('admin/assets/message.import.content_row_has_malformed_characters')
                         ),
                         422
                     );
@@ -117,7 +117,7 @@ class ImportController extends Controller
                 try {
                     $file->move($path, $date.'-'.$fixed_filename);
                 } catch (FileException $exception) {
-                    $results['error'] = trans('admin/hardware/message.upload.error');
+                    $results['error'] = trans('admin/assets/message.upload.error');
                     if (config('app.debug')) {
                         $results['error'] .= ' '.$exception->getMessage();
                     }
@@ -192,7 +192,7 @@ class ImportController extends Controller
             return response()->json(Helper::formatStandardApiResponse('import-errors', null, $errors), 500);
         }
         //Flash message before the redirect
-        Session::flash('success', trans('admin/hardware/message.import.success'));
+        Session::flash('success', trans('admin/assets/message.import.success'));
 
         return response()->json(Helper::formatStandardApiResponse('success', null, ['redirect_url' => route($redirectTo)]));
     }
@@ -212,15 +212,15 @@ class ImportController extends Controller
                 Storage::delete('imports/'.$import->file_path);
                 $import->delete();
 
-                return response()->json(Helper::formatStandardApiResponse('success', null, trans('admin/hardware/message.import.file_delete_success')));
+                return response()->json(Helper::formatStandardApiResponse('success', null, trans('admin/assets/message.import.file_delete_success')));
             } catch (\Exception $e) {
                 // If the file delete didn't work, remove it from the database anyway and return a warning
                 $import->delete();
 
-                return response()->json(Helper::formatStandardApiResponse('warning', null, trans('admin/hardware/message.import.file_not_deleted_warning')));
+                return response()->json(Helper::formatStandardApiResponse('warning', null, trans('admin/assets/message.import.file_not_deleted_warning')));
             }
 
         }
-        return response()->json(Helper::formatStandardApiResponse('warning', null, trans('admin/hardware/message.import.file_not_deleted_warning')));
+        return response()->json(Helper::formatStandardApiResponse('warning', null, trans('admin/assets/message.import.file_not_deleted_warning')));
     }
 }

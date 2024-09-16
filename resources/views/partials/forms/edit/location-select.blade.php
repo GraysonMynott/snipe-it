@@ -36,11 +36,11 @@
         <div class="col-md-9 col-md-offset-3">
             <label class="form-control">
                 {{ Form::radio('update_default_location', '1', old('update_default_location'), ['checked'=> 'checked', 'aria-label'=>'update_default_location']) }}
-                {{ trans('admin/hardware/form.asset_location') }}
+                {{ trans('admin/assets/form.asset_location') }}
             </label>
             <label class="form-control">
                 {{ Form::radio('update_default_location', '0', old('update_default_location'), ['aria-label'=>'update_default_location']) }}
-                {{ trans('admin/hardware/form.asset_location_update_default_current') }}
+                {{ trans('admin/assets/form.asset_location_update_default_current') }}
             </label>
         </div>
     </div> <!--/form-group-->

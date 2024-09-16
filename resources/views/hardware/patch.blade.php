@@ -28,7 +28,7 @@
                   'class' => 'form-horizontal' ]) }}
 
                     <div class="box-header with-border">
-                        <h2 class="box-title"> {{ trans('admin/hardware/form.tag') }} {{ $asset->asset_tag }}</h2>
+                        <h2 class="box-title"> {{ trans('admin/assets/form.tag') }} {{ $asset->asset_tag }}</h2>
                     </div>
                     <div class="box-body">
                     {{csrf_field()}}
@@ -36,7 +36,7 @@
                         <!-- Asset model -->
                             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                                 <label class="col-sm-3 control-label">
-                                    {{ trans('admin/hardware/form.model') }}
+                                    {{ trans('admin/assets/form.model') }}
                                 </label>
                                 <div class="col-md-8">
                                     <p class="form-control-static">
@@ -45,11 +45,11 @@
                                         @else
                                             <span class="text-danger text-bold">
                                               <i class="fas fa-exclamation-triangle" aria-hidden="true"></i>
-                                              {{ trans('admin/hardware/general.model_invalid')}}
+                                              {{ trans('admin/assets/general.model_invalid')}}
                                             </span>
-                                            {{ trans('admin/hardware/general.model_invalid_fix')}}
+                                            {{ trans('admin/assets/general.model_invalid_fix')}}
                                             <a href="{{ route('hardware.edit', $asset->id) }}">
-                                                <strong>{{ trans('admin/hardware/general.edit') }}</strong>
+                                                <strong>{{ trans('admin/assets/general.edit') }}</strong>
                                             </a>
                                         @endif
                                     </p>
@@ -75,7 +75,7 @@
 
                             <div class="col-md-8 col-md-offset-3">
                                 <label class="form-control">
-                                    <input type="checkbox" value="1" name="update_location" {{ old('update_location') == '1' ? ' checked="checked"' : '' }}> {{ trans('admin/hardware/form.asset_location') }}
+                                    <input type="checkbox" value="1" name="update_location" {{ old('update_location') == '1' ? ' checked="checked"' : '' }}> {{ trans('admin/assets/form.asset_location') }}
                                 </label>
                                 <p class="help-block">{!! trans('help.patch_help') !!}</p>
                             </div>
@@ -135,7 +135,7 @@
                     </div> <!--/.box-body-->
                     <div class="box-footer">
                         <a class="btn btn-link" href="{{ URL::previous() }}"> {{ trans('button.cancel') }}</a>
-                        <button type="submit" class="btn btn-success pull-right{{ (!$asset->model ? ' disabled' : '') }}"{!! (!$asset->model ? ' data-tooltip="true" title="'.trans('admin/hardware/general.model_invalid_fix').'" disabled' : '') !!}>
+                        <button type="submit" class="btn btn-success pull-right{{ (!$asset->model ? ' disabled' : '') }}"{!! (!$asset->model ? ' data-tooltip="true" title="'.trans('admin/assets/general.model_invalid_fix').'" disabled' : '') !!}>
                             <i class="fas fa-check icon-white" aria-hidden="true"></i>
                             {{ trans('general.patch') }}
                         </button>

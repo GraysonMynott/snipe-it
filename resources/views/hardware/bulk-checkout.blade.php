@@ -2,7 +2,7 @@
 
 {{-- Page title --}}
 @section('title')
-     {{ trans('admin/hardware/general.bulk_checkout') }}
+     {{ trans('admin/assets/general.bulk_checkout') }}
 @parent
 @stop
 
@@ -21,7 +21,7 @@
   <div class="col-md-7">
     <div class="box box-default">
       <div class="box-header with-border">
-        <h2 class="box-title"> {{ trans('admin/hardware/form.tag') }} </h2>
+        <h2 class="box-title"> {{ trans('admin/assets/form.tag') }} </h2>
       </div>
       <div class="box-body">
         <form class="form-horizontal" method="post" action="" autocomplete="off">
@@ -37,7 +37,7 @@
           <!-- Checkout/Checkin Date -->
               <div class="form-group {{ $errors->has('checkout_at') ? 'error' : '' }}">
                   <label for="checkout_at" class="col-sm-3 control-label">
-                      {{ trans('admin/hardware/form.checkout_date') }}
+                      {{ trans('admin/assets/form.checkout_date') }}
                   </label>
                   <div class="col-md-8">
                       <div class="input-group date col-md-5" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-end-date="0d" data-date-clear-btn="true">
@@ -51,7 +51,7 @@
               <!-- Expected Checkin Date -->
               <div class="form-group {{ $errors->has('expected_checkin') ? 'error' : '' }}">
                   <label for="expected_checkin" class="col-sm-3 control-label">
-                      {{ trans('admin/hardware/form.expected_checkin') }}
+                      {{ trans('admin/assets/form.expected_checkin') }}
                   </label>
                   <div class="col-md-8">
                       <div class="input-group date col-md-5" data-provide="datepicker" data-date-format="yyyy-mm-dd" data-date-start-date="0d" data-date-clear-btn="true">

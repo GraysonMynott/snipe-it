@@ -174,14 +174,14 @@ class Importer extends Component
             'asset_model' => trans('general.model_name'),
             'model_number' => trans('general.model_no'),
             'status' => trans('general.status'),
-            'warranty_months' => trans('admin/hardware/form.warranty'),
+            'warranty_months' => trans('admin/assets/form.warranty'),
             'category' => trans('general.category'),
             'serial' => trans('general.serial_number'),
-            'asset_notes' => trans('general.item_notes', ['item' => trans('admin/hardware/general.asset')]),
-            'model_notes' => trans('general.item_notes', ['item' => trans('admin/hardware/form.model')]),
+            'asset_notes' => trans('general.item_notes', ['item' => trans('admin/assets/general.asset')]),
+            'model_notes' => trans('general.item_notes', ['item' => trans('admin/assets/form.model')]),
             'manufacturer' => trans('general.manufacturer'),
             'image' => trans('general.importer.image_filename'),
-            'asset_eol_date' => trans('admin/hardware/form.eol_date'),
+            'asset_eol_date' => trans('admin/assets/form.eol_date'),
 
             /**
              * These are here so users can import history, to replace the dinosaur that
@@ -420,7 +420,7 @@ class Importer extends Component
         $this->activeFile = Import::find($id);
 
         if (!$this->activeFile) {
-            $this->message = trans('admin/hardware/message.import.file_missing');
+            $this->message = trans('admin/assets/message.import.file_missing');
             $this->message_type = 'danger';
 
             return;
@@ -448,11 +448,11 @@ class Importer extends Component
                 if (Storage::delete('private_uploads/imports/'.$file->file_path)) {
                     $file->delete();
 
-                    $this->message = trans('admin/hardware/message.import.file_delete_success');
+                    $this->message = trans('admin/assets/message.import.file_delete_success');
                     $this->message_type = 'success';
                     return;
                 } else {
-                    $this->message = trans('admin/hardware/message.import.file_delete_error');
+                    $this->message = trans('admin/assets/message.import.file_delete_error');
                     $this->message_type = 'danger';
                 }
             }

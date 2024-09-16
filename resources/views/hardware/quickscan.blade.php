@@ -49,7 +49,7 @@
                         <div class="form-group">
                             <div class="col-sm-offset-3 col-md-9">
                                 <label class="form-control">
-                                    <input type="checkbox" value="1" name="update_location" {{ old('update_location') == '1' ? ' checked="checked"' : '' }}> {{ trans('admin/hardware/form.asset_location') }}
+                                    <input type="checkbox" value="1" name="update_location" {{ old('update_location') == '1' ? ' checked="checked"' : '' }}> {{ trans('admin/assets/form.asset_location') }}
                                 </label>
 
                                 <a href="#" class="text-dark-gray" tabindex="0" role="button" data-toggle="popover" data-trigger="focus" title="<i class='far fa-life-ring'></i>"{{ trans('general.more_info') }} data-html="true" data-content="{{ trans('general.quickscan_bulk_help') }}"><i class="far fa-life-ring"></i></a>
@@ -73,7 +73,7 @@
 
                         <!-- Note -->
                         <div class="form-group {{ $errors->has('note') ? 'error' : '' }}">
-                            {{ Form::label('note', trans('admin/hardware/form.notes'), array('class' => 'col-md-3 control-label')) }}
+                            {{ Form::label('note', trans('admin/assets/form.notes'), array('class' => 'col-md-3 control-label')) }}
                             <div class="col-md-8">
                                 <textarea class="col-md-6 form-control" id="note" name="note">{{ old('note') }}</textarea>
                                 {!! $errors->first('note', '<span class="alert-msg" aria-hidden="true"><i class="fas fa-times" aria-hidden="true"></i> :message</span>') !!}
@@ -113,7 +113,7 @@
                         </tr>
                         <tr id="patch-loader" style="display: none;">
                             <td colspan="3">
-                                <i class="fas fa-spinner spin" aria-hidden="true"></i> {{ trans('admin/hardware/form.processing_spinner') }}
+                                <i class="fas fa-spinner spin" aria-hidden="true"></i> {{ trans('admin/assets/form.processing_spinner') }}
                             </td>
                         </tr>
                         </thead>

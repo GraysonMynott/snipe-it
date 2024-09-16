@@ -585,11 +585,11 @@ class Helper
     public static function statusTypeList()
     {
         $statuslabel_types =
-              ['' => trans('admin/hardware/form.select_statustype')]
-            + ['deployable' => trans('admin/hardware/general.deployable')]
-            + ['pending' => trans('admin/hardware/general.pending')]
-            + ['undeployable' => trans('admin/hardware/general.undeployable')]
-            + ['archived' => trans('admin/hardware/general.archived')];
+              ['' => trans('admin/assets/form.select_statustype')]
+            + ['deployable' => trans('admin/assets/general.deployable')]
+            + ['pending' => trans('admin/assets/general.pending')]
+            + ['undeployable' => trans('admin/assets/general.undeployable')]
+            + ['archived' => trans('admin/assets/general.archived')];
 
         return $statuslabel_types;
     }
@@ -1384,27 +1384,27 @@ class Helper
         if ($redirect_option == '0') {
             switch ($table) {
                 case "Assets":
-                    return redirect()->route('hardware.index')->with('success', trans('admin/hardware/message.checkout.success'));
+                    return redirect()->route('hardware.index')->with('success', trans('admin/assets/message.checkout.success'));
             }
         }
         //return to thing being assigned
         if ($redirect_option == '1') {
             switch ($table) {
                 case "Assets":
-                    return redirect()->route('hardware.show', $id ? $id : $asset_id)->with('success', trans('admin/hardware/message.checkout.success'));
+                    return redirect()->route('hardware.show', $id ? $id : $asset_id)->with('success', trans('admin/assets/message.checkout.success'));
             }
         }
         //return to thing being assigned to
         if ($redirect_option == '2') {
             switch ($checkout_to_type) {
                 case 'user':
-                    return redirect()->route('users.show', $request->assigned_user)->with('success', trans('admin/hardware/message.checkout.success'));
+                    return redirect()->route('users.show', $request->assigned_user)->with('success', trans('admin/assets/message.checkout.success'));
                 case 'location':
-                    return redirect()->route('locations.show', $request->assigned_location)->with('success', trans('admin/hardware/message.checkout.success'));
+                    return redirect()->route('locations.show', $request->assigned_location)->with('success', trans('admin/assets/message.checkout.success'));
                 case 'asset':
-                    return redirect()->route('hardware.show', $request->assigned_asset)->with('success', trans('admin/hardware/message.checkout.success'));
+                    return redirect()->route('hardware.show', $request->assigned_asset)->with('success', trans('admin/assets/message.checkout.success'));
             }
         }
-        return redirect()->back()->with('error', trans('admin/hardware/message.checkout.error'));
+        return redirect()->back()->with('error', trans('admin/assets/message.checkout.error'));
     }
 }
