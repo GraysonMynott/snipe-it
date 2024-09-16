@@ -36,19 +36,10 @@ class LocationsController extends Controller
             'zip',
             'created_at',
             'updated_at',
-            'manager_id',
-            'image',
-            'assigned_assets_count',
-            'users_count',
             'assets_count',
-            'assigned_assets_count',
-            'assets_count',
-            'rtd_assets_count',
-            'currency',
-            'ldap_ou',
             ];
 
-        $locations = Location::with('parent', 'manager', 'children')->select([
+        $locations = Location::select([
             'locations.id',
             'locations.name',
             'locations.address',
@@ -58,18 +49,9 @@ class LocationsController extends Controller
             'locations.zip',
             'locations.phone',
             'locations.country',
-            'locations.parent_id',
-            'locations.manager_id',
             'locations.created_at',
             'locations.updated_at',
-            'locations.image',
-            'locations.ldap_ou',
-            'locations.currency',
-        ])->withCount('assignedAssets as assigned_assets_count')
-            ->withCount('assets as assets_count')
-            ->withCount('rtd_assets as rtd_assets_count')
-            ->withCount('children as children_count')
-            ->withCount('users as users_count');
+        ])->withCount('assets as assets_count');
 
         if ($request->filled('search')) {
             $locations = $locations->TextSearch($request->input('search'));
@@ -99,10 +81,6 @@ class LocationsController extends Controller
             $locations->where('locations.country', '=', $request->input('country'));
         }
 
-        if ($request->filled('manager_id')) {
-            $locations->where('locations.manager_id', '=', $request->input('manager_id'));
-        }
-
         // Make sure the offset and limit are actually integers and do not exceed system limits
         $offset = ($request->input('offset') > $locations->count()) ? $locations->count() : app('api_offset_value');
         $limit = app('api_limit_value');
@@ -113,17 +91,10 @@ class LocationsController extends Controller
 
 
         switch ($request->input('sort')) {
-            case 'parent':
-                $locations->OrderParent($order);
-                break;
-            case 'manager':
-                $locations->OrderManager($order);
-                break;
             default:
                 $locations->orderBy($sort, $order);
                 break;
         }
-
 
         $total = $locations->count();
         $locations = $locations->skip($offset)->take($limit)->get();
@@ -163,8 +134,7 @@ class LocationsController extends Controller
     public function show($id) : JsonResponse | array
     {
         $this->authorize('view', Location::class);
-        $location = Location::with('parent', 'manager', 'children')
-            ->select([
+        $location = Location::select([
                 'locations.id',
                 'locations.name',
                 'locations.address',
@@ -173,17 +143,9 @@ class LocationsController extends Controller
                 'locations.state',
                 'locations.zip',
                 'locations.country',
-                'locations.parent_id',
-                'locations.manager_id',
                 'locations.created_at',
                 'locations.updated_at',
-                'locations.image',
-                'locations.currency',
-            ])
-            ->withCount('assignedAssets as assigned_assets_count')
-            ->withCount('assets as assets_count')
-            ->withCount('rtd_assets as rtd_assets_count')
-            ->withCount('users as users_count')
+            ])->withCount('assets as assets_count')
             ->findOrFail($id);
 
         return (new LocationsTransformer)->transformLocation($location);
@@ -231,11 +193,7 @@ class LocationsController extends Controller
     public function destroy($id) : JsonResponse
     {
         $this->authorize('delete', Location::class);
-        $location = Location::withCount('assignedAssets as assigned_assets_count')
-            ->withCount('assets as assets_count')
-            ->withCount('rtd_assets as rtd_assets_count')
-            ->withCount('children as children_count')
-            ->withCount('users as users_count')
+        $location = Location::withCount('assets as assets_count')
             ->findOrFail($id);
 
         if (! $location->isDeletable()) {
@@ -288,8 +246,6 @@ class LocationsController extends Controller
         $locations = Location::select([
             'locations.id',
             'locations.name',
-            'locations.parent_id',
-            'locations.image',
         ]);
 
         $page = 1;

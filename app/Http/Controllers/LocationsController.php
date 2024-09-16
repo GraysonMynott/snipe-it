@@ -250,11 +250,8 @@ class LocationsController extends Controller
     public function print_all_assigned($id) : View | RedirectResponse
     {
         if ($location = Location::where('id', $id)->first()) {
-            $parent = Location::where('id', $location->parent_id)->first();
-            $manager = User::where('id', $location->manager_id)->first();
-            $users = User::where('location_id', $id)->with('company', 'location')->get();
             $assets = Asset::where('location_id', $id)->with('model', 'model.category')->get();
-            return view('locations/print')->with('assets', $assets)->with('users', $users)->with('location', $location)->with('parent', $parent)->with('manager', $manager);
+            return view('locations/print')->with('assets', $assets);
 
         }
         return redirect()->route('locations.index')->with('error', trans('admin/locations/message.does_not_exist'));
@@ -274,11 +271,7 @@ class LocationsController extends Controller
         // Make sure some IDs have been selected
         if ((is_array($locations_raw_array)) && (count($locations_raw_array) > 0)) {
             $locations = Location::whereIn('id', $locations_raw_array)
-                ->withCount('assignedAssets as assigned_assets_count')
-                ->withCount('assets as assets_count')
-                ->withCount('rtd_assets as rtd_assets_count')
-                ->withCount('children as children_count')
-                ->withCount('users as users_count')->get();
+                ->withCount('assets as assets_count')->get();
 
                 $valid_count = 0;
                 foreach ($locations as $location) {
@@ -306,11 +299,7 @@ class LocationsController extends Controller
 
         if ((is_array($locations_raw_array)) && (count($locations_raw_array) > 0)) {
             $locations = Location::whereIn('id', $locations_raw_array)
-                ->withCount('assignedAssets as assigned_assets_count')
-                ->withCount('assets as assets_count')
-                ->withCount('rtd_assets as rtd_assets_count')
-                ->withCount('children as children_count')
-                ->withCount('users as users_count')->get();
+                ->withCount('assets as assets_count')->get();
 
             $success_count = 0;
             $error_count = 0;

@@ -255,17 +255,7 @@
 									<th class="col-sm-1" data-visible="true" data-field="assets_count" data-sortable="true">
 										<i class="fas fa-barcode" aria-hidden="true"></i>
 										<span class="sr-only">{{ trans('general.asset_count') }}</span>
-									</th>
-									<th class="col-sm-1" data-visible="true" data-field="assigned_assets_count" data-sortable="true">
-										
-										{{ trans('general.assigned') }}
-									</th>
-									<th class="col-sm-1" data-visible="true" data-field="users_count" data-sortable="true">
-										<i class="fas fa-users" aria-hidden="true"></i>
-										<span class="sr-only">{{ trans('general.people') }}</span>
-										
-									</th>
-									
+									</th>									
 								</tr>
 								</thead>
 							</table>
