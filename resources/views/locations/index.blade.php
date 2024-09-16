@@ -44,7 +44,7 @@
                   data-url="{{ route('api.locations.index') }}"
                   data-export-options='{
               "fileName": "export-locations-{{ date('Y-m-d') }}",
-              "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
+              "ignoreColumn": ["actions","change","checkbox","icon"]
               }'>
           </table>
         </div>

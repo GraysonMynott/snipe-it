@@ -19,19 +19,6 @@
           <ul class="nav nav-tabs hidden-print">
 
               <li class="active">
-                  <a href="#users" data-toggle="tab">
-                        <span class="hidden-lg hidden-md">
-                            <i class="fas fa-users fa-2x"></i>
-                        </span>
-                      <span class="hidden-xs hidden-sm">
-                          {{ trans('general.users') }}
-                          {!! ($location->users->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($location->users->count()).'</badge>' : '' !!}
-
-                      </span>
-                  </a>
-              </li>
-
-              <li>
                   <a href="#assets" data-toggle="tab">
                     <span class="hidden-lg hidden-md">
                         <i class="fas fa-barcode fa-2x" aria-hidden="true"></i>
@@ -39,19 +26,6 @@
                     <span class="hidden-xs hidden-sm">
                           {{ trans('admin/locations/message.current_location') }}
                           {!! ($location->assets()->AssetsForShow()->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($location->assets()->AssetsForShow()->count()).'</badge>' : '' !!}
-                    </span>
-                  </a>
-              </li>
-
-
-              <li>
-                  <a href="#rtd_assets" data-toggle="tab">
-                    <span class="hidden-lg hidden-md">
-                        <i class="fas fa-barcode fa-2x" aria-hidden="true"></i>
-                    </span>
-                      <span class="hidden-xs hidden-sm">
-                          {{ trans('admin/assets/form.default_location') }}
-                          {!! ($location->rtd_assets()->AssetsForShow()->count() > 0 ) ? '<badge class="badge badge-secondary">'.number_format($location->rtd_assets()->AssetsForShow()->count()).'</badge>' : '' !!}
                     </span>
                   </a>
               </li>
@@ -179,38 +153,6 @@
                   </div><!-- /.table-responsive -->
               </div><!-- /.tab-pane -->
 
-              <div class="tab-pane" id="rtd_assets">
-                  <h2 class="box-title">{{ trans('admin/assets/form.default_location') }}</h2>
-
-                  <div class="table table-responsive">
-                      @include('partials.asset-bulk-actions', ['id_divname' => 'RTDassetsBulkEditToolbar', 'id_formname' => 'RTDassets', 'id_button' => 'RTDbulkAssetEditButton'])
-                      <table
-                              data-columns="{{ \App\Presenters\AssetPresenter::dataTableLayout() }}"
-                              data-cookie-id-table="RTDassetsListingTable"
-                              data-pagination="true"
-                              data-id-table="RTDassetsListingTable"
-                              data-search="true"
-                              data-side-pagination="server"
-                              data-show-columns="true"
-                              data-show-export="true"
-                              data-show-refresh="true"
-                              data-sort-order="asc"
-                              data-toolbar="#RTDassetsBulkEditToolbar"
-                              data-bulk-button-id="#RTDbulkAssetEditButton"
-                              data-bulk-form-id="#RTDassetsBulkEditToolbar"
-                              data-click-to-select="true"
-                              id="RTDassetsListingTable"
-                              class="table table-striped snipe-table"
-                              data-url="{{route('api.assets.index', ['rtd_location_id' => $location->id]) }}"
-                              data-export-options='{
-                              "fileName": "export-rtd-locations-{{ str_slug($location->name) }}-assets-{{ date('Y-m-d') }}",
-                              "ignoreColumn": ["actions","image","change","checkbox","checkincheckout","icon"]
-                              }'>
-                      </table>
-
-                  </div><!-- /.table-responsive -->
-              </div><!-- /.tab-pane -->
-
                 <div class="tab-pane" id="history">
                     <h2 class="box-title">{{ trans('general.history') }}</h2>
                     <!-- checked out assets table -->
@@ -255,7 +197,6 @@
                         </div>
                     </div> <!-- /.row -->
                 </div> <!-- /.tab-pane history -->
-
           </div><!--/.col-md-9-->
       </div><!--/.col-md-9-->
   </div><!--/.col-md-9-->
@@ -265,19 +206,7 @@
       <div class="col-md-12">
           <a href="{{ route('locations.edit', ['location' => $location->id]) }}" style="width: 100%;" class="btn btn-sm btn-primary pull-left">{{ trans('admin/locations/table.update') }} </a>
       </div>
-      <div class="col-md-12" style="padding-top: 5px;">
-          <a href="{{ route('locations.print_assigned', ['locationId' => $location->id]) }}" style="width: 100%;" class="btn btn-sm btn-default pull-left">{{ trans('admin/locations/table.print_assigned') }} </a>
-      </div>
-      <div class="col-md-12" style="padding-top: 5px; padding-bottom: 20px;">
-          <a href="{{ route('locations.print_all_assigned', ['locationId' => $location->id]) }}" style="width: 100%;" class="btn btn-sm btn-default pull-left">{{ trans('admin/locations/table.print_all_assigned') }} </a>
-      </div>
 
-
-    @if ($location->image!='')
-      <div class="col-md-12 text-center" style="padding-bottom: 20px;">
-        <img src="{{ Storage::disk('public')->url('locations/'.e($location->image)) }}" class="img-responsive img-thumbnail" style="width:100%" alt="{{ $location->name }}">
-      </div>
-    @endif
       <div class="col-md-12">
         <ul class="list-unstyled" style="line-height: 25px; padding-bottom: 20px;">
           @if ($location->address!='')
@@ -289,15 +218,6 @@
             @if (($location->city!='') || ($location->state!='') || ($location->zip!=''))
               <li>{{ $location->city }} {{ $location->state }} {{ $location->zip }}</li>
             @endif
-            @if ($location->manager)
-              <li>{{ trans('admin/users/table.manager') }}: {!! $location->manager->present()->nameUrl() !!}</li>
-            @endif
-            @if ($location->parent)
-              <li>{{ trans('admin/locations/table.parent') }}: {!! $location->parent->present()->nameUrl() !!}</li>
-            @endif
-              @if ($location->ldap_ou)
-                  <li>{{ trans('admin/locations/table.ldap_ou') }}: {{ $location->ldap_ou }}</li>
-              @endif
         </ul>
 
         @if (($location->state!='') && ($location->country!='') && (config('services.google.maps_api_key')))
@@ -305,13 +225,8 @@
             <img src="https://maps.googleapis.com/maps/api/staticmap?markers={{ urlencode($location->address.','.$location->city.' '.$location->state.' '.$location->country.' '.$location->zip) }}&size=700x500&maptype=roadmap&key={{ config('services.google.maps_api_key') }}" class="img-thumbnail" style="width:100%" alt="Map">
           </div>
         @endif
-
       </div>
-
-
-		
   </div>
-
   </div>
 </div>
 

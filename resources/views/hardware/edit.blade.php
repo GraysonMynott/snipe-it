@@ -261,13 +261,6 @@
             document.cookie = "optional_info_open="+optional_info_open+'; path=/';
         });
 
-        $("#order_info").on("click",function(){
-            $('#order_details').fadeToggle(100);
-            $("#order_info_icon").toggleClass('fa-caret-right fa-caret-down');
-            var order_info_open = $('#order_info_icon').hasClass('fa-caret-down');
-            document.cookie = "order_info_open="+order_info_open+'; path=/';
-        });
-
         var all_cookies = document.cookie.split(';')
         for(var i in all_cookies) {
             var trimmed_cookie = all_cookies[i].trim(' ')
