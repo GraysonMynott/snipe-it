@@ -147,15 +147,15 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     </li>
                             @endcan
 
-                            @can('view', \App\Models\Firmware::class)
+{{--                            @can('view', \App\Models\Firmware::class)
                             <li aria-hidden="true"{!! (Request::is('firmware*') ? ' class="active"' : '') !!}>
-                                <a href="{{ route('firmware.index') }}" accesskey="2" tabindex="-1">
+                                <a href="{{ route('firmware.index') }}" accesskey="3" tabindex="-1">
                                     <i class="far fa-save fa-fw"></i>
                                     <span class="sr-only">{{ trans('admin/firmware.title') }}</span>
                                 </a>
                             </li>
                             @endcan
-
+--}}
                             @can('index', \App\Models\Asset::class)
                                 <li>
                                     <form class="navbar-form navbar-left form-horizontal" role="search"
