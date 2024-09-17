@@ -11,10 +11,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
     </title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1" name="viewport">
-
     <meta name="apple-mobile-web-app-capable" content="yes">
-
-
     <link rel="apple-touch-icon"
           href="{{ ($snipeSettings) && ($snipeSettings->favicon!='') ?  Storage::disk('public')->url(e($snipeSettings->logo)) :  config('app.url').'/img/snipe-logo-bug.png' }}">
     <link rel="apple-touch-startup-image"
@@ -40,8 +37,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
     @endif
     {{-- page level css --}}
     @stack('css')
-
-
 
     @if (($snipeSettings) && ($snipeSettings->header_color!=''))
         <style nonce="{{ csrf_token() }}">
@@ -70,7 +65,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
         </style>
     @endif
 
-
     <script nonce="{{ csrf_token() }}">
         window.snipeit = {
             settings: {
@@ -82,18 +76,13 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <script src="{{ url(asset('js/html5shiv.js')) }}" nonce="{{ csrf_token() }}"></script>
     <script src="{{ url(asset('js/respond.js')) }}" nonce="{{ csrf_token() }}"></script>
-
-
-
 </head>
 
 @if (($snipeSettings) && ($snipeSettings->allow_user_skin==1) && Auth::check() && Auth::user()->present()->skin != '')
     <body class="sidebar-mini skin-{{ $snipeSettings->skin!='' ? Auth::user()->present()->skin : 'blue' }} {{ (session('menu_state')!='open') ? 'sidebar-mini sidebar-collapse' : ''  }}">
-    @else
-        <body class="sidebar-mini skin-{{ $snipeSettings->skin!='' ? $snipeSettings->skin : 'blue' }} {{ (session('menu_state')!='open') ? 'sidebar-mini sidebar-collapse' : ''  }}">
-        @endif
-
-
+@else
+    <body class="sidebar-mini skin-{{ $snipeSettings->skin!='' ? $snipeSettings->skin : 'blue' }} {{ (session('menu_state')!='open') ? 'sidebar-mini sidebar-collapse' : ''  }}">
+@endif
         <a class="skip-main" href="#main">{{ trans('general.skip_to_main_content') }}</a>
         <div class="wrapper">
 
@@ -106,7 +95,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                 <nav class="navbar navbar-static-top" role="navigation">
                     <!-- Sidebar toggle button above the compact sidenav -->
                     <a href="#" style="color: white" class="sidebar-toggle btn btn-white" data-toggle="push-menu"
-                       role="button">
+                        role="button">
                         <span class="sr-only">{{ trans('general.toggle_navigation') }}</span>
                     </a>
                     <div class="nav navbar-nav navbar-left">
@@ -115,8 +104,8 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                 <a class="logo navbar-brand no-hover" href="{{ config('app.url') }}">
                                     @if ($snipeSettings->logo!='')
                                         <img class="navbar-brand-img"
-                                             src="{{ Storage::disk('public')->url($snipeSettings->logo) }}"
-                                             alt="{{ $snipeSettings->site_name }} logo">
+                                                src="{{ Storage::disk('public')->url($snipeSettings->logo) }}"
+                                                alt="{{ $snipeSettings->site_name }} logo">
                                     @endif
                                     {{ $snipeSettings->site_name }}
                                 </a>
@@ -124,8 +113,8 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                 <a class="logo navbar-brand no-hover" href="{{ config('app.url') }}">
                                     @if ($snipeSettings->logo!='')
                                         <img class="navbar-brand-img"
-                                             src="{{ Storage::disk('public')->url($snipeSettings->logo) }}"
-                                             alt="{{ $snipeSettings->site_name }} logo">
+                                                src="{{ Storage::disk('public')->url($snipeSettings->logo) }}"
+                                                alt="{{ $snipeSettings->site_name }} logo">
                                     @endif
                                     <span class="sr-only">{{ $snipeSettings->site_name }}</span>
                                 </a>
@@ -148,25 +137,35 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     </a>
                                 </li>
                             @endcan
+
                             @can('view', \App\Models\License::class)
-                                <li aria-hidden="true"{!! (Request::is('licenses*') ? ' class="active"' : '') !!}>
-                                    <a href="{{ route('licenses.index') }}" accesskey="2" tabindex="-1">
-                                        <i class="far fa-save fa-fw"></i>
-                                        <span class="sr-only">{{ trans('general.licenses') }}</span>
-                                    </a>
-                                </li>
+                                    <li aria-hidden="true"{!! (Request::is('licenses*') ? ' class="active"' : '') !!}>
+                                        <a href="{{ route('licenses.index') }}" accesskey="2" tabindex="-1">
+                                            <i class="far fa-save fa-fw"></i>
+                                            <span class="sr-only">{{ trans('general.licenses') }}</span>
+                                        </a>
+                                    </li>
+                            @endcan
+
+                            @can('view', \App\Models\Firmware::class)
+                            <li aria-hidden="true"{!! (Request::is('firmware*') ? ' class="active"' : '') !!}>
+                                <a href="{{ route('firmware.index') }}" accesskey="2" tabindex="-1">
+                                    <i class="far fa-save fa-fw"></i>
+                                    <span class="sr-only">{{ trans('admin/firmware.title') }}</span>
+                                </a>
+                            </li>
                             @endcan
 
                             @can('index', \App\Models\Asset::class)
                                 <li>
                                     <form class="navbar-form navbar-left form-horizontal" role="search"
-                                          action="{{ route('findbytag/hardware') }}" method="get">
+                                            action="{{ route('findbytag/hardware') }}" method="get">
                                         <div class="col-xs-12 col-md-12">
                                             <div class="col-xs-12 form-group">
                                                 <label class="sr-only"
-                                                       for="tagSearch">{{ trans('general.lookup_by_tag') }}</label>
+                                                        for="tagSearch">{{ trans('general.lookup_by_tag') }}</label>
                                                 <input type="text" class="form-control" id="tagSearch" name="assetTag"
-                                                       placeholder="{{ trans('general.lookup_by_tag') }}">
+                                                        placeholder="{{ trans('general.lookup_by_tag') }}">
                                                 <input type="hidden" name="topsearch" value="true" id="search">
                                             </div>
                                             <div class="col-xs-1">
@@ -245,10 +244,10 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                                                 </h2>
                                                                 <div class="progress xs">
                                                                     <div class="progress-bar progress-bar-yellow"
-                                                                         style="width: {{ $alert_items[$i]['percent'] }}%"
-                                                                         role="progressbar"
-                                                                         aria-valuenow="{{ $alert_items[$i]['percent'] }}"
-                                                                         aria-valuemin="0" aria-valuemax="100">
+                                                                            style="width: {{ $alert_items[$i]['percent'] }}%"
+                                                                            role="progressbar"
+                                                                            aria-valuenow="{{ $alert_items[$i]['percent'] }}"
+                                                                            aria-valuemin="0" aria-valuemax="100">
                                                                         <span class="sr-only">{{ $alert_items[$i]['percent'] }}% Complete</span>
                                                                     </div>
                                                                 </div>
@@ -259,7 +258,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                                 </ul>
                                             </li>
                                             {{-- <li class="footer">
-                                              <a href="#">{{ trans('general.tasks_view_all') }}</a>
+                                                <a href="#">{{ trans('general.tasks_view_all') }}</a>
                                             </li> --}}
                                         </ul>
                                     </li>
@@ -274,7 +273,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                                         @if (Auth::user()->present()->gravatar())
                                             <img src="{{ Auth::user()->present()->gravatar() }}" class="user-image"
-                                                 alt="">
+                                                    alt="">
                                         @else
                                             <i class="fas fa-user" aria-hidden="true"></i>
                                         @endif
@@ -305,7 +304,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                             <li>
                                                 <a href="{{ route('user.api') }}">
                                                     <i class="fa-solid fa-user-secret fa-fw"
-                                                       aria-hidden="true"></i></i> {{ trans('general.manage_api_keys') }}
+                                                        aria-hidden="true"></i></i> {{ trans('general.manage_api_keys') }}
                                                 </a>
                                             </li>
                                         @endcan
@@ -313,12 +312,12 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                         <li>
 
                                             <a href="{{ route('logout.get') }}"
-                                               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                                 <i class="fa fa-sign-out fa-fw"></i> {{ trans('general.logout') }}
                                             </a>
 
                                             <form id="logout-form" action="{{ route('logout.post') }}" method="POST"
-                                                  style="display: none;">
+                                                    style="display: none;">
                                                 {{ csrf_field() }}
                                             </form>
 
@@ -340,7 +339,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                     </div>
                 </nav>
                 <a href="#" style="float:left" class="sidebar-toggle-mobile visible-xs btn" data-toggle="push-menu"
-                   role="button">
+                    role="button">
                     <span class="sr-only">{{ trans('general.toggle_navigation') }}</span>
                     <i class="fas fa-bars"></i>
                 </a>
@@ -378,13 +377,19 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                                         </a>
                                     </li>
 
-                                    <?php $status_navs = \App\Models\Statuslabel::where('show_in_nav', '=', 1)->withCount('assets as asset_count')->get(); ?>
+                                    <?php $status_navs = \App\Models\Statuslabel::where(
+                                        "show_in_nav",
+                                        "=",
+                                        1
+                                    )
+                                        ->withCount("assets as asset_count")
+                                        ->get(); ?>
                                     @if (count($status_navs) > 0)
                                         @foreach ($status_navs as $status_nav)
                                             <li{!! (Request::is('statuslabels/'.$status_nav->id) ? ' class="active"' : '') !!}>
                                                 <a href="{{ route('statuslabels.show', ['statuslabel' => $status_nav->id]) }}">
                                                     <i class="fas fa-circle text-grey fa-fw"
-                                                       aria-hidden="true"{!!  ($status_nav->color!='' ? ' style="color: '.e($status_nav->color).'"' : '') !!}></i>
+                                                        aria-hidden="true"{!!  ($status_nav->color!='' ? ' style="color: '.e($status_nav->color).'"' : '') !!}></i>
                                                     {{ $status_nav->name }}
                                                     <span class="badge badge-secondary">{{ $status_nav->asset_count }}</span></a></li>
                                         @endforeach
@@ -570,7 +575,7 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                 @if ($debug_in_production)
                     <div class="row" style="margin-bottom: 0px; background-color: red; color: white; font-size: 15px;">
                         <div class="col-md-12"
-                             style="margin-bottom: 0px; background-color: #b50408 ; color: white; padding: 10px 20px 10px 30px; font-size: 16px;">
+                                style="margin-bottom: 0px; background-color: #b50408 ; color: white; padding: 10px 20px 10px 30px; font-size: 16px;">
                             <i class="fas fa-exclamation-triangle fa-3x pull-left"></i>
                             <strong>{{ strtoupper(trans('general.debug_warning')) }}:</strong>
                             {!! trans('general.debug_warning_text') !!}
@@ -584,10 +589,10 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
 
                     @if (isset($helpText))
                         @include ('partials.more-info',
-                                               [
-                                                   'helpText' => $helpText,
-                                                   'helpPosition' => (isset($helpPosition)) ? $helpPosition : 'left'
-                                               ])
+                                                [
+                                                    'helpText' => $helpText,
+                                                    'helpPosition' => (isset($helpPosition)) ? $helpPosition : 'left'
+                                                ])
                     @endif
                     <div class="pull-right">
                         @yield('header_right')
@@ -640,17 +645,17 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                     @if ($snipeSettings->support_footer!='off')
                         @if (($snipeSettings->support_footer=='on') || (($snipeSettings->support_footer=='admin') && (Auth::user()->isSuperUser()=='1')))
                             <a target="_blank" class="btn btn-default btn-xs"
-                               href="https://snipe-it.readme.io/docs/overview"
-                               rel="noopener">{{ trans('general.user_manual') }}</a>
+                                href="https://snipe-it.readme.io/docs/overview"
+                                rel="noopener">{{ trans('general.user_manual') }}</a>
                             <a target="_blank" class="btn btn-default btn-xs" href="https://snipeitapp.com/support/"
-                               rel="noopener">{{ trans('general.bug_report') }}</a>
+                                rel="noopener">{{ trans('general.bug_report') }}</a>
                         @endif
                     @endif
 
                     @if ($snipeSettings->privacy_policy_link!='')
                         <a target="_blank" class="btn btn-default btn-xs" rel="noopener"
-                           href="{{  $snipeSettings->privacy_policy_link }}"
-                           target="_new">{{ trans('admin/settings/general.privacy_policy') }}</a>
+                            href="{{  $snipeSettings->privacy_policy_link }}"
+                            target="_new">{{ trans('admin/settings/general.privacy_policy') }}</a>
                     @endif
                     </div>
                     <br>
@@ -662,7 +667,6 @@ dir="{{ in_array(app()->getLocale(),['ar-SA','fa-IR', 'he-IL']) ? 'rtl' : 'ltr' 
                 </div>
             </footer>
         </div><!-- ./wrapper -->
-
 
         <!-- end main container -->
 
