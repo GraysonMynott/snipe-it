@@ -259,23 +259,7 @@ class LocationsController extends Controller
 
         $locations = $locations->orderBy('name', 'ASC')->get();
 
-        $locations_with_children = [];
-
-        foreach ($locations as $location) {
-            if (! array_key_exists($location->parent_id, $locations_with_children)) {
-                $locations_with_children[$location->parent_id] = [];
-            }
-            $locations_with_children[$location->parent_id][] = $location;
-        }
-
-        if ($request->filled('search')) {
-            $locations_formatted = $locations;
-        } else {
-            $location_options = Location::indenter($locations_with_children);
-            $locations_formatted = new Collection($location_options);
-        }
-
-        $paginated_results = new LengthAwarePaginator($locations_formatted->forPage($page, 500), $locations_formatted->count(), 500, $page, []);
+        $paginated_results = new LengthAwarePaginator($locations->forPage($page, 500), $locations->count(), 500, $page, []);
 
         return (new SelectlistTransformer)->transformSelectlist($paginated_results);
     }

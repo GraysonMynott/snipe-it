@@ -62,7 +62,7 @@
 @include ('partials.forms.edit.notes')
 
 <!-- Asset Location -->
-@include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/assets/form.default_location'), 'fieldname' => 'rtd_location_id', 'help_text' => trans('general.rtd_location_help')])
+@include ('partials.forms.edit.location-select', ['translated_name' => trans('admin/assets/form.default_location'), 'fieldname' => 'location_id', 'help_text' => trans('general.rtd_location_help')])
 
 @stop
 
