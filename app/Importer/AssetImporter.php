@@ -32,26 +32,6 @@ class AssetImporter extends ItemImporter
         // ItemImporter handles the general fetching.
         parent::handle($row);
 
-        if ($this->customFields) {
-            foreach ($this->customFields as $customField) {
-                $customFieldValue = $this->array_smart_custom_field_fetch($row, $customField);
-
-                if ($customFieldValue) {
-                    if ($customField->field_encrypted == 1) {
-                        $this->item['custom_fields'][$customField->db_column_name()] = Crypt::encrypt($customFieldValue);
-                        $this->log('Custom Field '.$customField->name.': '.Crypt::encrypt($customFieldValue));
-                    } else {
-                        $this->item['custom_fields'][$customField->db_column_name()] = $customFieldValue;
-                        $this->log('Custom Field '.$customField->name.': '.$customFieldValue);
-                    }
-                } else {
-                    // Clear out previous data.
-                    $this->item['custom_fields'][$customField->db_column_name()] = null;
-                }
-            }
-        }
-
-
         $this->createAssetIfNotExists($row);
     }
 
@@ -92,13 +72,16 @@ class AssetImporter extends ItemImporter
             $this->item['status_id'] = $this->defaultStatusLabelId;
         }
 
+        $this->item['name'] = trim($this->findCsvMatch($row, 'name'));
+        $this->item['asset_tag'] = $asset_tag;
+        $this->item['serial'] = trim($this->findCsvMatch($row, 'serial'));
         $this->item['notes'] = trim($this->findCsvMatch($row, 'asset_notes'));
         $this->item['image'] = trim($this->findCsvMatch($row, 'image'));
+        $this->item['physical'] = trim($this->findCsvMatch($row, 'physical'));
         $this->item['model_id'] = $this->createOrFetchAssetModel($row);
         $this->item['last_patch_date'] = trim($this->findCsvMatch($row, 'last_patch_date'));
         $this->item['next_patch_date'] = trim($this->findCsvMatch($row, 'next_patch_date'));
         $this->item['asset_eol_date'] = trim($this->findCsvMatch($row, 'asset_eol_date'));
-        $this->item['asset_tag'] = $asset_tag;
 
         // We need to save the user if it exists so that we can checkout to user later.
         // Sanitizing the item will remove it.
@@ -113,29 +96,6 @@ class AssetImporter extends ItemImporter
         // checkout method if necessary below.
         if (isset($this->item['location_id'])) {
             $item['rtd_location_id'] = $this->item['location_id'];
-        }
-
-
-        /**
-         * We use this to backdate the checkin action further down
-         */
-        $checkin_date = date('Y-m-d H:i:s');
-        if ($this->item['last_checkin']!='') {
-            $item['last_checkin'] = $this->parseOrNullDate('last_checkin', 'datetime');
-            $checkout_date = $this->item['last_checkin'];
-        }
-
-        /**
-         * We use this to backdate the checkout action further down
-         */
-        $checkout_date = date('Y-m-d H:i:s');
-        if ($this->item['last_checkout']!='') {
-            $item['last_checkout'] = $this->parseOrNullDate('last_checkout', 'datetime');
-            $checkout_date = $this->item['last_checkout'];
-        }
-
-        if ($this->item['expected_checkin']!='') {
-            $item['expected_checkin'] = $this->parseOrNullDate('expected_checkin');
         }
 
         if ($this->item['last_patch_date']!='') {
@@ -155,13 +115,6 @@ class AssetImporter extends ItemImporter
             $asset->update($item);
         } else {
             $asset->fill($item);
-        }
-
-        // If we're updating, we don't want to overwrite old fields.
-        if (array_key_exists('custom_fields', $this->item)) {
-            foreach ($this->item['custom_fields'] as $custom_field => $val) {
-                $asset->{$custom_field} = $val;
-            }
         }
 
         // This sets an attribute on the Loggable trait for the action log
