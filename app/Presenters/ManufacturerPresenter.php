@@ -9,6 +9,19 @@ class ManufacturerPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
+    * Fields are:
+     *  - ID
+     *  - Name
+     *  - Image
+     *  - URL
+     *  - Support URL
+     *  - Support Phone
+     *  - Support Email
+     *  - Warranty URL
+     *  - Asset Count
+     *  - License Count
+     *  - Created Date
+     *  - Actions
      * @return string
      */
     public static function dataTableLayout()
