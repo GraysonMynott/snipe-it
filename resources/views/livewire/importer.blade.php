@@ -228,7 +228,7 @@
                                                                                         'placeholder' => trans('general.importer.do_not_import'),
                                                                                         'style' => 'min-width: 100%',
                                                                                         'data-livewire-component' => $this->getId()
-                                                                                    ],[
+                                                                                    ], [
                                                                                         '-' => ['disabled' => true] // this makes the "-----" line unclickable
                                                                                     ])
                                                                                 }}

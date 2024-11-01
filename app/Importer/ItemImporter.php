@@ -26,57 +26,37 @@ class ItemImporter extends Importer
         // Need to reset this between iterations or we'll have stale data.
         $this->item = [];
 
-        $item_category = $this->findCsvMatch($row, 'category');
+        $item_category          = $this->findCsvMatch($row, 'category');
+        $item_company_name      = $this->findCsvMatch($row, 'company');
+        $item_location          = $this->findCsvMatch($row, 'location');
+        $item_manufacturer      = $this->findCsvMatch($row, 'manufacturer');
+        $item_status_name       = $this->findCsvMatch($row, 'status');
+        $this->item['name']     = $this->findCsvMatch($row, 'item_name');
+        $this->item['notes']    = $this->findCsvMatch($row, 'notes');
+        $this->item['qty']      = $this->findCsvMatch($row, 'quantity');
+        $this->item['serial']   = $this->findCsvMatch($row, 'serial');
+        $this->item['user_id']  = $this->user_id;
+
+        
         if ($this->shouldUpdateField($item_category)) {
             $this->item['category_id'] = $this->createOrFetchCategory($item_category);
         }
 
-        $item_company_name = $this->findCsvMatch($row, 'company');
         if ($this->shouldUpdateField($item_company_name)) {
             $this->item['company_id'] = $this->createOrFetchCompany($item_company_name);
         }
 
-        $item_location = $this->findCsvMatch($row, 'location');
         if ($this->shouldUpdateField($item_location)) {
             $this->item['location_id'] = $this->createOrFetchLocation($item_location);
         }
-
-        $item_manufacturer = $this->findCsvMatch($row, 'manufacturer');
+        
         if ($this->shouldUpdateField($item_manufacturer)) {
             $this->item['manufacturer_id'] = $this->createOrFetchManufacturer($item_manufacturer);
         }
-
-        $item_status_name = $this->findCsvMatch($row, 'status');
+        
         if ($this->shouldUpdateField($item_status_name)) {
             $this->item['status_id'] = $this->createOrFetchStatusLabel($item_status_name);
         }
-
-        $item_manager_first_name = $this->findCsvMatch($row, 'manager_first_name');
-        $item_manager_last_name = $this->findCsvMatch($row, 'manager_last_name');
-
-        if ($this->shouldUpdateField($item_manager_first_name)) {
-            $this->item['manager_id'] = $this->fetchManager($item_manager_first_name, $item_manager_last_name);
-        }
-
-        $this->item['name'] = $this->findCsvMatch($row, 'item_name');
-        $this->item['notes'] = $this->findCsvMatch($row, 'notes');
-
-//        $this->item['asset_eol_date'] = null;
-//        if ($this->findCsvMatch($row, 'asset_eol_date') != '') {
-//            $csvMatch = $this->findCsvMatch($row, 'asset_eol_date');
-//            \Log::warning('EOL Date for $csvMatch is '.$csvMatch);
-//            try {
-//                $this->item['asset_eol_date'] = CarbonImmutable::parse($csvMatch)->format('Y-m-d');
-//            } catch (\Exception $e) {
-//                Log::info($e->getMessage());
-//                $this->log('Unable to parse date: '.$csvMatch);
-//            }
-//        }
-
-
-        $this->item['qty'] = $this->findCsvMatch($row, 'quantity');
-        $this->item['user_id'] = $this->user_id;
-        $this->item['serial'] = $this->findCsvMatch($row, 'serial');
     }
 
     /**

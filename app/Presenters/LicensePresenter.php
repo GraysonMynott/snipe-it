@@ -88,7 +88,7 @@ class LicensePresenter extends Presenter
                 'sortable' => true,
                 'title' => trans('mail.min_QTY'),
                 'formatter' => 'minAmtFormatter',
-            ],[
+            ], [
                 'field' => 'purchase_date',
                 'searchable' => true,
                 'sortable' => true,
@@ -123,8 +123,7 @@ class LicensePresenter extends Presenter
                 'visible' => false,
                 'title' => trans('general.updated_at'),
                 'formatter' => 'dateDisplayFormatter',
-            ],
-            [
+            ], [
                 'field' => 'notes',
                 'searchable' => true,
                 'sortable' => true,
@@ -170,8 +169,7 @@ class LicensePresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('general.id'),
                 'visible' => false,
-           ],
-           [
+           ], [
                 'field' => 'name',
                 'searchable' => false,
                 'sortable' => false,
@@ -211,16 +209,14 @@ class LicensePresenter extends Presenter
                 'title' => trans('general.location'),
                 'visible' => true,
                 'formatter' => 'locationsLinkObjFormatter',
-            ],
-            [
+            ], [
                 'field' => 'notes',
                 'searchable' => false,
                 'sortable' => false,
                 'visible' => false,
                 'title' => trans('general.notes'),
                 'formatter' => 'notesFormatter'
-            ],
-            [
+            ], [
                 'field' => 'checkincheckout',
                 'searchable' => false,
                 'sortable' => false,

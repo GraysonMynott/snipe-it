@@ -22,8 +22,7 @@ class ManufacturerPresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('general.id'),
                 'visible' => false,
-            ],
-            [
+            ], [
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,
@@ -31,8 +30,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('admin/manufacturers/table.name'),
                 'visible' => true,
                 'formatter' => 'manufacturersLinkFormatter',
-            ],
-            [
+            ], [
                 'field' => 'image',
                 'searchable' => false,
                 'sortable' => true,
@@ -40,8 +38,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('general.image'),
                 'visible' => true,
                 'formatter' => 'imageFormatter',
-            ],
-            [
+            ], [
                 'field' => 'url',
                 'searchable' => true,
                 'sortable' => true,
@@ -49,8 +46,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('general.url'),
                 'visible' => true,
                 'formatter' => 'externalLinkFormatter',
-            ],
-            [
+            ], [
                 'field' => 'support_url',
                 'searchable' => true,
                 'sortable' => true,
@@ -58,9 +54,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('admin/manufacturers/table.support_url'),
                 'visible' => true,
                 'formatter' => 'externalLinkFormatter',
-            ],
-
-            [
+            ], [
                 'field' => 'support_phone',
                 'searchable' => true,
                 'sortable' => true,
@@ -68,9 +62,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('admin/manufacturers/table.support_phone'),
                 'visible' => true,
                 'formatter' => 'phoneFormatter',
-            ],
-
-            [
+            ], [
                 'field' => 'support_email',
                 'searchable' => true,
                 'sortable' => true,
@@ -78,8 +70,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('admin/manufacturers/table.support_email'),
                 'visible' => true,
                 'formatter' => 'emailFormatter',
-            ],
-            [
+            ], [
                 'field' => 'warranty_lookup_url',
                 'searchable' => true,
                 'sortable' => true,
@@ -87,8 +78,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('admin/manufacturers/table.warranty_lookup_url'),
                 'visible' => false,
                 'formatter' => 'externalLinkFormatter',
-            ],
-            [
+            ], [
                 'field' => 'assets_count',
                 'searchable' => false,
                 'sortable' => true,
@@ -96,8 +86,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => ' <span class="hidden-md hidden-lg">Assets</span>'
                     .'<span class="hidden-xs"><i class="fas fa-barcode fa-lg"></i></span>',
                 'visible' => true,
-            ],
-            [
+            ], [
                 'field' => 'licenses_count',
                 'searchable' => false,
                 'sortable' => true,
@@ -105,8 +94,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => ' <span class="hidden-md hidden-lg">Licenses</span>'
                     .'<span class="hidden-xs"><i class="far fa-save fa-lg"></i></span>',
                 'visible' => true,
-            ],
-            [
+            ], [
                 'field' => 'created_at',
                 'searchable' => true,
                 'sortable' => true,
@@ -114,9 +102,7 @@ class ManufacturerPresenter extends Presenter
                 'title' => trans('general.created_at'),
                 'visible' => false,
                 'formatter' => 'dateDisplayFormatter',
-            ],
-
-            [
+            ], [
                 'field' => 'actions',
                 'searchable' => false,
                 'sortable' => false,

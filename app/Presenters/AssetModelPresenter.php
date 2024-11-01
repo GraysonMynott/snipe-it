@@ -15,8 +15,7 @@ class AssetModelPresenter extends Presenter
             [
                 'field' => 'checkbox',
                 'checkbox' => true,
-            ],
-            [
+            ], [
                 'field' => 'id',
                 'searchable' => false,
                 'sortable' => true,
@@ -32,8 +31,7 @@ class AssetModelPresenter extends Presenter
                 'visible' => true,
                 'title' => trans('general.name'),
                 'formatter' => 'modelsLinkFormatter',
-            ],
-            [
+            ], [
                 'field' => 'image',
                 'searchable' => false,
                 'sortable' => true,
@@ -41,8 +39,7 @@ class AssetModelPresenter extends Presenter
                 'title' => trans('general.image'),
                 'visible' => true,
                 'formatter' => 'imageFormatter',
-            ],
-            [
+            ], [
                 'field' => 'manufacturer',
                 'searchable' => false,
                 'sortable' => true,
@@ -50,24 +47,21 @@ class AssetModelPresenter extends Presenter
                 'title' => trans('general.manufacturer'),
                 'visible' => false,
                 'formatter' => 'manufacturersLinkObjFormatter',
-            ],
-            [
+            ], [
                 'field' => 'model_number',
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
                 'title' => trans('admin/models/table.modelnumber'),
                 'visible' => true,
-            ],
-            [
+            ], [
                 'field' => 'assets_count',
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
                 'title' => trans('admin/models/table.numassets'),
                 'visible' => true,
-            ],
-            [
+            ], [
                 'field' => 'category',
                 'searchable' => false,
                 'sortable' => true,
@@ -75,8 +69,7 @@ class AssetModelPresenter extends Presenter
                 'title' => trans('general.category'),
                 'visible' => true,
                 'formatter' => 'categoriesLinkObjFormatter',
-            ],
-            [
+            ], [
                 'field' => 'eol',
                 'searchable' => false,
                 'sortable' => true,
@@ -101,16 +94,14 @@ class AssetModelPresenter extends Presenter
                 'title' => trans('general.notes'),
                 'visible' => false,
                 'formatter' => 'notesFormatter',
-            ],
-            [
+            ], [
                 'field' => 'created_at',
                 'searchable' => true,
                 'sortable' => true,
                 'visible' => false,
                 'title' => trans('general.created_at'),
                 'formatter' => 'dateDisplayFormatter',
-            ],
-            [
+            ], [
                 'field' => 'updated_at',
                 'searchable' => true,
                 'sortable' => true,

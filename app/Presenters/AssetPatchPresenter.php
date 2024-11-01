@@ -20,8 +20,7 @@ class AssetPatchPresenter extends Presenter
              [
                 'field' => 'checkbox',
                 'checkbox' => true,
-             ],
-             [
+             ], [
                 'field' => 'id',
                 'searchable' => false,
                 'sortable' => true,

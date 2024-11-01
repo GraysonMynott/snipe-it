@@ -24,25 +24,14 @@ class UserPresenter extends Presenter
             [
                 'field' => 'checkbox',
                 'checkbox' => true,
-            ],
-            // [
+            ], [
             //     'field' => 'id',
             //     'searchable' => false,
             //     'sortable' => true,
             //     'switchable' => true,
             //     'title' => trans('general.id'),
             //     'visible' => false,
-            // ],
-            // [
-            //     'field' => 'avatar',
-            //     'searchable' => false,
-            //     'sortable' => false,
-            //     'switchable' => true,
-            //     'title' => trans('general.importer.avatar'),
-            //     'visible' => false,
-            //     'formatter' => 'imageFormatter',
-            // ],
-            [
+            // ], [
                 'field' => 'company',
                 'searchable' => true,
                 'sortable' => true,
@@ -50,61 +39,28 @@ class UserPresenter extends Presenter
                 'title' => trans('admin/companies/table.title'),
                 'visible' => false,
                 'formatter' => 'companiesLinkObjFormatter',
-            ],
-            [
+            ], [
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,
                 'title' => trans('admin/users/table.name'),
                 'visible' => true,
                 'formatter' => 'usersLinkFormatter',
-            ],
-
-            [
+            ], [
                 'field' => 'first_name',
                 'searchable' => true,
                 'sortable' => true,
                 'title' => trans('general.first_name'),
                 'visible' => false,
                 'formatter' => 'usersLinkFormatter',
-            ],
-
-            [
+            ], [
                 'field' => 'last_name',
                 'searchable' => true,
                 'sortable' => true,
                 'title' => trans('general.last_name'),
                 'visible' => false,
                 'formatter' => 'usersLinkFormatter',
-            ],
-            // [
-            //     'field' => 'jobtitle',
-            //     'searchable' => true,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/users/table.title'),
-            //     'visible' => true,
-            //     'formatter' => 'usersLinkFormatter',
-            // ],
-            // [
-            //     'field' => 'vip',
-            //     'searchable' => false,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/users/general.vip_label'),
-            //     'visible' => false,
-            //     'formatter' => 'trueFalseFormatter',
-            // ],
-            // [
-            //     'field' => 'remote',
-            //     'searchable' => false,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/users/general.remote'),
-            //     'visible' => false,
-            //     'formatter' => 'trueFalseFormatter',
-            // ],
-            [
+            ], [
                 'field' => 'email',
                 'searchable' => true,
                 'sortable' => true,
@@ -112,17 +68,7 @@ class UserPresenter extends Presenter
                 'title' => trans('admin/users/table.email'),
                 'visible' => true,
                 'formatter' => 'emailFormatter',
-            ],
-            // [
-            //     'field' => 'phone',
-            //     'searchable' => true,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/users/table.phone'),
-            //     'visible' => true,
-            //     'formatter'    => 'phoneFormatter',
-            // ],
-            [
+            ], [
                 'field' => 'username',
                 'searchable' => true,
                 'sortable' => true,
@@ -130,16 +76,14 @@ class UserPresenter extends Presenter
                 'title' => trans('admin/users/table.username'),
                 'visible' => true,
                 'formatter' => 'usersLinkFormatter',
-            ],
-            [
+            ], [
                 'field' => 'notes',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' => trans('general.notes'),
                 'visible' => true,
-            ],
-            [
+            ], [
                 'field' => 'groups',
                 'searchable' => false,
                 'sortable' => false,
@@ -147,35 +91,7 @@ class UserPresenter extends Presenter
                 'title' => trans('general.groups'),
                 'visible' => true,
                 'formatter' => 'groupsFormatter',
-            ],
-            // [
-            //     'field' => 'ldap_import',
-            //     'searchable' => false,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/settings/general.ldap_enabled'),
-            //     'visible' => false,
-            //     'formatter' => 'trueFalseFormatter',
-            // ],
-            // [
-            //     'field' => 'two_factor_enrolled',
-            //     'searchable' => false,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/users/general.two_factor_enrolled'),
-            //     'visible' => false,
-            //     'formatter' => 'trueFalseFormatter',
-            // ],
-            // [
-            //     'field' => 'two_factor_optin',
-            //     'searchable' => false,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('admin/users/general.two_factor_active'),
-            //     'visible' => false,
-            //     'formatter' => 'trueFalseFormatter',
-            // ],
-            [
+            ], [
                 'field' => 'activated',
                 'searchable' => false,
                 'sortable' => true,
@@ -183,25 +99,14 @@ class UserPresenter extends Presenter
                 'title' => trans('general.login_enabled'),
                 'visible' => true,
                 'formatter' => 'trueFalseFormatter',
-            ],
-            // [
-            //     'field' => 'autoassign_licenses',
-            //     'searchable' => false,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('general.autoassign_licenses'),
-            //     'visible' => false,
-            //     'formatter' => 'trueFalseFormatter',
-            // ],
-            // [
+            ], [
             //     'field' => 'created_by',
             //     'searchable' => false,
             //     'sortable' => true,
             //     'title' => trans('general.created_by'),
             //     'visible' => false,
             //     'formatter' => 'usersLinkObjFormatter',
-            // ],
-            [
+            // ], [
                 'field' => 'created_at',
                 'searchable' => true,
                 'sortable' => true,
@@ -209,26 +114,7 @@ class UserPresenter extends Presenter
                 'title' => trans('general.created_at'),
                 'visible' => false,
                 'formatter' => 'dateDisplayFormatter',
-            ],
-            // [
-            //     'field' => 'start_date',
-            //     'searchable' => true,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('general.start_date'),
-            //     'visible' => false,
-            //     'formatter' => 'dateDisplayFormatter',
-            // ],
-            // [
-            //     'field' => 'end_date',
-            //     'searchable' => true,
-            //     'sortable' => true,
-            //     'switchable' => true,
-            //     'title' => trans('general.end_date'),
-            //     'visible' => false,
-            //     'formatter' => 'dateDisplayFormatter',
-            // ],
-            [
+            ], [
                 'field' => 'last_login',
                 'searchable' => false,
                 'sortable' => true,
@@ -236,8 +122,7 @@ class UserPresenter extends Presenter
                 'title' => trans('general.last_login'),
                 'visible' => false,
                 'formatter' => 'dateDisplayFormatter',
-            ],
-            [
+            ], [
                 'field' => 'actions',
                 'searchable' => false,
                 'sortable' => false,

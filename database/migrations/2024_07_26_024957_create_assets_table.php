@@ -17,9 +17,9 @@ return new class extends Migration
             $table->timestamp('updated_at')->nullable();
             $table->softDeletes();
             
-            $table->string('name')->nullable();					// Name of asset
-            $table->string('asset_tag')->nullable();				// Asset tag? Remove?
-	        $table->string('serial')->nullable()->index();			// Asset serial
+            $table->string('name')->nullable();					        // Name of asset
+            $table->string('asset_tag')->nullable();				    // Asset tag? Remove?
+	        $table->string('serial')->nullable()->index();			    // Asset serial
             $table->text('notes')->nullable();
             $table->text('image')->nullable();
             $table->boolean('physical')->default(true);
@@ -30,12 +30,12 @@ return new class extends Migration
 
             // Links
             $table->unsignedInteger('company_id')->nullable()->index();
-            $table->integer('model_id')->nullable();				// ID of model
-            $table->integer('location_id')->nullable();				// ID of location
+            $table->integer('model_id')->nullable();				    // ID of model
+            $table->integer('location_id')->nullable();				    // ID of location
             $table->string('firmware_id')->nullable()->index();			// ID of firmware
-            $table->integer('user_id')->nullable();				// ID of user
-            $table->integer('status_id')->nullable();				// ID of status
-            $table->integer('rtd_location_id')->nullable()->index();		// ID of RTD location?
+            $table->integer('user_id')->nullable();				        // ID of user
+            $table->integer('status_id')->nullable();				    // ID of status
+            $table->integer('rtd_location_id')->nullable()->index();	// ID of RTD location?
 
 
             // To delete

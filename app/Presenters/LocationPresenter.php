@@ -18,14 +18,14 @@ class LocationPresenter extends Presenter
                 'field' => 'bulk_selectable',
                 'checkbox' => true,
                 'formatter' => 'checkboxEnabledFormatter',
-            ],[
+            ], [
                 'field' => 'id',
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
                 'title' => trans('general.id'),
                 'visible' => false,
-            ],[
+            ], [
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,
@@ -33,56 +33,56 @@ class LocationPresenter extends Presenter
                 'title' => trans('admin/locations/table.name'),
                 'visible' => true,
                 'formatter' => 'locationsLinkFormatter',
-            ],[
+            ], [
                 'field' => 'assets_count',
                 'searchable' => false,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/message.current_location'),
                 'visible' => true,
-            ],[
+            ], [
                 'field' => 'address',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/table.address'),
                 'visible' => true,
-            ],[
+            ], [
                 'field' => 'address2',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/table.address2'),
                 'visible' => false,
-            ],[
+            ], [
                 'field' => 'city',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/table.city'),
                 'visible' => true,
-            ],[
+            ], [
                 'field' => 'state',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/table.state'),
                 'visible' => true,
-            ],[
+            ], [
                 'field' => 'zip',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/table.zip'),
                 'visible' => false,
-            ],[
+            ], [
                 'field' => 'country',
                 'searchable' => true,
                 'sortable' => true,
                 'switchable' => true,
                 'title' =>  trans('admin/locations/table.country'),
                 'visible' => false,
-            ],[
+            ], [
                 'field' => 'phone',
                 'searchable' => true,
                 'sortable' => true,
@@ -90,7 +90,7 @@ class LocationPresenter extends Presenter
                 'title' => trans('admin/users/table.phone'),
                 'visible' => false,
                 'formatter'    => 'phoneFormatter',
-            ],[
+            ], [
                 'field' => 'created_at',
                 'searchable' => true,
                 'sortable' => true,
@@ -98,7 +98,7 @@ class LocationPresenter extends Presenter
                 'title' => trans('general.created_at'),
                 'visible' => false,
                 'formatter' => 'dateDisplayFormatter',
-            ],[
+            ], [
                 'field' => 'actions',
                 'searchable' => false,
                 'sortable' => false,
