@@ -16,6 +16,20 @@ class UserPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - Checkbox
+     *  - Company
+     *  - Name
+     *  - First Name
+     *  - Last Name
+     *  - Email
+     *  - Username
+     *  - Notes
+     *  - Groups
+     *  - Activated
+     *  - Created Date
+     *  - Last Login
+     *  - Actions
      * @return string
      */
     public static function dataTableLayout()
@@ -136,15 +150,6 @@ class UserPresenter extends Presenter
         return json_encode($layout);
     }
 
-    public function emailLink()
-    {
-        if ($this->email) {
-            return '<a href="mailto:'.$this->email.'">'.$this->email.'</a><a href="mailto:'.$this->email.'" class="hidden-xs hidden-sm"><i class="far fa-envelope"></i></a>';
-        }
-
-        return '';
-    }
-
     /**
      * Returns the user full name, it simply concatenates
      * the user first and last name.
@@ -158,13 +163,13 @@ class UserPresenter extends Presenter
 
     /**
      * Standard accessor.
-     * @TODO Remove presenter::fullName() entirely?
+     * @TODO [GM] Remove presenter::name() entirely?
      * @return string
      */
-    public function name()
-    {
-        return $this->fullName();
-    }
+//    public function name()
+//    {
+//        return $this->fullName();
+//    }
 
     /**
      * Returns the user Gravatar image url.
@@ -227,8 +232,12 @@ class UserPresenter extends Presenter
         return route('users.show', $this->id);
     }
 
-    public function glyph()
-    {
-        return '<i class="fas fa-user" aria-hidden="true"></i>';
-    }
+    /**
+     * @TODO [GM] Remove presenter::glyph() entirely?
+     * @return string
+     */
+//    public function glyph()
+//    {
+//        return '<i class="fas fa-user" aria-hidden="true"></i>';
+//    }
 }
