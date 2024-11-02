@@ -13,6 +13,28 @@ class AssetPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - Checkbox
+     *  - ID
+     *  - Company
+     *  - Name
+     *  - Image
+     *  - Serial
+     *  - MAC Address
+     *  - Manufacturer
+     *  - Model
+     *  - Model Number
+     *  - Category
+     *  - Status
+     *  - Location
+     *  - RTD Location
+     *  - EoL
+     *  - EoS
+     *  - Notes
+     *  - Created At
+     *  - Updated At
+     *  - Last Patch Date
+     *  - Next Patch Date
      * @return string
      */
     public static function dataTableLayout()

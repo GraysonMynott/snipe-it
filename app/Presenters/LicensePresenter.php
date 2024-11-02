@@ -9,6 +9,26 @@ class LicensePresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - ID
+     *  - Company
+     *  - Name
+     *  - Product Key
+     *  - Expiration Date
+     *  - License Name
+     *  - Category
+     *  - Manufacturer
+     *  - License Seats
+     *  - License Seats Available
+     *  - Min Amount
+     *  - Purchase Date
+     *  - Termination Date
+     *  - Reassignable
+     *  - Created At
+     *  - Updated At
+     *  - Notes
+     *  - Check In/Out
+     *  - Actions
      * @return string
      */
     public static function dataTableLayout()
@@ -49,11 +69,11 @@ class LicensePresenter extends Presenter
                 'title' => trans('admin/licenses/form.expiration'),
                 'formatter' => 'dateDisplayFormatter',
             ], [
-                'field' => 'license_email',
-                'searchable' => true,
-                'sortable' => true,
-                'title' => trans('admin/licenses/form.to_email'),
-            ], [
+//                'field' => 'license_email',
+//                'searchable' => true,
+//                'sortable' => true,
+//                'title' => trans('admin/licenses/form.to_email'),
+//            ], [
                 'field' => 'license_name',
                 'searchable' => true,
                 'sortable' => true,
@@ -157,6 +177,14 @@ class LicensePresenter extends Presenter
 
     /**
      * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - ID
+     *  - Name
+     *  - Assigned Asset
+     *  - Location
+     *  - Notes
+     *  - Check In/Out
+     *  - Actions
      * @return string
      */
     public static function dataTableLayoutSeats()
@@ -178,22 +206,22 @@ class LicensePresenter extends Presenter
                 'title' => trans('admin/licenses/general.seat'),
                 'visible' => true,
             ], [
-                'field' => 'assigned_user',
-                'searchable' => false,
-                'sortable' => false,
-                'switchable' => true,
-                'title' => trans('admin/licenses/general.user'),
-                'visible' => true,
-                'formatter' => 'usersLinkObjFormatter',
-            ], [
-                'field' => 'assigned_user.email',
-                'searchable' => false,
-                'sortable' => false,
-                'switchable' => true,
-                'title' => trans('admin/users/table.email'),
-                'visible' => true,
-                'formatter' => 'emailFormatter',
-            ], [
+//                'field' => 'assigned_user',
+//                'searchable' => false,
+//                'sortable' => false,
+//                'switchable' => true,
+//                'title' => trans('admin/licenses/general.user'),
+//                'visible' => true,
+//                'formatter' => 'usersLinkObjFormatter',
+//            ], [
+//                'field' => 'assigned_user.email',
+//                'searchable' => false,
+//                'sortable' => false,
+//                'switchable' => true,
+//                'title' => trans('admin/users/table.email'),
+//                'visible' => true,
+//                'formatter' => 'emailFormatter',
+//            ], [
                 'field' => 'assigned_asset',
                 'searchable' => false,
                 'sortable' => false,

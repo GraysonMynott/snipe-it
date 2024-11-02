@@ -9,7 +9,7 @@ class ManufacturerPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
-    * Fields are:
+     * Fields are:
      *  - ID
      *  - Name
      *  - Image

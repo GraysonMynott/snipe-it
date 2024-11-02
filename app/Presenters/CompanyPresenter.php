@@ -9,6 +9,18 @@ class CompanyPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - ID
+     *  - Name
+     *  - Image
+     *  - Phone
+     *  - Email
+     *  - User Count
+     *  - Asset Count
+     *  - License Count
+     *  - Updated At
+     *  - Created At
+     *  - Actions
      * @return string
      */
     public static function dataTableLayout()
@@ -59,14 +71,12 @@ class CompanyPresenter extends Presenter
                 'sortable' => true,
                 'title' => '<span class="hidden-xs"><i class="fas fa-users"></i></span><span class="hidden-md hidden-lg">'.trans('general.users').'</span></th>',
                 'visible' => true,
-
             ], [
                 'field' => 'assets_count',
                 'searchable' => false,
                 'sortable' => true,
                 'title' => '<span class="hidden-xs"><i class="fas fa-barcode" aria-hidden="true"></i></span><span class="hidden-md hidden-lg">'.trans('general.assets').'</span>',
                 'visible' => true,
-
             ], [
                 'field' => 'licenses_count',
                 'searchable' => false,

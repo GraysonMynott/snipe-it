@@ -9,6 +9,16 @@ class CategoryPresenter extends Presenter
 {
     /**
      * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - ID
+     *  - Name
+     *  - Image
+     *  - Category Type
+     *  - Item Count
+     *  - Checkin Email
+     *  - Created At
+     *  - Updated At
+     *  - Actions
      * @return string
      */
     public static function dataTableLayout()
@@ -76,7 +86,7 @@ class CategoryPresenter extends Presenter
                 'sortable' => false,
                 'switchable' => false,
                 'title' => trans('table.actions'),
-		'formatter' => 'categoriesActionsFormatter',
+		        'formatter' => 'categoriesActionsFormatter',
             ],
         ];
 

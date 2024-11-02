@@ -22,8 +22,7 @@ class AssetModelPresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('general.id'),
                 'visible' => false,
-            ], 
-            [
+            ], [
                 'field' => 'name',
                 'searchable' => true,
                 'sortable' => true,
@@ -76,17 +75,15 @@ class AssetModelPresenter extends Presenter
                 'switchable' => true,
                 'title' => trans('admin/assets/form.eol_rate'),
                 'visible' => true,
-            ],
-/*             [
-                'field' => 'fieldset',
-                'searchable' => false,
-                'sortable' => true,
-                'switchable' => true,
-                'title' => trans('admin/models/general.fieldset'),
-                'visible' => true,
-                'formatter' => 'fieldsetsLinkObjFormatter',
-            ], */
-            [
+            ], [
+//                'field' => 'fieldset',
+//                'searchable' => false,
+//                'sortable' => true,
+//                'switchable' => true,
+//                'title' => trans('admin/models/general.fieldset'),
+//                'visible' => true,
+//                'formatter' => 'fieldsetsLinkObjFormatter',
+//            ], [
                 'field' => 'notes',
                 'searchable' => true,
                 'sortable' => true,
