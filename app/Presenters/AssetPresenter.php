@@ -148,13 +148,13 @@ class AssetPresenter extends Presenter
                 'searchable' => false,
                 'sortable' => true,
                 'visible' => false,
-                'title' => trans('admin/assets/form.eol_rate'),
+                'title' => trans('admin/assets/form.eol_date'),
             ], [
                 'field' => 'eos',
                 'searchable' => false,
                 'sortable' => true,
                 'visible' => false,
-                'title' => trans('admin/assets/form.eol_rate'),
+                'title' => trans('admin/assets/form.eos_date'),
             ], [
                 'field' => 'notes',
                 'searchable' => true,
