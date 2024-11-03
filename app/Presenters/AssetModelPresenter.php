@@ -9,6 +9,24 @@ use App\Helpers\Helper;
  */
 class AssetModelPresenter extends Presenter
 {
+    /**
+     * Json Column Layout for bootstrap table
+     * Fields are:
+     *  - Checkbox
+     *  - ID
+     *  - Company
+     *  - Name
+     *  - Image
+     *  - Manufacturer
+     *  - Model Number
+     *  - Asset Count
+     *  - Category
+     *  - EoL
+     *  - Notes
+     *  - Created At
+     *  - Updated At
+     * @return string
+     */
     public static function dataTableLayout()
     {
         $layout = [

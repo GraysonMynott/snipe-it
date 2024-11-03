@@ -29,7 +29,7 @@
 
               @elseif ($field->element=='textarea')
                 @if($field->is_unique)
-                    <input type="text" class="form-control" disabled value="{{ trans('/admin/hardware/form.bulk_update_custom_field_unique') }}">
+                    <input type="text" class="form-control" disabled value="{{ trans('/admin/assets/form.bulk_update_custom_field_unique') }}">
                 @endif
                 @if(!$field->is_unique) 
                     <textarea class="col-md-6 form-control" id="{{ $field->db_column_name() }}" name="{{ $field->db_column_name() }}">{{ old($field->db_column_name(),(isset($item) ? Helper::gracefulDecrypt($field, $item->{$field->db_column_name()}) : $field->defaultValue($model->id))) }}</textarea>
@@ -72,7 +72,7 @@
                     
                     @if (($field->field_encrypted=='0') || (Gate::allows('admin')))
                         @if ($field->is_unique) 
-                                <input type="text" class="form-control" disabled value="{{trans('/admin/hardware/form.bulk_update_custom_field_unique')}}">
+                                <input type="text" class="form-control" disabled value="{{trans('/admin/assets/form.bulk_update_custom_field_unique')}}">
                             @endif  
                         @if(!$field->is_unique) 
                                 <input type="text" value="{{ old($field->db_column_name(),(isset($item) ? Helper::gracefulDecrypt($field, $item->{$field->db_column_name()}) : $field->defaultValue($model->id))) }}" id="{{ $field->db_column_name() }}" class="form-control" name="{{ $field->db_column_name() }}" placeholder="Enter {{ strtolower($field->format) }} text">
