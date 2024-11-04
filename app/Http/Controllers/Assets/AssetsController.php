@@ -317,16 +317,17 @@ class AssetsController extends Controller
         }
 
         // Update the asset data
-        $asset_tag = $request->input('asset_tags');
-        $serial = $request->input('serials');
-        $asset->name = $request->input('name');
-        $asset->serial = $serial[1];
-        $asset->company_id = Company::getIdForCurrentUser($request->input('company_id'));
-        $asset->model_id = $request->input('model_id');
-        $asset->asset_tag = $asset_tag[1];
-        $asset->notes = $request->input('notes');
+        $asset_tag              = $request->input('asset_tags');
+        $serial                 = $request->input('serials');
+        $asset->name            = $request->input('name');
+        $asset->serial          = $serial[1];
+        $asset->company_id      = Company::getIdForCurrentUser($request->input('company_id'));
+        $asset->model_id        = $request->input('model_id');
+        $asset->mac_address     = $request->input('mac_address');
+        $asset->asset_tag       = $asset_tag[1];
+        $asset->notes           = $request->input('notes');
 
-        $asset = $request->handleImages($asset);
+        $asset                  = $request->handleImages($asset);
 
         // Update custom fields in the database.
         // Validation for these fields is handlded through the AssetRequest form request
