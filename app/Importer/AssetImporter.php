@@ -46,13 +46,13 @@ class AssetImporter extends ItemImporter
     public function createAssetIfNotExists(array $row)
     {
         $editingAsset = false;
-        $asset_name = $this->findCsvMatch($row, 'asset_name');
+        $asset_name = $this->findCsvMatch($row, 'name');
 
 //        if (empty($asset_name)){
 //            $asset_name = Asset::autoincrement_asset();
 //        }
 
-        $asset = Asset::where(['asset_name'=> (string) $asset_name])->first();
+        $asset = Asset::where(['name'=> (string) $asset_name])->first();
         if ($asset) {
             if (! $this->updating) {
                 $this->log('A matching Asset '.$asset_name.' already exists');
