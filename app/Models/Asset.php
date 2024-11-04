@@ -55,37 +55,37 @@ class Asset extends SnipeModel
     protected $injectUniqueIdentifier = true;
 
     protected $casts = [
-        'purchase_date' => 'date',
-        'eol_explicit' => 'boolean',
-        'last_patch_date' => 'datetime',
-        'next_patch_date' => 'datetime:m-d-Y',
-        'model_id'       => 'integer',
-        'status_id'      => 'integer',
-        'company_id'     => 'integer',
-        'location_id'    => 'integer',
-        'rtd_company_id' => 'integer',
-        'created_at'     => 'datetime',
-        'updated_at'   => 'datetime',
-        'deleted_at'  => 'datetime',
+        'purchase_date'     => 'date',
+        'eol_explicit'      => 'boolean',
+        'last_patch_date'   => 'datetime',
+        'next_patch_date'   => 'datetime:m-d-Y',
+        'model_id'          => 'integer',
+        'status_id'         => 'integer',
+        'company_id'        => 'integer',
+        'location_id'       => 'integer',
+        'rtd_company_id'    => 'integer',
+        'created_at'        => 'datetime',
+        'updated_at'        => 'datetime',
+        'deleted_at'        => 'datetime',
     ];
 
     protected $rules = [
-        'model_id'         => 'required|integer|exists:models,id,deleted_at,NULL|not_array',
-        'status_id'        => 'required|integer|exists:status_labels,id',
-        'asset_tag'        => 'required|min:1|max:255|unique_undeleted:assets,asset_tag|not_array',
-        'name'             => 'nullable|max:255',
-        'company_id'       => 'nullable|integer|exists:companies,id',
-        'last_patch_date'  => 'nullable|date_format:Y-m-d H:i:s',
-        'mac_address'      => 'nullable|regex:/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/',
-        // 'next_patch_date'  => 'nullable|date|after:last_patch_date',
-        'next_patch_date'  => 'nullable|date',
-        'location_id'      => 'nullable|exists:locations,id',
-        'rtd_location_id'  => 'nullable|exists:locations,id',
-        'purchase_date'    => 'nullable|date|date_format:Y-m-d',
-        'serial'           => 'nullable|unique_undeleted:assets,serial',
-        'asset_eol_date'   => 'nullable|date',
-        'eol_explicit'     => 'nullable|boolean',
-        'notes'            => 'nullable|string|max:65535',
+        'model_id'          => 'required|integer|exists:models,id,deleted_at,NULL|not_array',
+        'status_id'         => 'required|integer|exists:status_labels,id',
+        'asset_tag'         => 'required|min:1|max:255|unique_undeleted:assets,asset_tag|not_array',
+        'name'              => 'nullable|max:255',
+        'company_id'        => 'nullable|integer|exists:companies,id',
+        'last_patch_date'   => 'nullable|date_format:Y-m-d H:i:s',
+        'mac_address'       => 'required|max:18',
+        //'mac_address'       => 'nullable|regex:/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/',
+        'next_patch_date'   => 'nullable|date',
+        'location_id'       => 'nullable|exists:locations,id',
+        'rtd_location_id'   => 'nullable|exists:locations,id',
+        'purchase_date'     => 'nullable|date|date_format:Y-m-d',
+        'serial'            => 'nullable|unique_undeleted:assets,serial',
+        'asset_eol_date'    => 'nullable|date',
+        'eol_explicit'      => 'nullable|boolean',
+        'notes'             => 'nullable|string|max:65535',
     ];
 
 
@@ -149,15 +149,6 @@ class Asset extends SnipeModel
         'model.category'     => ['name'],
         'model.manufacturer' => ['name'],
     ];
-
-    // To properly set the expected checkin as Y-m-d
-    public function setExpectedCheckinAttribute($value)
-    {
-        if ($value == '') {
-            $value = null;
-        }
-        $this->attributes['expected_checkin'] = $value;
-    }
 
     /**
      * This handles the custom field validation for assets
@@ -239,11 +230,12 @@ class Asset extends SnipeModel
                   ->orderBy('created_at', 'desc');
     }
 
+    /*
     public function checkedOutToLocation(): bool
     {
       return $this->assignedType() === self::LOCATION;
     }
-
+    */
 
     /**
      * Get the asset's location based on the assigned user
@@ -291,7 +283,7 @@ class Asset extends SnipeModel
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v6.1.0]
      * @return string
-     */
+     
     public function targetShowRoute()
     {
         $route = str_plural($this->assignedType());
@@ -302,6 +294,7 @@ class Asset extends SnipeModel
         return $route;
 
     }
+    */
 
     /**
      * Get the asset's location based on default RTD location
