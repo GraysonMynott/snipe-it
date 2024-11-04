@@ -156,7 +156,7 @@ class AssetModelPresenter extends Presenter
             return $this->eol.' '.trans('general.months');
         }
 
-        return '';
+        return 'Blah';
     }
 
     /**

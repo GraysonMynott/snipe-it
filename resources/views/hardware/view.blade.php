@@ -342,32 +342,12 @@
                                             </div>
                                         @endforeach
                                     @endif
-
-
-                                    @if ($asset->purchase_date)
-                                        <div class="row">
-                                            <div class="col-md-2">
-                                                <strong>
-                                                    {{ trans('admin/assets/form.date') }}
-                                                </strong>
-                                            </div>
-                                            <div class="col-md-6">
-                                                {{ Helper::getFormattedDateObject($asset->purchase_date, 'date', false) }}
-                                                -
-                                                {{ Carbon::parse($asset->purchase_date)->diff(Carbon::now())->format('%y years, %m months and %d days')}}
-
-                                            </div>
-                                        </div>
-                                    @endif
                                     
                                     @if ($asset->asset_eol_date)
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <strong>
                                                     {{ trans('admin/assets/form.eol_date') }}
-                                                    @if ($asset->purchase_date)
-							                            {!! $asset->asset_eol_date < date("Y-m-d") ? '<i class="fas fa-exclamation-triangle text-orange" aria-hidden="true"></i>' : '' !!}
-                                                    @endif
                                                 </strong>
                                             </div>
                                             <div class="col-md-6">
