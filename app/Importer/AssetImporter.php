@@ -101,10 +101,6 @@ class AssetImporter extends ItemImporter
             $item['next_patch_date'] = $this->parseOrNullDate('next_patch_date');
         }
 
-        if ($this->item['asset_eol_date']!='') {
-            $item['asset_eol_date'] = $this->parseOrNullDate('asset_eol_date');
-        }
-
 
         if ($editingAsset) {
             $asset->update($item);
