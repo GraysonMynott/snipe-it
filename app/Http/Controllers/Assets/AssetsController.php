@@ -134,7 +134,6 @@ class AssetsController extends Controller
             $asset->notes                   = $request->input('notes');
             $asset->user_id                 = Auth::id();
             $asset->status_id               = request('status_id');
-            $asset->asset_eol_date          = request('asset_eol_date', null);
             $asset->rtd_location_id         = request('rtd_location_id', null);
 
             if (! empty($settings->patch_interval)) {

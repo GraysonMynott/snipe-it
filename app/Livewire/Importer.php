@@ -177,11 +177,11 @@ class Importer extends Component
             'warranty_months' => trans('admin/assets/form.warranty'),
             'category' => trans('general.category'),
             'serial' => trans('general.serial_number'),
+            'mac_address' => trans('general.mac_address'),
             'asset_notes' => trans('general.item_notes', ['item' => trans('admin/assets/general.asset')]),
             'model_notes' => trans('general.item_notes', ['item' => trans('admin/assets/form.model')]),
             'manufacturer' => trans('general.manufacturer'),
             'image' => trans('general.importer.image_filename'),
-            'asset_eol_date' => trans('admin/assets/form.eol_date'),
 
             /**
              * These are here so users can import history, to replace the dinosaur that
