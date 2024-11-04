@@ -108,11 +108,8 @@ class Asset extends SnipeModel
         'rtd_location_id',
         'serial',
         'status_id',
-        'asset_eol_date',
-        'eol_explicit',
         'last_patch_date',
         'next_patch_date',
-        'asset_eol_date',
     ];
 
     use Searchable;
@@ -132,7 +129,6 @@ class Asset extends SnipeModel
       'updated_at',
       'next_patch_date',
       'last_patch_date',
-      'asset_eol_date',
     ];
 
     /**

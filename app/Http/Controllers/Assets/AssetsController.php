@@ -130,7 +130,7 @@ class AssetsController extends Controller
 
             $asset->company_id              = Company::getIdForCurrentUser($request->input('company_id'));
             $asset->model_id                = $request->input('model_id');
-            $asset->mac_address                = $request->input('mac_address');
+            $asset->mac_address             = $request->input('mac_address');
             $asset->notes                   = $request->input('notes');
             $asset->user_id                 = Auth::id();
             $asset->status_id               = request('status_id');
@@ -251,23 +251,13 @@ class AssetsController extends Controller
                 ->where('item_type', '=', Asset::class)
                 ->orderBy('created_at', 'DESC')->first();
 
-            if ($asset->location) {
-                $use_currency = $asset->location->currency;
-            } else {
-                if ($settings->default_currency != '') {
-                    $use_currency = $settings->default_currency;
-                } else {
-                    $use_currency = trans('general.currency');
-                }
-            }
-
             $qr_code = (object) [
                 'display' => $settings->qr_code == '1',
                 'url' => route('qr_code/hardware', $asset->id),
             ];
 
             return view('hardware/view', compact('asset', 'qr_code', 'settings'))
-                ->with('use_currency', $use_currency)->with('patch_log', $patch_log);
+                ->with('patch_log', $patch_log);
         }
 
         return redirect()->route('hardware.index')->with('error', trans('admin/assets/message.does_not_exist'));
@@ -290,7 +280,6 @@ class AssetsController extends Controller
         $this->authorize($asset);
 
         $asset->status_id = $request->input('status_id', null);
-        $asset->purchase_date = $request->input('purchase_date', null);
         $asset->next_patch_date = $request->input('next_patch_date', null);
 
         // If the box isn't checked, it's not in the request at all.
