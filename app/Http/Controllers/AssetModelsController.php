@@ -156,14 +156,6 @@ class AssetModelsController extends Controller
         }
 
         if ($model->save()) {
-            if ($model->wasChanged('eol')) {
-                    if ($model->eol > 0) {
-                        $newEol = $model->eol; 
-                        $model->assets()->update(['asset_eol_date' => DB::raw('DATE_ADD(purchase_date, INTERVAL ' . $newEol . ' MONTH)')]);
-                    } elseif ($model->eol == 0) {
-    						$model->assets()->update(['asset_eol_date' => DB::raw('null')]);
-					}
-                }
             return redirect()->route('models.index')->with('success', trans('admin/models/message.update.success'));
         }
 

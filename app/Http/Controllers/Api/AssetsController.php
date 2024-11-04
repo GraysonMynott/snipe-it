@@ -91,7 +91,6 @@ class AssetsController extends Controller
             'updated_at',
             'last_patch_date',
             'next_patch_date',
-            'asset_eol_date',
         ];
 
         $filter = [];
