@@ -12,37 +12,33 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('assets', function (Blueprint $table) {
-            $table->increments('id');
-            $table->timestamp('created_at')->nullable()->index();
-            $table->timestamp('updated_at')->nullable();
-            $table->softDeletes();
+            # Default entity fields
+            $table->increments('id');                                   // Entity ID
+            $table->timestamp('created_at')->nullable()->index();       // Created date
+            $table->timestamp('updated_at')->nullable();                // Updated date
+            $table->softDeletes();                                      // Soft delete fields
             
-            $table->string('name')->nullable();					        // Name of asset
+            // Asset-specific fields
+            $table->string('name')->nullable();					        // Asset name
+            $table->text('notes')->nullable();                          // Asset notes/comment
+            $table->string('mac_address')->nullable()->unique();		// Asset MAC address
+	        $table->string('serial')->nullable()->unique();			    // Asset serial
+            $table->string('ip_address')->nullable()->unique();			// Asset IP
+            $table->string('oob_ip')->nullable();			            // OoB management IP
+            $table->text('image')->nullable();                          // Image of asset
+            $table->boolean('physical')->default(true);                 // Physical/Virtual/Logical
+            $table->boolean('archived')->nullable()->default(false);    // Is asset archived?
+            $table->date('last_patch_date')->nullable();			    // Date of last patch
+            $table->date('next_patch_date')->nullable();                // Date of next patch
             $table->string('asset_tag')->nullable();				    // Asset tag? Remove?
-	        $table->string('serial')->nullable()->index();			    // Asset serial
-            $table->text('notes')->nullable();
-            $table->text('image')->nullable();
-            $table->boolean('physical')->default(true);
-            $table->boolean('archived')->nullable()->default(false);
-            $table->string('assigned_type')->nullable();
-            $table->dateTime('last_patch_date')->nullable();			// TODO: Change to "date"
-            $table->date('next_patch_date')->nullable();
 
             // Links
-            $table->unsignedInteger('company_id')->nullable()->index();
-            $table->integer('model_id')->nullable();				    // ID of model
-            $table->integer('location_id')->nullable();				    // ID of location
-            $table->string('firmware_id')->nullable()->index();			// ID of firmware
-            $table->integer('user_id')->nullable();				        // ID of user
-            $table->integer('status_id')->nullable();				    // ID of status
-            $table->integer('rtd_location_id')->nullable()->index();	// ID of RTD location?
-
-
-            // To delete
-            $table->date('purchase_date')->nullable();
-            $table->date('asset_eol_date')->nullable();
-            $table->boolean('eol_explicit')->default(false);
-            $table->integer('assigned_to')->nullable();
+            $table->unsignedInteger('company_id')->nullable()->index(); // ID of Company
+            $table->integer('model_id')->nullable();				    // ID of Model      [inherits manufacturer and category]
+            $table->integer('location_id')->nullable();				    // ID of Location
+            $table->string('firmware_id')->nullable()->index();			// ID of Firmware
+            $table->integer('user_id')->nullable();				        // ID of User
+            $table->integer('status_id')->nullable();				    // ID of Status
 
 	        // Indexes
             $table->index(['assigned_type', 'assigned_to']);
