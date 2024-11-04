@@ -46,16 +46,16 @@ class AssetImporter extends ItemImporter
     public function createAssetIfNotExists(array $row)
     {
         $editingAsset = false;
-        $asset_tag = $this->findCsvMatch($row, 'asset_tag');
+        $asset_name = $this->findCsvMatch($row, 'asset_name');
 
-        if (empty($asset_tag)){
-            $asset_tag = Asset::autoincrement_asset();
-        }
+//        if (empty($asset_name)){
+//            $asset_name = Asset::autoincrement_asset();
+//        }
 
-        $asset = Asset::where(['asset_tag'=> (string) $asset_tag])->first();
+        $asset = Asset::where(['asset_name'=> (string) $asset_name])->first();
         if ($asset) {
             if (! $this->updating) {
-                $this->log('A matching Asset '.$asset_tag.' already exists');
+                $this->log('A matching Asset '.$asset_name.' already exists');
                 return;
             }
 
@@ -73,21 +73,16 @@ class AssetImporter extends ItemImporter
         }
 
         $this->item['name'] = trim($this->findCsvMatch($row, 'name'));
-        $this->item['asset_tag'] = $asset_tag;
+        $this->item['asset_tag'] = Asset::autoincrement_asset();
         $this->item['serial'] = trim($this->findCsvMatch($row, 'serial'));
+        $this->item['mac_address'] = trim($this->findCsvMatch($row, 'mac_address'));
         $this->item['notes'] = trim($this->findCsvMatch($row, 'asset_notes'));
         $this->item['image'] = trim($this->findCsvMatch($row, 'image'));
         $this->item['physical'] = trim($this->findCsvMatch($row, 'physical'));
         $this->item['model_id'] = $this->createOrFetchAssetModel($row);
         $this->item['last_patch_date'] = trim($this->findCsvMatch($row, 'last_patch_date'));
         $this->item['next_patch_date'] = trim($this->findCsvMatch($row, 'next_patch_date'));
-        $this->item['asset_eol_date'] = trim($this->findCsvMatch($row, 'asset_eol_date'));
 
-        // We need to save the user if it exists so that we can checkout to user later.
-        // Sanitizing the item will remove it.
-        if (array_key_exists('checkout_target', $this->item)) {
-            $target = $this->item['checkout_target'];
-        }
 
         $item = $this->sanitizeItemForStoring($asset, $editingAsset);
 
@@ -123,20 +118,6 @@ class AssetImporter extends ItemImporter
         if ($asset->save()) {
 
             $this->log('Asset '.$this->item['name'].' with serial number '.$this->item['serial'].' was created');
-
-            // If we have a target to checkout to, lets do so.
-            //-- user_id is a property of the abstract class Importer, which this class inherits from and it's set by
-            //-- the class that needs to use it (command importer or GUI importer inside the project).
-            if (isset($target) && ($target !== false)) {
-                if (!is_null($asset->assigned_to)){
-                    if ($asset->assigned_to != $target->id) {
-                        event(new CheckoutableCheckedIn($asset, User::find($asset->assigned_to), auth()->user(), 'Checkin from CSV Importer', $checkin_date));
-                    }
-                }
-
-                $asset->fresh()->checkOut($target, $this->user_id, $checkout_date, null, 'Checkout from CSV Importer',  $asset->name);
-            }
-
             return;
         }
         $this->logError($asset, 'Asset "'.$this->item['name'].'"');
