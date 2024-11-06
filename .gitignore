@@ -2,6 +2,7 @@
 .couscous
 .DS_Store
 .env.testing
+.*vsdx
 phpstan.neon
 .idea
 /bin/
