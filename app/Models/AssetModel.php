@@ -92,6 +92,18 @@ class AssetModel extends SnipeModel
     }
 
     /**
+     * Establishes the model -> asset relationship
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v1.0]
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function getAssets()
+    {
+        return $this->hasManyThrough(Asset::class, \App\Models\Hardware::class, 'model_id', 'hardware_id');
+    }
+
+    /**
      * Establishes the model -> category relationship
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
