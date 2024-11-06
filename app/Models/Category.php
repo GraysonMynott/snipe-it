@@ -27,19 +27,13 @@ class Category extends SnipeModel
     use SoftDeletes;
 
     protected $table = 'categories';
-    protected $hidden = ['user_id', 'deleted_at'];
-
-    protected $casts = [
-        'user_id'      => 'integer',
-    ];
+    protected $hidden = ['deleted_at'];
 
     /**
      * Category validation rules
      */
     public $rules = [
-        'user_id' => 'numeric|nullable',
         'name'   => 'required|min:1|max:255|two_column_unique_undeleted:category_type',
-        'category_type'   => 'required|in:asset,license',
     ];
 
     /**
@@ -60,9 +54,8 @@ class Category extends SnipeModel
      * @var array
      */
     protected $fillable = [
-        'category_type',
         'name',
-        'user_id',
+        'notes',
     ];
 
     use Searchable;
@@ -72,7 +65,7 @@ class Category extends SnipeModel
      *
      * @var array
      */
-    protected $searchableAttributes = ['name', 'category_type'];
+    protected $searchableAttributes = ['name', 'notes'];
 
     /**
      * The relations and their attributes that should be included when searching the model.
@@ -103,7 +96,7 @@ class Category extends SnipeModel
      * @since [v4.3]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function licenses()
+    public function getLicenses()
     {
         return $this->hasMany(\App\Models\License::class);
     }
@@ -143,7 +136,7 @@ class Category extends SnipeModel
      * @since [v2.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function assets()
+    public function getHardware()
     {
         return $this->hasManyThrough(Asset::class, \App\Models\AssetModel::class, 'category_id', 'model_id');
     }
@@ -176,45 +169,5 @@ class Category extends SnipeModel
     public function models()
     {
         return $this->hasMany(\App\Models\AssetModel::class, 'category_id');
-    }
-    
-    /**
-     * Checks for a category-specific EULA, and if that doesn't exist,
-     * checks for a settings level EULA
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return string | null
-     */
-    public function getEula()
-    {
-
-        if ($this->eula_text) {
-            return Helper::parseEscapedMarkedown($this->eula_text);
-        } elseif ((Setting::getSettings()->default_eula_text) && ($this->use_default_eula == '1')) {
-            return Helper::parseEscapedMarkedown(Setting::getSettings()->default_eula_text);
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * -----------------------------------------------
-     * BEGIN MUTATORS
-     * -----------------------------------------------
-     **/
-
-    /**
-     * This sets the checkin_value to a boolean 0 or 1. This accounts for forms or API calls that
-     * explicitly pass the checkin_email field but it has a null or empty value.
-     *
-     * This will also correctly parse a 1/0 if "true"/"false" is passed.
-     *
-     * @param $value
-     * @return void
-     */
-    public function setCheckinEmailAttribute($value)
-    {
-        $this->attributes['checkin_email'] = (int) filter_var($value, FILTER_VALIDATE_BOOLEAN);
     }
 }
