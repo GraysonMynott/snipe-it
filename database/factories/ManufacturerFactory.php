@@ -24,8 +24,7 @@ class ManufacturerFactory extends Factory
     {
         return [
             'name' => Null,
-            'user_id' => "1",
-            'support_phone' => Null,
+            'notes' => Null,
             'url' => Null,
             'support_email' => Null,
         ];
@@ -36,6 +35,7 @@ class ManufacturerFactory extends Factory
         return $this->state(function () {
             return [
                 'name' => 'Check Point',
+                'notes' => 'Check Point Technologies',
                 'url' => 'https://checkpoint.com',
                 'support_url' => 'https://usercenter.checkpoint.com',
                 'image' => 'checkpoint.png',
@@ -48,6 +48,7 @@ class ManufacturerFactory extends Factory
         return $this->state(function () {
             return [
                 'name' => 'Aruba',
+                'notes' => 'Aruba Networking. Subsidiary of HPE',
                 'url' => 'https://arubanetworks.com',
                 'support_url' => 'https://networkingsupport.hpe.com',
                 'image' => 'aruba.png',
@@ -71,6 +72,7 @@ class ManufacturerFactory extends Factory
         return $this->state(function () {
             return [
                 'name' => 'Citrix',
+                'notes' => 'Citrix - purveyors of fine NetScalers since 1892',
                 'url' => 'https://citrix.com',
                 'support_url' => 'https://support.citrix.com',
                 'image' => 'citrix.png',
@@ -83,6 +85,7 @@ class ManufacturerFactory extends Factory
         return $this->state(function () {
             return [
                 'name' => 'Apple',
+                'notes' => 'Not a Pear',
                 'url' => 'https://apple.com',
                 'support_url' => 'https://support.apple.com',
                 'warranty_lookup_url' => 'https://checkcoverage.apple.com',
@@ -96,6 +99,7 @@ class ManufacturerFactory extends Factory
         return $this->state(function () {
             return [
                 'name' => 'HP',
+                'notes' => 'Like the sauce.',
                 'url' => 'https://hp.com',
                 'support_url' => 'https://support.hp.com',
                 'image' => 'hp.png',

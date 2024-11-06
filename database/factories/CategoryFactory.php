@@ -24,8 +24,7 @@ class CategoryFactory extends Factory
     {
         return [
             'name' => Null,
-            'category_type' => 'asset',
-            'user_id' => "1",
+            'notes' => Null
         ];
     }
 
@@ -34,7 +33,6 @@ class CategoryFactory extends Factory
     {
         return $this->state([
             'name' => 'Firewall',
-            'category_type' => 'asset',
         ]);
     }
 
@@ -43,7 +41,6 @@ class CategoryFactory extends Factory
     {
         return $this->state([
             'name' => 'Server',
-            'category_type' => 'asset',
         ]);
     }
 
@@ -52,7 +49,6 @@ class CategoryFactory extends Factory
     {
         return $this->state([
             'name' => 'Switch',
-            'category_type' => 'asset',
         ]);
     }
 
@@ -61,7 +57,6 @@ class CategoryFactory extends Factory
     {
         return $this->state([
             'name' => 'Router',
-            'category_type' => 'asset',
         ]);
     }
 
@@ -70,7 +65,6 @@ class CategoryFactory extends Factory
      {
          return $this->state([
              'name' => 'Wireless Access Point',
-             'category_type' => 'asset',
          ]);
      }
 
@@ -79,7 +73,6 @@ class CategoryFactory extends Factory
      {
          return $this->state([
              'name' => 'NetScaler',
-             'category_type' => 'asset',
          ]);
      }
 }

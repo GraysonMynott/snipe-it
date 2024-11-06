@@ -40,14 +40,15 @@ class AssetModelFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'name' => '1550 Appliance',
-                'category_id' => function () {
-                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
-                },
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'notes' => 'Check Point 1550 Appliance'
+                'category_id' => function () {
+                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
+                },
+                'name' => '1550 Appliance',
+                'notes' => 'Check Point 1550 SMB Appliance',
+                'model_number' => 'CPAP-SG1550',
             ];
         });
     }
@@ -56,14 +57,15 @@ class AssetModelFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'name' => '1555 Appliance',
-                'category_id' => function () {
-                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
-                },
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'notes' => 'Check Point 1555 Appliance'
+                'category_id' => function () {
+                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
+                },
+                'name' => '1555 Appliance',
+                'notes' => 'Check Point 1555 SMB Appliance',
+                'model_number' => 'CPAP-SG1555',
             ];
         });
     }
@@ -72,14 +74,15 @@ class AssetModelFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'name' => '1570 Appliance',
-                'category_id' => function () {
-                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
-                },
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'notes' => 'Check Point 1570 Appliance'
+                'category_id' => function () {
+                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
+                },
+                'name' => '1550 Appliance',
+                'notes' => 'Check Point 1570 SMB Appliance',
+                'model_number' => 'CPAP-SG1570',
             ];
         });
     }
@@ -88,30 +91,31 @@ class AssetModelFactory extends Factory
     {
         return $this->state(function () {
             return [
-                'name' => '1590 Appliance',
-                'category_id' => function () {
-                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
-                },
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'notes' => 'Check Point 1590 Appliance'
+                'category_id' => function () {
+                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
+                },
+                'name' => '1590 Appliance',
+                'notes' => 'Check Point 1590 SMB Appliance',
+                'model_number' => 'CPAP-SG1590',
             ];
         });
     }
 
-    public function ckpCloudguardModel()
+    public function ckpCloudGuardModel()
     {
         return $this->state(function () {
             return [
-                'name' => 'Cloudguard VM',
-                'category_id' => function () {
-                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
-                },
                 'manufacturer_id' => function () {
                     return Manufacturer::where('name', 'Check Point')->first() ?? Manufacturer::factory()->checkpoint();
                 },
-                'notes' => 'Check Point Cloudguard Virtual Machine'
+                'category_id' => function () {
+                    return Category::where('name', 'Firewall')->first() ?? Category::factory()->assetFirewallCategory();
+                },
+                'name' => 'CloudGuard VM',
+                'notes' => 'Check Point 1550 Appliance',
             ];
         });
     }
