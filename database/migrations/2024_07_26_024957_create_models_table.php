@@ -16,21 +16,18 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->string('name');					// Name
-            $table->string('model_number')->nullable();			// Model number/SKU
-            $table->integer('user_id')->nullable();			// User ID of creator??
-            $table->integer('eol')->nullable();				// End of life date
-            $table->integer('eos')->nullable();				// End of support date
-            $table->string('image')->nullable();
-	    $table->text('notes')->nullable();
+            // Links
+            $table->integer('manufacturer_id');				            // ID of Manufacturer
+            $table->integer('category_id')->nullable();				    // ID of Category
 
-	    // Links
-            $table->integer('manufacturer_id')->nullable();		// Manufacturer ID
-            $table->integer('category_id')->nullable();			// Category ID
-	    
-	    $table->tinyInteger('requestable')->default(0);                 // To be removed
-            $table->integer('min_amt')->nullable();                         // To be removed
-            $table->integer('fieldset_id')->nullable();                     // To be removed?
+            // Model-specific fields
+            $table->string('name');					                    // Name
+            $table->text('notes')->nullable();                          // Notes
+            $table->string('model_number')->nullable();			        // Model number/SKU
+            $table->date('eol')->nullable();				            // End of life date
+            
+            //Optional
+            $table->string('image')->nullable();
         });
     }
 

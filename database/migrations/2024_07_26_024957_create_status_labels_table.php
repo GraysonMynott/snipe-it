@@ -16,8 +16,8 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            // Status-specific fields
             $table->string('name', 100)->nullable();
-            $table->integer('user_id')->nullable();
             $table->boolean('deployable')->default(false);
             $table->boolean('pending')->default(false);
             $table->boolean('archived')->default(false);

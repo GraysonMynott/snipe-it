@@ -16,15 +16,14 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
+            // Location-specific fields
             $table->string('name')->nullable();
             $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('country')->nullable();
-            $table->integer('user_id')->nullable();
             $table->string('address')->nullable();
             $table->string('address2')->nullable();
             $table->string('zip', 10)->nullable();
-            $table->string('phone', 20)->nullable();
         });
     }
 

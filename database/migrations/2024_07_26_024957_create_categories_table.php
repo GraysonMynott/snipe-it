@@ -16,10 +16,11 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->string('name');
-            $table->integer('user_id')->nullable();
-            $table->string('category_type')->nullable()->default('asset');
-            $table->string('image')->nullable();
+            $table->string('name');                                     // Category name
+            $table->text('notes')->nullable();                          // Category notes/comment
+
+            // Optional
+            $table->text('image')->nullable();
         });
     }
 

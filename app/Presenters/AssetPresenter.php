@@ -250,6 +250,15 @@ class AssetPresenter extends Presenter
         return '';
     }
 
+    public function modelEol()
+    {
+        if ($this->model->model) {
+            return $this->model->model->present()->nameUrl();
+        }
+
+        return '';
+    }
+
     /**
      * Generate img tag to this items image.
      * @return mixed|string

@@ -16,13 +16,13 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
 
-            $table->string('name');
-            $table->integer('user_id')->nullable();
-            $table->string('url')->nullable();
-            $table->string('support_url')->nullable();
-            $table->string('warranty_lookup_url')->nullable();
-            $table->string('support_phone')->nullable();
-            $table->string('support_email')->nullable();
+            // Manufacturer-specific fields
+            $table->string('name');                                 // Manufacturer name
+            $table->text('notes');                                  // Notes
+            $table->string('url')->nullable();                      // Manufacturer URL
+            $table->string('support_url')->nullable();              // Manufacturer support URL
+
+            // Optional
             $table->string('image')->nullable();
         });
     }
