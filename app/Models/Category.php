@@ -142,6 +142,18 @@ class Category extends SnipeModel
     }
 
     /**
+     * Establishes the category -> firmware relationship
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v2.0]
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
+     */
+    public function getFirmware()
+    {
+        return $this->hasMany(\App\Models\Firmware::class, 'category_id');
+    }
+
+    /**
      * Establishes the category -> assets relationship but also takes into consideration
      * the setting to show archived in lists.
      *
