@@ -25,16 +25,15 @@ class AssetModel extends SnipeModel
     use Loggable, Requestable, Presentable;
 
     protected $table = 'models';
-    protected $hidden = ['user_id', 'deleted_at'];
+    protected $hidden = ['deleted_at'];
 
     // Declare the rules for the model validation
     protected $rules = [
+        'category_id'       => 'required|integer|exists:categories,id',
+        'manufacturer_id'   => 'required|integer|exists:manufacturers,id',
         'name'              => 'required|min:1|max:255',
         'model_number'      => 'max:255|nullable',
-        'category_id'       => 'required|integer|exists:categories,id',
-        'manufacturer_id'   => 'integer|exists:manufacturers,id|nullable',
         'eol'               => 'integer:min:0|max:240|nullable',
-        'eos'               => 'integer:min:0|max:240|nullable',
     ];
 
     /**
@@ -53,16 +52,12 @@ class AssetModel extends SnipeModel
      * @var array
      */
     protected $fillable = [
-        'name',
-        'model_number',
-        'category_id',
         'manufacturer_id',
-        'eol',
-        'eos',
+        'category_id',
+        'name',
         'notes',
-        'user_id',
-        'fieldset_id',
-        'image',
+        'model_number',
+        'eol',
     ];
 
     use Searchable;
@@ -80,21 +75,20 @@ class AssetModel extends SnipeModel
      * @var array
      */
     protected $searchableRelations = [
-        'category'     => ['name'],
         'manufacturer' => ['name'],
+        'category'     => ['name'],
     ];
 
     /**
-     * Establishes the model -> assets relationship
+     * Establishes the model -> hardware relationship
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
-     * TODO: Rename to getAssets()
      */
-    public function assets()
+    public function getHardware()
     {
-        return $this->hasMany(\App\Models\Asset::class, 'model_id');
+        return $this->hasMany(\App\Models\Hardware::class, 'model_id');
     }
 
     /**
@@ -103,9 +97,8 @@ class AssetModel extends SnipeModel
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
-     * TODO: Rename to getCategory()
      */
-    public function category()
+    public function getCategory()
     {
         return $this->belongsTo(\App\Models\Category::class, 'category_id');
     }
@@ -117,58 +110,10 @@ class AssetModel extends SnipeModel
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function manufacturer()
+    public function getManufacturer()
     {
         return $this->belongsTo(\App\Models\Manufacturer::class, 'manufacturer_id');
     }
-
-    /**
-     * Establishes the model -> fieldset relationship
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function fieldset()
-    {
-        return $this->belongsTo(\App\Models\CustomFieldset::class, 'fieldset_id');
-    }
-   
-    public function customFields()
-    {
-       return $this->fieldset()->first()->fields(); 
-    }
-
-    /**
-     * Establishes the model -> custom field default values relationship
-     *
-     * @author hannah tinkler
-     * @since [v4.3]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function defaultValues()
-    {
-        return $this->belongsToMany(\App\Models\CustomField::class, 'models_custom_fields')->withPivot('default_value');
-    }
-
-    /**
-     * Gets the full url for the image
-     *
-     * @todo this should probably be moved
-     *
-     * @author [A. Gianotto] [<snipe@snipe.net>]
-     * @since [v2.0]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function getImageUrl()
-    {
-        if ($this->image) {
-            return Storage::disk('public')->url(app('models_upload_path').$this->image);
-        }
-
-        return false;
-    }
-
 
     /**
      * Checks if the model is deletable
@@ -255,10 +200,5 @@ class AssetModel extends SnipeModel
     public function scopeOrderCategory($query, $order)
     {
         return $query->leftJoin('categories', 'models.category_id', '=', 'categories.id')->orderBy('categories.name', $order);
-    }
-
-    public function scopeOrderFieldset($query, $order)
-    {
-        return $query->leftJoin('custom_fieldsets', 'models.fieldset_id', '=', 'custom_fieldsets.id')->orderBy('custom_fieldsets.name', $order);
     }
 }
