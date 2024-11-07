@@ -23,8 +23,8 @@ final class Company extends SnipeModel
 
     // Declare the rules for the model validation
     protected $rules = [
-        'name' => 'required|min:1|max:255|unique:companies,name',
-        'phone' => 'min:7|max:35|nullable',
+        'name'              => 'required|min:1|max:255|unique:companies,name',
+        'notes'             => 'nullable|string|max:65535',
     ];
 
     protected $presenter = \App\Presenters\CompanyPresenter::class;
@@ -48,7 +48,7 @@ final class Company extends SnipeModel
      */
     protected $searchableAttributes = [
         'name', 
-        'phone', 
+        'notes', 
         'created_at', 
         'updated_at'
     ];
@@ -67,8 +67,7 @@ final class Company extends SnipeModel
      */
     protected $fillable = [
         'name',
-        'phone',
-        'email',
+        'notes',
     ];
 
     private static function isFullMultipleCompanySupportEnabled()
@@ -202,46 +201,66 @@ final class Company extends SnipeModel
     public function isDeletable()
     {
         return Gate::allows('delete', $this)
-            && ($this->assets()->count() === 0)
-            && ($this->licenses()->count() === 0)
-            && ($this->users()->count() === 0);
+            && ($this->getUsers()->count() === 0)
+            && ($this->getAccounts()->count() === 0);
     }
 
     /**
      * Retrieve a list(?) of users belonging to this company
-     * TODO: Rename to getUsers()
+     * Relation: Company > User
      */
-    public function users()
+    public function getUsers()
     {
         return $this->hasMany(User::class, 'company_id');
     }
 
     /**
-     * Retrieve a list(?) of assetss belonging to this company
-     * TODO: Rename to getAssets()
+     * Retrieve a list(?) of accounts belonging to this company
+     * Relation: Company > Account
      */
-    public function assets()
+    public function getAccounts()
     {
-        return $this->hasMany(Asset::class, 'company_id');
+        return $this->hasMany(Account::class, 'company_id');
+    }
+
+    /**
+     * Retrieve a list(?) of hardware belonging to this company
+     * Relation: Company > Account > Hardware
+     */
+    public function getHardware()
+    {
+        return $this->hasManyThrough(\App\Models\Hardware::class, \App\Models\Account::class, 'company_id', 'account_id');
+    }
+
+    /**
+     * Retrieve a list(?) of assets belonging to this company
+     * Relation: Company > Account > Hardware > Asset
+     */
+    public function getAssets()
+    {
+        return Asset::whereHas('hardware.account', function ($query) {
+            $query->where('company_id', $this->id);
+        })->get()
     }
 
     /**
      * Retrieve a list(?) of licenses belonging to this company
-     * TODO: Rename to getLicenses()
-     * Really, the licenses hsould belong to accounts under the company, rather than the company itself
+     * Relation: Company > Account > License
      */
-    public function licenses()
+    public function getLicenses()
     {
         return $this->hasMany(License::class, 'company_id');
     }
 
     /**
-     * Retrieve a list(?) of accounts belonging to this company
-     * TODO: Implement...
+     * Retrieve a list(?) of licensed assets belonging to this company
+     * Relation: Company > Account > License > Asset
      */
-    public function getAccounts()
+    public function getLicensedAssets()
     {
-        return $this->hasMany(License::class, 'company_id');
+        return Asset::whereHas('license.account', function ($query) {
+            $query->where('company_id', $this->id);
+        })->get()
     }
 
     /**
@@ -334,5 +353,4 @@ final class Company extends SnipeModel
             return $q;
         }
     }
-
 }
