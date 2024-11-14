@@ -178,7 +178,7 @@ class Category extends SnipeModel
      * @since [v2.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
-    public function models()
+    public function getModels()
     {
         return $this->hasMany(\App\Models\AssetModel::class, 'category_id');
     }

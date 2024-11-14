@@ -70,22 +70,19 @@ class Asset extends SnipeModel
     ];
 
     protected $rules = [
-        'model_id'          => 'required|integer|exists:models,id,deleted_at,NULL|not_array',
-        'status_id'         => 'required|integer|exists:status_labels,id',
-        'asset_tag'         => 'required|min:1|max:255|unique_undeleted:assets,asset_tag|not_array',
-        'name'              => 'nullable|max:255',
-        'company_id'        => 'nullable|integer|exists:companies,id',
-        'last_patch_date'   => 'nullable|date_format:Y-m-d H:i:s',
-        //'mac_address'       => 'required|max:18',
-        'mac_address'       => 'nullable|regex:/^([0-9A-Fa-f]{2}[:-]){5}([0-9A-Fa-f]{2})$/',
-        'next_patch_date'   => 'nullable|date',
+        'hardware_id'       => 'required|integer|exists:hardware,id,deleted_at,NULL|unique:assets,hardware_id|not_array',
+        'license_id'        => 'required|integer|exists:license,id,deleted_at,NULL|not_array',
         'location_id'       => 'nullable|exists:locations,id',
-        'rtd_location_id'   => 'nullable|exists:locations,id',
-        'purchase_date'     => 'nullable|date|date_format:Y-m-d',
-        'serial'            => 'nullable|unique_undeleted:assets,serial',
-        'asset_eol_date'    => 'nullable|date',
-        'eol_explicit'      => 'nullable|boolean',
+        'firmware_id'       => 'nullable|exists:firmware,id',
+        'status_id'         => 'required|integer|exists:status_labels,id',
+        'parent_id'         => 'nullable|integer|exists:assets,id',
+        'name'              => 'required|min:5|max:255',
         'notes'             => 'nullable|string|max:65535',
+        'pvl'               => 'nullable|string|in:Physical,Virtual,Logical'
+        'ip_address',       => 'nullable|ip|unique:assets,ip_address'
+        'oob_ip',           => 'nullable|ip'
+        'last_patch_date'   => 'nullable|date_format:Y-m-d H:i:s',
+        'next_patch_date'   => 'nullable|date_format:Y-m-d H:i:s',
     ];
 
 
@@ -95,19 +92,17 @@ class Asset extends SnipeModel
    * @var array
    */
     protected $fillable = [
-        'asset_tag',
-        'assigned_to',
-        'assigned_type',
-        'company_id',
-        'image',
+        'hardware_id',
+        'license_id',
         'location_id',
-        'mac_address',
-        'model_id',
+        'firmware_id',
+        'status_id',
+        'parent_id',
         'name',
         'notes',
-        'rtd_location_id',
-        'serial',
-        'status_id',
+        'pvl',
+        'ip_address',
+        'oob_ip',
         'last_patch_date',
         'next_patch_date',
     ];
@@ -120,9 +115,6 @@ class Asset extends SnipeModel
      * @var array
      */
     protected $searchableAttributes = [
-      'name',
-      'asset_tag',
-      'serial',
       'mac_address',
       'notes',
       'created_at',
@@ -137,13 +129,13 @@ class Asset extends SnipeModel
      * @var array
      */
     protected $searchableRelations = [
-        'assetstatus'        => ['name'],
-        'company'            => ['name'],
-        'defaultLoc'         => ['name'],
-        'location'           => ['name'],
-        'model'              => ['name', 'model_number', 'eol'],
-        'model.category'     => ['name'],
-        'model.manufacturer' => ['name'],
+        'hardware'              => ['name'],
+        'model'                 => ['name'],
+        'defaultLoc'            => ['name'],
+        'location'              => ['name'],
+        'model'                 => ['name', 'model_number', 'eol'],
+        'model.category'        => ['name'],
+        'model.manufacturer'    => ['name'],
     ];
 
     /**

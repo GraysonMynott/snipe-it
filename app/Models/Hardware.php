@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Storage;
 use Watson\Validating\ValidatingTrait;
-use \App\Presenters\FirmwarePresenter;
+use \App\Presenters\AssetModelPresenter;
 
 /**
  * Model for Asset Models. Asset Models contain higher level
@@ -17,25 +17,26 @@ use \App\Presenters\FirmwarePresenter;
  *
  * @version    v1.0
  */
-class Firmware extends SnipeModel
+class Hardware extends SnipeModel
 {
     use HasFactory;
     use SoftDeletes;
-    protected $presenter = \App\Presenters\FirmwarePresenter::class;
-    use Loggable, Presentable;
+    protected $presenter = \App\Presenters\HardwarePresenter::class;
+    use Loggable, Requestable, Presentable;
 
-    protected $table = 'firmware';
-    protected $hidden = ['user_id', 'deleted_at'];
+    protected $table = 'hardware';
+    protected $hidden = ['deleted_at'];
 
     // Declare the rules for the model validation
     protected $rules = [
+        'model_id'          => 'required|integer|exists:models,id',
+        'account_id'        => 'required|integer|exists:accounts,id',
+        'support_id'        => 'integer|exists:supports,id|nullable',
+        'status_id'         => 'required|integer|exists:status_labels,id',
         'name'              => 'required|min:1|max:255',
-        'major_release'     => 'required|max:255',
-        'minor_release'     => 'max:255|nullable',
-        'eol'               => 'integer:min:0|max:240|nullable',
-        'eos'               => 'integer:min:0|max:240|nullable',
-        'category_id'       => 'required|integer|exists:categories,id',
-        'manufacturer_id'   => 'integer|exists:manufacturers,id|nullable',
+        'mac_address'       => 'max:255|nullable', // TODO [GM]: Add MAC Regex
+        'serial'            => 'max:255|nullable',
+        'purchase_date'     => 'integer:min:0|max:240|nullable',
     ];
 
     /**
@@ -54,16 +55,14 @@ class Firmware extends SnipeModel
      * @var array
      */
     protected $fillable = [
+        'model_id',
+        'account_id',
+        'support_id',
+        'status_id',
         'name',
-        'major_release',
-        'minor_release',
-        'recommended',
-        'eol',
-        'eos',
-        'notes',
-        'user_id',
-        'manufacturer_id',
-        'category_id',
+        'mac_address',
+        'serial',
+        'purchase_date',
     ];
 
     use Searchable;
@@ -73,7 +72,7 @@ class Firmware extends SnipeModel
      *
      * @var array
      */
-    protected $searchableAttributes = ['name', 'major_release', 'notes', 'eol'];
+    protected $searchableAttributes = ['name', 'mac_address', 'serial'];
 
     /**
      * The relations and their attributes that should be included when searching the model.
@@ -81,21 +80,34 @@ class Firmware extends SnipeModel
      * @var array
      */
     protected $searchableRelations = [
-        'category'     => ['name'],
-        'manufacturer' => ['name'],
+        'model'         => ['name'],
+        'account'       => ['name'],
+        'support'       => ['name'],
+        'status'        => ['name'],
     ];
 
     /**
-     * Establishes the model -> assets relationship
+     * Establishes the model -> hardware relationship
      *
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
-     * TODO: Rename to getAssets()
+     */
+    public function getModel()
+    {
+        return $this->belongsTo(\App\Models\AssetModel::class, 'model_id');
+    }
+
+    /**
+     * Establishes the model -> asset relationship
+     *
+     * @author [A. Gianotto] [<snipe@snipe.net>]
+     * @since [v1.0]
+     * @return \Illuminate\Database\Eloquent\Relations\Relation
      */
     public function getAssets()
     {
-        return $this->hasMany(\App\Models\Asset::class, 'firmware_id');
+        return $this->hasOne(Asset::class, 'hardware_id');
     }
 
     /**
@@ -104,7 +116,6 @@ class Firmware extends SnipeModel
      * @author [A. Gianotto] [<snipe@snipe.net>]
      * @since [v1.0]
      * @return \Illuminate\Database\Eloquent\Relations\Relation
-     * TODO: Rename to getCategory()
      */
     public function getCategory()
     {
@@ -124,19 +135,6 @@ class Firmware extends SnipeModel
     }
 
     /**
-     * Establishes the model -> custom field default values relationship
-     *
-     * @author hannah tinkler
-     * @since [v4.3]
-     * @return \Illuminate\Database\Eloquent\Relations\Relation
-     */
-    public function defaultValues()
-    {
-        return $this->belongsToMany(\App\Models\CustomField::class, 'models_custom_fields')->withPivot('default_value');
-    }
-
-
-    /**
      * Checks if the model is deletable
      *
      * @author A. Gianotto <snipe@snipe.net>
@@ -146,7 +144,7 @@ class Firmware extends SnipeModel
     public function isDeletable()
     {
         return Gate::allows('delete', $this)
-            && ($this->assets_count == 0)
+            && ($this->getHardware() == 0)
             && ($this->deleted_at == '');
     }
 
@@ -207,7 +205,7 @@ class Firmware extends SnipeModel
      */
     public function scopeOrderManufacturer($query, $order)
     {
-        return $query->leftJoin('manufacturers', 'firmware.manufacturer_id', '=', 'manufacturers.id')->orderBy('manufacturers.name', $order);
+        return $query->leftJoin('manufacturers', 'models.manufacturer_id', '=', 'manufacturers.id')->orderBy('manufacturers.name', $order);
     }
 
     /**
@@ -220,6 +218,6 @@ class Firmware extends SnipeModel
      */
     public function scopeOrderCategory($query, $order)
     {
-        return $query->leftJoin('categories', 'firmware.category_id', '=', 'categories.id')->orderBy('categories.name', $order);
+        return $query->leftJoin('categories', 'models.category_id', '=', 'categories.id')->orderBy('categories.name', $order);
     }
 }
